@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Factolier">
+      <UniqueIdentifier>{ed0d7d07-78cc-4c19-8e7e-6b374c5d3a5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Admin">
+      <UniqueIdentifier>{ec796f9b-03dd-4fd3-9f32-22c2f5130a81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Scene">
+      <UniqueIdentifier>{c607bb3a-e8a1-4979-ba08-e5bdc1c84f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Graphic">
+      <UniqueIdentifier>{f4634b9e-1f61-4b12-997f-d4adbccb5d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\HLSL">
+      <UniqueIdentifier>{63a65fd3-2c9f-4a5f-b0b4-90b821d5e6fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Shader">
+      <UniqueIdentifier>{d0151f71-525f-40f2-8a81-0b82e99add78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Accessibility">
+      <UniqueIdentifier>{23b7c131-552b-4eee-ba5a-0724f9e1792e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Entity">
+      <UniqueIdentifier>{a592c030-6bee-4c95-9472-2e1abebebe26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{f45c9c64-2e8d-4737-86a0-ebb90460d1f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External\imgui">
+      <UniqueIdentifier>{8e1d1e73-b764-46e6-af52-20289fe51e1b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Factolier\Code\scene_manager.cpp">
+      <Filter>Factolier\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\scene_loading.cpp">
+      <Filter>Factolier\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\framebuffer.cpp">
+      <Filter>Factolier\Admin</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\framework.cpp">
+      <Filter>Factolier\Admin</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\fullscreen_quad.cpp">
+      <Filter>Factolier\Admin</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\model.cpp">
+      <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\skinned_mesh.cpp">
+      <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\sprite.cpp">
+      <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\sprite_batch.cpp">
+      <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\texture.cpp">
+      <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\static_mesh.cpp">
+      <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\shader.cpp">
+      <Filter>Factolier\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\shader_manager.cpp">
+      <Filter>Factolier\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\skinned_shader.cpp">
+      <Filter>Factolier\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\main.cpp">
+      <Filter>Factolier\Admin</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\input_manager.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\sound_manager.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\state_manager.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\camera.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\camera_controller.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\geometric_primitive.cpp">
+      <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\scene_title.cpp">
+      <Filter>Factolier\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\model_manager.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\sky_box.cpp">
+      <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui.cpp">
+      <Filter>External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_draw.cpp">
+      <Filter>External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_impl_dx11.cpp">
+      <Filter>External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_impl_win32.cpp">
+      <Filter>External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_ja_gryph_ranges.cpp">
+      <Filter>External\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="External\imgui\imgui_widgets.cpp">
+      <Filter>External\imgui</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Factolier\Code\scene.h">
+      <Filter>Factolier\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\scene_manager.h">
+      <Filter>Factolier\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\scene_loading.h">
+      <Filter>Factolier\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\framebuffer.h">
+      <Filter>Factolier\Admin</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\framework.h">
+      <Filter>Factolier\Admin</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\fullscreen_quad.h">
+      <Filter>Factolier\Admin</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\high_resolution_timer.h">
+      <Filter>Factolier\Admin</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\misc.h">
+      <Filter>Factolier\Admin</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\model.h">
+      <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\skinned_mesh.h">
+      <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\sprite.h">
+      <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\sprite_batch.h">
+      <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\texture.h">
+      <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\static_mesh.h">
+      <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\shader.h">
+      <Filter>Factolier\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\shader_manager.h">
+      <Filter>Factolier\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\skinned_shader.h">
+      <Filter>Factolier\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\input_manager.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\sound.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\sound_manager.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\state_manager.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\camera.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\camera_controller.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\geometric_primitive.h">
+      <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\scene_title.h">
+      <Filter>Factolier\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\model_manager.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\sky_box.h">
+      <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imgui.h">
+      <Filter>External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imgui_impl_dx11.h">
+      <Filter>External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imgui_impl_win32.h">
+      <Filter>External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imgui_internal.h">
+      <Filter>External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imstb_rectpack.h">
+      <Filter>External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imstb_textedit.h">
+      <Filter>External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imstb_truetype.h">
+      <Filter>External\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="External\imgui\imconfig.h">
+      <Filter>External\imgui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Factolier\Shader\blur_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\fullscreen_quad_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\fullscreen_quad_vs.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\geometric_primitive_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\geometric_primitive_vs.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\luminance_extraction_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\skinned_mesh_vs.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\sprite_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\sprite_vs.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\static_mesh_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\static_mesh_vs.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\pbr_vs.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\pbr_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Factolier\Shader\fullscreen_quad.hlsli">
+      <Filter>Factolier\HLSL</Filter>
+    </None>
+    <None Include="Factolier\Shader\geometric_primitive.hlsli">
+      <Filter>Factolier\HLSL</Filter>
+    </None>
+    <None Include="Factolier\Shader\skinned_mesh.hlsli">
+      <Filter>Factolier\HLSL</Filter>
+    </None>
+    <None Include="Factolier\Shader\sprite.hlsli">
+      <Filter>Factolier\HLSL</Filter>
+    </None>
+    <None Include="Factolier\Shader\static_mesh.hlsli">
+      <Filter>Factolier\HLSL</Filter>
+    </None>
+    <None Include="Factolier\Shader\pbr.hlsli">
+      <Filter>Factolier\HLSL</Filter>
+    </None>
+  </ItemGroup>
+</Project>
