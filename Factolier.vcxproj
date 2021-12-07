@@ -191,6 +191,7 @@
     <ClCompile Include="Factolier\Code\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="entity.h" />
     <ClInclude Include="External\imgui\imconfig.h" />
     <ClInclude Include="External\imgui\imgui.h" />
     <ClInclude Include="External\imgui\imgui_impl_dx11.h" />
