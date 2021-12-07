@@ -227,7 +227,6 @@
     <ClInclude Include="Factolier\Code\state_manager.h" />
     <ClInclude Include="Factolier\Code\static_mesh.h" />
     <ClInclude Include="Factolier\Code\texture.h" />
-    <ClInclude Include="hhhhh.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Factolier\Shader\blur_ps.hlsl">
