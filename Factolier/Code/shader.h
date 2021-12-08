@@ -23,9 +23,11 @@ protected:
     //シーン定数バッファ
     struct Scene_Constants
     {
-        DirectX::XMFLOAT4X4 view_projection;	//ビュー・プロジェクション変換行列
-        DirectX::XMFLOAT4 light_direction;		//ライトの向き
-        DirectX::XMFLOAT4 camera_position;		//カメラ位置
+        DirectX::XMFLOAT4X4 view_projection {};	    //ビュー・プロジェクション変換行列
+        DirectX::XMFLOAT4X4 view_rotate{};          //ビューの回転行列
+        DirectX::XMFLOAT4 light_direction {};		//ライトの向き
+        DirectX::XMFLOAT4 light_radiance {};		//ライトの向き
+        DirectX::XMFLOAT4 camera_position {};		//カメラ位置
     };
     Microsoft::WRL::ComPtr<ID3D11Buffer> constant_buffer;
 

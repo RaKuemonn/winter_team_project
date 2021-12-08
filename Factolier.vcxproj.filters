@@ -123,6 +123,9 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp">
       <Filter>External\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\sky_shader.cpp">
+      <Filter>Factolier\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -230,6 +233,9 @@
     <ClInclude Include="External\imgui\imconfig.h">
       <Filter>External\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="Factolier\Code\sky_shader.h">
+      <Filter>Factolier\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Factolier\Shader\blur_ps.hlsl">
@@ -274,6 +280,12 @@
     <FxCompile Include="Factolier\Shader\pbr_ps.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
+    <FxCompile Include="Factolier\Shader\sky_box_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\sky_box_vs.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Factolier\Shader\fullscreen_quad.hlsli">
@@ -292,6 +304,9 @@
       <Filter>Factolier\HLSL</Filter>
     </None>
     <None Include="Factolier\Shader\pbr.hlsli">
+      <Filter>Factolier\HLSL</Filter>
+    </None>
+    <None Include="Factolier\Shader\sky_box.hlsli">
       <Filter>Factolier\HLSL</Filter>
     </None>
   </ItemGroup>

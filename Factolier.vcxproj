@@ -118,6 +118,7 @@
       <ConformanceMode>false</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>.\External\DirectXTK-master\Inc;.\External\DirectXTK-master\Audio;.\External\DirectXTK-master\Src;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;.\External\cereal-master\include;.\External\imgui;.\External\DirectXTex-master\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -142,6 +143,7 @@
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>.\External\DirectXTK-master\Inc;.\External\DirectXTK-master\Audio;.\External\DirectXTK-master\Src;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;.\External\cereal-master\include;.\External\imgui;.\External\DirectXTex-master\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -171,6 +173,7 @@
     <ClCompile Include="Factolier\Code\scene_loading.cpp" />
     <ClCompile Include="Factolier\Code\scene_title.cpp" />
     <ClCompile Include="Factolier\Code\sky_box.cpp" />
+    <ClCompile Include="Factolier\Code\sky_shader.cpp" />
     <ClCompile Include="Factolier\Code\sound_manager.cpp" />
     <ClCompile Include="Factolier\Code\framebuffer.cpp" />
     <ClCompile Include="Factolier\Code\framework.cpp" />
@@ -205,6 +208,7 @@
     <ClInclude Include="Factolier\Code\scene_loading.h" />
     <ClInclude Include="Factolier\Code\scene_title.h" />
     <ClInclude Include="Factolier\Code\sky_box.h" />
+    <ClInclude Include="Factolier\Code\sky_shader.h" />
     <ClInclude Include="Factolier\Code\sound.h" />
     <ClInclude Include="Factolier\Code\sound_manager.h" />
     <ClInclude Include="Factolier\Code\framebuffer.h" />
@@ -272,6 +276,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="Factolier\Shader\sky_box_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\sky_box_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Factolier\Shader\sprite_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -294,6 +306,7 @@
     <None Include="Factolier\Shader\geometric_primitive.hlsli" />
     <None Include="Factolier\Shader\pbr.hlsli" />
     <None Include="Factolier\Shader\skinned_mesh.hlsli" />
+    <None Include="Factolier\Shader\sky_box.hlsli" />
     <None Include="Factolier\Shader\sprite.hlsli" />
     <None Include="Factolier\Shader\static_mesh.hlsli" />
   </ItemGroup>

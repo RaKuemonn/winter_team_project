@@ -1,11 +1,13 @@
 
 #include "shader_manager.h"
 #include "skinned_shader.h"
+#include "sky_shader.h"
 
 
 void Shader_Manager::initialize(ID3D11Device* device)
 {
     shaders.emplace_back(new Skinned_Shader());
+    shaders.emplace_back(new Sky_Shader());
 
     for (Shader* s : shaders)
     {

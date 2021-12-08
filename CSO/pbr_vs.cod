@@ -17,9 +17,10 @@
 // {
 //
 //   row_major float4x4 view_projection;// Offset:    0 Size:    64
-//   float4 light_direction;            // Offset:   64 Size:    16 [unused]
-//   float4 light_radiance;             // Offset:   80 Size:    16 [unused]
-//   float4 camera_position;            // Offset:   96 Size:    16 [unused]
+//   row_major float4x4 view_rotate;    // Offset:   64 Size:    64 [unused]
+//   float4 light_direction;            // Offset:  128 Size:    16 [unused]
+//   float4 light_radiance;             // Offset:  144 Size:    16 [unused]
+//   float4 camera_position;            // Offset:  160 Size:    16 [unused]
 //
 // }
 //
@@ -99,7 +100,7 @@ dcl_temps 9
 //   o1.x <- <main return value>.world_position.x; o1.y <- <main return value>.world_position.y; o1.z <- <main return value>.world_position.z; o1.w <- <main return value>.world_position.w; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
-#line 11 "C:\Users\2200259\Desktop\Direct X\Factolier\Factolier\Shader\pbr_vs.hlsl"
+#line 11 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\pbr_vs.hlsl"
 itof r0.x, l(0)  // r0.x <- vin.normal.w
 
 #line 12

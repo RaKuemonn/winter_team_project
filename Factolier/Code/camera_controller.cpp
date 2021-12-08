@@ -3,30 +3,50 @@
 //#include "Input/Input.h"
 
 //更新処理
-void Camera_Controller::update(float elapsedTime)
+void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
 {
 #if 0
     GamePad& gamePad = Input::Instance().GetGamePad();
     float ax = gamePad.GetAxisRX();
     float ay = gamePad.GetAxisRY();
     //カメラの回転速度
-    float speed = rollSpeed * elapsedTime;
+    float speed = roll_speed * elapsedTime;
 
     //スティックの入力値に合わせてX軸とY軸を回転
     angle.y += ax * speed;
     angle.x += ay * speed;
 #endif
 
+    if (input_manager->STATE(0) & PAD_UP)
+    {
+        angle.x += 1.0f * elapsedTime;
+    }
+
+    if (input_manager->STATE(0) & PAD_DOWN)
+    {
+        angle.x -= 1.0f * elapsedTime;
+    }
+
+    if (input_manager->STATE(0) & PAD_LEFT)
+    {
+        angle.y += 1.0f * elapsedTime;
+    }
+
+    if (input_manager->STATE(0) & PAD_RIGHT)
+    {
+        angle.y -= 1.0f * elapsedTime;
+    }
+
 
     //X軸のカメラ回転を制限
-    if (angle.x > maxAngle)
+    if (angle.x > max_angle)
     {
-        angle.x = maxAngle;
+        angle.x = max_angle;
     }
     
-    if (angle.x < minAngle)
+    if (angle.x < min_angle)
     {
-        angle.x = minAngle;
+        angle.x = min_angle;
     }
 
     //Y軸の回転値を-3.14~3.14に収まるようにする
@@ -42,6 +62,11 @@ void Camera_Controller::update(float elapsedTime)
 
     //カメラ回転値を回転行列に変換
     DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.x, angle.y, angle.z);
+
+    //回転行列を保存
+    DirectX::XMFLOAT4X4 romat;
+    DirectX::XMStoreFloat4x4(&romat, Transform);
+    Camera::Instance().set_rotation_matrix(romat);
 
     //回転行列から前方向ベクトルを取り出す
     DirectX::XMVECTOR Front = Transform.r[2];
