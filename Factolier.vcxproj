@@ -169,7 +169,9 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
+    <ClCompile Include="Factolier\Code\character.cpp" />
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
+    <ClCompile Include="Factolier\Code\player.cpp" />
     <ClCompile Include="Factolier\Code\scene_loading.cpp" />
     <ClCompile Include="Factolier\Code\scene_title.cpp" />
     <ClCompile Include="Factolier\Code\sky_box.cpp" />
@@ -204,7 +206,9 @@
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
+    <ClInclude Include="Factolier\Code\character.h" />
     <ClInclude Include="Factolier\Code\input_manager.h" />
+    <ClInclude Include="Factolier\Code\player.h" />
     <ClInclude Include="Factolier\Code\scene_loading.h" />
     <ClInclude Include="Factolier\Code\scene_title.h" />
     <ClInclude Include="Factolier\Code\sky_box.h" />
