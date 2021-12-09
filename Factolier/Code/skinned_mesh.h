@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <fbxsdk.h>
+#include <filesystem>
 
 #include <cereal\archives\binary.hpp>
 #include <cereal\types\memory.hpp>
@@ -284,9 +285,6 @@ public:
 
 
 private:
-    //Microsoft::WRL::ComPtr<ID3D11VertexShader>      vertex_shader;
-    //Microsoft::WRL::ComPtr<ID3D11PixelShader>       pixel_shader;
-    //Microsoft::WRL::ComPtr<ID3D11InputLayout>       input_layout;
     Microsoft::WRL::ComPtr<ID3D11Buffer>            constant_buffer;
 
 public:
@@ -315,7 +313,8 @@ public:
     std::vector<Node>       nodes;
     std::vector<MeshData>	meshes;
     std::vector<Animation>	animations;
-    bool pbr{ false };
+    bool                    pbr{ false };
+    std::filesystem::path   fcm_filename;
 
 protected:
     int64_t indexof_node(uint64_t unique_id) const

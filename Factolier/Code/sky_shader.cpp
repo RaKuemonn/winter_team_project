@@ -41,7 +41,18 @@ void Sky_Shader::begin(ID3D11DeviceContext* immediate_context)
     immediate_context->PSSetShader(pixel_shader.Get(), nullptr, 0);
 
     Scene_Constants data{};
-    DirectX::XMStoreFloat4x4(&data.view_rotate, DirectX::XMLoadFloat4x4(&Camera::Instance().get_rotation_matrix()) * DirectX::XMLoadFloat4x4(&Camera::Instance().get_projection()));
+    Camera& camera = Camera::Instance();
+    DirectX::XMFLOAT3 eye = { 0.0f, 0.0f, 0.0f };
+    DirectX::XMVECTOR eye_v = DirectX::XMLoadFloat3(&eye);
+    DirectX::XMFLOAT3 up = { 0.0f, 1.0f, 0.0f };
+    DirectX::XMVECTOR up_v = DirectX::XMLoadFloat3(&up);
+
+    DirectX::XMMATRIX rotate = DirectX::XMMatrixLookAtLH(eye_v, DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&camera.get_front())), up_v);
+
+    DirectX::XMStoreFloat4x4(&data.view_rotate, rotate * DirectX::XMLoadFloat4x4(&camera.get_projection()));
+    //DirectX::XMStoreFloat4x4(&data.view_rotate, DirectX::XMLoadFloat4x4(&Camera::Instance().get_projection()));
+    DirectX::XMStoreFloat4x4(&data.view_projection, DirectX::XMLoadFloat4x4(&camera.get_view()) * DirectX::XMLoadFloat4x4(&camera.get_projection()));
+
     immediate_context->UpdateSubresource(constant_buffer.Get(), 0, 0, &data, 0, 0);
     immediate_context->VSSetConstantBuffers(1, 1, constant_buffer.GetAddressOf());
     immediate_context->PSSetConstantBuffers(1, 1, constant_buffer.GetAddressOf());

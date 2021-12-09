@@ -25,12 +25,9 @@ public:
 	void set_perspective_fov(float fovY, float aspect, float nearZ, float farZ);
 	//シーンコンスタント設定
 	void set_constants(ID3D11DeviceContext* immediate_context);
-	//回転行列設定
-	void set_rotation_matrix(DirectX::XMFLOAT4X4 romat) { rotation_matrix = romat; }
 
 	const DirectX::XMFLOAT4X4& get_view() const { return view; }
 	const DirectX::XMFLOAT4X4& get_projection() const { return projection; }
-	const DirectX::XMFLOAT4X4& get_rotation_matrix() const { return rotation_matrix; }
 	const DirectX::XMFLOAT3& get_eye() const { return eye; }
 	const DirectX::XMFLOAT3& get_focus() const { return focus; }
 	const DirectX::XMFLOAT3& get_up() const { return up; }
@@ -40,8 +37,6 @@ public:
 private:
 	DirectX::XMFLOAT4X4		view {};
 	DirectX::XMFLOAT4X4		projection {};
-
-	DirectX::XMFLOAT4X4		rotation_matrix {};
 
 	DirectX::XMFLOAT3		eye {};
 	DirectX::XMFLOAT3		focus {};
