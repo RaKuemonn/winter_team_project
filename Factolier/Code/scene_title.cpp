@@ -4,6 +4,7 @@
 #include "camera.h"
 
 
+
 void Scene_Title::initialize()
 {
     //title_back = std::make_unique<Sprite_Batch>(parent->device(), "./Data/cyberpunk.jpg", 1000);
@@ -30,6 +31,8 @@ void Scene_Title::initialize()
 
     DirectX::XMFLOAT3 target = { 0.0f, 0.0f, 0.0f };
     camera_controller->set_target(target);
+
+    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
 }
 
 
@@ -68,11 +71,11 @@ void Scene_Title::render(float elapsedTime)
 
 
     Shader* shader = parent->shader_manager()->get_shader(1);
-
+    
     shader->begin(parent->device_context());
-
+    
     sky_box->render(parent->device_context()); // ˆê”Ôæ‚É•`‰æ‚³‚¹‚é
-
+    
     shader->end(parent->device_context());
 
 
@@ -84,5 +87,23 @@ void Scene_Title::render(float elapsedTime)
     //}
     //
     //title_back->end(device_context_);
+
+
+    DirectX::XMFLOAT4X4 world = {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    };
+
+    parent->state_manager()->setDS(DS::ON_ON);
+
+    shader = parent->shader_manager()->get_shader(0);
+
+    shader->begin(parent->device_context());
+
+    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+
+    shader->end(parent->device_context());
 
 }

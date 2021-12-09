@@ -315,7 +315,7 @@ public:
     std::vector<Node>       nodes;
     std::vector<MeshData>	meshes;
     std::vector<Animation>	animations;
-    bool pbr{false};
+    bool pbr{ false };
 
 protected:
     int64_t indexof_node(uint64_t unique_id) const

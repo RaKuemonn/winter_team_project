@@ -31,7 +31,9 @@ cbuffer OBJECT_CONSTANT_BUFFER : register(b0)
 
 cbuffer SCENE_CONSTANT_BUFFER : register(b1)
 {
-    row_major float4x4 view_projection;
-    float4 light_direction;
-    float4 camera_position;
+    row_major float4x4 view_projection;	    //ビュー・プロジェクション変換行列
+    row_major float4x4 view_rotate;         //ビューの回転行列
+    float4 light_direction;		            //ライトの向き
+    float4 light_radiance;		            //ライトの向き
+    float4 camera_position;		            //カメラ位置
 };
