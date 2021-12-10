@@ -135,6 +135,9 @@
     <ClCompile Include="Factolier\Code\player.cpp">
       <Filter>Factolier\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\SceneGame.cpp">
+      <Filter>Factolier\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -171,9 +174,6 @@
       <Filter>Factolier\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\sprite_batch.h">
-      <Filter>Factolier\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Factolier\Code\texture.h">
       <Filter>Factolier\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\static_mesh.h">
@@ -250,6 +250,12 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\player.h">
       <Filter>Factolier\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\SceneGame.h">
+      <Filter>Factolier\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\texture.h">
+      <Filter>Factolier\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

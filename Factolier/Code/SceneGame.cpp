@@ -1,19 +1,13 @@
-
-#include "scene_title.h"
 #include "scene_manager.h"
 #include "camera.h"
+#include "SceneGame.h"
 
 
-
-void Scene_Title::initialize()
+void SceneGame::initialize()
 {
-    //title_back = std::make_unique<Sprite_Batch>(parent->device(), "./Data/cyberpunk.jpg", 1000);
-
-    //sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/_.wav"));
-
-    //sound->play(false);
-
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
+    //sky_box.reset(new Sky_Box(parent->device(), L"./Data/cubemap_batch.dds"));
+
 
     Camera& camera = Camera::Instance();
     camera.set_lookat(
@@ -25,38 +19,36 @@ void Scene_Title::initialize()
         1280 / 720,
         0.1f,
         1000.0f);
-
-
+    
+    
     camera_controller = make_unique<Camera_Controller>();
-
+    
     DirectX::XMFLOAT3 target = { 0.0f, 0.0f, 0.0f };
     camera_controller->set_target(target);
-
-    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
+    
+    
+    player = std::make_unique<Player>(parent);
+    //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
+    //player = std::make_unique<Model>(parent->model_manager()->load_model("./Data/Mr.Incredible/Mr.Incredible.fbx"));
 
 }
 
 
-void Scene_Title::uninitialize()
+void SceneGame::uninitialize()
 {
 
 }
 
 
-void Scene_Title::update(float elapsedTime)
+void SceneGame::update(float elapsedTime)
 {
     camera_controller->update(elapsedTime, parent->input_manager());
-
-    //sound->set_emitter({ 0.0f, 0.0f, 0.0f });
-    //parent->sound_manager()->set_listener(0, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f });
-    //
-    //sound->apply_3d(parent->sound_manager()->get_listener(0));
-    //
-    //sound->update();
+   
+    player->update(elapsedTime);
 }
 
 
-void Scene_Title::render(float elapsedTime)
+void SceneGame::render(float elapsedTime)
 {
     ID3D11DeviceContext* device_context_ = parent->device_context();
 
@@ -72,22 +64,13 @@ void Scene_Title::render(float elapsedTime)
 
 
     Shader* shader = parent->shader_manager()->get_shader(1);
-    
+
     shader->begin(parent->device_context());
-    
+
     sky_box->render(parent->device_context()); // ˆê”Ôæ‚É•`‰æ‚³‚¹‚é
-    
+
     shader->end(parent->device_context());
 
-
-    //title_back->begin(device_context_);
-    //
-    //for (int i = 0; i < 1; i++)
-    //{
-    //    title_back->render(device_context_, 0, 0, 2, 2, 0, 0, 616, 353, 0, 0, 1, 1, 1, 1, 0);
-    //}
-    //
-    //title_back->end(device_context_);
 
 
     DirectX::XMFLOAT4X4 world = {
@@ -96,11 +79,7 @@ void Scene_Title::render(float elapsedTime)
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f
     };
-    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
-    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
-    DirectX::CXMMATRIX W = S * R * T;
-    DirectX::XMStoreFloat4x4(&world, W);
+   
 
     parent->state_manager()->setDS(DS::ON_ON);
 
@@ -109,6 +88,11 @@ void Scene_Title::render(float elapsedTime)
     shader->begin(parent->device_context());
 
     //test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+    //player->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+
+    // player•`‰æ
+    player->render();
+    
 
     shader->end(parent->device_context());
 
