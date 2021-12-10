@@ -22,6 +22,10 @@ dcl_globalFlags refactoringAllowed | skipOptimization
 dcl_input_sgv v0.x, vertex_id
 dcl_output_siv o0.xyzw, position
 dcl_output o1.xy
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 dcl_temps 2
 dcl_indexableTemp x0[4], 4
 dcl_indexableTemp x1[4], 4
@@ -32,7 +36,11 @@ dcl_indexableTemp x1[4], 4
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w; 
 //   x0 <- position; x1 <- texcoords
 //
+<<<<<<< HEAD
 #line 9 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\fullscreen_quad_vs.hlsl"
+=======
+#line 9 "C:\Users\2200433\Desktop\後期2回目\Factolier\Shader\fullscreen_quad_vs.hlsl"
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 itof r0.xy, l(-1, 1, 0, 0)
 itof r0.zw, l(0, 0, 1, 1)
 itof r1.xyzw, l(-1, -1, 1, -1)
@@ -51,6 +59,13 @@ mov x1[2].xy, r1.xyxx
 mov x1[3].xy, r1.zwzz
 
 #line 11
+<<<<<<< HEAD
+=======
+=======
+dcl_temps 1
+mov o0.zw, l(0,0,0,1.000000)
+>>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 mov r0.x, v0.x
 mov r1.xy, x0[r0.x + 0].xyxx  // r1.x <- vout.position.x; r1.y <- vout.position.y
 itof r1.zw, l(0, 0, 0, 1)  // r1.z <- vout.position.z; r1.w <- vout.position.w

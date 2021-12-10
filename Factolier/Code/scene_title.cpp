@@ -32,8 +32,13 @@ void Scene_Title::initialize()
     DirectX::XMFLOAT3 target = { 0.0f, 0.0f, 0.0f };
     camera_controller->set_target(target);
 
+<<<<<<< HEAD
     test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/nico.fbx"));
     //test_model->append_animation("./Data/Animations/Idle.fbx");
+=======
+    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
+
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 }
 
 
@@ -99,6 +104,11 @@ void Scene_Title::render(float elapsedTime)
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f
     };
+    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
+    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
+    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
+    DirectX::CXMMATRIX W = S * R * T;
+    DirectX::XMStoreFloat4x4(&world, W);
 
     DirectX::XMMATRIX World = DirectX::XMLoadFloat4x4(&world);
     World = scale;
@@ -110,7 +120,7 @@ void Scene_Title::render(float elapsedTime)
 
     shader->begin(parent->device_context());
 
-    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+    //test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
 
     shader->end(parent->device_context());
 

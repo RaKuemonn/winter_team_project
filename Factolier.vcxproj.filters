@@ -31,9 +31,6 @@
     <Filter Include="External\imgui">
       <UniqueIdentifier>{8e1d1e73-b764-46e6-af52-20289fe51e1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Factolier\Character">
-      <UniqueIdentifier>{5727782a-47ae-4542-b675-bd5d756f5616}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_manager.cpp">
@@ -129,12 +126,6 @@
     <ClCompile Include="Factolier\Code\sky_shader.cpp">
       <Filter>Factolier\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\character.cpp">
-      <Filter>Factolier\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Factolier\Code\player.cpp">
-      <Filter>Factolier\Character</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -171,9 +162,6 @@
       <Filter>Factolier\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\sprite_batch.h">
-      <Filter>Factolier\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Factolier\Code\texture.h">
       <Filter>Factolier\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\static_mesh.h">
@@ -245,11 +233,8 @@
     <ClInclude Include="Factolier\Code\sky_shader.h">
       <Filter>Factolier\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\character.h">
-      <Filter>Factolier\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Factolier\Code\player.h">
-      <Filter>Factolier\Character</Filter>
+    <ClInclude Include="Factolier\Code\texture.h">
+      <Filter>Factolier\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -70,6 +70,10 @@ dcl_input_ps linear v3.xyz
 dcl_input_ps linear v4.xyz
 dcl_input_ps linear v5.xy
 dcl_output o0.xyzw
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 dcl_temps 12
 //
 // Initial variable locations:
@@ -82,7 +86,11 @@ dcl_temps 12
 //   v6.x <- pin.color.x; v6.y <- pin.color.y; v6.z <- pin.color.z; v6.w <- pin.color.w; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
+<<<<<<< HEAD
 #line 19 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\pbr_ps.hlsl"
+=======
+#line 19 "C:\Users\2200433\Desktop\後期2回目\Factolier\Shader\pbr_ps.hlsl"
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 mov r0.x, l(3.141592)  // r0.x <- pi
 
 #line 20
@@ -106,6 +114,15 @@ sample_indexable(texture2d)(float,float,float,float) r3.x, v5.xyxx, t3.xyzw, s2 
 mov r4.xyzw, -v1.xyzw
 add r4.xyzw, r4.xyzw, cb1[10].xyzw
 dp4 r0.w, r4.xyzw, r4.xyzw
+<<<<<<< HEAD
+=======
+=======
+dcl_temps 8
+sample_indexable(texture2d)(float,float,float,float) r0.xyz, v5.xyxx, t1.xyzw, s2
+mad r0.xyz, r0.xyzx, l(2.000000, 2.000000, 2.000000, 0.000000), l(-1.000000, -1.000000, -1.000000, 0.000000)
+dp3 r0.w, r0.xyzx, r0.xyzx
+>>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 rsq r0.w, r0.w
 mul r4.xyz, r0.wwww, r4.xyzx  // r4.x <- lo.x; r4.y <- lo.y; r4.z <- lo.z
 

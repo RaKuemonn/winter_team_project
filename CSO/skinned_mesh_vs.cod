@@ -81,6 +81,10 @@ dcl_output o2.xyzw
 dcl_output o3.xyzw
 dcl_output o4.xy
 dcl_output o5.xyzw
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 dcl_temps 9
 //
 // Initial variable locations:
@@ -97,7 +101,11 @@ dcl_temps 9
 //   o1.x <- <main return value>.world_position.x; o1.y <- <main return value>.world_position.y; o1.z <- <main return value>.world_position.z; o1.w <- <main return value>.world_position.w; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
+<<<<<<< HEAD
 #line 9 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\skinned_mesh_vs.hlsl"
+=======
+#line 9 "C:\Users\2200433\Desktop\後期2回目\Factolier\Shader\skinned_mesh_vs.hlsl"
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 itof r0.x, l(0)  // r0.x <- vin.normal.w
 
 #line 10
@@ -191,6 +199,20 @@ mov r6.xyzw, r6.xyzw  // r6.x <- vin.tangent.x; r6.y <- vin.tangent.y; r6.z <- v
 
 #line 29
 mul r1.xyzw, cb0[0].xxxx, cb1[0].xyzw
+<<<<<<< HEAD
+=======
+=======
+dcl_temps 7
+mul r0.xyzw, cb0[3].yyyy, cb1[1].xyzw
+mad r0.xyzw, cb0[3].xxxx, cb1[0].xyzw, r0.xyzw
+mad r0.xyzw, cb0[3].zzzz, cb1[2].xyzw, r0.xyzw
+mad r0.xyzw, cb0[3].wwww, cb1[3].xyzw, r0.xyzw
+mul r1.xyzw, cb0[2].yyyy, cb1[1].xyzw
+mad r1.xyzw, cb0[2].xxxx, cb1[0].xyzw, r1.xyzw
+mad r1.xyzw, cb0[2].zzzz, cb1[2].xyzw, r1.xyzw
+mad r1.xyzw, cb0[2].wwww, cb1[3].xyzw, r1.xyzw
+>>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 mul r2.xyzw, cb0[0].yyyy, cb1[1].xyzw
 add r1.xyzw, r1.xyzw, r2.xyzw
 mul r2.xyzw, cb0[0].zzzz, cb1[2].xyzw

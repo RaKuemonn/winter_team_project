@@ -7,7 +7,7 @@
 Model::Model(std::shared_ptr<Skinned_Mesh> resource_)
 {
 	resource = resource_;
-
+	
 	if (resource->animations.size() > 0)
 	{
 		now_anime = resource->animations.at(0);

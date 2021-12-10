@@ -28,6 +28,10 @@ dcl_input v2.xy
 dcl_output_siv o0.xyzw, position
 dcl_output o1.xyzw
 dcl_output o2.xy
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 dcl_temps 3
 //
 // Initial variable locations:
@@ -38,7 +42,11 @@ dcl_temps 3
 //   o1.x <- <main return value>.color.x; o1.y <- <main return value>.color.y; o1.z <- <main return value>.color.z; o1.w <- <main return value>.color.w; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
+<<<<<<< HEAD
 #line 8 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\sprite_vs.hlsl"
+=======
+#line 8 "C:\Users\2200433\Desktop\後期2回目\Factolier\Shader\sprite_vs.hlsl"
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 mov r0.xyzw, v0.xyzw  // r0.x <- vout.position.x; r0.y <- vout.position.y; r0.z <- vout.position.z; r0.w <- vout.position.w
 
 #line 9
@@ -51,5 +59,13 @@ mov r2.xy, v2.xyxx  // r2.x <- vout.texcoord.x; r2.y <- vout.texcoord.y
 mov o0.xyzw, r0.xyzw
 mov o1.xyzw, r1.xyzw
 mov o2.xy, r2.xyxx
+<<<<<<< HEAD
+=======
+=======
+mov o0.xyzw, v0.xyzw
+mov o1.xyzw, v1.xyzw
+mov o2.xy, v2.xyxx
+>>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
+>>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 ret 
 // Approximately 7 instruction slots used

@@ -9,6 +9,8 @@
 #include "camera_controller.h"
 
 
+
+
 class Scene_Title : public Scene
 {
 public:
@@ -24,6 +26,7 @@ private:
 	std::unique_ptr<Sound> sound = nullptr;
 	std::unique_ptr<Sky_Box> sky_box = nullptr;
 	std::unique_ptr<Model> test_model = nullptr;
+
 
 	std::unique_ptr<Camera_Controller> camera_controller = nullptr;
 
