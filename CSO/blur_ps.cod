@@ -26,11 +26,12 @@
 // SV_TARGET                0   xyzw        0   TARGET   float   xyzw
 //
 ps_5_0
-dcl_globalFlags refactoringAllowed | skipOptimization
+dcl_globalFlags refactoringAllowed
 dcl_sampler s2, mode_default
 dcl_resource_texture2d (float,float,float,float) t0
 dcl_input_ps linear v1.xy
 dcl_output o0.xyzw
+<<<<<<< HEAD
 dcl_temps 2
 //
 // Initial variable locations:
@@ -52,17 +53,16 @@ itof r1.yzw, l(0, 1, 1, 1)
 mov r0.xyz, -r0.xyzx
 mul r0.xyz, r1.xxxx, r0.xyzx
 mul r0.xyz, r0.xyzx, l(1.442695, 1.442695, 1.442695, 0.000000)
+=======
+dcl_temps 1
+sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v1.xyxx, t0.xyzw, s2
+mul r0.xyz, r0.xyzx, l(-1.731234, -1.731234, -1.731234, 0.000000)
+mov o0.w, r0.w
+>>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
 exp r0.xyz, r0.xyzx
-mov r0.xyz, -r0.xyzx
-add r0.xyz, r0.xyzx, r1.yzwy  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z
-
-#line 54
+add r0.xyz, -r0.xyzx, l(1.000000, 1.000000, 1.000000, 0.000000)
 log r0.xyz, r0.xyzx
 mul r0.xyz, r0.xyzx, l(0.454545, 0.454545, 0.454545, 0.000000)
-exp r0.xyz, r0.xyzx  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z
-
-#line 58
-mov o0.xyz, r0.xyzx
-mov o0.w, r0.w
+exp o0.xyz, r0.xyzx
 ret 
-// Approximately 16 instruction slots used
+// Approximately 9 instruction slots used

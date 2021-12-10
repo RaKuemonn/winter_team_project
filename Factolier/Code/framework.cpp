@@ -1,7 +1,6 @@
 
 #include "framework.h"
 #include "scene_title.h"
-#include "SceneGame.h"
 
 float fps{ 0 };
 
@@ -17,8 +16,8 @@ bool Framework::initialize()
 	//シーンマネージャー生成
 	scene_manager = std::make_unique<Scene_Manager>();
 	scene_manager->initialize(device.Get(), immediate_context.Get(), hr);
-	//scene_manager->change_scene(new Scene_Title);
-	scene_manager->change_scene(new SceneGame);
+	scene_manager->change_scene(new Scene_Title);
+	
 
 
 	/*************ビューポートの設定**************/

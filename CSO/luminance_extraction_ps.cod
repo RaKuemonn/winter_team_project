@@ -26,12 +26,13 @@
 // SV_TARGET                0   xyzw        0   TARGET   float   xyzw
 //
 ps_5_0
-dcl_globalFlags refactoringAllowed | skipOptimization
+dcl_globalFlags refactoringAllowed
 dcl_sampler s2, mode_default
 dcl_resource_texture2d (float,float,float,float) t0
 dcl_input_ps linear v1.xy
 dcl_output o0.xyzw
 dcl_temps 2
+<<<<<<< HEAD
 //
 // Initial variable locations:
 //   v0.x <- pin.position.x; v0.y <- pin.position.y; v0.z <- pin.position.z; v0.w <- pin.position.w; 
@@ -45,22 +46,16 @@ sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v1.xyxx, t0.xyzw, 
 mov r0.w, r0.w  // r0.w <- alpha
 
 #line 16
+=======
+sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v1.xyxx, t0.xyzw, s2
+>>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
 dp3 r1.x, r0.xyzx, l(0.299000, 0.587000, 0.114000, 0.000000)
-mov r1.y, l(-0.600000)
-add r1.z, r1.y, l(0.800000)
-add r1.x, r1.y, r1.x
-div r1.y, l(1.000000, 1.000000, 1.000000, 1.000000), r1.z
-mul r1.x, r1.y, r1.x
-max r1.x, r1.x, l(0.000000)
-min r1.x, r1.x, l(1.000000)
-mul r1.y, r1.x, l(-2.000000)
-add r1.y, r1.y, l(3.000000)
+add r1.x, r1.x, l(-0.600000)
+mul_sat r1.x, r1.x, l(5.000000)
+mad r1.y, r1.x, l(-2.000000), l(3.000000)
 mul r1.x, r1.x, r1.x
 mul r1.x, r1.x, r1.y
-mul r0.xyz, r0.xyzx, r1.xxxx
-
-#line 17
-mov o0.xyz, r0.xyzx
+mul o0.xyz, r0.xyzx, r1.xxxx
 mov o0.w, r0.w
 ret 
-// Approximately 18 instruction slots used
+// Approximately 10 instruction slots used

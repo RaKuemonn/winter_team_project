@@ -8,7 +8,7 @@ VS_OUT main( float4 pos : POSITION )
 
 	vout.local_position = pos.xyz;
 	pos.w = 1.0f;
-	vout.world_position = mul(view_rotate, pos);
+
 	vout.world_position = mul(pos,view_rotate);
 
 	return vout;

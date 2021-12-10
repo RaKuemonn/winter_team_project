@@ -10,7 +10,7 @@ Player::Player(Scene_Manager* sm)
     // parent‚Ìİ’è
     set_parent(sm);
     // player“Ç‚İ‚İ
-    model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/Jummo/Jummo.fbx"));
+    model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/Jummo/Jummo.mdl"));
 }
 
 
@@ -23,7 +23,7 @@ void Player::update(float elapsedTime)
 void Player::move(float elapsedTime)
 {
     
-    model->play_animation(elapsedTime, 0);
+    model->play_animation(elapsedTime,0, true );
     if(parent->input_manager()->STATE(0)& PAD_TRG1)
     {
         position.x += speed.x * elapsedTime;

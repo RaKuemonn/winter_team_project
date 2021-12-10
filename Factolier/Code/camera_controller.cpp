@@ -63,11 +63,6 @@ void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
     //カメラ回転値を回転行列に変換
     DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.x, angle.y, angle.z);
 
-    //回転行列を保存
-    DirectX::XMFLOAT4X4 romat;
-    DirectX::XMStoreFloat4x4(&romat, Transform);
-    Camera::Instance().set_rotation_matrix(romat);
-
     //回転行列から前方向ベクトルを取り出す
     DirectX::XMVECTOR Front = Transform.r[2];
     DirectX::XMFLOAT3 front;

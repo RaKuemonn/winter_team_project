@@ -21,13 +21,14 @@
 // TEXCOORD                 0   xy          2     NONE   float   xy  
 //
 vs_5_0
-dcl_globalFlags refactoringAllowed | skipOptimization
+dcl_globalFlags refactoringAllowed
 dcl_input v0.xyzw
 dcl_input v1.xyzw
 dcl_input v2.xy
 dcl_output_siv o0.xyzw, position
 dcl_output o1.xyzw
 dcl_output o2.xy
+<<<<<<< HEAD
 dcl_temps 3
 //
 // Initial variable locations:
@@ -51,5 +52,10 @@ mov r2.xy, v2.xyxx  // r2.x <- vout.texcoord.x; r2.y <- vout.texcoord.y
 mov o0.xyzw, r0.xyzw
 mov o1.xyzw, r1.xyzw
 mov o2.xy, r2.xyxx
+=======
+mov o0.xyzw, v0.xyzw
+mov o1.xyzw, v1.xyzw
+mov o2.xy, v2.xyxx
+>>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
 ret 
-// Approximately 7 instruction slots used
+// Approximately 4 instruction slots used
