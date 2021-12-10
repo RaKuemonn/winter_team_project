@@ -47,7 +47,8 @@ void Skinned_Shader::begin(ID3D11DeviceContext* immediate_context)
 
     Scene_Constants data{};
     DirectX::XMStoreFloat4x4(&data.view_projection, DirectX::XMLoadFloat4x4(&Camera::Instance().get_view()) * DirectX::XMLoadFloat4x4(&Camera::Instance().get_projection()));
-    data.light_direction = { 0, 0, 1, 0 };
+    Camera& camera = Camera::Instance();
+    data.light_direction = { camera.get_front().x, camera.get_front().y, camera.get_front().z, 0 };
     data.camera_position = { 0, 0, 0, 0 };
     immediate_context->UpdateSubresource(constant_buffer.Get(), 0, 0, &data, 0, 0);
     immediate_context->VSSetConstantBuffers(1, 1, constant_buffer.GetAddressOf());

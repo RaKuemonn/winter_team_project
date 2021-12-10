@@ -4,7 +4,7 @@
 
 
 
-Model::Model(std::shared_ptr<Skinned_Mesh> resource_, bool triangulate, float rate)
+Model::Model(std::shared_ptr<Skinned_Mesh> resource_)
 {
 	resource = resource_;
 
@@ -18,13 +18,6 @@ Model::Model(std::shared_ptr<Skinned_Mesh> resource_, bool triangulate, float ra
 }
 
 
-Model::~Model()
-{
-    
-}
-
-
-
 void Model::play_animation(float elapsed_time, int anime_num, bool loop, float blend_second)
 {
 	//アニメーションの取得
@@ -33,9 +26,14 @@ void Model::play_animation(float elapsed_time, int anime_num, bool loop, float b
 	//現在のアニメーションと同一か
     if (now_anime.name != animation.name)
     {
+		//現在のアニメーションがない場合はブレンド補完しない
+        if (now_anime.name != "")
+        {
+			blend_mode = true;
+        }
+
 		//違うならブレンド補完する
 		anime_timer = 0.0f;
-		blend_mode = true;
 		now_anime = animation;
 		blend_timer = 0.0f;
     }

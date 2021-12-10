@@ -32,7 +32,8 @@ void Scene_Title::initialize()
     DirectX::XMFLOAT3 target = { 0.0f, 0.0f, 0.0f };
     camera_controller->set_target(target);
 
-    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
+    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/nico.fbx"));
+    //test_model->append_animation("./Data/Animations/Idle.fbx");
 }
 
 
@@ -52,6 +53,8 @@ void Scene_Title::update(float elapsedTime)
     //sound->apply_3d(parent->sound_manager()->get_listener(0));
     //
     //sound->update();
+
+    test_model->play_animation(elapsedTime, 0);
 }
 
 
@@ -88,6 +91,7 @@ void Scene_Title::render(float elapsedTime)
     //
     //title_back->end(device_context_);
 
+    DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
     DirectX::XMFLOAT4X4 world = {
         1.0f, 0.0f, 0.0f, 0.0f,
@@ -95,6 +99,10 @@ void Scene_Title::render(float elapsedTime)
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f
     };
+
+    DirectX::XMMATRIX World = DirectX::XMLoadFloat4x4(&world);
+    World = scale;
+    DirectX::XMStoreFloat4x4(&world, World);
 
     parent->state_manager()->setDS(DS::ON_ON);
 

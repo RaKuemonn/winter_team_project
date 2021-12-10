@@ -9,8 +9,8 @@ class Model
 {
 public:
 
-    Model(std::shared_ptr<Skinned_Mesh>, bool triangulate = false, float rate = 60.0f);
-    ~Model();
+    Model(std::shared_ptr<Skinned_Mesh>);
+    ~Model() {}
 
 private:
     std::shared_ptr<Skinned_Mesh> resource;
@@ -26,6 +26,7 @@ private:
 
 public:
     void play_animation(float elapsed_time, int anime_num, bool loop = true, float blend_second = 1.0f);
+    void append_animation(const char* animation_filename, float sampling_rate = 60.0f) { resource->append_animations(animation_filename, sampling_rate); }
     const bool get_anime_play_flag() const { return anime_play_flag; }
 
     void render(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color);

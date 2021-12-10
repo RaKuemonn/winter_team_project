@@ -15,9 +15,9 @@ Skinned_Mesh::Skinned_Mesh(ID3D11Device* device, const char* fbx_filename, bool 
     //ファイルパス検索
     std::filesystem::path cereal_filename(fbx_filename);
     cereal_filename.replace_extension("fcm");
-    fcm_filename = cereal_filename.c_str();
+    fcm_name = cereal_filename.c_str();
 
-    if (std::filesystem::exists(fcm_filename))
+    if (std::filesystem::exists(fcm_name))
     {
         //シリアライズデータ読み込み
         std::ifstream ifs(cereal_filename.c_str(), std::ios::binary);
@@ -87,12 +87,12 @@ Skinned_Mesh::Skinned_Mesh(ID3D11Device* device, const char* fbx_filename, bool 
         fbx_manager->Destroy();
 
         //シリアライズデータ作成
-        std::ofstream ofs(fcm_filename, std::ios::binary);
+        std::ofstream ofs(fcm_name, std::ios::binary);
         cereal::BinaryOutputArchive serialization(ofs);
         serialization(nodes, meshes, animations);
     }
 
-    create_com_objects(device, fbx_filename);
+    create_com_objects(device);
 }
 
 
@@ -572,6 +572,8 @@ bool Skinned_Mesh::append_animations(const char* animation_filename, float sampl
     FbxArray<FbxString*> animation_stack_names;
     fbx_scene->FillAnimStackNameArray(animation_stack_names);
 
+    bool judge = false;
+
     const int animation_stack_count{ animation_stack_names.GetCount() };
     for (int animation_stack_index = 0; animation_stack_index < animation_stack_count; ++animation_stack_index)
     {
@@ -579,19 +581,36 @@ bool Skinned_Mesh::append_animations(const char* animation_filename, float sampl
         {
             if (animation_stack_names[animation_stack_index]->Buffer() == i.name)
             {
-                return false;
+                judge = true;
             }
         }
+    }
+
+    if (judge)
+    {
+        for (int animation_stack_index = 0; animation_stack_index < animation_stack_count; ++animation_stack_index)
+        {
+            delete animation_stack_names[animation_stack_index];
+        }
+
+        fbx_manager->Destroy();
+        return false;
     }
 
 
     fetch_animations(fbx_scene, sampling_rate);
 
+
     fbx_manager->Destroy();
+
+    for (int animation_stack_index = 0; animation_stack_index < animation_stack_count; ++animation_stack_index)
+    {
+        delete animation_stack_names[animation_stack_index];
+    }
 
 
     //シリアライズデータ作成
-    std::ofstream ofs(fcm_filename, std::ios::binary);
+    std::ofstream ofs(fcm_name, std::ios::binary);
     cereal::BinaryOutputArchive serialization(ofs);
     serialization(nodes, meshes, animations);
 
@@ -623,7 +642,7 @@ void Skinned_Mesh::blend_animations(const Keyframe* keyframes[2], float factor, 
 }
 
 
-void Skinned_Mesh::create_com_objects(ID3D11Device* device, const char* fbx_filename)
+void Skinned_Mesh::create_com_objects(ID3D11Device* device)
 {
     for (MeshData& mesh : meshes)
     {

@@ -12,8 +12,6 @@
 #include <cereal\types\memory.hpp>
 #include <cereal\types\vector.hpp>
 
-
-
 static const int MAX_BONE_INFLUENCES{ 4 };
 static const int MAX_BONES{ 256 };
 
@@ -289,7 +287,7 @@ private:
 
 public:
     Skinned_Mesh(ID3D11Device* device, const char* fbx_filename, bool triangulate = false, float rate = 60.0f);
-    virtual ~Skinned_Mesh() = default;
+    virtual ~Skinned_Mesh() {}
 
     void fetch_meshes(FbxScene* fbx_scene, const char* filename);
     void fetch_material(const FbxSurfaceMaterial* fbx_material, Material& material, const char* propertyName, const char* factorName, const char* filename);
@@ -302,7 +300,7 @@ public:
     bool append_animations(const char* animation_filename, float sampling_rate);
     void blend_animations(const Keyframe* keyframes[2], float factor, Keyframe& keyframe);
 
-    void create_com_objects(ID3D11Device* device, const char* fbx_filename);
+    void create_com_objects(ID3D11Device* device);
     HRESULT make_dummy_texture(ID3D11Device* device, ID3D11ShaderResourceView** shader_resource_view, DWORD value/*0xAABBGGRR*/, UINT dimension);
 
     void render(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color, const Keyframe* keyframe);
@@ -314,7 +312,7 @@ public:
     std::vector<MeshData>	meshes;
     std::vector<Animation>	animations;
     bool                    pbr{ false };
-    std::filesystem::path   fcm_filename;
+    std::filesystem::path   fcm_name;
 
 protected:
     int64_t indexof_node(uint64_t unique_id) const
