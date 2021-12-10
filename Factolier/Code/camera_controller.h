@@ -20,8 +20,8 @@ private:
 	DirectX::XMFLOAT3	target = { 0, 0, 0 };
 	DirectX::XMFLOAT3	angle = { 0, 0, 0 };
 	float				roll_speed = DirectX::XMConvertToRadians(50);
-	float				range = 0.1f;
-	float				max_angle = DirectX::XMConvertToRadians(45);
-	float				min_angle = DirectX::XMConvertToRadians(-45);
+	float				range = 5.0f;
+	float				max_angle = DirectX::XMConvertToRadians(80);
+	float				min_angle = DirectX::XMConvertToRadians(-80);
 
 };

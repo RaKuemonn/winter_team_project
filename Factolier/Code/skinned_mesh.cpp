@@ -3,7 +3,6 @@
 #include "skinned_mesh.h"
 #include <fstream>
 #include <functional>
-#include <filesystem>
 #include "shader.h"
 #include "texture.h"
 
@@ -16,8 +15,9 @@ Skinned_Mesh::Skinned_Mesh(ID3D11Device* device, const char* fbx_filename, bool 
     //ファイルパス検索
     std::filesystem::path cereal_filename(fbx_filename);
     cereal_filename.replace_extension("fcm");
+    fcm_filename = cereal_filename.c_str();
 
-    if (std::filesystem::exists(cereal_filename.c_str()))
+    if (std::filesystem::exists(fcm_filename))
     {
         //シリアライズデータ読み込み
         std::ifstream ifs(cereal_filename.c_str(), std::ios::binary);
@@ -87,7 +87,7 @@ Skinned_Mesh::Skinned_Mesh(ID3D11Device* device, const char* fbx_filename, bool 
         fbx_manager->Destroy();
 
         //シリアライズデータ作成
-        std::ofstream ofs(cereal_filename.c_str(), std::ios::binary);
+        std::ofstream ofs(fcm_filename, std::ios::binary);
         cereal::BinaryOutputArchive serialization(ofs);
         serialization(nodes, meshes, animations);
     }
@@ -567,9 +567,33 @@ bool Skinned_Mesh::append_animations(const char* animation_filename, float sampl
     import_status = fbx_importer->Import(fbx_scene);
     _ASSERT_EXPR_A(import_status, fbx_importer->GetStatus().GetErrorString());
 
+
+    //同じアニメーションが存在するなら追加しない
+    FbxArray<FbxString*> animation_stack_names;
+    fbx_scene->FillAnimStackNameArray(animation_stack_names);
+
+    const int animation_stack_count{ animation_stack_names.GetCount() };
+    for (int animation_stack_index = 0; animation_stack_index < animation_stack_count; ++animation_stack_index)
+    {
+        for (auto i : animations)
+        {
+            if (animation_stack_names[animation_stack_index]->Buffer() == i.name)
+            {
+                return false;
+            }
+        }
+    }
+
+
     fetch_animations(fbx_scene, sampling_rate);
 
     fbx_manager->Destroy();
+
+
+    //シリアライズデータ作成
+    std::ofstream ofs(fcm_filename, std::ios::binary);
+    cereal::BinaryOutputArchive serialization(ofs);
+    serialization(nodes, meshes, animations);
 
     return true;
 }
