@@ -31,6 +31,12 @@
     <Filter Include="External\imgui">
       <UniqueIdentifier>{8e1d1e73-b764-46e6-af52-20289fe51e1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Entity\Status">
+      <UniqueIdentifier>{b72e2036-5fde-4b9f-a5fc-ea81b4d4c92f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Utility">
+      <UniqueIdentifier>{fc4500fd-d3a7-4723-83fa-75f3cca7b6d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_manager.cpp">
@@ -235,6 +241,21 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\texture.h">
       <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\position.h">
+      <Filter>Factolier\Entity\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\rotate.h">
+      <Filter>Factolier\Entity\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\scale.h">
+      <Filter>Factolier\Entity\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\transform.h">
+      <Filter>Factolier\Entity\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\math_xmfloat.h">
+      <Filter>Factolier\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
