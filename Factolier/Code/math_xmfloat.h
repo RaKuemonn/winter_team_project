@@ -16,12 +16,10 @@
 inline DirectX::XMFLOAT2 operator+ (const DirectX::XMFLOAT2 a, const DirectX::XMFLOAT2 b) 
 {
     using namespace DirectX;
+    
+    const XMVECTOR Ans = XMLoadFloat2(&a) + XMLoadFloat2(&b);
 
-    const XMVECTOR A = XMLoadFloat2(&a);
-    const XMVECTOR B = XMLoadFloat2(&b);
-    const XMVECTOR Ans = A + B;
     XMFLOAT2 ret{};
-
     XMStoreFloat2(&ret, Ans);
     return ret;
 }
@@ -30,72 +28,58 @@ inline DirectX::XMFLOAT2 operator+ (const DirectX::XMFLOAT2 a, const DirectX::XM
 inline DirectX::XMFLOAT2 operator- (const DirectX::XMFLOAT2 a, const DirectX::XMFLOAT2 b)
 {
     using namespace DirectX;
+    
+    const XMVECTOR Ans = XMLoadFloat2(&a) - XMLoadFloat2(&b);
 
-    const XMVECTOR A = XMLoadFloat2(&a);
-    const XMVECTOR B = XMLoadFloat2(&b);
-    const XMVECTOR Ans = A - B;
     XMFLOAT2 ret;
-
     XMStoreFloat2(&ret, Ans);
     return ret;
 }
-
-// ä|ÇØéZ
-inline DirectX::XMFLOAT2 operator* (const DirectX::XMFLOAT2 a, const DirectX::XMFLOAT2 b)
-{
-    using namespace DirectX;
-
-    const XMVECTOR A = XMLoadFloat2(&a);
-    const XMVECTOR B = XMLoadFloat2(&b);
-    const XMVECTOR Ans = A * B;
-    XMFLOAT2 ret;
-
-    XMStoreFloat2(&ret, Ans);
-    return ret;
-}
-
-// äÑÇËéZ
-inline DirectX::XMFLOAT2 operator/ (const DirectX::XMFLOAT2 a, const DirectX::XMFLOAT2 b)
-{
-    using namespace DirectX;
-
-    const XMVECTOR A = XMLoadFloat2(&a);
-    const XMVECTOR B = XMLoadFloat2(&b);
-    const XMVECTOR Ans = A / B;
-    XMFLOAT2 ret;
-
-    XMStoreFloat2(&ret, Ans);
-    return ret;
-}
-
 
 // ä|ÇØéZ
 inline DirectX::XMFLOAT2 operator * (const DirectX::XMFLOAT2 a, const float b)
 {
     using namespace DirectX;
 
-    const DirectX::XMFLOAT2 ret = {
-        a.x * b,
-        a.y * b
-    };
+    const DirectX::XMVECTOR RET = DirectX::XMVectorScale(XMLoadFloat2(&a), b);
 
+    DirectX::XMFLOAT2 ret{};
+    XMStoreFloat2(&ret, RET);
+    return ret;
+}
+
+// ä|ÇØéZ
+inline DirectX::XMFLOAT2 operator * (const float& b, const DirectX::XMFLOAT2& a)
+{
+    using namespace DirectX;
+
+    const DirectX::XMVECTOR RET = DirectX::XMVectorScale(XMLoadFloat2(&a), b);
+
+    DirectX::XMFLOAT2 ret{};
+    XMStoreFloat2(&ret, RET);
     return ret;
 }
 
 // Å{ÅÅ
-inline DirectX::XMFLOAT2 operator += (DirectX::XMFLOAT2 xmf2_, const DirectX::XMFLOAT2& add_xmf2_)
+inline void operator += (DirectX::XMFLOAT2& xmf2_, const DirectX::XMFLOAT2& add_xmf2_)
 {
-    DirectX::XMFLOAT2 added_xmf2 = {};
-    DirectX::XMStoreFloat2(&added_xmf2, DirectX::XMVectorAdd(DirectX::XMLoadFloat2(&xmf2_), DirectX::XMLoadFloat2(&add_xmf2_)));
-    return added_xmf2;
+    DirectX::XMStoreFloat2(&xmf2_, DirectX::XMVectorAdd(DirectX::XMLoadFloat2(&xmf2_), DirectX::XMLoadFloat2(&add_xmf2_)));
+}
+
+// -=
+inline void operator -= (DirectX::XMFLOAT2& xmf2_, const DirectX::XMFLOAT2& subtract_xmf2_)
+{
+    DirectX::XMStoreFloat2(&xmf2_, DirectX::XMVectorSubtract(DirectX::XMLoadFloat2(&xmf2_), DirectX::XMLoadFloat2(&subtract_xmf2_)));
 }
 
 // ÅñÅÅ
 inline void operator *= (DirectX::XMFLOAT2& a, const float& b)
 {
     using namespace DirectX;
-    a.x *= b;
-    a.y *= b;
+
+    const DirectX::XMVECTOR A = DirectX::XMVectorScale(XMLoadFloat2(&a), b);
+    
+    XMStoreFloat2(&a, A);
 }
 //**********************************************************************************************************************************
 // 
@@ -107,12 +91,10 @@ inline void operator *= (DirectX::XMFLOAT2& a, const float& b)
 inline DirectX::XMFLOAT3 operator + (const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b)
 {
     using namespace DirectX;
+    
+    const XMVECTOR Ans = XMLoadFloat3(&a) + XMLoadFloat3(&b);
 
-    const XMVECTOR A = XMLoadFloat3(&a);
-    const XMVECTOR B = XMLoadFloat3(&b);
-    const XMVECTOR Ans = A + B;
     XMFLOAT3 ret;
-
     XMStoreFloat3(&ret, Ans);
     return ret;
 }
@@ -121,26 +103,10 @@ inline DirectX::XMFLOAT3 operator + (const DirectX::XMFLOAT3& a, const DirectX::
 inline DirectX::XMFLOAT3 operator - (const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b)
 {
     using namespace DirectX;
+    
+    const XMVECTOR Ans = XMLoadFloat3(&a) - XMLoadFloat3(&b);
 
-    const XMVECTOR A = XMLoadFloat3(&a);
-    const XMVECTOR B = XMLoadFloat3(&b);
-    const XMVECTOR Ans = A - B;
     XMFLOAT3 ret;
-
-    XMStoreFloat3(&ret, Ans);
-    return ret;
-}
-
-// ä|ÇØéZ
-inline DirectX::XMFLOAT3 operator * (const DirectX::XMFLOAT3& a, const DirectX::XMFLOAT3& b)
-{
-    using namespace DirectX;
-
-    const XMVECTOR A = XMLoadFloat3(&a);
-    const XMVECTOR B = XMLoadFloat3(&b);
-    const XMVECTOR Ans = A * B;
-    XMFLOAT3 ret;
-
     XMStoreFloat3(&ret, Ans);
     return ret;
 }
@@ -150,12 +116,10 @@ inline DirectX::XMFLOAT3 operator * (const DirectX::XMFLOAT3& a, const float& b)
 {
     using namespace DirectX;
 
-    const DirectX::XMFLOAT3 ret = {
-        a.x * b,
-        a.y * b,
-        a.z * b
-    };
+    const DirectX::XMVECTOR RET = DirectX::XMVectorScale(XMLoadFloat3(&a), b);
 
+    DirectX::XMFLOAT3 ret{};
+    XMStoreFloat3(&ret, RET);
     return ret;
 }
 
@@ -164,33 +128,27 @@ inline DirectX::XMFLOAT3 operator * (const float& b, const DirectX::XMFLOAT3& a)
 {
     using namespace DirectX;
 
-    const DirectX::XMFLOAT3 ret = {
-        a.x * b,
-        a.y * b,
-        a.z * b
-    };
+    const DirectX::XMVECTOR RET = DirectX::XMVectorScale(XMLoadFloat3(&a), b);
 
+    DirectX::XMFLOAT3 ret{};
+    XMStoreFloat3(&ret, RET);
     return ret;
 }
 
 // Å{ÅÅ
-inline DirectX::XMFLOAT3 operator += (DirectX::XMFLOAT3 xmf3_, const DirectX::XMFLOAT3& add_xmf3_)
+inline void operator += (DirectX::XMFLOAT3& xmf3_, const DirectX::XMFLOAT3& add_xmf3_)
 {
-    DirectX::XMFLOAT3 added_xmf3 = {};
-    DirectX::XMStoreFloat3(&added_xmf3, DirectX::XMVectorAdd(DirectX::XMLoadFloat3(&xmf3_), DirectX::XMLoadFloat3(&add_xmf3_)));
-    return added_xmf3;
+    DirectX::XMStoreFloat3(&xmf3_, DirectX::XMVectorAdd(DirectX::XMLoadFloat3(&xmf3_), DirectX::XMLoadFloat3(&add_xmf3_)));
 }
-
 
 // *=
 inline void operator *= (DirectX::XMFLOAT3& a, const float b)
 {
     using namespace DirectX;
 
+    const DirectX::XMVECTOR A = DirectX::XMVectorScale(XMLoadFloat3(&a), b);
 
-    a.x *= b;
-    a.y *= b;
-    a.z *= b;
+    XMStoreFloat3(&a, A);
 }
 
 // *=
@@ -198,21 +156,15 @@ inline void operator *= (const float b, DirectX::XMFLOAT3& a)
 {
     using namespace DirectX;
 
+    const DirectX::XMVECTOR A = DirectX::XMVectorScale(XMLoadFloat3(&a), b);
 
-    a.x *= b;
-    a.y *= b;
-    a.z *= b;
+    XMStoreFloat3(&a, A);
 }
 
 // -=
-inline void operator -= (DirectX::XMFLOAT3& a,DirectX::XMFLOAT3& b)
+inline void operator -= (DirectX::XMFLOAT3& xmf3_, const DirectX::XMFLOAT3& subtract_xmf3_)
 {
-    using namespace DirectX;
-
-
-    a.x -= b.x;
-    a.y -= b.y;
-    a.z -= b.z;
+    DirectX::XMStoreFloat3(&xmf3_, DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&xmf3_), DirectX::XMLoadFloat3(&subtract_xmf3_)));
 }
 
 
@@ -223,15 +175,13 @@ inline void operator -= (DirectX::XMFLOAT3& a,DirectX::XMFLOAT3& b)
 //**********************************************************************************************************************************
 
 // ë´ÇµéZ
-inline DirectX::XMFLOAT4 operator + (const DirectX::XMFLOAT4 a, const DirectX::XMFLOAT4 b)
+inline DirectX::XMFLOAT4 operator + (const DirectX::XMFLOAT4& a, const DirectX::XMFLOAT4& b)
 {
     using namespace DirectX;
 
-    const XMVECTOR A = XMLoadFloat4(&a);
-    const XMVECTOR B = XMLoadFloat4(&b);
-    const XMVECTOR Ans = A + B;
-    XMFLOAT4 ret;
+    const XMVECTOR Ans = XMLoadFloat4(&a) + XMLoadFloat4(&b);
 
+    XMFLOAT4 ret;
     XMStoreFloat4(&ret, Ans);
     return ret;
 }
@@ -256,11 +206,9 @@ inline void operator *= (DirectX::XMFLOAT4& a, const float b)
 {
     using namespace DirectX;
 
+    const DirectX::XMVECTOR A = DirectX::XMVectorScale(XMLoadFloat4(&a), b);
 
-    a.x *= b;
-    a.y *= b;
-    a.z *= b;
-    a.w *= b;
+    XMStoreFloat4(&a, A);
 }
 
 
@@ -269,10 +217,7 @@ inline void operator *= (const float b, DirectX::XMFLOAT4& a)
 {
     using namespace DirectX;
 
+    const DirectX::XMVECTOR A = DirectX::XMVectorScale(XMLoadFloat4(&a), b);
 
-    a.x *= b;
-    a.y *= b;
-    a.z *= b;
-    a.w *= b;
+    XMStoreFloat4(&a, A);
 }
-
