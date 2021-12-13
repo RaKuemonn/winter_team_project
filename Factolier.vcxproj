@@ -169,6 +169,7 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
+    <ClCompile Include="Factolier\Code\entity.cpp" />
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
     <ClCompile Include="Factolier\Code\scene_loading.cpp" />
     <ClCompile Include="Factolier\Code\scene_title.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
+    <ClInclude Include="Factolier\Code\entity.h" />
     <ClInclude Include="Factolier\Code\input_manager.h" />
     <ClInclude Include="Factolier\Code\math_xmfloat.h" />
     <ClInclude Include="Factolier\Code\position.h" />
