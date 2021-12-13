@@ -189,14 +189,14 @@ private:
 
 
     // 位置
-    position m_position;
+    Position m_position;
 
     // スケール
-    scale m_scale;
+    Scale m_scale;
     DirectX::XMFLOAT3 m_latest_scale = {};      // 更新した最新のスケール値
 
     // 回転
-    rotate m_quaternion;
+    Rotate m_quaternion;
     DirectX::XMFLOAT4 m_latest_quaternion = {}; // 更新した最新のクオータニオン回転値
     DirectX::XMFLOAT3 m_latest_euler = {};      // 更新した最新のオイラー回転値
 

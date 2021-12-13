@@ -2,11 +2,11 @@
 
 #include "math_xmfloat.h"
 
-class scale
+class Scale
 {
 public:
-    scale() = default;
-    ~scale() = default;
+    Scale() = default;
+    ~Scale() = default;
 
     // Getterä÷êî //
     const auto& get() const { return m_scale; }

@@ -4,11 +4,11 @@
 
 
 
-class position
+class Position
 {
 public:
-    position() = default;
-    ~position() = default;
+    Position() = default;
+    ~Position() = default;
 
     // Getterä÷êî //
     const auto& get() const { return m_position; }

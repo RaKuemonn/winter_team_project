@@ -3,13 +3,13 @@
 #include "math_xmfloat.h"
 #include <valarray>
 
-class rotate
+class Rotate
 {
 public:
-    rotate() = default;
-    ~rotate() = default;
+    Rotate() = default;
+    ~Rotate() = default;
 
-    const auto& operator *= (const rotate& quaternion_)
+    const auto& operator *= (const Rotate& quaternion_)
     {
         DirectX::XMStoreFloat4(&m_quaternion,
             DirectX::XMQuaternionNormalize(DirectX::XMQuaternionMultiply(
