@@ -120,17 +120,17 @@ private:
 #include "position.h"
 
 
-class transform final
+class Transform final
 {
 public:
-    transform()
+    Transform()
     {
         m_was_transition = true;
         Update();
     };
-    ~transform() = default;
-    transform(const transform& obj) = delete;
-    transform(const transform&& obj) = delete;
+    ~Transform() = default;
+    Transform(const Transform& obj) = delete;
+    Transform(const Transform&& obj) = delete;
 
     // çXêV
     void Update()
@@ -161,14 +161,20 @@ public:
     }
 
     // Getterä÷êî //
-    _NODISCARD const auto& get_position()      const { return m_offset; }
-    _NODISCARD const auto& get_scale()         const { return m_latest_scale; }
-    _NODISCARD const auto& get_quaternion()    const { return m_latest_quaternion; }
-    _NODISCARD const auto& get_euler()         const { return m_latest_euler; }
-    _NODISCARD const auto& get_matrix()        const { return m_matrix; }
-    _NODISCARD const auto& get_axis_x()        const { return m_axis_x; }
-    _NODISCARD const auto& get_axis_y()        const { return m_axis_y; }
-    _NODISCARD const auto& get_axis_z()        const { return m_axis_z; }
+    _NODISCARD const auto& get_position()           const { return m_offset; }
+    _NODISCARD const auto& get_scale()              const { return m_latest_scale; }
+    _NODISCARD const auto& get_quaternion()         const { return m_latest_quaternion; }
+    _NODISCARD const auto& get_euler()              const { return m_latest_euler; }
+    _NODISCARD const auto& get_matrix()             const { return m_matrix; }
+    _NODISCARD const auto& get_axis_x()             const { return m_axis_x; }
+    _NODISCARD const auto& get_axis_y()             const { return m_axis_y; }
+    _NODISCARD const auto& get_axis_z()             const { return m_axis_z; }
+
+    static _NODISCARD const DirectX::XMFLOAT4& quaternion_default()
+    {
+        return { 0.0f,0.0f,0.0f,1.0f };
+    }
+
 
 
     // Setterä÷êî //

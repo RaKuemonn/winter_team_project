@@ -8,19 +8,23 @@ class Transform;
 class Entity
 {
 public:
-    Entity()            = default;
+    Entity();
     virtual ~Entity()   = default;
 
-    virtual void init();
+    virtual void init() = 0;
 
     // Getterä÷êî //
-    _NODISCARD const Transform* get_transform() const;
-    _NODISCARD const DirectX::XMFLOAT3& get_position() const;
-    _NODISCARD const DirectX::XMFLOAT3& get_axis_x() const;
-    _NODISCARD const DirectX::XMFLOAT3& get_axis_y() const;
-    _NODISCARD const DirectX::XMFLOAT3& get_axis_z() const;
+    _NODISCARD const Transform*         get_transform()     const;
+    _NODISCARD const DirectX::XMFLOAT3& get_position()      const;
+    _NODISCARD const DirectX::XMFLOAT3& get_axis_x()        const;
+    _NODISCARD const DirectX::XMFLOAT3& get_axis_y()        const;
+    _NODISCARD const DirectX::XMFLOAT3& get_axis_z()        const;
 
     // Setterä÷êî //
+    void set_position(const DirectX::XMFLOAT3& position_)   const;
+    void add_position(const DirectX::XMFLOAT3& velocity)    const;
+
+
 
 
 private:
