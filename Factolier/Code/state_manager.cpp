@@ -10,9 +10,9 @@ void State_Manager::generate_state(ID3D11Device* device, HRESULT hr)
 	D3D11_SAMPLER_DESC sampler_desc;
 
 	sampler_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;		//テクスチャをサンプリングするときに使用するフィルタリング方法
-	sampler_desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;		//0から1の範囲外のauテクスチャ座標の解決方法
-	sampler_desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;		//0から1の範囲外のavテクスチャ座標の解決方法
-	sampler_desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;		//0から1の範囲外のawテクスチャ座標の解決方法
+	sampler_desc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;			//0から1の範囲外のauテクスチャ座標の解決方法
+	sampler_desc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;			//0から1の範囲外のavテクスチャ座標の解決方法
+	sampler_desc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;			//0から1の範囲外のawテクスチャ座標の解決方法
 	sampler_desc.MipLODBias = 0;								//計算されたミップマップレベルからのオフセット
 	sampler_desc.MaxAnisotropy = 16;							//フィルタでANISOTROPICまたはANISOTROPICが指定されている場合に使用されるクランプ値
 	sampler_desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;		//サンプリングされたデータを既存のサンプリングされたデータと比較する関数

@@ -57,8 +57,8 @@ void Scene_Title::update(float elapsedTime)
     //
     //sound->update();
 
-    //test_model->play_animation(elapsedTime, 0);
-    player->update(elapsedTime);
+    test_model->play_animation(elapsedTime, 0);
+    //player->update(elapsedTime);
 }
 
 
@@ -113,7 +113,7 @@ void Scene_Title::render(float elapsedTime)
     World = scale;
     DirectX::XMStoreFloat4x4(&world, World);
 
-    parent->state_manager()->setDS(DS::OFF_OFF);
+    parent->state_manager()->setDS(DS::ON_ON);
 
     shader = parent->shader_manager()->get_shader(0);
 
@@ -151,5 +151,5 @@ void Scene_Title::render(float elapsedTime)
     //test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
     //
     //shader->end(parent->device_context());
-    player->render();
+    //player->render();
 }

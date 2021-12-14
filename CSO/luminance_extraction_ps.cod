@@ -32,33 +32,19 @@ dcl_resource_texture2d (float,float,float,float) t0
 dcl_input_ps linear v1.xy
 dcl_output o0.xyzw
 dcl_temps 2
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 //
 // Initial variable locations:
 //   v0.x <- pin.position.x; v0.y <- pin.position.y; v0.z <- pin.position.z; v0.w <- pin.position.w; 
 //   v1.x <- pin.texcoord.x; v1.y <- pin.texcoord.y; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-<<<<<<< HEAD
 #line 14 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\luminance_extraction_ps.hlsl"
-=======
-#line 14 "C:\Users\2200433\Desktop\後期2回目\Factolier\Shader\luminance_extraction_ps.hlsl"
->>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v1.xyxx, t0.xyzw, s2  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z; r0.w <- color.w
 
 #line 15
 mov r0.w, r0.w  // r0.w <- alpha
 
 #line 16
-<<<<<<< HEAD
-=======
-=======
-sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v1.xyxx, t0.xyzw, s2
->>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
->>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 dp3 r1.x, r0.xyzx, l(0.299000, 0.587000, 0.114000, 0.000000)
 mov r1.y, l(-0.600000)
 add r1.z, r1.y, l(0.800000)

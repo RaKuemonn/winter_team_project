@@ -73,7 +73,7 @@ float4 main(VS_OUT pin) : SV_TARGET
 
 
 	// Outgoing light direction (vector from world-space fragment position to the "eye").
-	float3 lo = normalize(camera_position - pin.world_position);
+	float3 lo = normalize(camera_position.xyz - pin.world_position.xyz);
 
 	// Pass tangent space basis vectors (for normal mapping).
 	float3x3 tbn = float3x3(pin.world_tangent.xyz, pin.world_binormal.xyz, pin.world_normal.xyz);
@@ -96,8 +96,8 @@ float4 main(VS_OUT pin) : SV_TARGET
 	// Direct lighting calculation for analytical lights.
 	float3 direct_lighting = 0.0;
 	{
-		float3 li = -light_direction;
-		float3 l_radiance = light_radiance;
+		float3 li = -light_direction.xyz;
+		float3 l_radiance = light_radiance.xyz;
 
 		// Half-vector between Li and Lo.
 		float3 lh = normalize(li + lo);

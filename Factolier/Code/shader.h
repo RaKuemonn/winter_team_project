@@ -24,8 +24,9 @@ protected:
     struct Scene_Constant
     {
         DirectX::XMFLOAT4X4 view_projection {};	    //ビュー・プロジェクション変換行列
-        DirectX::XMFLOAT4X4 view_rotate{};          //ビューの回転行列
+        DirectX::XMFLOAT4X4 view_rotate {};         //ビューの回転行列
         DirectX::XMFLOAT4 camera_position {};		//カメラ位置
+        DirectX::XMFLOAT4 timer {};                 //経過時間
     };
     Microsoft::WRL::ComPtr<ID3D11Buffer> scene_buffer;
 
@@ -52,7 +53,7 @@ protected:
 public:
     virtual void initialize(ID3D11Device* device) = 0;
 
-    virtual void begin(ID3D11DeviceContext* immediate_context) = 0;
+    virtual void begin(ID3D11DeviceContext* immediate_context, float elapsed_time = 0.0f) = 0;
     virtual void end(ID3D11DeviceContext* immediate_context) = 0;
 
     ID3D11VertexShader* get_vs() {return vertex_shader.Get();}

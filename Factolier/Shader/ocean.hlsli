@@ -17,7 +17,8 @@ struct VS_OUT
     float4 world_normal : NORMAL;
     float4 world_binormal : BINORMAL;
     float4 world_tangent : TANGENT;
-    float2 texcoord : TEXCOORD;
+    float2 texcoord1 : TEXCOORD1;
+    float2 texcoord2 : TEXCOORD2;
     float4 color : COLOR;
 };
 

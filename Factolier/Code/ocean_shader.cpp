@@ -1,9 +1,9 @@
 
-#include "skinned_shader.h"
+#include "ocean_shader.h"
 #include "camera.h"
 
 
-void Skinned_Shader::initialize(ID3D11Device* device)
+void Ocean_Shader::initialize(ID3D11Device* device)
 {
     D3D11_INPUT_ELEMENT_DESC input_element_desc[]
     {
@@ -16,9 +16,9 @@ void Skinned_Shader::initialize(ID3D11Device* device)
     };
 
     //シェーダーの生成
-    create_vs_from_cso(device, "./CSO/default_vs.cso", vertex_shader.ReleaseAndGetAddressOf(), input_layout.ReleaseAndGetAddressOf(),
+    create_vs_from_cso(device, "./CSO/ocean_vs.cso", vertex_shader.ReleaseAndGetAddressOf(), input_layout.ReleaseAndGetAddressOf(),
         input_element_desc, ARRAYSIZE(input_element_desc));
-    create_ps_from_cso(device, "./CSO/skinned_mesh_ps.cso", pixel_shader.ReleaseAndGetAddressOf());
+    create_ps_from_cso(device, "./CSO/ocean_ps.cso", pixel_shader.ReleaseAndGetAddressOf());
 
 
     HRESULT hr{ S_OK };
@@ -62,7 +62,7 @@ void Skinned_Shader::initialize(ID3D11Device* device)
 }
 
 
-void Skinned_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_time)
+void Ocean_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_time)
 {
     immediate_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     immediate_context->IASetInputLayout(input_layout.Get());
@@ -71,11 +71,16 @@ void Skinned_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed
     immediate_context->PSSetShader(pixel_shader.Get(), nullptr, 0);
 
 
+    scroll_timer += elapsed_time;
+    if (scroll_timer >= FLT_MAX - 10.0f) scroll_timer = 0.0f;
+
+
     Camera& camera = Camera::Instance();
 
     Scene_Constant scene_constant{};
     DirectX::XMStoreFloat4x4(&scene_constant.view_projection, DirectX::XMLoadFloat4x4(&camera.get_view()) * DirectX::XMLoadFloat4x4(&camera.get_projection()));
     scene_constant.camera_position = { 0, 0, 0, 0 };
+    scene_constant.timer.x = scroll_timer;
     immediate_context->UpdateSubresource(scene_buffer.Get(), 0, 0, &scene_constant, 0, 0);
     immediate_context->VSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
     immediate_context->PSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
@@ -95,8 +100,7 @@ void Skinned_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed
 }
 
 
-void Skinned_Shader::end(ID3D11DeviceContext* immediate_context)
+void Ocean_Shader::end(ID3D11DeviceContext* immediate_context)
 {
-    
-}
 
+}

@@ -31,10 +31,6 @@ dcl_sampler s2, mode_default
 dcl_resource_texture2d (float,float,float,float) t0
 dcl_input_ps linear v1.xy
 dcl_output o0.xyzw
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 dcl_temps 2
 //
 // Initial variable locations:
@@ -42,11 +38,7 @@ dcl_temps 2
 //   v1.x <- pin.texcoord.x; v1.y <- pin.texcoord.y; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-<<<<<<< HEAD
 #line 17 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\blur_ps.hlsl"
-=======
-#line 17 "C:\Users\2200433\Desktop\後期2回目\Factolier\Shader\blur_ps.hlsl"
->>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v1.xyxx, t0.xyzw, s2  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z; r0.w <- color.w
 
 #line 18
@@ -60,15 +52,6 @@ itof r1.yzw, l(0, 1, 1, 1)
 mov r0.xyz, -r0.xyzx
 mul r0.xyz, r1.xxxx, r0.xyzx
 mul r0.xyz, r0.xyzx, l(1.442695, 1.442695, 1.442695, 0.000000)
-<<<<<<< HEAD
-=======
-=======
-dcl_temps 1
-sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v1.xyxx, t0.xyzw, s2
-mul r0.xyz, r0.xyzx, l(-1.731234, -1.731234, -1.731234, 0.000000)
-mov o0.w, r0.w
->>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
->>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 exp r0.xyz, r0.xyzx
 mov r0.xyz, -r0.xyzx
 add r0.xyz, r0.xyzx, r1.yzwy  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z

@@ -11,7 +11,7 @@ VS_OUT main(float4 position : POSITION, float4 normal : NORMAL, float2 texcoord 
 	vout.world_normal = normalize(mul(normal, world));
 
 
-	vout.color.rgb = material_color;
+	vout.color.rgb = material_color.rgb;
 	vout.texcoord = texcoord;
 
 	return vout;

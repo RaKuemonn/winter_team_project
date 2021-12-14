@@ -34,10 +34,6 @@ dcl_input_ps linear v1.xyzw
 dcl_input_ps linear v2.xy
 dcl_output o0.xyzw
 dcl_temps 2
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 //
 // Initial variable locations:
 //   v0.x <- pin.position.x; v0.y <- pin.position.y; v0.z <- pin.position.z; v0.w <- pin.position.w; 
@@ -45,11 +41,7 @@ dcl_temps 2
 //   v2.x <- pin.texcoord.x; v2.y <- pin.texcoord.y; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-<<<<<<< HEAD
 #line 12 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\sprite_ps.hlsl"
-=======
-#line 12 "C:\Users\2200433\Desktop\後期2回目\Factolier\Shader\sprite_ps.hlsl"
->>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v2.xyxx, t0.xyzw, s2  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z; r0.w <- color.w
 
 #line 13
@@ -61,14 +53,6 @@ mov r1.x, l(2.200000)  // r1.x <- GAMMA
 #line 18
 log r1.yzw, r0.xxyz
 mul r1.xyz, r1.yzwy, r1.xxxx
-<<<<<<< HEAD
-=======
-=======
-sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v2.xyxx, t0.xyzw, s2
-log r1.xyz, r0.xyzx
-mul r1.xyz, r1.xyzx, l(2.200000, 2.200000, 2.200000, 0.000000)
->>>>>>> 2cff3a8fe7610e2c36656a5b1025280d3062c031
->>>>>>> 7554587bc0d3662bfccfb296e376df8d633f5655
 exp r0.xyz, r1.xyzx
 
 #line 21
