@@ -1,3 +1,6 @@
+
+#if 0
+
 #include "scene.h"
 #include "model.h"
 #include "sprite_batch.h"
@@ -26,4 +29,31 @@ private:
 
    
 
+};
+
+#endif
+
+
+#include "entity.h"
+#include "velocity.h"
+
+
+class Player final : public Entity
+{
+public:
+    Player(class Scene_Manager* ptr_scene_manager_);
+    virtual ~Player()                       override = default;
+
+    void init()                             override{};
+    void update(const float elapsed_time_)  override;
+    void render()                           override;
+
+private:
+    inline static void input(DirectX::XMFLOAT3& input_direction, class Input_Manager& input_);
+    void update_velocity(const float elapsed_time_);
+    void collision();
+
+private:
+    std::unique_ptr<Velocity> m_velocity = nullptr;
+    DirectX::XMFLOAT3 input_direction = {};
 };

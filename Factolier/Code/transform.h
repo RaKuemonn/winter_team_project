@@ -120,17 +120,17 @@ private:
 #include "position.h"
 
 
-class transform final
+class Transform final
 {
 public:
-    transform()
+    Transform()
     {
         m_was_transition = true;
         Update();
     };
-    ~transform() = default;
-    transform(const transform& obj) = delete;
-    transform(const transform&& obj) = delete;
+    ~Transform() = default;
+    Transform(const Transform& obj) = delete;
+    Transform(const Transform&& obj) = delete;
 
     // 更新
     void Update()
@@ -161,24 +161,32 @@ public:
     }
 
     // Getter関数 //
-    _NODISCARD const auto& get_position()      const { return m_offset; }
-    _NODISCARD const auto& get_scale()         const { return m_latest_scale; }
-    _NODISCARD const auto& get_quaternion()    const { return m_latest_quaternion; }
-    _NODISCARD const auto& get_euler()         const { return m_latest_euler; }
-    _NODISCARD const auto& get_matrix()        const { return m_matrix; }
-    _NODISCARD const auto& get_axis_x()        const { return m_axis_x; }
-    _NODISCARD const auto& get_axis_y()        const { return m_axis_y; }
-    _NODISCARD const auto& get_axis_z()        const { return m_axis_z; }
+    _NODISCARD const auto& get_position()           const { return m_offset; }
+    _NODISCARD const auto& get_scale()              const { return m_latest_scale; }
+    _NODISCARD const auto& get_quaternion()         const { return m_latest_quaternion; }
+    _NODISCARD const auto& get_euler()              const { return m_latest_euler; }
+    _NODISCARD const auto& get_matrix()             const { return m_matrix; }
+    _NODISCARD const auto& get_axis_x()             const { return m_axis_x; }
+    _NODISCARD const auto& get_axis_y()             const { return m_axis_y; }
+    _NODISCARD const auto& get_axis_z()             const { return m_axis_z; }
+
+    static _NODISCARD const DirectX::XMFLOAT4& quaternion_default()
+    {
+        return { 0.0f,0.0f,0.0f,1.0f };
+    }
+
 
 
     // Setter関数 //
-    void set_position(const DirectX::XMFLOAT3& position_)                                   { if(zero_check(position_))return;        m_position.set(position_);                        m_was_transition = true; }
-    void set_scale(const DirectX::XMFLOAT3& scale_)                                         { if(zero_check(scale_))return;           m_scale.set(scale_);                              m_was_transition = true; }
-    void set_euler(const DirectX::XMFLOAT3& euler_)                                         { if(zero_check(euler_))return;           m_quaternion.set_euler(euler_);                   m_was_transition = true; }
-    void set_quaternion(const DirectX::XMFLOAT4& quaternion_)                               { if(zero_check(quaternion_))return;      m_quaternion.set(quaternion_);                    m_was_transition = true; }
+    void set_position(const DirectX::XMFLOAT3& position_)                                   {                                         m_position.set(position_);                        m_was_transition = true; }
+    void set_scale(const DirectX::XMFLOAT3& scale_)                                         {                                         m_scale.set(scale_);                              m_was_transition = true; }
+    void set_euler(const DirectX::XMFLOAT3& euler_)                                         {                                         m_quaternion.set_euler(euler_);                   m_was_transition = true; }
+    void set_quaternion(const DirectX::XMFLOAT4& quaternion_)                               {                                         m_quaternion.set(quaternion_);                    m_was_transition = true; }
     void set_slerp_quaternion(const DirectX::XMFLOAT4& to_quaternion_, const float ratio)   { if(zero_check(to_quaternion_))return;   m_quaternion.set_slerp(to_quaternion_, ratio);    m_was_transition = true; }
     //void add_euler(const DirectX::XMFLOAT3& add_euler_)                                     { zero_check(add_euler_);       m_quaternion.add_euler(add_euler_);                   m_was_transition = true; }
-    void add_quaternion(const DirectX::XMFLOAT4& add_quaternion_)                           { if(zero_check(add_quaternion_))return;  m_quaternion.add(add_quaternion_);                    m_was_transition = true; }
+    void add_position(const DirectX::XMFLOAT3& add_position_)                               { if(zero_check(add_position_))return;    m_position.add(add_position_);                    m_was_transition = true; }
+    void add_scale(const DirectX::XMFLOAT3& add_scale_)                                     { if(zero_check(add_scale_))return;       m_scale.add(add_scale_);                          m_was_transition = true; }
+    void add_quaternion(const DirectX::XMFLOAT4& add_quaternion_)                           { if(zero_check(add_quaternion_))return;  m_quaternion.add(add_quaternion_);                m_was_transition = true; }
     
 
 private:
@@ -187,14 +195,14 @@ private:
 
 
     // 位置
-    position m_position;
+    Position m_position;
 
     // スケール
-    scale m_scale;
+    Scale m_scale;
     DirectX::XMFLOAT3 m_latest_scale = {};      // 更新した最新のスケール値
 
     // 回転
-    rotate m_quaternion;
+    Rotate m_quaternion;
     DirectX::XMFLOAT4 m_latest_quaternion = {}; // 更新した最新のクオータニオン回転値
     DirectX::XMFLOAT3 m_latest_euler = {};      // 更新した最新のオイラー回転値
 
@@ -215,11 +223,11 @@ private:
 private:
     static bool zero_check(const DirectX::XMFLOAT3& f3)
     {
-        return (f3.x + f3.y + f3.z) == 0.0f;
+        return DirectX::XMVector3Equal(DirectX::XMLoadFloat3(&f3), DirectX::XMVectorZero());
     }
     static bool zero_check(const DirectX::XMFLOAT4& f4)
     {
-        return (f4.x + f4.y + f4.z) == 0.0f;
+        return DirectX::XMVector4Equal(DirectX::XMLoadFloat4(&f4), DirectX::XMVectorZero());
     }
 
 };

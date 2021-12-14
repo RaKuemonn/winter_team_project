@@ -132,6 +132,12 @@
     <ClCompile Include="Factolier\Code\sky_shader.cpp">
       <Filter>Factolier\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\entity.cpp">
+      <Filter>Factolier\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\player.cpp">
+      <Filter>Factolier\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -256,6 +262,15 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\math_xmfloat.h">
       <Filter>Factolier\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\entity.h">
+      <Filter>Factolier\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\player.h">
+      <Filter>Factolier\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\velocity.h">
+      <Filter>Factolier\Entity\Status</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

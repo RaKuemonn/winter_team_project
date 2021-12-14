@@ -83,7 +83,7 @@ public:
 //==============================================================================
 class Input_Manager
 {
-private:
+protected:
     DirectX::Keyboard* keyboard = nullptr;   // https://github.com/Microsoft/DirectXTK/wiki/Keyboard
     DirectX::GamePad* gamePad = nullptr;    // https://github.com/Microsoft/DirectXTK/wiki/GamePad
 
@@ -95,14 +95,9 @@ private:
     void setJoyAssign(int no, PadAssign* data); // ジョイスティック割り当ての設定
 
 public:
-    Input_Manager() { initialize(); }
-    ~Input_Manager();
+    Input_Manager();
+    virtual ~Input_Manager();
 
-    // 初期化
-    void initialize();                                // 初期化
-
-    // 更新
-    void update(HWND);                          // 入力情報の更新
 
     // パッド
     PadState* getPadAddress() { return pad; }	// ゲームパッドの取得
@@ -115,4 +110,11 @@ public:
     // マウス関連
     int getCursorPosX();                        // x座標取得
     int getCursorPosY();                        // y座標取得
+};
+
+class Input_Manager_Interface final : public Input_Manager
+{
+public:
+    // 更新
+    void update(HWND);                          // 入力情報の更新
 };

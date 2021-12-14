@@ -2,14 +2,14 @@
 
 #include "math_xmfloat.h"
 
-class scale
+class Scale final
 {
 public:
-    scale() = default;
-    ~scale() = default;
+    Scale() = default;
+    ~Scale() = default;
 
     // Getterä÷êî //
-    const auto& get() const { return m_scale; }
+    _NODISCARD const auto& get() const { return m_scale; }
 
     // Setterä÷êî //
     void set(const DirectX::XMFLOAT3& scale_)       { m_scale = scale_; }

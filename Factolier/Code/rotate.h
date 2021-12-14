@@ -3,38 +3,46 @@
 #include "math_xmfloat.h"
 #include <valarray>
 
-class rotate
+class Rotate final
 {
 public:
-    rotate() = default;
-    ~rotate() = default;
+    Rotate() = default;
+    ~Rotate() = default;
 
-    const auto& operator *= (const DirectX::XMFLOAT4& quaternion_) const
+    const auto& operator *= (const Rotate& quaternion_)
     {
-        DirectX::XMFLOAT4 rotated_quaternion = {};
-        DirectX::XMStoreFloat4(&rotated_quaternion,
+        DirectX::XMStoreFloat4(&m_quaternion,
+            DirectX::XMQuaternionNormalize(DirectX::XMQuaternionMultiply(
+                DirectX::XMLoadFloat4(&m_quaternion),
+                DirectX::XMLoadFloat4(&quaternion_.get())
+            ))
+        );
+        return this;
+    }
+    const auto& operator *= (const DirectX::XMFLOAT4& quaternion_)
+    {
+        DirectX::XMStoreFloat4(&m_quaternion,
             DirectX::XMQuaternionNormalize(DirectX::XMQuaternionMultiply(
                 DirectX::XMLoadFloat4(&m_quaternion),
                 DirectX::XMLoadFloat4(&quaternion_)
             ))
         );
-        return rotated_quaternion;
+        return this;
     }
-    const auto& operator *= (const DirectX::XMFLOAT3& add_euler_) const
+    const auto& operator *= (const DirectX::XMFLOAT3& add_euler_)
     {
-        DirectX::XMFLOAT4 rotated_quaternion = {};
-        DirectX::XMStoreFloat4(&rotated_quaternion,
+        DirectX::XMStoreFloat4(&m_quaternion,
             DirectX::XMQuaternionNormalize(DirectX::XMQuaternionMultiply(
                 DirectX::XMLoadFloat4(&m_quaternion),
                 DirectX::XMQuaternionNormalize(DirectX::XMQuaternionRotationRollPitchYawFromVector(DirectX::XMVectorSet(add_euler_.x, add_euler_.z, add_euler_.y, 0.0f)))
             ))
         );
-        return rotated_quaternion;
+        return this;
     }
 
     // Getterä÷êî //
-    const auto& get() const       { return m_quaternion; }
-    const auto& get_euler() const { return convert_to_euler(m_quaternion); }
+    _NODISCARD const DirectX::XMFLOAT4& get() const       { return m_quaternion; }
+    _NODISCARD const DirectX::XMFLOAT3& get_euler() const { return convert_to_euler(m_quaternion); }
 
     // Setterä÷êî //
     void set(const DirectX::XMFLOAT4& quaternion_)  { m_quaternion = quaternion_; }
@@ -51,10 +59,10 @@ public:
     void add(const DirectX::XMFLOAT4& quaternion_)
     {
         DirectX::XMStoreFloat4(&m_quaternion,
-            DirectX::XMQuaternionMultiply(
+            DirectX::XMQuaternionNormalize(DirectX::XMQuaternionMultiply(
                 DirectX::XMLoadFloat4(&m_quaternion),
                 DirectX::XMLoadFloat4(&quaternion_)
-            )
+            ))
         );
     }
 
