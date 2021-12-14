@@ -21,11 +21,11 @@ public:
 
     // Getterä÷êî //
     _NODISCARD Model*                       get_model()         const;
-    _NODISCARD const DirectX::XMFLOAT3&     get_position()      const;
-    _NODISCARD const DirectX::XMFLOAT3&     get_scale()         const;
-    _NODISCARD const DirectX::XMFLOAT3&     get_axis_x()        const;
-    _NODISCARD const DirectX::XMFLOAT3&     get_axis_y()        const;
-    _NODISCARD const DirectX::XMFLOAT3&     get_axis_z()        const;
+    _NODISCARD const DirectX::XMFLOAT3     get_position()      const;
+    _NODISCARD const DirectX::XMFLOAT3     get_scale()         const;
+    _NODISCARD const DirectX::XMFLOAT3     get_axis_x()        const;
+    _NODISCARD const DirectX::XMFLOAT3     get_axis_y()        const;
+    _NODISCARD const DirectX::XMFLOAT3     get_axis_z()        const;
 
     // Setterä÷êî //
     void set_position(const DirectX::XMFLOAT3& position_)   const;

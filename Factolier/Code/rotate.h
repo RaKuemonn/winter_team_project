@@ -88,7 +88,7 @@ private:
 private:
 
     // 多分これでクオータニオンからオイラーに変換できる
-    static const DirectX::XMFLOAT3& convert_to_euler(const DirectX::XMFLOAT4& q)
+    static const DirectX::XMFLOAT3 convert_to_euler(const DirectX::XMFLOAT4& q)
     {
         const auto sy = 2 * q.x * q.z + 2 * q.y * q.w;
         const auto unlocked = std::abs(sy) < 0.99999f;
