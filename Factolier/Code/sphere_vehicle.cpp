@@ -8,7 +8,7 @@
 Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
-    load_model(get_scene_manager()->model_manager()->load_model("./Data/nico.fbx"));
+    load_model(get_scene_manager()->model_manager()->load_model("./Data/ball_demo.fbx"));
     m_velocity = std::make_unique<Velocity>();
     m_velocity->set_mass(1.0f);
 
@@ -24,6 +24,9 @@ void Sphere_Vehicle::update(const float elapsed_time_)
 
     // 位置の更新
     get_transform()->add_position(m_velocity->get());
+
+    // 回転の更新
+    rotate(elapsed_time_);
 
     // 姿勢の更新
     get_transform()->Update();
@@ -66,6 +69,21 @@ void Sphere_Vehicle::update_velocity(const float elapsed_time_)
 
     // 速度の更新
     m_velocity->update(elapsed_time_);
+}
+
+void Sphere_Vehicle::rotate(const float elapsed_time_)
+{
+    const DirectX::XMVECTOR xmvector_velocity = DirectX::XMLoadFloat3(&m_velocity->get());
+    const DirectX::XMVECTOR xmvector_up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+    const DirectX::XMVECTOR rotate_axis = DirectX::XMVector3Normalize(DirectX::XMVector3Cross(xmvector_up, xmvector_velocity));
+
+
+    const float velocity_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(xmvector_velocity));
+    const DirectX::XMVECTOR xmvector_quaternion = DirectX::XMQuaternionRotationAxis(rotate_axis, -velocity_length * elapsed_time_);
+
+    DirectX::XMFLOAT4 xmf4_quaternion = {};
+    DirectX::XMStoreFloat4(&xmf4_quaternion, xmvector_quaternion);
+    get_transform()->add_quaternion(xmf4_quaternion);
 }
 
 void Sphere_Vehicle::collision()

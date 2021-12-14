@@ -7,7 +7,7 @@ class Sphere_Vehicle final : public Entity
 {
 public:
     Sphere_Vehicle(class Scene_Manager* ptr_scene_manager_);
-    virtual ~Sphere_Vehicle()               override = default;
+    ~Sphere_Vehicle()                       override = default;
 
     void init()                             override {};
     void update(const float elapsed_time_)  override;
@@ -15,6 +15,7 @@ public:
 
 private:
     void update_velocity(const float elapsed_time_);
+    void rotate(const float elapsed_time_);
     void collision();
 
 private:

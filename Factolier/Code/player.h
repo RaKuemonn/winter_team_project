@@ -42,7 +42,7 @@ class Player final : public Entity
 {
 public:
     Player(class Scene_Manager* ptr_scene_manager_);
-    virtual ~Player()                       override = default;
+    ~Player()                               override = default;
 
     void init()                             override{};
     void update(const float elapsed_time_)  override;

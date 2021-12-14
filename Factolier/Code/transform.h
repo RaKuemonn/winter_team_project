@@ -161,14 +161,14 @@ public:
     }
 
     // Getterä÷êî //
-    _NODISCARD const auto& get_position()           const { return m_offset; }
-    _NODISCARD const auto& get_scale()              const { return m_latest_scale; }
-    _NODISCARD const auto& get_quaternion()         const { return m_latest_quaternion; }
-    _NODISCARD const auto& get_euler()              const { return m_latest_euler; }
-    _NODISCARD const auto& get_matrix()             const { return m_matrix; }
-    _NODISCARD const auto& get_axis_x()             const { return m_axis_x; }
-    _NODISCARD const auto& get_axis_y()             const { return m_axis_y; }
-    _NODISCARD const auto& get_axis_z()             const { return m_axis_z; }
+    _NODISCARD const auto get_position()           const { return m_offset; }
+    _NODISCARD const auto get_scale()              const { return m_latest_scale; }
+    _NODISCARD const auto get_quaternion()         const { return m_latest_quaternion; }
+    _NODISCARD const auto get_euler()              const { return m_latest_euler; }
+    _NODISCARD const auto get_matrix()             const { return m_matrix; }
+    _NODISCARD const auto get_axis_x()             const { return m_axis_x; }
+    _NODISCARD const auto get_axis_y()             const { return m_axis_y; }
+    _NODISCARD const auto get_axis_z()             const { return m_axis_z; }
 
     static _NODISCARD const DirectX::XMFLOAT4& quaternion_default()
     {
