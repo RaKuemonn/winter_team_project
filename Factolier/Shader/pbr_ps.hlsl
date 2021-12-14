@@ -1,5 +1,5 @@
 
-#include "pbr.hlsli"
+#include "default.hlsli"
 
 
 #define POINT 0

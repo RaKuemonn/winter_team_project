@@ -271,6 +271,25 @@ void State_Manager::generate_state(ID3D11Device* device, HRESULT hr)
 	);
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
+
+	//ブレンドモード : CLEARNESS
+	blend_desc.AlphaToCoverageEnable = TRUE;												//ピクセルをレンダーターゲットに設定するとき、アルファからカバレッジをマルチサンプリング手法として使用するかどうか
+	blend_desc.IndependentBlendEnable = FALSE;												//同時レンダーターゲットで独立したブレンディングを有効にするかどうか
+	blend_desc.RenderTarget[0].BlendEnable = TRUE;											//ブレンディングの有無
+	blend_desc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;							//ピクセルシェーダーが出力するRGB値に対して実行する操作を指定
+	blend_desc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;						//レンダーターゲットの現在のRGB値に対して実行する操作を指定
+	blend_desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;								//結合する方法を定義しSrcBlendとDestBlend動作を制御
+	blend_desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;								//ピクセルシェーダーが出力するアルファ値に対して実行する操作を指定
+	blend_desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;					//レンダーターゲットの現在のアルファ値に対して実行する操作を指定
+	blend_desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;							//どのように組み合わせるかを定義しSrcBlendAlphaとDestBlendAlpha動作を制御
+	blend_desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;		//書き込みマスク
+
+	hr = device->CreateBlendState(
+		&blend_desc,						//デスクのアドレス
+		blend_states[9].GetAddressOf()		//作成されたブレンディングステートオブジェクトのアドレス
+	);
+	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
+
 	/*************ここまで**************/
 
 

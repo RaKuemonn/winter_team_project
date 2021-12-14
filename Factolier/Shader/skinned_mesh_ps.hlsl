@@ -1,5 +1,5 @@
 
-#include "skinned_mesh.hlsli"
+#include "default.hlsli"
 
 #define POINT 0
 #define LINEAR 1 
@@ -36,6 +36,8 @@ float4 main(VS_OUT pin) : SV_TARGET
     float3 diffuse = color.rgb * max(0, dot(N, L));
     float3 V = normalize(camera_position.xyz - pin.world_position.xyz);
     float3 specular = pow(max(0, dot(N, normalize(V + L))), 128);
+
+    //pin.color.w = 0.3f;
 
     return float4(diffuse + specular, alpha) * pin.color;
 

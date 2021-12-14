@@ -30,6 +30,7 @@ enum class BS
 	LIGHTEN,
 	DARKEN,
 	SCREEN,
+	CLEARNESS,
 };
 
 enum class RS
@@ -64,7 +65,7 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depth_stencil_state[4];
 
-	Microsoft::WRL::ComPtr<ID3D11BlendState> blend_states[9];
+	Microsoft::WRL::ComPtr<ID3D11BlendState> blend_states[10];
 
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizer_state[4];
 };

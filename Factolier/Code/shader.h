@@ -21,15 +21,33 @@ protected:
     Microsoft::WRL::ComPtr<ID3D11InputLayout>       input_layout;
 
     //シーン定数バッファ
-    struct Scene_Constants
+    struct Scene_Constant
     {
         DirectX::XMFLOAT4X4 view_projection {};	    //ビュー・プロジェクション変換行列
         DirectX::XMFLOAT4X4 view_rotate{};          //ビューの回転行列
-        DirectX::XMFLOAT4 light_direction {};		//ライトの向き
-        DirectX::XMFLOAT4 light_radiance {};		//ライトの向き
         DirectX::XMFLOAT4 camera_position {};		//カメラ位置
     };
-    Microsoft::WRL::ComPtr<ID3D11Buffer> constant_buffer;
+    Microsoft::WRL::ComPtr<ID3D11Buffer> scene_buffer;
+
+    //ライト定数バッファ
+    struct Light_Constant
+    {
+        DirectX::XMFLOAT4 ambient_color{ 0.2f, 0.2f, 0.2f, 0.2f };      //アンビエントカラー
+        DirectX::XMFLOAT4 light_direction{ 0.0f, -1.0f, 1.0f, 1.0f };   //ライトの向き
+        DirectX::XMFLOAT4 light_radiance{ 1.0f, 1.0f, 1.0f, 1.0f };     //ライトの輝度
+        DirectX::XMFLOAT4 light_color{ 1.0f, 1.0f, 1.0f, 1.0f };        //ライトの色
+    };
+    Microsoft::WRL::ComPtr<ID3D11Buffer> light_buffer;
+
+    //フォグ定数バッファ
+    struct Fog_Constant
+    {
+        DirectX::XMFLOAT4 fog_color{ 1.0f, 1.0f, 1.0f, 1.0f };          //フォグの色
+        DirectX::XMFLOAT4 fog_range{ 0.0f, 100.0f, 0.0f, 0.0f };        //フォグの距離(x = near, y = far)
+    };
+    Microsoft::WRL::ComPtr<ID3D11Buffer> fog_buffer;
+
+
 
 public:
     virtual void initialize(ID3D11Device* device) = 0;

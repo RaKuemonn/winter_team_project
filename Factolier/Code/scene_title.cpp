@@ -111,13 +111,14 @@ void Scene_Title::render(float elapsedTime)
     World = scale;
     DirectX::XMStoreFloat4x4(&world, World);
 
-    parent->state_manager()->setDS(DS::ON_ON);
+    parent->state_manager()->setDS(DS::OFF_OFF);
 
     shader = parent->shader_manager()->get_shader(0);
 
     shader->begin(parent->device_context());
 
-    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+    test_model->render_exmesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.3f }, 0);
+    test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.3f }, 0);
 
     shader->end(parent->device_context());
 

@@ -267,19 +267,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="Factolier\Shader\pbr_vs.hlsl">
+    <FxCompile Include="Factolier\Shader\default_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="Factolier\Shader\phong_shader_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\skinned_mesh_vs.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Factolier\Shader\sky_box_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -309,8 +308,9 @@
   <ItemGroup>
     <None Include="Factolier\Shader\fullscreen_quad.hlsli" />
     <None Include="Factolier\Shader\geometric_primitive.hlsli" />
-    <None Include="Factolier\Shader\pbr.hlsli" />
-    <None Include="Factolier\Shader\skinned_mesh.hlsli" />
+    <None Include="Factolier\Shader\default.hlsli" />
+    <None Include="Factolier\Shader\phong_shader.hlsli" />
+    <None Include="Factolier\Shader\shading_function.hlsli" />
     <None Include="Factolier\Shader\sky_box.hlsli" />
     <None Include="Factolier\Shader\sprite.hlsli" />
     <None Include="Factolier\Shader\static_mesh.hlsli" />

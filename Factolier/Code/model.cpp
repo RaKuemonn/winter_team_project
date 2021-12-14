@@ -120,7 +120,7 @@ void Model::render_exmesh(ID3D11DeviceContext* immediate_context, const DirectX:
 }
 
 
-bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end)
+bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, const DirectX::XMFLOAT4X4& world)
 {
 	using namespace DirectX;
 
@@ -147,7 +147,7 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 		}
 
 		//レイをワールド空間からローカル空間へ変換
-		DirectX::XMMATRIX WorldTransform = DirectX::XMLoadFloat4x4(&node.global_transform) * DirectX::XMLoadFloat4x4(&world_transform);
+		DirectX::XMMATRIX WorldTransform = DirectX::XMLoadFloat4x4(&node.global_transform) * DirectX::XMLoadFloat4x4(&world);
 		DirectX::XMMATRIX InverseWorldTransform = DirectX::XMMatrixInverse(nullptr, WorldTransform);
 
 		DirectX::XMVECTOR Start = DirectX::XMVector3TransformCoord(WorldStart, InverseWorldTransform);

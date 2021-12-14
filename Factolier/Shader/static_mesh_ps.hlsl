@@ -2,7 +2,7 @@
 #include "static_mesh.hlsli"
 
 Texture2D color_map : register(t0);
-Texture2D normal_map : register(t1);
+Texture2D normal_texture : register(t1);
 SamplerState point_sampler_state : register(s0);
 SamplerState liner_sampler_state : register(s1);
 SamplerState anisotropic_sampler_state : register(s2);
@@ -17,7 +17,7 @@ float4 main(VS_OUT pin) : SV_TARGET
 	float3 B = normalize(cross(N, T));
 	T = normalize(cross(B, N));
 
-	float4 normal = normal_map.Sample(point_sampler_state, pin.texcoord);
+	float4 normal = normal_texture.Sample(point_sampler_state, pin.texcoord);
 	normal = (normal * 2.0) - 1.0;
 	normal.w = 0;
 	N = normalize((normal.x * T) + (normal.y * B) + (normal.z * N));

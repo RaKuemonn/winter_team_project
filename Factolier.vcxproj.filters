@@ -280,9 +280,6 @@
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="Factolier\Shader\skinned_mesh_vs.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
     <FxCompile Include="Factolier\Shader\sprite_ps.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
@@ -295,9 +292,6 @@
     <FxCompile Include="Factolier\Shader\static_mesh_vs.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="Factolier\Shader\pbr_vs.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
     <FxCompile Include="Factolier\Shader\pbr_ps.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
@@ -305,6 +299,12 @@
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Factolier\Shader\sky_box_vs.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\phong_shader_ps.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\default_vs.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
   </ItemGroup>
@@ -315,19 +315,22 @@
     <None Include="Factolier\Shader\geometric_primitive.hlsli">
       <Filter>Factolier\HLSL</Filter>
     </None>
-    <None Include="Factolier\Shader\skinned_mesh.hlsli">
-      <Filter>Factolier\HLSL</Filter>
-    </None>
     <None Include="Factolier\Shader\sprite.hlsli">
       <Filter>Factolier\HLSL</Filter>
     </None>
     <None Include="Factolier\Shader\static_mesh.hlsli">
       <Filter>Factolier\HLSL</Filter>
     </None>
-    <None Include="Factolier\Shader\pbr.hlsli">
+    <None Include="Factolier\Shader\sky_box.hlsli">
       <Filter>Factolier\HLSL</Filter>
     </None>
-    <None Include="Factolier\Shader\sky_box.hlsli">
+    <None Include="Factolier\Shader\phong_shader.hlsli">
+      <Filter>Factolier\HLSL</Filter>
+    </None>
+    <None Include="Factolier\Shader\shading_function.hlsli">
+      <Filter>Factolier\HLSL</Filter>
+    </None>
+    <None Include="Factolier\Shader\default.hlsli">
       <Filter>Factolier\HLSL</Filter>
     </None>
   </ItemGroup>

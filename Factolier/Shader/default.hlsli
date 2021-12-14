@@ -9,11 +9,13 @@ struct VS_IN
     uint4 bone_indices : BONES;
 };
 
+
 struct VS_OUT
 {
     float4 position : SV_POSITION;
     float4 world_position : POSITION;
     float4 world_normal : NORMAL;
+    float4 world_binormal : BINORMAL;
     float4 world_tangent : TANGENT;
     float2 texcoord : TEXCOORD;
     float4 color : COLOR;
@@ -33,7 +35,22 @@ cbuffer SCENE_CONSTANT_BUFFER : register(b1)
 {
     row_major float4x4 view_projection;	    //ビュー・プロジェクション変換行列
     row_major float4x4 view_rotate;         //ビューの回転行列
-    float4 light_direction;		            //ライトの向き
-    float4 light_radiance;		            //ライトの向き
     float4 camera_position;		            //カメラ位置
 };
+
+cbuffer LIGHT_CONSTANT_BUFFER : register(b2)
+{
+    float4 ambient_color;
+    float4 light_direction;		            //ライトの向き
+    float4 light_radiance;		            //ライトの向き
+    float4 light_color;
+};
+
+cbuffer FOG_CONSTANT_BUFFER : register(b3)
+{
+    float4 fog_color;
+    float4 fog_range;
+};
+
+
+#include "shading_function.hlsli"

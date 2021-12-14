@@ -20,14 +20,14 @@ void Sky_Shader::initialize(ID3D11Device* device)
     //定数バッファオブジェクトの生成
 
     D3D11_BUFFER_DESC buffer_desc{};
-    buffer_desc.ByteWidth = sizeof(Scene_Constants);
+    buffer_desc.ByteWidth = sizeof(Scene_Constant);
     buffer_desc.Usage = D3D11_USAGE_DEFAULT;
     buffer_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
     buffer_desc.CPUAccessFlags = 0;
     buffer_desc.MiscFlags = 0;
     buffer_desc.StructureByteStride = 0;
 
-    hr = device->CreateBuffer(&buffer_desc, nullptr, constant_buffer.GetAddressOf());
+    hr = device->CreateBuffer(&buffer_desc, nullptr, scene_buffer.GetAddressOf());
     _ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 }
 
@@ -40,7 +40,7 @@ void Sky_Shader::begin(ID3D11DeviceContext* immediate_context)
     immediate_context->VSSetShader(vertex_shader.Get(), nullptr, 0);
     immediate_context->PSSetShader(pixel_shader.Get(), nullptr, 0);
 
-    Scene_Constants data{};
+    Scene_Constant data{};
     Camera& camera = Camera::Instance();
     DirectX::XMFLOAT3 eye = { 0.0f, 0.0f, 0.0f };
     DirectX::XMVECTOR eye_v = DirectX::XMLoadFloat3(&eye);
@@ -53,9 +53,9 @@ void Sky_Shader::begin(ID3D11DeviceContext* immediate_context)
     //DirectX::XMStoreFloat4x4(&data.view_rotate, DirectX::XMLoadFloat4x4(&Camera::Instance().get_projection()));
     DirectX::XMStoreFloat4x4(&data.view_projection, DirectX::XMLoadFloat4x4(&camera.get_view()) * DirectX::XMLoadFloat4x4(&camera.get_projection()));
 
-    immediate_context->UpdateSubresource(constant_buffer.Get(), 0, 0, &data, 0, 0);
-    immediate_context->VSSetConstantBuffers(1, 1, constant_buffer.GetAddressOf());
-    immediate_context->PSSetConstantBuffers(1, 1, constant_buffer.GetAddressOf());
+    immediate_context->UpdateSubresource(scene_buffer.Get(), 0, 0, &data, 0, 0);
+    immediate_context->VSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
+    immediate_context->PSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
 }
 
 
