@@ -69,10 +69,9 @@ void Player::render()
 #endif
 
 #include "player.h"
-#include "scene_manager.h"
 #include "transform.h"
-#include "velocity.h"
 #include "model.h"
+#include "scene_manager.h"
 #include "camera.h"
 
 
@@ -101,9 +100,6 @@ void Player::update(const float elapsed_time_)
 
     // 姿勢の更新
     get_transform()->Update();
-
-    // 当たり判定
-    collision();
 
     // モデルの更新
     get_model()->play_animation(elapsed_time_, 0);
@@ -171,9 +167,4 @@ void Player::update_velocity(const float elapsed_time_)
 
     // 速度の更新
     m_velocity->update(elapsed_time_);
-}
-
-void Player::collision()
-{
-    
 }

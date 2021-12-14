@@ -51,7 +51,6 @@ public:
 private:
     inline static void input(DirectX::XMFLOAT3& input_direction, class Input_Manager& input_);
     void update_velocity(const float elapsed_time_);
-    void collision();
 
 private:
     std::unique_ptr<Velocity> m_velocity = nullptr;

@@ -37,6 +37,9 @@
     <Filter Include="Factolier\Utility">
       <UniqueIdentifier>{fc4500fd-d3a7-4723-83fa-75f3cca7b6d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Entity\Sphere_Vehicle">
+      <UniqueIdentifier>{148b249c-31dd-4105-ae57-817e48ba8e35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_manager.cpp">
@@ -137,6 +140,12 @@
     </ClCompile>
     <ClCompile Include="Factolier\Code\player.cpp">
       <Filter>Factolier\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\sphere_vehicle.cpp">
+      <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\sv_ball.cpp">
+      <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +280,12 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\velocity.h">
       <Filter>Factolier\Entity\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\sphere_vehicle.h">
+      <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\sv_ball.h">
+      <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

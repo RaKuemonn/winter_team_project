@@ -189,10 +189,12 @@
     <ClCompile Include="Factolier\Code\shader_manager.cpp" />
     <ClCompile Include="Factolier\Code\skinned_mesh.cpp" />
     <ClCompile Include="Factolier\Code\skinned_shader.cpp" />
+    <ClCompile Include="Factolier\Code\sphere_vehicle.cpp" />
     <ClCompile Include="Factolier\Code\sprite.cpp" />
     <ClCompile Include="Factolier\Code\sprite_batch.cpp" />
     <ClCompile Include="Factolier\Code\state_manager.cpp" />
     <ClCompile Include="Factolier\Code\static_mesh.cpp" />
+    <ClCompile Include="Factolier\Code\sv_ball.cpp" />
     <ClCompile Include="Factolier\Code\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -233,10 +235,12 @@
     <ClInclude Include="Factolier\Code\shader_manager.h" />
     <ClInclude Include="Factolier\Code\skinned_mesh.h" />
     <ClInclude Include="Factolier\Code\skinned_shader.h" />
+    <ClInclude Include="Factolier\Code\sphere_vehicle.h" />
     <ClInclude Include="Factolier\Code\sprite.h" />
     <ClInclude Include="Factolier\Code\sprite_batch.h" />
     <ClInclude Include="Factolier\Code\state_manager.h" />
     <ClInclude Include="Factolier\Code\static_mesh.h" />
+    <ClInclude Include="Factolier\Code\sv_ball.h" />
     <ClInclude Include="Factolier\Code\texture.h" />
     <ClInclude Include="Factolier\Code\transform.h" />
     <ClInclude Include="Factolier\Code\velocity.h" />
