@@ -24,31 +24,31 @@ Model* Entity::get_model() const
 }
 
 
-const DirectX::XMFLOAT3& Entity::get_position() const
+const DirectX::XMFLOAT3 Entity::get_position() const
 {
     return m_transform->get_position();
 }
 
-const DirectX::XMFLOAT3& Entity::get_scale() const
+const DirectX::XMFLOAT3 Entity::get_scale() const
 {
     return m_transform->get_scale();
 }
 
-const DirectX::XMFLOAT3& Entity::get_axis_x() const
+const DirectX::XMFLOAT3 Entity::get_axis_x() const
 {
     DirectX::XMFLOAT3 axis_x = {};
     DirectX::XMStoreFloat3(&axis_x, DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&m_transform->get_axis_x())));
     return axis_x;
 }
 
-const DirectX::XMFLOAT3& Entity::get_axis_y() const
+const DirectX::XMFLOAT3 Entity::get_axis_y() const
 {
     DirectX::XMFLOAT3 axis_y = {};
     DirectX::XMStoreFloat3(&axis_y, DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&m_transform->get_axis_y())));
     return axis_y;
 }
 
-const DirectX::XMFLOAT3& Entity::get_axis_z() const
+const DirectX::XMFLOAT3 Entity::get_axis_z() const
 {
     DirectX::XMFLOAT3 axis_z = {};
     DirectX::XMStoreFloat3(&axis_z, DirectX::XMVector3Normalize(DirectX::XMLoadFloat3(&m_transform->get_axis_z())));
