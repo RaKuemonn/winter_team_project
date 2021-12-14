@@ -95,7 +95,6 @@ void Scene_Title::render(float elapsedTime)
     //
     //title_back->end(device_context_);
 
-<<<<<<< HEAD
     DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
 
     DirectX::XMFLOAT4X4 world = {
@@ -125,7 +124,6 @@ void Scene_Title::render(float elapsedTime)
 
     shader->end(parent->device_context());
 
-=======
     //DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
     //
     //DirectX::XMFLOAT4X4 world = {
@@ -154,5 +152,4 @@ void Scene_Title::render(float elapsedTime)
     //
     //shader->end(parent->device_context());
     player->render();
->>>>>>> 70c18abfac8329b8714254a7fec69327204c4706
 }
