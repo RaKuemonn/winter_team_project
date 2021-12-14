@@ -3,8 +3,6 @@
 #include "scene_manager.h"
 #include "camera.h"
 
-
-
 void Scene_Title::initialize()
 {
     //title_back = std::make_unique<Sprite_Batch>(parent->device(), "./Data/cyberpunk.jpg", 1000);
@@ -36,6 +34,9 @@ void Scene_Title::initialize()
     //test_model->append_animation("./Data/Animations/Idle.fbx");
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
 
+
+    // ƒvƒŒƒCƒ„[
+    player = std::make_unique<Player>(parent);
 }
 
 
@@ -56,7 +57,8 @@ void Scene_Title::update(float elapsedTime)
     //
     //sound->update();
 
-    test_model->play_animation(elapsedTime, 0);
+    //test_model->play_animation(elapsedTime, 0);
+    player->update(elapsedTime);
 }
 
 
@@ -93,32 +95,32 @@ void Scene_Title::render(float elapsedTime)
     //
     //title_back->end(device_context_);
 
-    DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-
-    DirectX::XMFLOAT4X4 world = {
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
-    };
-    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
-    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
-    DirectX::CXMMATRIX W = S * R * T;
-    DirectX::XMStoreFloat4x4(&world, W);
-
-    DirectX::XMMATRIX World = DirectX::XMLoadFloat4x4(&world);
-    World = scale;
-    DirectX::XMStoreFloat4x4(&world, World);
-
-    parent->state_manager()->setDS(DS::ON_ON);
-
-    shader = parent->shader_manager()->get_shader(0);
-
-    shader->begin(parent->device_context());
-
-    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-
-    shader->end(parent->device_context());
-
+    //DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
+    //
+    //DirectX::XMFLOAT4X4 world = {
+    //    1.0f, 0.0f, 0.0f, 0.0f,
+    //    0.0f, 1.0f, 0.0f, 0.0f,
+    //    0.0f, 0.0f, 1.0f, 0.0f,
+    //    0.0f, 0.0f, 0.0f, 1.0f
+    //};
+    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
+    //DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
+    //DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
+    //DirectX::CXMMATRIX W = S * R * T;
+    //DirectX::XMStoreFloat4x4(&world, W);
+    //
+    //DirectX::XMMATRIX World = DirectX::XMLoadFloat4x4(&world);
+    //World = scale;
+    //DirectX::XMStoreFloat4x4(&world, World);
+    //
+    //parent->state_manager()->setDS(DS::ON_ON);
+    //
+    //shader = parent->shader_manager()->get_shader(0);
+    //
+    //shader->begin(parent->device_context());
+    //
+    //test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+    //
+    //shader->end(parent->device_context());
+    player->render();
 }

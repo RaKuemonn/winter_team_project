@@ -114,7 +114,7 @@ Input_Manager::~Input_Manager()
 //--------------------------------------------------------------
 //  初期化
 //--------------------------------------------------------------
-void Input_Manager::initialize()
+Input_Manager::Input_Manager()
 {
     keyboard = new DirectX::Keyboard;
     gamePad = new DirectX::GamePad;
@@ -140,7 +140,7 @@ void Input_Manager::initialize()
 //--------------------------------------------------------------
 //  入力情報の更新
 //--------------------------------------------------------------
-void Input_Manager::update(HWND hwnd)
+void Input_Manager_Interface::update(HWND hwnd)
 {
     // キーボードの状態取得
     DirectX::Keyboard::State kb = keyboard->GetState();

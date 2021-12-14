@@ -135,6 +135,29 @@ inline DirectX::XMFLOAT3 operator * (const float& b, const DirectX::XMFLOAT3& a)
     return ret;
 }
 
+// äÑÇËéZ
+inline DirectX::XMFLOAT3 operator / (const DirectX::XMFLOAT3& a, const float& b)
+{
+    using namespace DirectX;
+
+    // 0Ç≈äÑÇÈÇ»
+    assert(b != 0.0f);
+
+#if 0
+    // ïÅí 
+    const DirectX::XMVECTOR RET = DirectX::XMVectorDivide(XMLoadFloat3(&a), DirectX::XMVectorReplicate(b));
+#else
+    // ê∏ìxóéÇøÇÈÇ™çÇë¨ÇÁÇµÇ¢
+    const XMVECTOR R = DirectX::XMVectorReciprocalEst(DirectX::XMVectorReplicate(b));
+    const DirectX::XMVECTOR RET = DirectX::XMVectorMultiply(DirectX::XMLoadFloat3(&a), R);
+#endif
+
+
+    DirectX::XMFLOAT3 ret{};
+    XMStoreFloat3(&ret, RET);
+    return ret;
+}
+
 // Å{ÅÅ
 inline void operator += (DirectX::XMFLOAT3& xmf3_, const DirectX::XMFLOAT3& add_xmf3_)
 {

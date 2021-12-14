@@ -171,6 +171,7 @@
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
     <ClCompile Include="Factolier\Code\entity.cpp" />
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
+    <ClCompile Include="Factolier\Code\player.cpp" />
     <ClCompile Include="Factolier\Code\scene_loading.cpp" />
     <ClCompile Include="Factolier\Code\scene_title.cpp" />
     <ClCompile Include="Factolier\Code\sky_box.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Factolier\Code\entity.h" />
     <ClInclude Include="Factolier\Code\input_manager.h" />
     <ClInclude Include="Factolier\Code\math_xmfloat.h" />
+    <ClInclude Include="Factolier\Code\player.h" />
     <ClInclude Include="Factolier\Code\position.h" />
     <ClInclude Include="Factolier\Code\rotate.h" />
     <ClInclude Include="Factolier\Code\scale.h" />
@@ -237,6 +239,7 @@
     <ClInclude Include="Factolier\Code\static_mesh.h" />
     <ClInclude Include="Factolier\Code\texture.h" />
     <ClInclude Include="Factolier\Code\transform.h" />
+    <ClInclude Include="Factolier\Code\velocity.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Factolier\Shader\blur_ps.hlsl">

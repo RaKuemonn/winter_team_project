@@ -7,11 +7,11 @@ void Scene_Manager::initialize(ID3D11Device* device, ID3D11DeviceContext* contex
     device_ = device;
     immediate_context_ = context;
 
-    state_manager_ = std::make_unique<State_Manager>(device, context, hr);
+    state_manager_  = std::make_unique<State_Manager>(device, context, hr);
     shader_manager_ = std::make_unique<Shader_Manager>(device);
-    model_manager_ = std::make_unique<Model_Manager>(device);
-    sound_manager_ = std::make_unique<Sound_Manager>();
-    input_manager_ = std::make_unique<Input_Manager>();
+    model_manager_  = std::make_unique<Model_Manager>(device);
+    sound_manager_  = std::make_unique<Sound_Manager>();
+    input_manager_  = std::make_unique<Input_Manager_Interface>();
 }
 
 
@@ -21,12 +21,16 @@ void Scene_Manager::uninitialize()
 }
 
 
-void Scene_Manager::update(float elapsedTime)
+void Scene_Manager::update(float elapsedTime, const HWND& hwnd_)
 {
+    input_manager_.get()->update(hwnd_);
+
     if (scene != nullptr)
     {
         scene->update(elapsedTime);
     }
+
+    sound_manager_.get()->update();
 }
 
 

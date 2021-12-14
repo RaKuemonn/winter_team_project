@@ -48,10 +48,7 @@ void Framework::update(float elapsed_time/*Elapsed seconds from last frame*/)
 	ImGui::NewFrame();
 #endif
 
-	scene_manager->update(elapsed_time);
-
-	scene_manager->sound_manager()->update();
-	scene_manager->input_manager()->update(hwnd);
+	scene_manager->update(elapsed_time, hwnd);
 
 #ifdef USE_IMGUI
 	
