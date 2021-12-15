@@ -72,7 +72,6 @@ void Player::render()
 #include "transform.h"
 #include "model.h"
 #include "scene_manager.h"
-#include "camera.h"
 
 
 Player::Player(Scene_Manager* ptr_scene_manager_)

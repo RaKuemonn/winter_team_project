@@ -50,6 +50,7 @@ public:
 
 private:
     void check_has_vehicle();
+    void ride_on_vehicle();
 
 private:
     std::weak_ptr<Entity> wkp_vehicle;
