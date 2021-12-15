@@ -20,7 +20,7 @@ public:
     virtual void render()                           = 0;
 
     // Getterä÷êî //
-    _NODISCARD Model*                       get_model()         const;
+    _NODISCARD Model*                      get_model()         const;
     _NODISCARD const DirectX::XMFLOAT3     get_position()      const;
     _NODISCARD const DirectX::XMFLOAT3     get_scale()         const;
     _NODISCARD const DirectX::XMFLOAT3     get_axis_x()        const;

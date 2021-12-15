@@ -79,8 +79,10 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
     load_model(get_scene_manager()->model_manager()->load_model("./Data/nico.fbx"));
-    m_velocity = std::make_unique<Velocity>();
-    m_velocity->set_mass(1.0f);
+    //m_velocity = std::make_unique<Velocity>();
+    //m_velocity->set_mass(1.0f);
+
+    
 
     constexpr float scale = 0.01f;
     get_transform()->set_scale({ scale,scale,scale });
@@ -89,14 +91,14 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
 
 void Player::update(const float elapsed_time_)
 {
-    // 入力値の受け取り
-    input(input_direction, *get_scene_manager()->input_manager());
-
-    // 速度の更新
-    update_velocity(elapsed_time_);
-
-    // 位置の更新
-    get_transform()->add_position(m_velocity->get());
+    //// 入力値の受け取り
+    //input(input_direction, *get_scene_manager()->input_manager());
+    //
+    //// 速度の更新
+    //update_velocity(elapsed_time_);
+    //
+    //// 位置の更新
+    //get_transform()->add_position(m_velocity->get());
 
     // 姿勢の更新
     get_transform()->Update();
@@ -126,6 +128,17 @@ void Player::render()
     // ーーーーーーーーーー //
 }
 
+void Player::check_has_vehicle()
+{
+    // 参照先があるか          (expired()は参照先が無いときにtrueになる)
+    if (wkp_vehicle.expired() == false) return;
+
+    // ないのでweak_ptrを解放しておく
+    wkp_vehicle.reset();
+}
+
+
+/*
 void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
 {
     input_direction_ = {};
@@ -167,3 +180,5 @@ void Player::update_velocity(const float elapsed_time_)
     // 速度の更新
     m_velocity->update(elapsed_time_);
 }
+
+*/

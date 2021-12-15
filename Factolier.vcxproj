@@ -170,6 +170,7 @@
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
     <ClCompile Include="Factolier\Code\entity.cpp" />
+    <ClCompile Include="Factolier\Code\entity_manager.cpp" />
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
     <ClCompile Include="Factolier\Code\ocean_shader.cpp" />
     <ClCompile Include="Factolier\Code\phong_shader.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
     <ClInclude Include="Factolier\Code\entity.h" />
+    <ClInclude Include="Factolier\Code\entity_manager.h" />
     <ClInclude Include="Factolier\Code\input_manager.h" />
     <ClInclude Include="Factolier\Code\math_xmfloat.h" />
     <ClInclude Include="Factolier\Code\ocean_shader.h" />

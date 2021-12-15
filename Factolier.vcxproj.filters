@@ -159,6 +159,9 @@
     <ClCompile Include="Factolier\Code\phong_shader.cpp">
       <Filter>Factolier\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\entity_manager.cpp">
+      <Filter>Factolier\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -304,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\phong_shader.h">
       <Filter>Factolier\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\entity_manager.h">
+      <Filter>Factolier\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

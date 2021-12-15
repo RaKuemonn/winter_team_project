@@ -3,6 +3,7 @@
 #include "transform.h"
 #include "model.h"
 #include "scene_manager.h"
+#include "DirectXCollision.h"
 
 
 Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_)

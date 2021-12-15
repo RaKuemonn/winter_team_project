@@ -35,7 +35,7 @@ private:
 
 
 #include "entity.h"
-#include "velocity.h"
+//#include "velocity.h"
 
 
 class Player final : public Entity
@@ -49,10 +49,19 @@ public:
     void render()                           override;
 
 private:
+    void check_has_vehicle();
+
+private:
+    std::weak_ptr<Entity> wkp_vehicle;
+
+
+/*
+private:
     inline static void input(DirectX::XMFLOAT3& input_direction, class Input_Manager& input_);
     void update_velocity(const float elapsed_time_);
 
 private:
     std::unique_ptr<Velocity> m_velocity = nullptr;
     DirectX::XMFLOAT3 input_direction = {};
+*/
 };
