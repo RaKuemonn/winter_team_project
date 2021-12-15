@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 #include <map>
-#include "skinned_mesh.h"
+#include "model_resource.h"
 
 
 //リソースマネージャー
@@ -19,14 +19,14 @@ public:
 
 
 	//モデルリソース読み込み
-	std::shared_ptr<Skinned_Mesh> load_model(const char* filename, bool triangulate = false, float rate = 60.0f);
+	std::shared_ptr<Model_Resource> load_model(const char* filename, bool triangulate = false, float rate = 60.0f);
 
 	
 	void load();
 	void release();
 
 private:
-	using ModelMap = std::map<std::string, std::shared_ptr<Skinned_Mesh>>;
+	using ModelMap = std::map<std::string, std::shared_ptr<Model_Resource>>;
 	ID3D11Device* _device;
 
 	ModelMap resources;

@@ -4,7 +4,7 @@
 
 
 
-Model::Model(std::shared_ptr<Skinned_Mesh> resource_)
+Model::Model(std::shared_ptr<Model_Resource> resource_)
 {
 	resource = resource_;
 	
@@ -21,7 +21,7 @@ Model::Model(std::shared_ptr<Skinned_Mesh> resource_)
 void Model::play_animation(float elapsed_time, int anime_num, bool loop, float blend_second)
 {
 	//アニメーションの取得
-	Skinned_Mesh::Animation& animation{ resource->animations.at(anime_num) };
+	Model_Resource::Animation& animation{ resource->animations.at(anime_num) };
 
 	//現在のアニメーションと同一か
     if (now_anime.name != animation.name)
@@ -82,7 +82,7 @@ void Model::play_animation(float elapsed_time, int anime_num, bool loop, float b
 		}
 
 		//アニメーションブレンド
-		const Skinned_Mesh::Keyframe* keyframes[2]{
+		const Model_Resource::Keyframe* keyframes[2]{
 			&now_key,
 			&animation.keyframes.at(static_cast<int>(blend_timer * 60.0f))
 		};
@@ -132,10 +132,10 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 
 	bool hit = false;
 
-	for (const Skinned_Mesh::MeshData& mesh : resource->meshes)
+	for (const Model_Resource::MeshData& mesh : resource->meshes)
 	{
 		//メッシュノード取得
-		Skinned_Mesh::NodeKeyData node;
+		Model_Resource::NodeKeyData node;
         if (resource->animations.size() > 0)
         {
             node = now_key.node_keys.at(mesh.node_index);
@@ -161,23 +161,23 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 		DirectX::XMStoreFloat(&neart, Length);
 
 		//三角形(面)との交差判定
-		const std::vector<Skinned_Mesh::Vertex>& vertices = mesh.vertices;
+		const std::vector<Model_Resource::Vertex>& vertices = mesh.vertices;
 		const std::vector<UINT> indices = mesh.indices;
 
 
 		int materialIndex = -1;
 		DirectX::XMVECTOR HitPosition;
 		DirectX::XMVECTOR HitNormal;
-		for (const Skinned_Mesh::Subset& subset : mesh.subsets)
+		for (const Model_Resource::Subset& subset : mesh.subsets)
 		{
 			for (UINT i = 0; i < subset.index_count; i += 3)
 			{
 				UINT index = subset.index_start + i;
 
 				//三角形の頂点を抽出
-				const Skinned_Mesh::Vertex& a = vertices.at(indices.at(index));
-				const Skinned_Mesh::Vertex& b = vertices.at(indices.at(index + 1));
-				const Skinned_Mesh::Vertex& c = vertices.at(indices.at(index + 2));
+				const Model_Resource::Vertex& a = vertices.at(indices.at(index));
+				const Model_Resource::Vertex& b = vertices.at(indices.at(index + 1));
+				const Model_Resource::Vertex& c = vertices.at(indices.at(index + 2));
 
 				DirectX::XMVECTOR A = DirectX::XMLoadFloat3(&a.position);
 				DirectX::XMVECTOR B = DirectX::XMLoadFloat3(&b.position);

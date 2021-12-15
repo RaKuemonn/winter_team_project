@@ -2,6 +2,7 @@
 
 #include <d3d11.h>
 #include <wrl.h>
+#include "utility.h"
 
 
 enum class SS
@@ -51,10 +52,10 @@ public:
 	void generate_state(ID3D11Device* device, HRESULT hr);
 	void set_context(ID3D11DeviceContext* context) { immediate_context = context; }
 
-	void setSS(SS state) { immediate_context->PSSetSamplers(static_cast<int>(state), 1, sampler_states[static_cast<int>(state)].GetAddressOf()); }
-	void setDS(DS state) { immediate_context->OMSetDepthStencilState(depth_stencil_state[static_cast<int>(state)].Get(), 1); }
-	void setBS(BS state) { immediate_context->OMSetBlendState(blend_states[static_cast<int>(state)].Get(), nullptr, 0xFFFFFFFF); }
-	void setRS(RS state) { immediate_context->RSSetState(rasterizer_state[static_cast<int>(state)].Get()); }
+	void setSS(SS state) { immediate_context->PSSetSamplers(CAST_I(state), 1, sampler_states[CAST_I(state)].GetAddressOf()); }
+	void setDS(DS state) { immediate_context->OMSetDepthStencilState(depth_stencil_state[CAST_I(state)].Get(), 1); }
+	void setBS(BS state) { immediate_context->OMSetBlendState(blend_states[CAST_I(state)].Get(), nullptr, 0xFFFFFFFF); }
+	void setRS(RS state) { immediate_context->RSSetState(rasterizer_state[CAST_I(state)].Get()); }
 
 
 private:

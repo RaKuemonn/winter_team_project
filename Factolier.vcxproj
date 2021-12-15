@@ -190,7 +190,7 @@
     <ClCompile Include="Factolier\Code\scene_manager.cpp" />
     <ClCompile Include="Factolier\Code\shader.cpp" />
     <ClCompile Include="Factolier\Code\shader_manager.cpp" />
-    <ClCompile Include="Factolier\Code\skinned_mesh.cpp" />
+    <ClCompile Include="Factolier\Code\model_resource.cpp" />
     <ClCompile Include="Factolier\Code\skinned_shader.cpp" />
     <ClCompile Include="Factolier\Code\sphere_vehicle.cpp" />
     <ClCompile Include="Factolier\Code\sprite.cpp" />
@@ -239,7 +239,7 @@
     <ClInclude Include="Factolier\Code\scene_manager.h" />
     <ClInclude Include="Factolier\Code\shader.h" />
     <ClInclude Include="Factolier\Code\shader_manager.h" />
-    <ClInclude Include="Factolier\Code\skinned_mesh.h" />
+    <ClInclude Include="Factolier\Code\model_resource.h" />
     <ClInclude Include="Factolier\Code\skinned_shader.h" />
     <ClInclude Include="Factolier\Code\sphere_vehicle.h" />
     <ClInclude Include="Factolier\Code\sprite.h" />
@@ -249,6 +249,7 @@
     <ClInclude Include="Factolier\Code\sv_ball.h" />
     <ClInclude Include="Factolier\Code\texture.h" />
     <ClInclude Include="Factolier\Code\transform.h" />
+    <ClInclude Include="Factolier\Code\utility.h" />
     <ClInclude Include="Factolier\Code\velocity.h" />
   </ItemGroup>
   <ItemGroup>

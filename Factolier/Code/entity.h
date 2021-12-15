@@ -37,7 +37,7 @@ protected:
     _NODISCARD Scene_Manager* get_scene_manager()           const;
     void set_ptr_scene_manager(Scene_Manager* ptr_scene_manager_);
 
-    void load_model(std::shared_ptr<class Skinned_Mesh> model_);
+    void load_model(std::shared_ptr<class Model_Resource> model_);
     _NODISCARD Transform* get_transform();
 
 

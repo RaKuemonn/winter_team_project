@@ -16,7 +16,7 @@ Entity::~Entity()
 }
 
 
-// GetterŠÖ” //
+// Getterï¿½Öï¿½ //
 
 Model* Entity::get_model() const
 {
@@ -58,7 +58,7 @@ const DirectX::XMFLOAT3 Entity::get_axis_z() const
 
 
 
-// SetterŠÖ” //
+// Setterï¿½Öï¿½ //
 
 void Entity::set_position(const DirectX::XMFLOAT3& position_) const
 {
@@ -83,7 +83,7 @@ void Entity::set_ptr_scene_manager(Scene_Manager* ptr_scene_manager_)
     m_ptr_scene_manager = ptr_scene_manager_;
 }
 
-void Entity::load_model(std::shared_ptr<Skinned_Mesh> model_)
+void Entity::load_model(std::shared_ptr<Model_Resource> model_)
 {
     m_model = std::make_unique<Model>(model_);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "skinned_mesh.h"
+#include "model_resource.h"
 #include "memory"
 #include "DirectXMath.h"
 
@@ -9,14 +9,14 @@ class Model
 {
 public:
 
-    Model(std::shared_ptr<Skinned_Mesh>);
+    Model(std::shared_ptr<Model_Resource>);
     ~Model() {}
 
 private:
-    std::shared_ptr<Skinned_Mesh> resource;
+    std::shared_ptr<Model_Resource> resource;
 
-    Skinned_Mesh::Keyframe now_key;         //現在姿勢
-    Skinned_Mesh::Animation now_anime;      //現在アニメーション
+    Model_Resource::Keyframe now_key;         //現在姿勢
+    Model_Resource::Animation now_anime;      //現在アニメーション
     float anime_timer = 0;
     float blend_timer = 0.0f;
     bool blend_mode = false;

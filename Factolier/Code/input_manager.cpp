@@ -1,5 +1,6 @@
 
 #include "input_manager.h"
+#include "utility.h"
 
 
 using DirectX::Keyboard;
@@ -98,17 +99,8 @@ void Input_Manager::setJoyAssign(int no, PadAssign* data)
 //--------------------------------------------------------------
 Input_Manager::~Input_Manager()
 {
-    if (gamePad != nullptr)
-    {
-        delete gamePad;
-        gamePad = nullptr;
-    }
-
-    if (keyboard != nullptr)
-    {
-        delete keyboard;
-        keyboard = nullptr;
-    }
+    safe_delete(gamePad);
+    safe_delete(keyboard);
 }
 
 //--------------------------------------------------------------

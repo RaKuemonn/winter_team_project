@@ -1,6 +1,6 @@
 
 #include "misc.h"
-#include "skinned_mesh.h"
+#include "model_resource.h"
 #include <fstream>
 #include <functional>
 #include "shader.h"
@@ -10,7 +10,7 @@ using namespace DirectX;
 
 
 
-Skinned_Mesh::Skinned_Mesh(ID3D11Device* device, const char* fbx_filename, bool triangulate, float rate)
+Model_Resource::Model_Resource(ID3D11Device* device, const char* fbx_filename, bool triangulate, float rate)
 {
     //ファイルパス検索
     std::filesystem::path cereal_filename(fbx_filename);
@@ -135,7 +135,7 @@ inline XMFLOAT4 to_xmfloat4(const FbxDouble4& fbxdouble4)
 }
 
 
-void Skinned_Mesh::fetch_meshes(FbxScene* fbx_scene, const char* filename)
+void Model_Resource::fetch_meshes(FbxScene* fbx_scene, const char* filename)
 {
     //メッシュのノード取得
     for (const Node& node : nodes)
@@ -345,7 +345,7 @@ void Skinned_Mesh::fetch_meshes(FbxScene* fbx_scene, const char* filename)
 }
 
 
-void Skinned_Mesh::fetch_material(const FbxSurfaceMaterial* fbx_material, Material& material, const char* propertyName, const char* factorName, const char* filename)
+void Model_Resource::fetch_material(const FbxSurfaceMaterial* fbx_material, Material& material, const char* propertyName, const char* factorName, const char* filename)
 {
     const FbxProperty property = fbx_material->FindProperty(propertyName);
     const FbxProperty factor = fbx_material->FindProperty(factorName);
@@ -389,7 +389,7 @@ void Skinned_Mesh::fetch_material(const FbxSurfaceMaterial* fbx_material, Materi
 }
 
 
-void Skinned_Mesh::fetch_pbr(const char* filename, std::string mesh_name, Material& material, const char* pbr_name)
+void Model_Resource::fetch_pbr(const char* filename, std::string mesh_name, Material& material, const char* pbr_name)
 {
     std::filesystem::path file_name = filename;
 
@@ -404,7 +404,7 @@ void Skinned_Mesh::fetch_pbr(const char* filename, std::string mesh_name, Materi
 }
 
 
-void Skinned_Mesh::fetch_skeleton(FbxMesh* fbx_mesh, Skeleton& skeleton)
+void Model_Resource::fetch_skeleton(FbxMesh* fbx_mesh, Skeleton& skeleton)
 {
     //バインドポーズの情報を取得
     const int deformer_count = fbx_mesh->GetDeformerCount(FbxDeformer::eSkin);
@@ -439,7 +439,7 @@ void Skinned_Mesh::fetch_skeleton(FbxMesh* fbx_mesh, Skeleton& skeleton)
 }
 
 
-void Skinned_Mesh::fetch_bone_influences(const FbxMesh* fbx_mesh, std::vector<bone_influences_per_control_point>& bone_influences)
+void Model_Resource::fetch_bone_influences(const FbxMesh* fbx_mesh, std::vector<bone_influences_per_control_point>& bone_influences)
 {
     //ボーン影響度の取得
     const int control_points_count{ fbx_mesh->GetControlPointsCount() };
@@ -469,7 +469,7 @@ void Skinned_Mesh::fetch_bone_influences(const FbxMesh* fbx_mesh, std::vector<bo
 }
 
 
-void Skinned_Mesh::fetch_animations(FbxScene* fbx_scene, float sampling_rate /*If this value is 0, the animation data will be sampled at the default frame rate.*/)
+void Model_Resource::fetch_animations(FbxScene* fbx_scene, float sampling_rate /*If this value is 0, the animation data will be sampled at the default frame rate.*/)
 {
     //アニメーション情報を取得
     FbxArray<FbxString*> animation_stack_names;
@@ -534,7 +534,7 @@ void Skinned_Mesh::fetch_animations(FbxScene* fbx_scene, float sampling_rate /*I
 }
 
 
-void Skinned_Mesh::update_animation(Keyframe& keyframe)
+void Model_Resource::update_animation(Keyframe& keyframe)
 {
     size_t node_count{ nodes.size() };
     for (size_t node_index = 0; node_index < node_count; ++node_index)
@@ -553,7 +553,7 @@ void Skinned_Mesh::update_animation(Keyframe& keyframe)
 }
 
 
-bool Skinned_Mesh::append_animations(const char* animation_filename, float sampling_rate)
+bool Model_Resource::append_animations(const char* animation_filename, float sampling_rate)
 {
     FbxManager* fbx_manager{ FbxManager::Create() };
     FbxScene* fbx_scene{ FbxScene::Create(fbx_manager, "") };
@@ -618,7 +618,7 @@ bool Skinned_Mesh::append_animations(const char* animation_filename, float sampl
 }
 
 
-void Skinned_Mesh::blend_animations(const Keyframe* keyframes[2], float factor, Keyframe& keyframe)
+void Model_Resource::blend_animations(const Keyframe* keyframes[2], float factor, Keyframe& keyframe)
 {
     size_t node_count{ keyframes[0]->node_keys.size() };
     keyframe.node_keys.resize(node_count);
@@ -642,7 +642,7 @@ void Skinned_Mesh::blend_animations(const Keyframe* keyframes[2], float factor, 
 }
 
 
-void Skinned_Mesh::create_com_objects(ID3D11Device* device)
+void Model_Resource::create_com_objects(ID3D11Device* device)
 {
     for (MeshData& mesh : meshes)
     {
@@ -798,7 +798,7 @@ void Skinned_Mesh::create_com_objects(ID3D11Device* device)
 }
 
 
-HRESULT Skinned_Mesh::make_dummy_texture(ID3D11Device* device, ID3D11ShaderResourceView** shader_resource_view, DWORD value/*0xAABBGGRR*/, UINT dimension)
+HRESULT Model_Resource::make_dummy_texture(ID3D11Device* device, ID3D11ShaderResourceView** shader_resource_view, DWORD value/*0xAABBGGRR*/, UINT dimension)
 {
     HRESULT hr{ S_OK };
 
@@ -844,7 +844,7 @@ HRESULT Skinned_Mesh::make_dummy_texture(ID3D11Device* device, ID3D11ShaderResou
 }
 
 
-void Skinned_Mesh::render(ID3D11DeviceContext* immediate_context, const XMFLOAT4X4& world, const XMFLOAT4& material_color, const Keyframe* keyframe)
+void Model_Resource::render(ID3D11DeviceContext* immediate_context, const XMFLOAT4X4& world, const XMFLOAT4& material_color, const Keyframe* keyframe)
 {
     for (MeshData& mesh : meshes)
     {
@@ -902,7 +902,7 @@ void Skinned_Mesh::render(ID3D11DeviceContext* immediate_context, const XMFLOAT4
 }
 
 
-void Skinned_Mesh::render_mesh(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color, const Keyframe* keyframe, int mesh_num)
+void Model_Resource::render_mesh(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color, const Keyframe* keyframe, int mesh_num)
 {
     MeshData& mesh = meshes[mesh_num];
 
@@ -960,7 +960,7 @@ void Skinned_Mesh::render_mesh(ID3D11DeviceContext* immediate_context, const Dir
 }
 
 
-void Skinned_Mesh::render_exmesh(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color, const Keyframe* keyframe, int mesh_num)
+void Model_Resource::render_exmesh(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color, const Keyframe* keyframe, int mesh_num)
 {
     for (MeshData& mesh : meshes)
     {

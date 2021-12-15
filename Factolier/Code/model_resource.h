@@ -67,7 +67,7 @@ namespace DirectX
 
 
 
-class Skinned_Mesh
+class Model_Resource
 {
 public:
     struct Node
@@ -286,8 +286,8 @@ private:
     Microsoft::WRL::ComPtr<ID3D11Buffer>            constant_buffer;
 
 public:
-    Skinned_Mesh(ID3D11Device* device, const char* fbx_filename, bool triangulate = false, float rate = 60.0f);
-    virtual ~Skinned_Mesh() {}
+    Model_Resource(ID3D11Device* device, const char* fbx_filename, bool triangulate = false, float rate = 60.0f);
+    virtual ~Model_Resource() {}
 
     void fetch_meshes(FbxScene* fbx_scene, const char* filename);
     void fetch_material(const FbxSurfaceMaterial* fbx_material, Material& material, const char* propertyName, const char* factorName, const char* filename);

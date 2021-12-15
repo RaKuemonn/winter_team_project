@@ -22,8 +22,7 @@ void Shader_Manager::uninitialize()
 {
     for (Shader* s : shaders)
     {
-        delete s;
-        s = nullptr;
+        safe_delete(s);
     }
 
     shaders.clear();

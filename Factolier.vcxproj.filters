@@ -66,9 +66,6 @@
     <ClCompile Include="Factolier\Code\model.cpp">
       <Filter>Factolier\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\skinned_mesh.cpp">
-      <Filter>Factolier\Graphic</Filter>
-    </ClCompile>
     <ClCompile Include="Factolier\Code\sprite.cpp">
       <Filter>Factolier\Graphic</Filter>
     </ClCompile>
@@ -82,9 +79,6 @@
       <Filter>Factolier\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="Factolier\Code\shader.cpp">
-      <Filter>Factolier\Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="Factolier\Code\shader_manager.cpp">
       <Filter>Factolier\Shader</Filter>
     </ClCompile>
     <ClCompile Include="Factolier\Code\skinned_shader.cpp">
@@ -162,6 +156,12 @@
     <ClCompile Include="Factolier\Code\entity_manager.cpp">
       <Filter>Factolier\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\shader_manager.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\model_resource.cpp">
+      <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -191,9 +191,6 @@
     <ClInclude Include="Factolier\Code\model.h">
       <Filter>Factolier\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\skinned_mesh.h">
-      <Filter>Factolier\Graphic</Filter>
-    </ClInclude>
     <ClInclude Include="Factolier\Code\sprite.h">
       <Filter>Factolier\Graphic</Filter>
     </ClInclude>
@@ -204,9 +201,6 @@
       <Filter>Factolier\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\shader.h">
-      <Filter>Factolier\Shader</Filter>
-    </ClInclude>
-    <ClInclude Include="Factolier\Code\shader_manager.h">
       <Filter>Factolier\Shader</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\skinned_shader.h">
@@ -310,6 +304,15 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\entity_manager.h">
       <Filter>Factolier\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\utility.h">
+      <Filter>Factolier\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\shader_manager.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\model_resource.h">
+      <Filter>Factolier\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

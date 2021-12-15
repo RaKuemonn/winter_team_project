@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "shader.h"
+#include "utility.h"
 
 
 enum class Shaders
@@ -21,7 +22,7 @@ public:
     void initialize(ID3D11Device* device);
     void uninitialize();
 
-    Shader* get_shader(Shaders num) { return shaders[static_cast<int>(num)]; }
+    Shader* get_shader(Shaders num) { return shaders[CAST_I(num)]; }
 
 private:
     std::vector<Shader*> shaders;
