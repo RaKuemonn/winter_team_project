@@ -21,11 +21,14 @@ public:
 
 
     // Getter関数 //
-
+    _NODISCARD Entity* get_entity(const short& index) const;    // indexが範囲外だとアクセス違反になる
 
     // Setter関数 //
+    void spawn_register(std::unique_ptr<Entity>& entity);
+    void remove_register(const Entity* entity);
 
 
 private:
     std::vector<std::unique_ptr<Entity>> vec_entities = {};
+    std::vector<Entity*> vec_removes = {};
 };
