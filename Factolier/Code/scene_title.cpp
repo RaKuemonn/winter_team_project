@@ -30,7 +30,7 @@ void Scene_Title::initialize()
     DirectX::XMFLOAT3 target = { 0.0f, 0.0f, 0.0f };
     camera_controller->set_target(target);
 
-    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/nico.fbx"));
+    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_cube.fbx"));
     //test_model->append_animation("./Data/Animations/Idle.fbx");
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
 
@@ -57,7 +57,7 @@ void Scene_Title::update(float elapsedTime)
     //
     //sound->update();
 
-    test_model->play_animation(elapsedTime, 0);
+    //test_model->play_animation(elapsedTime, 0);
     //player->update(elapsedTime);
 }
 
@@ -103,24 +103,21 @@ void Scene_Title::render(float elapsedTime)
         0.0f, 0.0f, 1.0f, 0.0f,
         0.0f, 0.0f, 0.0f, 1.0f
     };
-    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
+    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
+    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.1f, 0.15f, 0.1f);
     DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
     DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
     DirectX::CXMMATRIX W = S * R * T;
     DirectX::XMStoreFloat4x4(&world, W);
 
-    DirectX::XMMATRIX World = DirectX::XMLoadFloat4x4(&world);
-    World = scale;
-    DirectX::XMStoreFloat4x4(&world, World);
-
     parent->state_manager()->setDS(DS::ON_ON);
 
-    shader = parent->shader_manager()->get_shader(Shaders::PHONG);
+    shader = parent->shader_manager()->get_shader(Shaders::OCEAN);
 
-    shader->begin(parent->device_context());
+    shader->begin(parent->device_context(), elapsedTime * 0.5f);
 
-    test_model->render_exmesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);
-    test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);
+    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.5f });
+    //test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);
 
     shader->end(parent->device_context());
 
