@@ -18,6 +18,7 @@ float4 main(VS_OUT pin) : SV_TARGET
 {
 	float4 diffuse_color = diffuse_texture.Sample(sampler_states[ANISOTROPIC], pin.texcoord);
 
+
 	float3 E = normalize(pin.world_position.xyz - camera_position.xyz);
 	float3 L = normalize(light_direction.xyz);
 
@@ -32,7 +33,8 @@ float4 main(VS_OUT pin) : SV_TARGET
 	float3 k_s = { 1.0f, 1.0f, 1.0f };
 
 
-	float3 directional_diffuse = CalcHalfLambert(N, L, light_color.rgb, material_color.rgb);
+	float3 directional_diffuse = CalcHalfLambert(N, L, light_color.rgb, pin.color.rgb);
+	//float3 directional_diffuse = CalcLambert(N, L, light_color.rgb, pin.color.rgb);
 
 	float3 directional_specular = CalcPhongSpecular(N, L, E, light_color.rgb, k_s);
 
@@ -40,6 +42,7 @@ float4 main(VS_OUT pin) : SV_TARGET
 	float4 color = float4(ambient, diffuse_color.a);
 	color.rgb += diffuse_color.rgb * directional_diffuse;
 	color.rgb += directional_specular;
+	color.a *= pin.color.a;
 	
 	color = CalcFog(color, fog_color, fog_range.xy, length(pin.world_position.xyz - camera_position.xyz));
 

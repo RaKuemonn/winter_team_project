@@ -1,13 +1,15 @@
 
 #include "shader_manager.h"
-#include "skinned_shader.h"
+#include "phong_shader.h"
 #include "sky_shader.h"
+#include "ocean_shader.h"
 
 
 void Shader_Manager::initialize(ID3D11Device* device)
 {
-    shaders.emplace_back(new Skinned_Shader());
+    shaders.emplace_back(new Phong_Shader());
     shaders.emplace_back(new Sky_Shader());
+    shaders.emplace_back(new Ocean_Shader());
 
     for (Shader* s : shaders)
     {

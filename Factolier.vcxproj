@@ -172,6 +172,7 @@
     <ClCompile Include="Factolier\Code\entity.cpp" />
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
     <ClCompile Include="Factolier\Code\ocean_shader.cpp" />
+    <ClCompile Include="Factolier\Code\phong_shader.cpp" />
     <ClCompile Include="Factolier\Code\player.cpp" />
     <ClCompile Include="Factolier\Code\scene_loading.cpp" />
     <ClCompile Include="Factolier\Code\scene_title.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Factolier\Code\input_manager.h" />
     <ClInclude Include="Factolier\Code\math_xmfloat.h" />
     <ClInclude Include="Factolier\Code\ocean_shader.h" />
+    <ClInclude Include="Factolier\Code\phong_shader.h" />
     <ClInclude Include="Factolier\Code\player.h" />
     <ClInclude Include="Factolier\Code\position.h" />
     <ClInclude Include="Factolier\Code\rotate.h" />
@@ -296,7 +298,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Factolier\Shader\phong_shader_ps.hlsl">
+    <FxCompile Include="Factolier\Shader\phong_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
@@ -333,7 +335,6 @@
     <None Include="Factolier\Shader\geometric_primitive.hlsli" />
     <None Include="Factolier\Shader\default.hlsli" />
     <None Include="Factolier\Shader\ocean.hlsli" />
-    <None Include="Factolier\Shader\phong_shader.hlsli" />
     <None Include="Factolier\Shader\shading_function.hlsli" />
     <None Include="Factolier\Shader\sky_box.hlsli" />
     <None Include="Factolier\Shader\sprite.hlsli" />

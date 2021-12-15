@@ -77,7 +77,7 @@ void Scene_Title::render(float elapsedTime)
     parent->state_manager()->setRS(RS::SOLID_NONE);
 
 
-    Shader* shader = parent->shader_manager()->get_shader(1);
+    Shader* shader = parent->shader_manager()->get_shader(Shaders::SKY);
     
     shader->begin(parent->device_context());
     
@@ -115,12 +115,12 @@ void Scene_Title::render(float elapsedTime)
 
     parent->state_manager()->setDS(DS::ON_ON);
 
-    shader = parent->shader_manager()->get_shader(0);
+    shader = parent->shader_manager()->get_shader(Shaders::PHONG);
 
     shader->begin(parent->device_context());
 
-    test_model->render_exmesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.3f }, 0);
-    test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.3f }, 0);
+    test_model->render_exmesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);
+    test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);
 
     shader->end(parent->device_context());
 

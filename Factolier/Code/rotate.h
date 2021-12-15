@@ -42,7 +42,7 @@ public:
 
     // Getterä÷êî //
     _NODISCARD const DirectX::XMFLOAT4& get() const       { return m_quaternion; }
-    _NODISCARD const DirectX::XMFLOAT3& get_euler() const { return convert_to_euler(m_quaternion); }
+    _NODISCARD const DirectX::XMFLOAT3  get_euler() const { return convert_to_euler(m_quaternion); }
 
     // Setterä÷êî //
     void set(const DirectX::XMFLOAT4& quaternion_)  { m_quaternion = quaternion_; }

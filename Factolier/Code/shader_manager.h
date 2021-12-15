@@ -4,6 +4,14 @@
 #include "shader.h"
 
 
+enum class Shaders
+{
+    PHONG = 0,
+    SKY,
+    OCEAN,
+};
+
+
 class Shader_Manager
 {
 public:
@@ -13,7 +21,7 @@ public:
     void initialize(ID3D11Device* device);
     void uninitialize();
 
-    Shader* get_shader(int num) { return shaders[num]; }
+    Shader* get_shader(Shaders num) { return shaders[static_cast<int>(num)]; }
 
 private:
     std::vector<Shader*> shaders;

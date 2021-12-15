@@ -79,7 +79,7 @@ void Ocean_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_t
 
     Scene_Constant scene_constant{};
     DirectX::XMStoreFloat4x4(&scene_constant.view_projection, DirectX::XMLoadFloat4x4(&camera.get_view()) * DirectX::XMLoadFloat4x4(&camera.get_projection()));
-    scene_constant.camera_position = { 0, 0, 0, 0 };
+    scene_constant.camera_position = { camera.get_eye().x, camera.get_eye().y, camera.get_eye().z, 0 };
     scene_constant.timer.x = scroll_timer;
     immediate_context->UpdateSubresource(scene_buffer.Get(), 0, 0, &scene_constant, 0, 0);
     immediate_context->VSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());

@@ -1,9 +1,9 @@
 
-#include "skinned_shader.h"
+#include "phong_shader.h"
 #include "camera.h"
 
 
-void Skinned_Shader::initialize(ID3D11Device* device)
+void Phong_Shader::initialize(ID3D11Device* device)
 {
     D3D11_INPUT_ELEMENT_DESC input_element_desc[]
     {
@@ -18,7 +18,7 @@ void Skinned_Shader::initialize(ID3D11Device* device)
     //シェーダーの生成
     create_vs_from_cso(device, "./CSO/default_vs.cso", vertex_shader.ReleaseAndGetAddressOf(), input_layout.ReleaseAndGetAddressOf(),
         input_element_desc, ARRAYSIZE(input_element_desc));
-    create_ps_from_cso(device, "./CSO/skinned_mesh_ps.cso", pixel_shader.ReleaseAndGetAddressOf());
+    create_ps_from_cso(device, "./CSO/phong_ps.cso", pixel_shader.ReleaseAndGetAddressOf());
 
 
     HRESULT hr{ S_OK };
@@ -62,7 +62,7 @@ void Skinned_Shader::initialize(ID3D11Device* device)
 }
 
 
-void Skinned_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_time)
+void Phong_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_time)
 {
     immediate_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     immediate_context->IASetInputLayout(input_layout.Get());
@@ -76,6 +76,7 @@ void Skinned_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed
     Scene_Constant scene_constant{};
     DirectX::XMStoreFloat4x4(&scene_constant.view_projection, DirectX::XMLoadFloat4x4(&camera.get_view()) * DirectX::XMLoadFloat4x4(&camera.get_projection()));
     scene_constant.camera_position = { camera.get_eye().x, camera.get_eye().y, camera.get_eye().z, 0 };
+    //scene_constant.camera_position = { 0.0f, 0.0f, 0.0f, 0.0f };
     immediate_context->UpdateSubresource(scene_buffer.Get(), 0, 0, &scene_constant, 0, 0);
     immediate_context->VSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
     immediate_context->PSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
@@ -87,7 +88,7 @@ void Skinned_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed
     immediate_context->PSSetConstantBuffers(2, 1, light_buffer.GetAddressOf());
 
     Fog_Constant fog_constant{};
-    //fog_constant.fog_range = { camera.get_front().x, camera.get_front().y, camera.get_front().z, 0 };
+    fog_constant.fog_range = { 0.0f, 100.0f, 0, 0 };
     immediate_context->UpdateSubresource(fog_buffer.Get(), 0, 0, &fog_constant, 0, 0);
     immediate_context->VSSetConstantBuffers(3, 1, fog_buffer.GetAddressOf());
     immediate_context->PSSetConstantBuffers(3, 1, fog_buffer.GetAddressOf());
@@ -95,8 +96,8 @@ void Skinned_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed
 }
 
 
-void Skinned_Shader::end(ID3D11DeviceContext* immediate_context)
+void Phong_Shader::end(ID3D11DeviceContext* immediate_context)
 {
-    
+
 }
 

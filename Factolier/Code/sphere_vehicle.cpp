@@ -44,19 +44,18 @@ void Sphere_Vehicle::render()
 
     managers* ptr_managers = get_scene_manager();
     ID3D11DeviceContext* ptr_device_context = ptr_managers->device_context();
-    Shader* ptr_shader = ptr_managers->shader_manager()->get_shader(1);
 
     // シェーダの設定
     ptr_managers->state_manager()->setDS(DS::ON_ON);
-    ptr_shader = ptr_managers->shader_manager()->get_shader(0);
+    Shader* ptr_shader = ptr_managers->shader_manager()->get_shader(Shaders::PHONG);
 
 
     // ー　モデルの描画　ー //
-    ptr_shader->begin(ptr_managers->device_context());
+    ptr_shader->begin(ptr_device_context);
 
-    get_model()->render(ptr_managers->device_context(), get_transform()->get_matrix(), { 1.0f, 1.0f, 1.0f, 1.0f });
+    get_model()->render(ptr_device_context, get_transform()->get_matrix(), { 1.0f, 1.0f, 1.0f, 1.0f });
 
-    ptr_shader->end(ptr_managers->device_context());
+    ptr_shader->end(ptr_device_context);
     // ーーーーーーーーーー //
 }
 

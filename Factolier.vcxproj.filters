@@ -40,6 +40,12 @@
     <Filter Include="Factolier\Entity\Sphere_Vehicle">
       <UniqueIdentifier>{148b249c-31dd-4105-ae57-817e48ba8e35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\HLSL\Post_Effect">
+      <UniqueIdentifier>{56ea5174-eea2-44d0-9c36-b8e6ec540414}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\HLSL\Group">
+      <UniqueIdentifier>{b6e27df9-1a79-465f-9dcb-aaca69e57518}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_manager.cpp">
@@ -149,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="Factolier\Code\sv_ball.cpp">
       <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\phong_shader.cpp">
+      <Filter>Factolier\Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,90 +302,90 @@
     <ClInclude Include="Factolier\Code\sv_ball.h">
       <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
     </ClInclude>
+    <ClInclude Include="Factolier\Code\phong_shader.h">
+      <Filter>Factolier\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Factolier\Shader\blur_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\fullscreen_quad_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\fullscreen_quad_vs.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\geometric_primitive_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\geometric_primitive_vs.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\luminance_extraction_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\sprite_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\sprite_vs.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\static_mesh_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\static_mesh_vs.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
     <FxCompile Include="Factolier\Shader\pbr_ps.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="Factolier\Shader\sky_box_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\sky_box_vs.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
-    <FxCompile Include="Factolier\Shader\phong_shader_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
-    </FxCompile>
     <FxCompile Include="Factolier\Shader\default_vs.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
-    <FxCompile Include="Factolier\Shader\ocean_vs.hlsl">
+    <FxCompile Include="Factolier\Shader\phong_ps.hlsl">
       <Filter>Factolier\HLSL</Filter>
     </FxCompile>
+    <FxCompile Include="Factolier\Shader\blur_ps.hlsl">
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\fullscreen_quad_ps.hlsl">
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\fullscreen_quad_vs.hlsl">
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\luminance_extraction_ps.hlsl">
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
+    </FxCompile>
     <FxCompile Include="Factolier\Shader\ocean_ps.hlsl">
-      <Filter>Factolier\HLSL</Filter>
+      <Filter>Factolier\HLSL\Group</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\ocean_vs.hlsl">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\sky_box_ps.hlsl">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\sky_box_vs.hlsl">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\sprite_ps.hlsl">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\sprite_vs.hlsl">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\geometric_primitive_ps.hlsl">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\geometric_primitive_vs.hlsl">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\static_mesh_ps.hlsl">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\static_mesh_vs.hlsl">
+      <Filter>Factolier\HLSL\Group</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Factolier\Shader\fullscreen_quad.hlsli">
-      <Filter>Factolier\HLSL</Filter>
-    </None>
-    <None Include="Factolier\Shader\geometric_primitive.hlsli">
-      <Filter>Factolier\HLSL</Filter>
-    </None>
-    <None Include="Factolier\Shader\sprite.hlsli">
-      <Filter>Factolier\HLSL</Filter>
-    </None>
-    <None Include="Factolier\Shader\static_mesh.hlsli">
-      <Filter>Factolier\HLSL</Filter>
-    </None>
-    <None Include="Factolier\Shader\sky_box.hlsli">
-      <Filter>Factolier\HLSL</Filter>
-    </None>
-    <None Include="Factolier\Shader\phong_shader.hlsli">
-      <Filter>Factolier\HLSL</Filter>
-    </None>
     <None Include="Factolier\Shader\shading_function.hlsli">
       <Filter>Factolier\HLSL</Filter>
     </None>
     <None Include="Factolier\Shader\default.hlsli">
       <Filter>Factolier\HLSL</Filter>
     </None>
+    <None Include="Factolier\Shader\fullscreen_quad.hlsli">
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
+    </None>
     <None Include="Factolier\Shader\ocean.hlsli">
-      <Filter>Factolier\HLSL</Filter>
+      <Filter>Factolier\HLSL\Group</Filter>
+    </None>
+    <None Include="Factolier\Shader\sky_box.hlsli">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </None>
+    <None Include="Factolier\Shader\sprite.hlsli">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </None>
+    <None Include="Factolier\Shader\geometric_primitive.hlsli">
+      <Filter>Factolier\HLSL\Group</Filter>
+    </None>
+    <None Include="Factolier\Shader\static_mesh.hlsli">
+      <Filter>Factolier\HLSL\Group</Filter>
     </None>
   </ItemGroup>
 </Project>
