@@ -141,16 +141,14 @@
     <ClCompile Include="Factolier\Code\player.cpp">
       <Filter>Factolier\Entity</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="Factolier\Code\ocean_shader.cpp">
       <Filter>Factolier\Shader</Filter>
-=======
+    </ClCompile>
     <ClCompile Include="Factolier\Code\sphere_vehicle.cpp">
       <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
     </ClCompile>
     <ClCompile Include="Factolier\Code\sv_ball.cpp">
       <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
->>>>>>> 096b8334ad4e3ab3642ceb03b45ae56f19aa157e
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,16 +284,14 @@
     <ClInclude Include="Factolier\Code\velocity.h">
       <Filter>Factolier\Entity\Status</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Factolier\Code\ocean_shader.h">
       <Filter>Factolier\Shader</Filter>
-=======
+    </ClInclude>
     <ClInclude Include="Factolier\Code\sphere_vehicle.h">
       <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\sv_ball.h">
       <Filter>Factolier\Entity\Sphere_Vehicle</Filter>
->>>>>>> 096b8334ad4e3ab3642ceb03b45ae56f19aa157e
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
