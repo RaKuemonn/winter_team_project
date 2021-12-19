@@ -69,17 +69,25 @@ void Player::render()
 #endif
 
 #include "player.h"
+
+#include "camera.h"
+#include "entity_manager.h"
 #include "transform.h"
 #include "model.h"
 #include "scene_manager.h"
+#include "input_manager.h"
+#include "sphere_vehicle.h"
 
 
 Player::Player(Scene_Manager* ptr_scene_manager_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
     load_model(get_scene_manager()->model_manager()->load_model("./Data/nico.fbx"));
-    //m_velocity = std::make_unique<Velocity>();
-    //m_velocity->set_mass(1.0f);
+
+    set_tag(Tag::Player);
+
+    m_velocity = std::make_unique<Velocity>();
+    m_velocity->set_mass(1.0f);
 
     
 
@@ -90,14 +98,16 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
 
 void Player::update(const float elapsed_time_)
 {
-    //// 入力値の受け取り
-    //input(input_direction, *get_scene_manager()->input_manager());
-    //
-    //// 速度の更新
-    //update_velocity(elapsed_time_);
-    //
-    //// 位置の更新
-    //get_transform()->add_position(m_velocity->get());
+    // 入力値の受け取り
+    input(input_direction, *get_scene_manager()->input_manager());
+    
+    // 速度の更新
+    update_velocity(elapsed_time_);
+    
+    // 位置の更新
+    get_transform()->add_position(m_velocity->get());
+
+    //currentBall->move_direction(input_direction);
 
     // 姿勢の更新
     get_transform()->Update();
@@ -127,17 +137,49 @@ void Player::render()
     // ーーーーーーーーーー //
 }
 
+void Player::update_velocity(const float elapsed_time_)
+{
+    constexpr float speed = 5.0f;
+
+    // 入力方向に加速
+    m_velocity->add(input_direction * speed);
+
+    // 速度の更新
+    m_velocity->update(elapsed_time_);
+}
+
 void Player::check_has_vehicle()
 {
     // 参照先があるか          (expired()は参照先が無いときにtrueになる)
-    if (wkp_vehicle.expired() == false) return;
+    if (wkp_vehicle.expired() == false)
+    {
 
+        reference_vehicle();
+
+        return;
+    }
     // ないのでweak_ptrを解放しておく
     wkp_vehicle.reset();
+
+    create_vehicle();
+}
+
+void Player::create_vehicle()
+{
+    std::unique_ptr<Entity> vehicle = std::make_unique<Sphere_Vehicle>(get_scene_manager());
+
+    
+
+    Entity_Manager::instance().spawn_register(vehicle);
+}
+
+void Player::reference_vehicle()
+{
+    
 }
 
 
-/*
+
 void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
 {
     input_direction_ = {};
@@ -163,21 +205,9 @@ void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
         input_direction_.x += -1.0f;
     }
     
-    const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
-
-    input_direction_.x = input_direction_.x * camera_axis_z.x + input_direction_.z * camera_axis_z.x;
-    input_direction_.z = input_direction_.x * camera_axis_z.z + input_direction_.z * camera_axis_z.z;
+    //const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
+    //
+    //input_direction_.x = input_direction_.x * camera_axis_z.x + input_direction_.z * camera_axis_z.x;
+    //input_direction_.z = input_direction_.x * camera_axis_z.z + input_direction_.z * camera_axis_z.z;
 }
 
-void Player::update_velocity(const float elapsed_time_)
-{
-    constexpr float speed = 5.0f;
-
-    // 入力方向に加速
-    m_velocity->add(input_direction * speed);
-
-    // 速度の更新
-    m_velocity->update(elapsed_time_);
-}
-
-*/

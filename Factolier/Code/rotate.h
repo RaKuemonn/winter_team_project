@@ -3,6 +3,7 @@
 #include "math_xmfloat.h"
 #include <valarray>
 
+
 class Rotate final
 {
 public:

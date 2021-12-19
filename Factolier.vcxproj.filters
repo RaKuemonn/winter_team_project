@@ -46,6 +46,9 @@
     <Filter Include="Factolier\HLSL\Group">
       <UniqueIdentifier>{b6e27df9-1a79-465f-9dcb-aaca69e57518}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Entity\Enemy">
+      <UniqueIdentifier>{aa101253-e43b-4d59-8f49-aa948588d48c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_manager.cpp">
@@ -161,6 +164,12 @@
     </ClCompile>
     <ClCompile Include="Factolier\Code\model_resource.cpp">
       <Filter>Factolier\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\enemy.cpp">
+      <Filter>Factolier\Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\scene_game.cpp">
+      <Filter>Factolier\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +322,15 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\model_resource.h">
       <Filter>Factolier\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy.h">
+      <Filter>Factolier\Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\ability.h">
+      <Filter>Factolier\Entity\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\scene_game.h">
+      <Filter>Factolier\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

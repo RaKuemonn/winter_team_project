@@ -5,7 +5,15 @@
 
 #include "model.h"
 class Transform;
+class Ability;
 class Scene_Manager;
+enum class Tag
+{
+    None,
+    Player,
+    Vehicle,
+    Enemy,
+};
 
 // エンティティクラス (抽象クラス)
 
@@ -19,6 +27,7 @@ public:
     virtual void update(const float elapsed_time)   = 0;
     virtual void render()                           = 0;
 
+public:
     // Getter関数 //
     _NODISCARD Model*                      get_model()         const;
     _NODISCARD const DirectX::XMFLOAT3     get_position()      const;
@@ -26,6 +35,9 @@ public:
     _NODISCARD const DirectX::XMFLOAT3     get_axis_x()        const;
     _NODISCARD const DirectX::XMFLOAT3     get_axis_y()        const;
     _NODISCARD const DirectX::XMFLOAT3     get_axis_z()        const;
+    _NODISCARD const Tag&                  get_tag()           const;
+    _NODISCARD       Ability&              get_ability()       const;
+
 
     // Setter関数 //
     void set_position(const DirectX::XMFLOAT3& position_)   const;
@@ -40,9 +52,13 @@ protected:
     void load_model(std::shared_ptr<class Model_Resource> model_);
     _NODISCARD Transform* get_transform();
 
+    void set_tag(Tag tag_);
+
 
 private:
     std::unique_ptr<Model>  m_model             = nullptr;
     Transform*              m_transform         = nullptr;
+    Ability*                m_ability           = nullptr;
     Scene_Manager*          m_ptr_scene_manager = nullptr;
+    Tag                     m_tag               = Tag::None;
 };

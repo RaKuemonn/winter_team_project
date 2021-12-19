@@ -11,7 +11,7 @@ public:
     void init()                             override {};
     void update(const float elapsed_time_)  override;
     void render()                           override;
-
+    
 private:
     std::unique_ptr<Entity> m_implements = nullptr;
 

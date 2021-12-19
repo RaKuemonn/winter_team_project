@@ -169,12 +169,14 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
+    <ClCompile Include="Factolier\Code\enemy.cpp" />
     <ClCompile Include="Factolier\Code\entity.cpp" />
     <ClCompile Include="Factolier\Code\entity_manager.cpp" />
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
     <ClCompile Include="Factolier\Code\ocean_shader.cpp" />
     <ClCompile Include="Factolier\Code\phong_shader.cpp" />
     <ClCompile Include="Factolier\Code\player.cpp" />
+    <ClCompile Include="Factolier\Code\scene_game.cpp" />
     <ClCompile Include="Factolier\Code\scene_loading.cpp" />
     <ClCompile Include="Factolier\Code\scene_title.cpp" />
     <ClCompile Include="Factolier\Code\sky_box.cpp" />
@@ -209,8 +211,10 @@
     <ClInclude Include="External\imgui\imstb_rectpack.h" />
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
+    <ClInclude Include="Factolier\Code\ability.h" />
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
+    <ClInclude Include="Factolier\Code\enemy.h" />
     <ClInclude Include="Factolier\Code\entity.h" />
     <ClInclude Include="Factolier\Code\entity_manager.h" />
     <ClInclude Include="Factolier\Code\input_manager.h" />
@@ -221,6 +225,7 @@
     <ClInclude Include="Factolier\Code\position.h" />
     <ClInclude Include="Factolier\Code\rotate.h" />
     <ClInclude Include="Factolier\Code\scale.h" />
+    <ClInclude Include="Factolier\Code\scene_game.h" />
     <ClInclude Include="Factolier\Code\scene_loading.h" />
     <ClInclude Include="Factolier\Code\scene_title.h" />
     <ClInclude Include="Factolier\Code\sky_box.h" />

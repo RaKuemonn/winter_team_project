@@ -34,9 +34,6 @@ void Scene_Title::initialize()
     //test_model->append_animation("./Data/Animations/Idle.fbx");
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
 
-
-    // ƒvƒŒƒCƒ„[
-    player = std::make_unique<Player>(parent);
 }
 
 
@@ -50,15 +47,8 @@ void Scene_Title::update(float elapsedTime)
 {
     camera_controller->update(elapsedTime, parent->input_manager());
 
-    //sound->set_emitter({ 0.0f, 0.0f, 0.0f });
-    //parent->sound_manager()->set_listener(0, { 0.0f, 0.0f, 0.0f }, { 0.0f, 0.0f, 1.0f });
-    //
-    //sound->apply_3d(parent->sound_manager()->get_listener(0));
-    //
-    //sound->update();
+    //entity_manager->update(elapsed_time);
 
-    //test_model->play_animation(elapsedTime, 0);
-    //player->update(elapsedTime);
 }
 
 

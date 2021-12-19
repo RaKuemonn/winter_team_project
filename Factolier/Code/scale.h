@@ -2,6 +2,8 @@
 
 #include "math_xmfloat.h"
 
+
+
 class Scale final
 {
 public:

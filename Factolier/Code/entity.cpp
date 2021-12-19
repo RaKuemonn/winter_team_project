@@ -1,18 +1,22 @@
 
 #include "entity.h"
 #include "transform.h"
+#include "ability.h"
 #include "scene_manager.h"
+#include "utility.h"
 
 
-Entity::Entity() : m_transform(new Transform())
+Entity::Entity() : m_transform(new Transform()), m_ability(new Ability())
 {
     
 }
 
 Entity::~Entity()
 {
-    delete m_transform;
-    m_transform = nullptr;
+    safe_delete(m_transform);
+
+    safe_delete(m_ability);
+
 }
 
 
@@ -55,6 +59,17 @@ const DirectX::XMFLOAT3 Entity::get_axis_z() const
     return axis_z;
 }
 
+const Tag& Entity::get_tag() const
+{
+    return m_tag;
+}
+
+Ability& Entity::get_ability() const
+{
+    return *m_ability;
+}
+
+
 
 
 
@@ -91,4 +106,9 @@ void Entity::load_model(std::shared_ptr<Model_Resource> model_)
 Transform* Entity::get_transform()
 {
     return m_transform;
+}
+
+void Entity::set_tag(Tag tag_)
+{
+    m_tag = tag_;
 }
