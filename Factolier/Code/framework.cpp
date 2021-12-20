@@ -18,7 +18,7 @@ bool Framework::initialize()
 	//シーンマネージャー生成
 	scene_manager = std::make_unique<Scene_Manager>();
 	scene_manager->initialize(device.Get(), immediate_context.Get(), hr);
-	scene_manager->change_scene(new Scene_Title);
+	scene_manager->change_scene(new Scene_Game);
 	
 
 

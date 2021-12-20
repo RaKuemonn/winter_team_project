@@ -29,7 +29,7 @@ void Enemy::update(const float elapsed_time_)
     get_transform()->Update();
 
     // ƒ‚ƒfƒ‹‚ÌXV
-    //get_model()->play_animation(elapsed_time_, 0);
+    get_model()->play_animation(elapsed_time_, 0);
 }
 
 void Enemy::render()

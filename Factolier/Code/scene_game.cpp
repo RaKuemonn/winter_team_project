@@ -3,7 +3,8 @@
 #include "scene_manager.h"
 #include "camera.h"
 #include "entity_manager.h"
-#include "sv_ball.h"
+#include "player.h"
+
 
 void Scene_Game::initialize()
 {
@@ -20,6 +21,8 @@ void Scene_Game::initialize()
         1000.0f);
     
     Entity_Manager::instance().spawn_register(std::make_unique<Player>(parent));
+    enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
+    enemy_spawner->set_enemy<Enemy>({ 0.0f,5.0f,1.0f });
 }
 
 

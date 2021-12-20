@@ -4,18 +4,16 @@
 
 void Entity_Manager::update(const float elapsed_time)
 {
-    for(auto& entity : vec_entities)
+    
+    for(int i = 0; i < vec_entities.size(); ++i) // update’†‚Éentity‚ð’Ç‰Á‚·‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‚±‚Ìfor•¶‚É‚µ‚Ä‚¢‚é
     {
-        entity->update(elapsed_time);
+        vec_entities.at(i)->update(elapsed_time);
 
 #ifdef _DEBUG
         //entity->imgui();
 #endif
-
     }
-
-    // entity->get_massage_update();
-
+    
     for (auto& entity : vec_removes)
     {
         auto it = std::find(vec_entities.begin(), vec_entities.end(), entity);

@@ -2,8 +2,7 @@
 
 #include <memory>
 #include "scene.h"
-#include "player.h"
-
+#include "enemy_spawner.h"
 
 
 class Scene_Game : public Scene
@@ -17,5 +16,5 @@ public:
 	void render(float elapsed_time) override;
 
 private:
-
+	std::unique_ptr<Enemy_Spawner> enemy_spawner = nullptr;
 };
