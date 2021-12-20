@@ -20,17 +20,6 @@ void Scene_Game::initialize()
         1000.0f);
     
     Entity_Manager::instance().spawn_register(std::make_unique<Player>(parent));
-    //Entity_Manager::instance().spawn_register(std::make_unique<SV_Ball>(parent));
-    //Entity_Manager::instance().spawn_register(std::make_unique<SV_Ball>(parent));
-    //Entity_Manager::instance().spawn_register(std::make_unique<SV_Ball>(parent));
-    //Entity_Manager::instance().spawn_register(std::make_unique<Player>(parent));
-    //Entity_Manager::instance().spawn_register(std::make_unique<SV_Ball>(parent));
-
-    std::vector<short> vec_tag = {};
-
-    vec_tag = Entity_Manager::instance().get_entity(Tag::Player);
-
-    int data = vec_tag.size();
 }
 
 

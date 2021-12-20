@@ -49,6 +49,9 @@
     <Filter Include="Factolier\Entity\Enemy">
       <UniqueIdentifier>{aa101253-e43b-4d59-8f49-aa948588d48c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Entity\Manager">
+      <UniqueIdentifier>{eb2634bf-d7ca-4ba6-8a01-b0080c1adfa9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_manager.cpp">
@@ -156,9 +159,6 @@
     <ClCompile Include="Factolier\Code\phong_shader.cpp">
       <Filter>Factolier\Shader</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\entity_manager.cpp">
-      <Filter>Factolier\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Factolier\Code\shader_manager.cpp">
       <Filter>Factolier\Accessibility</Filter>
     </ClCompile>
@@ -170,6 +170,12 @@
     </ClCompile>
     <ClCompile Include="Factolier\Code\scene_game.cpp">
       <Filter>Factolier\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\entity_manager.cpp">
+      <Filter>Factolier\Entity\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\enemy_spawner.cpp">
+      <Filter>Factolier\Entity\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -311,9 +317,6 @@
     <ClInclude Include="Factolier\Code\phong_shader.h">
       <Filter>Factolier\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\entity_manager.h">
-      <Filter>Factolier\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Factolier\Code\utility.h">
       <Filter>Factolier\Utility</Filter>
     </ClInclude>
@@ -331,6 +334,12 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\scene_game.h">
       <Filter>Factolier\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\entity_manager.h">
+      <Filter>Factolier\Entity\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy_spawner.h">
+      <Filter>Factolier\Entity\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

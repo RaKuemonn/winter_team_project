@@ -87,9 +87,6 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
 
     set_tag(Tag::Player);
 
-    m_velocity = std::make_unique<Velocity>();
-    m_velocity->set_mass(1.0f);
-
     constexpr float scale = 0.01f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
@@ -103,12 +100,6 @@ void Player::update(const float elapsed_time_)
     // 乗り物の更新 ・ 位置の更新
     update_vehicle();
     
-    //// 速度の更新
-    //update_velocity(elapsed_time_);
-    //
-    //// 位置の更新
-    //get_transform()->add_position(m_velocity->get());
-
 
     // 姿勢の更新
     get_transform()->Update();
@@ -138,16 +129,6 @@ void Player::render()
     // ーーーーーーーーーー //
 }
 
-void Player::update_velocity(const float elapsed_time_)
-{
-    constexpr float speed = 5.0f;
-
-    // 入力方向に加速
-    m_velocity->add(input_direction * speed);
-
-    // 速度の更新
-    m_velocity->update(elapsed_time_);
-}
 
 void Player::reference_vehicle_position()
 {
@@ -159,7 +140,6 @@ void Player::reference_vehicle_position()
     set_position(vehicle_position);
 
 }
-
 
 void Player::update_vehicle()
 {

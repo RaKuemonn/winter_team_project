@@ -170,6 +170,7 @@
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
     <ClCompile Include="Factolier\Code\enemy.cpp" />
+    <ClCompile Include="Factolier\Code\enemy_spawner.cpp" />
     <ClCompile Include="Factolier\Code\entity.cpp" />
     <ClCompile Include="Factolier\Code\entity_manager.cpp" />
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
     <ClInclude Include="Factolier\Code\enemy.h" />
+    <ClInclude Include="Factolier\Code\enemy_spawner.h" />
     <ClInclude Include="Factolier\Code\entity.h" />
     <ClInclude Include="Factolier\Code\entity_manager.h" />
     <ClInclude Include="Factolier\Code\input_manager.h" />
