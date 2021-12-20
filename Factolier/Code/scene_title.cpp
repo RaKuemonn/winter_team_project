@@ -30,7 +30,7 @@ void Scene_Title::initialize()
     DirectX::XMFLOAT3 target = { 0.0f, 0.0f, 0.0f };
     camera_controller->set_target(target);
 
-    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_cube.fbx"));
+    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/water.fbx"));
     //test_model->append_animation("./Data/Animations/Idle.fbx");
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
 
@@ -46,8 +46,6 @@ void Scene_Title::uninitialize()
 void Scene_Title::update(float elapsed_time)
 {
     camera_controller->update(elapsed_time, parent->input_manager());
-
-    //entity_manager->update(elapsed_time);
 
 }
 
@@ -104,39 +102,11 @@ void Scene_Title::render(float elapsed_time)
 
     shader = parent->shader_manager()->get_shader(Shaders::OCEAN);
 
-    shader->begin(parent->device_context(), elapsed_time * 0.5f);
+    shader->begin(parent->device_context(), elapsed_time * 0.1f);
 
     test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.5f });
     //test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);
 
     shader->end(parent->device_context());
 
-    //DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-    //
-    //DirectX::XMFLOAT4X4 world = {
-    //    1.0f, 0.0f, 0.0f, 0.0f,
-    //    0.0f, 1.0f, 0.0f, 0.0f,
-    //    0.0f, 0.0f, 1.0f, 0.0f,
-    //    0.0f, 0.0f, 0.0f, 1.0f
-    //};
-    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-    //DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
-    //DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
-    //DirectX::CXMMATRIX W = S * R * T;
-    //DirectX::XMStoreFloat4x4(&world, W);
-    //
-    //DirectX::XMMATRIX World = DirectX::XMLoadFloat4x4(&world);
-    //World = scale;
-    //DirectX::XMStoreFloat4x4(&world, World);
-    //
-    //parent->state_manager()->setDS(DS::ON_ON);
-    //
-    //shader = parent->shader_manager()->get_shader(0);
-    //
-    //shader->begin(parent->device_context());
-    //
-    //test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-    //
-    //shader->end(parent->device_context());
-    //player->render();
 }

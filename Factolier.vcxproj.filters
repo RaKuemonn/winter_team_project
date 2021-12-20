@@ -60,13 +60,7 @@
     <ClCompile Include="Factolier\Code\scene_loading.cpp">
       <Filter>Factolier\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\framebuffer.cpp">
-      <Filter>Factolier\Admin</Filter>
-    </ClCompile>
     <ClCompile Include="Factolier\Code\framework.cpp">
-      <Filter>Factolier\Admin</Filter>
-    </ClCompile>
-    <ClCompile Include="Factolier\Code\fullscreen_quad.cpp">
       <Filter>Factolier\Admin</Filter>
     </ClCompile>
     <ClCompile Include="Factolier\Code\model.cpp">
@@ -191,13 +185,7 @@
     <ClInclude Include="Factolier\Code\scene_loading.h">
       <Filter>Factolier\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\framebuffer.h">
-      <Filter>Factolier\Admin</Filter>
-    </ClInclude>
     <ClInclude Include="Factolier\Code\framework.h">
-      <Filter>Factolier\Admin</Filter>
-    </ClInclude>
-    <ClInclude Include="Factolier\Code\fullscreen_quad.h">
       <Filter>Factolier\Admin</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\high_resolution_timer.h">

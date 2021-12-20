@@ -184,9 +184,7 @@
     <ClCompile Include="Factolier\Code\sky_box.cpp" />
     <ClCompile Include="Factolier\Code\sky_shader.cpp" />
     <ClCompile Include="Factolier\Code\sound_manager.cpp" />
-    <ClCompile Include="Factolier\Code\framebuffer.cpp" />
     <ClCompile Include="Factolier\Code\framework.cpp" />
-    <ClCompile Include="Factolier\Code\fullscreen_quad.cpp" />
     <ClCompile Include="Factolier\Code\geometric_primitive.cpp" />
     <ClCompile Include="Factolier\Code\main.cpp" />
     <ClCompile Include="Factolier\Code\model.cpp" />
@@ -236,9 +234,7 @@
     <ClInclude Include="Factolier\Code\sky_shader.h" />
     <ClInclude Include="Factolier\Code\sound.h" />
     <ClInclude Include="Factolier\Code\sound_manager.h" />
-    <ClInclude Include="Factolier\Code\framebuffer.h" />
     <ClInclude Include="Factolier\Code\framework.h" />
-    <ClInclude Include="Factolier\Code\fullscreen_quad.h" />
     <ClInclude Include="Factolier\Code\geometric_primitive.h" />
     <ClInclude Include="Factolier\Code\high_resolution_timer.h" />
     <ClInclude Include="Factolier\Code\misc.h" />

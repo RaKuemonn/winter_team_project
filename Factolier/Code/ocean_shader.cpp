@@ -86,7 +86,7 @@ void Ocean_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_t
     immediate_context->PSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
 
     Light_Constant light_constant{};
-    light_constant.light_direction = { camera.get_front().x, camera.get_front().y, camera.get_front().z, 0 };
+    //light_constant.light_direction = { camera.get_front().x, camera.get_front().y, camera.get_front().z, 0 };
     immediate_context->UpdateSubresource(light_buffer.Get(), 0, 0, &light_constant, 0, 0);
     immediate_context->VSSetConstantBuffers(2, 1, light_buffer.GetAddressOf());
     immediate_context->PSSetConstantBuffers(2, 1, light_buffer.GetAddressOf());
