@@ -33,6 +33,7 @@ public:
 
 
 private:
-    std::vector<std::shared_ptr<Entity>> vec_entities = {};
-    std::vector<std::shared_ptr<Entity>> vec_removes = {};
+    std::vector<std::shared_ptr<Entity>> vec_entities   = {};
+    std::vector<std::shared_ptr<Entity>> vec_registers  = {};
+    std::vector<std::shared_ptr<Entity>> vec_removes    = {};
 };

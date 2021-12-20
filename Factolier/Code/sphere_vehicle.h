@@ -15,19 +15,17 @@ public:
 
 
     // GetterŠÖ” //
-    _NODISCARD const bool get_is_free() { return m_is_free; }
+    _NODISCARD const bool& get_is_free() { return m_is_free; }
 
     // SetterŠÖ” //
     void move_direction(const DirectX::XMFLOAT3& direction_);
+    void set_is_free() { m_is_free = true; }
 
 private:
     void update_velocity(const float elapsed_time_);
     void rotate(const float elapsed_time_);
-    void collision();
-    //inline static void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_);
 
 private:
     std::unique_ptr<Velocity> m_velocity = nullptr;
     bool m_is_free = false;                               // æ‚è•¨‚Ì“®‚«‚ª©—R‚© ( ‘©”›/‘€ì‚³‚ê‚Ä‚¢‚é = false , ©—R = true )
-    //DirectX::XMFLOAT3 input_direction = {};
 };

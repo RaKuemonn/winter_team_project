@@ -147,6 +147,16 @@ void Player::update_vehicle()
     if(check_has_vehicle())
     {
         // あるので更新する
+
+        if(get_scene_manager()->input_manager()->TRG(0) & PAD_START)
+        {
+            static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
+
+
+
+            return;
+        }
+            
         control_vehicle();
         reference_vehicle_position();
         return;
@@ -161,8 +171,14 @@ void Player::update_vehicle()
 bool Player::check_has_vehicle() const
 {
     // 参照先があるか          (expired()は参照先が無いときにtrueになる)
-    return (m_wkp_vehicle.expired() == false);
+    if (m_wkp_vehicle.expired() == false)
+    {
+        return (static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->get_is_free() == false);
+    }
+
+    return false;
 }
+
 
 void Player::create_vehicle()
 {

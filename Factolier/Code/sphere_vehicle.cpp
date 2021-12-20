@@ -8,23 +8,21 @@
 Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
-    load_model(get_scene_manager()->model_manager()->load_model("./Data/ball_demo.fbx"));
+
+    load_model(get_scene_manager()->model_manager()->load_model("./Data/ball_demo.fbx",true));
 
     set_tag(Tag::Vehicle);
 
     m_velocity = std::make_unique<Velocity>();
     m_velocity->set_mass(1.0f);
 
-    constexpr float scale = 0.01f;
+    constexpr float scale = 3.0f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
 }
 
 void Sphere_Vehicle::update(const float elapsed_time_)
 {
-    //// 入力値の受け取り
-    //input(input_direction, *get_scene_manager()->input_manager());
-    
     // 速度の更新
     update_velocity(elapsed_time_);
 
@@ -36,12 +34,6 @@ void Sphere_Vehicle::update(const float elapsed_time_)
 
     // 姿勢の更新
     get_transform()->Update();
-
-    // 当たり判定
-    collision();
-
-    // モデルの更新
-    //get_model()->play_animation(elapsed_time_, 0);
 }
 
 void Sphere_Vehicle::render()
@@ -77,6 +69,8 @@ void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
 void Sphere_Vehicle::update_velocity(const float elapsed_time_)
 {
 
+    if (m_is_free) m_velocity->add(m_velocity->get());
+
     // 速度の更新
     m_velocity->update(elapsed_time_);
 }
@@ -98,39 +92,3 @@ void Sphere_Vehicle::rotate(const float elapsed_time_)
     DirectX::XMStoreFloat4(&xmf4_quaternion, xmvector_quaternion);
     get_transform()->add_quaternion(xmf4_quaternion);
 }
-
-void Sphere_Vehicle::collision()
-{
-    
-}
-
-//void Sphere_Vehicle::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
-//{
-//    input_direction_ = {};
-//
-//
-//    if (input_.TRG(0) & PAD_UP)
-//    {
-//        input_direction_.z += 1.0f;
-//    }
-//
-//    if (input_.TRG(0) & PAD_DOWN)
-//    {
-//        input_direction_.z += -1.0f;
-//    }
-//
-//    if (input_.TRG(0) & PAD_RIGHT)
-//    {
-//        input_direction_.x += 1.0f;
-//    }
-//
-//    if (input_.TRG(0) & PAD_LEFT)
-//    {
-//        input_direction_.x += -1.0f;
-//    }
-//
-//    const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
-//
-//    input_direction_.x = input_direction_.x * camera_axis_z.x + input_direction_.z * camera_axis_z.x;
-//    input_direction_.z = input_direction_.x * camera_axis_z.z + input_direction_.z * camera_axis_z.z;
-//}

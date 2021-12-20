@@ -4,15 +4,19 @@
 
 void Entity_Manager::update(const float elapsed_time)
 {
-    
-    for(int i = 0; i < vec_entities.size(); ++i) // update’†‚Éentity‚ð’Ç‰Á‚·‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‚±‚Ìfor•¶‚É‚µ‚Ä‚¢‚é
-    {
-        vec_entities.at(i)->update(elapsed_time);
 
-#ifdef _DEBUG
-        //entity->imgui();
-#endif
+    for (auto& entity : vec_entities)
+    {
+        entity->update(elapsed_time);
     }
+
+
+    for(auto& entity : vec_registers)
+    {
+        vec_entities.emplace_back(entity);
+    }
+    vec_registers.clear();
+
     
     for (auto& entity : vec_removes)
     {
@@ -65,17 +69,17 @@ std::vector<short> Entity_Manager::get_entity(const Tag& tag_) const
 
 void Entity_Manager::spawn_register(std::unique_ptr<Entity>& entity)
 {
-    vec_entities.emplace_back(std::move(entity));
+    vec_registers.emplace_back(std::move(entity));
 }
 
 void Entity_Manager::spawn_register(std::unique_ptr<Entity>&& entity)
 {
-    vec_entities.emplace_back(std::move(entity));
+    vec_registers.emplace_back(std::move(entity));
 }
 
 void Entity_Manager::spawn_register(std::shared_ptr<Entity>& entity)
 {
-    vec_entities.emplace_back(entity);
+    vec_registers.emplace_back(entity);
 }
 
 
@@ -87,5 +91,6 @@ void Entity_Manager::remove_register(Entity* entity)
 void Entity_Manager::all_clear()
 {
     vec_removes.clear();
+    vec_registers.clear();
     vec_entities.clear();
 }
