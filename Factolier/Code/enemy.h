@@ -4,19 +4,17 @@
 #include "velocity.h"
 
 
-class Enemy final : public Entity
+class Enemy : public Entity
 {
 public:
     Enemy(class Scene_Manager* ptr_scene_manager_);
-    ~Enemy()                                override = default;
+    virtual ~Enemy()                                override = default;
 
-    void init()                             override {};
-    void update(const float elapsed_time_)  override;
-    void render()                           override;
+    virtual void init()                             override = 0;
+    virtual void update(const float elapsed_time_)  override = 0;
+    virtual void render()                           override = 0;
 
 private:
-    std::unique_ptr<Velocity> wkp_vehicle;
-    DirectX::XMFLOAT3 input_direction = {};
 
 };
 

@@ -1,7 +1,5 @@
 
 #include "enemy_spawner.h"
-#include "enemy.h"
-
 
 void Enemy_Spawner::set_enemies(Scene_Manager* ptr_scene_manager)
 {
