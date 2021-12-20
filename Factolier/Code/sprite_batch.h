@@ -9,13 +9,6 @@
 #include "shader.h"
 
 
-//struct Vertex
-//{
-//	DirectX::XMFLOAT3 position;
-//	DirectX::XMFLOAT4 color;
-//	DirectX::XMFLOAT2 texcoord;
-//};
-
 
 class Sprite_Batch
 {
@@ -29,7 +22,7 @@ public:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> vertex_buffer;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shader_resource_view;
 	D3D11_TEXTURE2D_DESC texture2d_desc;
-	//Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizer_state;
+
 
 	const size_t max_vertices;
 	std::vector<Vertex> vertices;
@@ -41,11 +34,6 @@ public:
 		float px, float py,
 		float r, float g, float b, float a,
 		float angle/*degree*/);
-
-	//void render(ID3D11DeviceContext* immediate_context,
-	//		float dx, float dy, float dw, float dh,
-	//		float r, float g, float b, float a,
-	//		float angle/*degree*/);
 
 	void begin(ID3D11DeviceContext* immediate_context);
 

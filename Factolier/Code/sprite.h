@@ -25,22 +25,19 @@ public:
 	ID3D11Buffer* vertex_buffer;
 	ID3D11ShaderResourceView* shader_resource_view;
 	D3D11_TEXTURE2D_DESC texture2d_desc;
-	//ID3D11RasterizerState* rasterizer_state;
 
 
 	void render(ID3D11DeviceContext* immediate_context,
 		float dx, float dy, float dw, float dh,
-		float r, float g, float b, float a,
 		float sx, float sy, float sw, float sh,
-		float angle/*degree*/);
-
-	void render(ID3D11DeviceContext* immediate_context,
-		float dx, float dy, float dw, float dh,
+		float px, float py,
 		float r, float g, float b, float a,
 		float angle/*degree*/);
 
 	Vertex* Screen_to_NDC(ID3D11DeviceContext* immediate_context,
 		float dx, float dy, float dw, float dh,
+		float sx, float sy, float sw, float sh,
+		float px, float py,
 		float r, float g, float b, float a,
 		float angle/*degree*/);
 

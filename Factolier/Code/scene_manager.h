@@ -15,8 +15,8 @@ public:
     void initialize(ID3D11Device* device, ID3D11DeviceContext* context, HRESULT hr);
     void uninitialize();
 
-    void update(float elapsedTime,const HWND& hwnd_);
-    void render(float elapsedTime);
+    void update(float elapsed_time,const HWND& hwnd_);
+    void render(float elapsed_time);
 
     void change_scene(Scene* next_scene);
     void clear();

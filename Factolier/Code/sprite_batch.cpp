@@ -9,14 +9,6 @@ Sprite_Batch::Sprite_Batch(ID3D11Device* device, const char* filename, size_t ma
 {
     HRESULT hr{ S_OK };
 
-    ////頂点情報のセット
-    //Vertex vertices[]
-    //{
-    //    { { -1.0, +1.0, 0 }, { 1, 1, 1, 1 }, { 0, 0 } },
-    //    { { +1.0, +1.0, 0 }, { 1, 1, 1, 1 }, { 1, 0 } },
-    //    { { -1.0, -1.0, 0 }, { 1, 1, 1, 1 }, { 0, 1 } },
-    //    { { +1.0, -1.0, 0 }, { 1, 1, 1, 1 }, { 1, 1 } },
-    //};
 
     std::unique_ptr<Vertex[]> vertices{ std::make_unique<Vertex[]>(max_vertices) };
 
@@ -86,25 +78,6 @@ Sprite_Batch::Sprite_Batch(ID3D11Device* device, const char* filename, size_t ma
     hr = create_ps_from_cso(device, cso_name_p, pixel_shader.GetAddressOf());
 
     _ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
-
-
-    //ラスタライザーステートの生成
-    //D3D11_RASTERIZER_DESC rasterizer_desc{};
-    //
-    //rasterizer_desc.FillMode = D3D11_FILL_SOLID;        //レンダリング時に使用する塗りつぶしモードを決定
-    //rasterizer_desc.CullMode = D3D11_CULL_NONE;         //指定された方向を向いている三角形が描画されていないことを示す
-    //rasterizer_desc.FrontCounterClockwise = FALSE;      //三角形が前面か背面かを決定する
-    //rasterizer_desc.DepthBias = 0;                      //特定のピクセルに追加された深度値
-    //rasterizer_desc.DepthBiasClamp = 0;                 //ピクセルの最大深度バイアス
-    //rasterizer_desc.SlopeScaledDepthBias = 0;           //特定のピクセルの傾きのスカラー
-    //rasterizer_desc.DepthClipEnable = FALSE;            //距離に基づいてクリッピングを有効にする
-    //rasterizer_desc.ScissorEnable = FALSE;              //シザー長方形カリングを有効にする
-    //rasterizer_desc.MultisampleEnable = FALSE;          //MSAAレンダーターゲットで四角形またはアルファ線のアンチエイリアシングアルゴリズムを使用するかどうかを指定
-    //rasterizer_desc.AntialiasedLineEnable = FALSE;      //回線アンチエイリアスを有効にするかどうかを指定
-    //
-    //hr = device->CreateRasterizerState(&rasterizer_desc, &rasterizer_state);
-    //
-    //_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 }
 
 
@@ -145,17 +118,6 @@ void Sprite_Batch::end(ID3D11DeviceContext* immediate_context)
         memcpy_s(data, max_vertices * sizeof(Vertex), p, vertex_count * sizeof(Vertex));
     }
 
-
-    //Vertex* vertices{ reinterpret_cast<Vertex*>(mapped_subresource.pData) };
-    //if (vertices != nullptr)
-    //{
-    //    vertices[0].position = { x0, y0, 0 };
-    //    vertices[1].position = { x1, y1, 0 };
-    //    vertices[2].position = { x2, y2, 0 };
-    //    vertices[3].position = { x3, y3, 0 };
-    //    vertices[0].color = vertices[1].color = vertices[2].color = vertices[3].color = { r, g, b, a };
-    //
-    //}
 
     immediate_context->Unmap(vertex_buffer.Get(), 0);
 
@@ -266,32 +228,11 @@ void Sprite_Batch::render(ID3D11DeviceContext* immediate_context, float dx, floa
     vertices.push_back({ { x2, y2 , 0 }, { r, g, b, a }, { u0, v1 } });
     vertices.push_back({ { x1, y1 , 0 }, { r, g, b, a }, { u1, v0 } });
     vertices.push_back({ { x3, y3 , 0 }, { r, g, b, a }, { u1, v1 } });
-
-
-
-    //if (vertices != nullptr)
-    //{
-    //    vertices[0].texcoord.x = static_cast<FLOAT>(sx) / texture2d_desc.Width;
-    //    vertices[0].texcoord.y = static_cast<FLOAT>(sy) / texture2d_desc.Height;
-    //    vertices[1].texcoord.x = static_cast<FLOAT>(sx + sw) / texture2d_desc.Width;
-    //    vertices[1].texcoord.y = static_cast<FLOAT>(sy) / texture2d_desc.Height;
-    //    vertices[2].texcoord.x = static_cast<FLOAT>(sx) / texture2d_desc.Width;
-    //    vertices[2].texcoord.y = static_cast<FLOAT>(sy + sh) / texture2d_desc.Height;
-    //    vertices[3].texcoord.x = static_cast<FLOAT>(sx + sw) / texture2d_desc.Width;
-    //    vertices[3].texcoord.y = static_cast<FLOAT>(sy + sh) / texture2d_desc.Height;
-    //}
-
-    //end(immediate_context);
+    
 }
 
 
 Sprite_Batch::~Sprite_Batch()
 {
-    //COMオブジェクトの解放
-    //vertex_shader->Release();
-    //pixel_shader->Release();
-    //input_layout->Release();
-    //vertex_buffer->Release();
-    //shader_resource_view->Release();
-    //rasterizer_state->Release();
+    
 }

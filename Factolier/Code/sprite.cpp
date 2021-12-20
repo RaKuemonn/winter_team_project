@@ -86,24 +86,6 @@ Sprite::Sprite(ID3D11Device* device, const char* filename)
 
     _ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
-
-    //ラスタライザーステートの生成
-    //D3D11_RASTERIZER_DESC rasterizer_desc{};
-    //
-    //rasterizer_desc.FillMode = D3D11_FILL_SOLID;        //レンダリング時に使用する塗りつぶしモードを決定
-    //rasterizer_desc.CullMode = D3D11_CULL_NONE;         //指定された方向を向いている三角形が描画されていないことを示す
-    //rasterizer_desc.FrontCounterClockwise = FALSE;      //三角形が前面か背面かを決定する
-    //rasterizer_desc.DepthBias = 0;                      //特定のピクセルに追加された深度値
-    //rasterizer_desc.DepthBiasClamp = 0;                 //ピクセルの最大深度バイアス
-    //rasterizer_desc.SlopeScaledDepthBias = 0;           //特定のピクセルの傾きのスカラー
-    //rasterizer_desc.DepthClipEnable = FALSE;            //距離に基づいてクリッピングを有効にする
-    //rasterizer_desc.ScissorEnable = FALSE;              //シザー長方形カリングを有効にする
-    //rasterizer_desc.MultisampleEnable = FALSE;          //MSAAレンダーターゲットで四角形またはアルファ線のアンチエイリアシングアルゴリズムを使用するかどうかを指定
-    //rasterizer_desc.AntialiasedLineEnable = FALSE;      //回線アンチエイリアスを有効にするかどうかを指定
-    //
-    //hr = device->CreateRasterizerState(&rasterizer_desc, &rasterizer_state);
-    //
-    //_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 }
 
 
@@ -122,7 +104,12 @@ inline void rotate(float& x, float& y, float cx, float cy, float& cos, float& si
 }
 
 
-Vertex* Sprite::Screen_to_NDC(ID3D11DeviceContext* immediate_context, float dx, float dy, float dw, float dh, float r, float g, float b, float a, float angle)
+Vertex* Sprite::Screen_to_NDC(ID3D11DeviceContext* immediate_context,
+    float dx, float dy, float dw, float dh,
+    float sx, float sy, float sw, float sh,
+    float px, float py,
+    float r, float g, float b, float a,
+    float angle/*degree*/)
 {
     //スクリーン(ビューポート)のサイズを取得する
     D3D11_VIEWPORT viewport{};
@@ -139,18 +126,20 @@ Vertex* Sprite::Screen_to_NDC(ID3D11DeviceContext* immediate_context, float dx, 
     //           |/   |
     //  (x2, y2) *----* (x3, y3) 
 
+    DirectX::XMFLOAT2 size{ sw * dw, sh * dh };
+
     //left-top
-    float x0{ dx };
-    float y0{ dy };
+    float x0{ dx - size.x * px };
+    float y0{ dy - size.y * py };
     //right-top
-    float x1{ dx + dw };
-    float y1{ dy };
+    float x1{ dx + size.x * (1 - px) };
+    float y1{ dy - size.y * py };
     //left-bottom
-    float x2{ dx };
-    float y2{ dy + dh };
+    float x2{ dx - size.x * px };
+    float y2{ dy + size.y * (1 - py) };
     //right-bottom
-    float x3{ dx + dw };
-    float y3{ dy + dh };
+    float x3{ dx + size.x * (1 - px) };
+    float y3{ dy + size.y * (1 - py) };
 
 
     float cos{ cosf(DirectX::XMConvertToRadians(angle)) };
@@ -158,8 +147,8 @@ Vertex* Sprite::Screen_to_NDC(ID3D11DeviceContext* immediate_context, float dx, 
 
 
     //回転の中心を矩形の中心点にした場合
-    float cx = dx + dw * 0.5f;
-    float cy = dy + dh * 0.5f;
+    float cx = dx;
+    float cy = dy;
     rotate(x0, y0, cx, cy, cos, sin);
     rotate(x1, y1, cx, cy, cos, sin);
     rotate(x2, y2, cx, cy, cos, sin);
@@ -167,7 +156,7 @@ Vertex* Sprite::Screen_to_NDC(ID3D11DeviceContext* immediate_context, float dx, 
 
 
 
-    //スクリーン座標計からNDCへの座標変換を行う
+    //スクリーン座標系からNDCへの座標変換を行う
     x0 = 2.0f * x0 / viewport.Width - 1.0f;
     y0 = 1.0f - 2.0f * y0 / viewport.Height;
     x1 = 2.0f * x1 / viewport.Width - 1.0f;
@@ -246,29 +235,14 @@ void Sprite::Bind(ID3D11DeviceContext* immediate_context)
 }
 
 
-void Sprite::render(ID3D11DeviceContext* immediate_context, float dx, float dy, float dw, float dh, float r, float g, float b, float a, float angle)
+void Sprite::render(ID3D11DeviceContext* immediate_context,
+    float dx, float dy, float dw, float dh,
+    float sx, float sy, float sw, float sh,
+    float px, float py,
+    float r, float g, float b, float a,
+    float angle/*degree*/)
 {
-    Vertex* vertices = Screen_to_NDC(immediate_context, dx, dy, dw, dh, r, g, b, a, angle);
-
-    if (vertices != nullptr)
-    {
-        vertices[0].texcoord.x = 0;
-        vertices[0].texcoord.y = 0;
-        vertices[1].texcoord.x = 1;
-        vertices[1].texcoord.y = 0;
-        vertices[2].texcoord.x = 0;
-        vertices[2].texcoord.y = 1;
-        vertices[3].texcoord.x = 1;
-        vertices[3].texcoord.y = 1;
-    }
-
-    Bind(immediate_context);
-}
-
-
-void Sprite::render(ID3D11DeviceContext* immediate_context, float dx, float dy, float dw, float dh, float r, float g, float b, float a, float sx, float sy, float sw, float sh, float angle)
-{
-    Vertex* vertices = Screen_to_NDC(immediate_context, dx, dy, dw, dh, r, g, b, a, angle);
+    Vertex* vertices = Screen_to_NDC(immediate_context, dx, dy, dw, dh, sx, sy, sw, sh, px, py, r, g, b, a, angle);
 
     if (vertices != nullptr)
     {
@@ -294,5 +268,4 @@ Sprite::~Sprite()
     input_layout->Release();
     vertex_buffer->Release();
     shader_resource_view->Release();
-    //rasterizer_state->Release();
 }

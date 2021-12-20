@@ -40,13 +40,13 @@ void Scene_Game::uninitialize()
 }
 
 
-void Scene_Game::update(float elapsedTime)
+void Scene_Game::update(float elapsed_time)
 {
-    Entity_Manager::instance().update(elapsedTime);
+    Entity_Manager::instance().update(elapsed_time);
 }
 
 
-void Scene_Game::render(float elapsedTime)
+void Scene_Game::render(float elapsed_time)
 {
     ID3D11DeviceContext* device_context_ = parent->device_context();
 
