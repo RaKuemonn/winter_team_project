@@ -40,6 +40,8 @@ public:
         
         if (enemy.get() == nullptr)return;
 
+        enemy->set_position(position_);
+
         Entity_Manager::instance().spawn_register(enemy);
     }
 
