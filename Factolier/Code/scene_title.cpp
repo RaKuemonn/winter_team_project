@@ -94,7 +94,7 @@ void Scene_Title::render(float elapsed_time)
         0.0f, 0.0f, 0.0f, 1.0f
     };
     //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(10.0f, 0.15f, 10.0f);
+    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 0.15f, 1.0f);
     DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
     DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
     DirectX::CXMMATRIX W = S * R * T;
