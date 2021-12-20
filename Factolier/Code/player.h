@@ -50,14 +50,19 @@ public:
 
 private:
     void update_velocity(const float elapsed_time_);
-    void check_has_vehicle();
+    void reference_vehicle_position();
+    void update_vehicle();
+    _NODISCARD bool check_has_vehicle() const;
     void create_vehicle();
-    void reference_vehicle();
+    void control_vehicle();
     inline static void input(DirectX::XMFLOAT3& input_direction, class Input_Manager& input_);
 
 private:
     std::unique_ptr<Velocity> m_velocity = nullptr;
-    std::weak_ptr<Entity> wkp_vehicle;
+    std::weak_ptr<Entity> m_wkp_vehicle;
     DirectX::XMFLOAT3 input_direction = {};
+
+private:
+    static constexpr float pudding_y = 5.0f;
 
 };

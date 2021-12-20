@@ -26,6 +26,7 @@ public:
     virtual void init()                             = 0;
     virtual void update(const float elapsed_time)   = 0;
     virtual void render()                           = 0;
+    virtual void imgui() {};
 
 public:
     // GetterŠÖ” //

@@ -41,7 +41,7 @@ void Sphere_Vehicle::update(const float elapsed_time_)
     collision();
 
     // モデルの更新
-    get_model()->play_animation(elapsed_time_, 0);
+    //get_model()->play_animation(elapsed_time_, 0);
 }
 
 void Sphere_Vehicle::render()
@@ -65,12 +65,17 @@ void Sphere_Vehicle::render()
     // ーーーーーーーーーー //
 }
 
-void Sphere_Vehicle::update_velocity(const float elapsed_time_)
+void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
 {
     constexpr float speed = 5.0f;
 
-    // 入力方向に加速
-    //m_velocity->add(input_direction * speed);
+    // 引数の方向に加速
+    m_velocity->add(direction_ * speed);
+}
+
+
+void Sphere_Vehicle::update_velocity(const float elapsed_time_)
+{
 
     // 速度の更新
     m_velocity->update(elapsed_time_);
@@ -79,11 +84,14 @@ void Sphere_Vehicle::update_velocity(const float elapsed_time_)
 void Sphere_Vehicle::rotate(const float elapsed_time_)
 {
     const DirectX::XMVECTOR xmvector_velocity = DirectX::XMLoadFloat3(&m_velocity->get());
+    const float velocity_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(xmvector_velocity));
+
+    if (velocity_length < FLT_EPSILON) return;
+
     const DirectX::XMVECTOR xmvector_up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
     const DirectX::XMVECTOR rotate_axis = DirectX::XMVector3Normalize(DirectX::XMVector3Cross(xmvector_up, xmvector_velocity));
 
 
-    const float velocity_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(xmvector_velocity));
     const DirectX::XMVECTOR xmvector_quaternion = DirectX::XMQuaternionRotationAxis(rotate_axis, -velocity_length * elapsed_time_);
 
     DirectX::XMFLOAT4 xmf4_quaternion = {};

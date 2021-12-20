@@ -9,7 +9,7 @@
 class Scene_Game : public Scene
 {
 public:
-	~Scene_Game() override {}
+	~Scene_Game() override = default;
 
 	void initialize() override;
 	void uninitialize() override;
@@ -17,7 +17,5 @@ public:
 	void render(float elapsedTime) override;
 
 private:
-	std::unique_ptr<Entity> player = nullptr;
-
 
 };

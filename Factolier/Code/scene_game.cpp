@@ -2,6 +2,8 @@
 #include "scene_game.h"
 #include "scene_manager.h"
 #include "camera.h"
+#include "entity_manager.h"
+#include "sv_ball.h"
 
 void Scene_Game::initialize()
 {
@@ -17,19 +19,30 @@ void Scene_Game::initialize()
         0.1f,
         1000.0f);
     
-    player = std::make_unique<Player>(parent);
+    Entity_Manager::instance().spawn_register(std::make_unique<Player>(parent));
+    //Entity_Manager::instance().spawn_register(std::make_unique<SV_Ball>(parent));
+    //Entity_Manager::instance().spawn_register(std::make_unique<SV_Ball>(parent));
+    //Entity_Manager::instance().spawn_register(std::make_unique<SV_Ball>(parent));
+    //Entity_Manager::instance().spawn_register(std::make_unique<Player>(parent));
+    //Entity_Manager::instance().spawn_register(std::make_unique<SV_Ball>(parent));
+
+    std::vector<short> vec_tag = {};
+
+    vec_tag = Entity_Manager::instance().get_entity(Tag::Player);
+
+    int data = vec_tag.size();
 }
 
 
 void Scene_Game::uninitialize()
 {
-
+    Entity_Manager::instance().all_clear();
 }
 
 
 void Scene_Game::update(float elapsedTime)
 {
-    player->update(elapsedTime);
+    Entity_Manager::instance().update(elapsedTime);
 }
 
 
@@ -48,5 +61,5 @@ void Scene_Game::render(float elapsedTime)
     parent->state_manager()->setRS(RS::SOLID_NONE);
 
 
-    player->render();
+    Entity_Manager::instance().render();
 }

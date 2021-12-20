@@ -77,6 +77,7 @@ void Player::render()
 #include "scene_manager.h"
 #include "input_manager.h"
 #include "sphere_vehicle.h"
+#include "sv_ball.h"
 
 
 Player::Player(Scene_Manager* ptr_scene_manager_)
@@ -89,8 +90,6 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
     m_velocity = std::make_unique<Velocity>();
     m_velocity->set_mass(1.0f);
 
-    
-
     constexpr float scale = 0.01f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
@@ -100,14 +99,16 @@ void Player::update(const float elapsed_time_)
 {
     // 入力値の受け取り
     input(input_direction, *get_scene_manager()->input_manager());
-    
-    // 速度の更新
-    update_velocity(elapsed_time_);
-    
-    // 位置の更新
-    get_transform()->add_position(m_velocity->get());
 
-    //currentBall->move_direction(input_direction);
+    // 乗り物の更新 ・ 位置の更新
+    update_vehicle();
+    
+    //// 速度の更新
+    //update_velocity(elapsed_time_);
+    //
+    //// 位置の更新
+    //get_transform()->add_position(m_velocity->get());
+
 
     // 姿勢の更新
     get_transform()->Update();
@@ -148,34 +149,60 @@ void Player::update_velocity(const float elapsed_time_)
     m_velocity->update(elapsed_time_);
 }
 
-void Player::check_has_vehicle()
+void Player::reference_vehicle_position()
 {
-    // 参照先があるか          (expired()は参照先が無いときにtrueになる)
-    if (wkp_vehicle.expired() == false)
+    // 1 frame 遅れている
+
+    DirectX::XMFLOAT3 vehicle_position = m_wkp_vehicle.lock()->get_position();
+    vehicle_position.y += pudding_y;
+
+    set_position(vehicle_position);
+
+}
+
+
+void Player::update_vehicle()
+{
+    //  乗ってる乗り物があるか
+    if(check_has_vehicle())
     {
-
-        reference_vehicle();
-
+        // あるので更新する
+        control_vehicle();
+        reference_vehicle_position();
         return;
     }
+    
     // ないのでweak_ptrを解放しておく
-    wkp_vehicle.reset();
+    m_wkp_vehicle.reset();
 
     create_vehicle();
 }
 
+bool Player::check_has_vehicle() const
+{
+    // 参照先があるか          (expired()は参照先が無いときにtrueになる)
+    return (m_wkp_vehicle.expired() == false);
+}
+
 void Player::create_vehicle()
 {
-    std::unique_ptr<Entity> vehicle = std::make_unique<Sphere_Vehicle>(get_scene_manager());
+    //std::shared_ptr<Entity> vehicle = std::make_shared<Sphere_Vehicle>(get_scene_manager());
+    std::shared_ptr<Entity> vehicle = std::make_shared<SV_Ball>(get_scene_manager());
 
-    
+    // 位置の設定
+    DirectX::XMFLOAT3 position = get_position();
+    position.y += -1.0f * pudding_y;
+    vehicle->set_position(position);
+
+    // プレイヤーが参照する乗り物を変更
+    m_wkp_vehicle = vehicle;
 
     Entity_Manager::instance().spawn_register(vehicle);
 }
 
-void Player::reference_vehicle()
+void Player::control_vehicle()
 {
-    
+    static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->move_direction(input_direction);
 }
 
 
