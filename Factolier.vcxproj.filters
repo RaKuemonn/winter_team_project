@@ -177,6 +177,9 @@
     <ClCompile Include="Factolier\Code\enemy_spawner.cpp">
       <Filter>Factolier\Entity\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\shadow_map.cpp">
+      <Filter>Factolier\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -340,6 +343,9 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\enemy_spawner.h">
       <Filter>Factolier\Entity\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\shadow_map.h">
+      <Filter>Factolier\Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
