@@ -13,8 +13,8 @@ public:
 
 	virtual void initialize() = 0;
 	virtual void uninitialize() = 0;
-	virtual void update(float elapsedTime) = 0;
-	virtual void render(float elapsedTime) = 0;
+	virtual void update(float elapsed_time) = 0;
+	virtual void render(float elapsed_time) = 0;
 
 protected:
 	Scene_Manager* parent = nullptr;

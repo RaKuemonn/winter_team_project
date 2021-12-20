@@ -43,16 +43,16 @@ void Scene_Title::uninitialize()
 }
 
 
-void Scene_Title::update(float elapsedTime)
+void Scene_Title::update(float elapsed_time)
 {
-    camera_controller->update(elapsedTime, parent->input_manager());
+    camera_controller->update(elapsed_time, parent->input_manager());
 
     //entity_manager->update(elapsed_time);
 
 }
 
 
-void Scene_Title::render(float elapsedTime)
+void Scene_Title::render(float elapsed_time)
 {
     ID3D11DeviceContext* device_context_ = parent->device_context();
 
@@ -71,7 +71,7 @@ void Scene_Title::render(float elapsedTime)
     
     shader->begin(parent->device_context());
     
-    sky_box->render(parent->device_context()); // ˆê”Ôæ‚É•`‰æ‚³‚¹‚é
+    sky_box->render(parent->device_context()); // ï¿½ï¿½Ôï¿½É•`ï¿½æ‚³ï¿½ï¿½ï¿½ï¿½
     
     shader->end(parent->device_context());
 
@@ -104,7 +104,7 @@ void Scene_Title::render(float elapsedTime)
 
     shader = parent->shader_manager()->get_shader(Shaders::OCEAN);
 
-    shader->begin(parent->device_context(), elapsedTime * 0.5f);
+    shader->begin(parent->device_context(), elapsed_time * 0.5f);
 
     test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.5f });
     //test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);

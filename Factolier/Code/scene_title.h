@@ -18,8 +18,8 @@ public:
 
 	void initialize() override;
 	void uninitialize() override;
-	void update(float elapsedTime) override;
-	void render(float elapsedTime) override;
+	void update(float elapsed_time) override;
+	void render(float elapsed_time) override;
 
 private:
 	std::unique_ptr<Sprite_Batch> title_back = nullptr;

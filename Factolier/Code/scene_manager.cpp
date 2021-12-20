@@ -21,24 +21,24 @@ void Scene_Manager::uninitialize()
 }
 
 
-void Scene_Manager::update(float elapsedTime, const HWND& hwnd_)
+void Scene_Manager::update(float elapsed_time, const HWND& hwnd_)
 {
     input_manager_.get()->update(hwnd_);
 
     if (scene != nullptr)
     {
-        scene->update(elapsedTime);
+        scene->update(elapsed_time);
     }
 
     sound_manager_.get()->update();
 }
 
 
-void Scene_Manager::render(float elapsedTime)
+void Scene_Manager::render(float elapsed_time)
 {
     if (scene != nullptr)
     {
-        scene->render(elapsedTime);
+        scene->render(elapsed_time);
     }
 }
 

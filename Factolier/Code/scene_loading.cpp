@@ -20,7 +20,7 @@ void Scene_Loading::uninitialize()
 }
 
 
-void Scene_Loading::update(float elapsedTime)
+void Scene_Loading::update(float elapsed_time)
 {
     //次のシーンの準備が完了したらシーンを切り替える
     if (next_scene->is_ready())
@@ -30,7 +30,7 @@ void Scene_Loading::update(float elapsedTime)
 }
 
 
-void Scene_Loading::render(float elapsedTime)
+void Scene_Loading::render(float elapsed_time)
 {
     
 }
