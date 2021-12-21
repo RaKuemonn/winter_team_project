@@ -1,5 +1,6 @@
 #pragma once
 
+#include <DirectXMath.h>
 #include <memory>
 #include <vector>
 class Stage;
@@ -18,7 +19,10 @@ public:
         return instance_;
     }
 
+    void update(const float elapsed_time);
     void render();
+    bool ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, struct Hit_Result* hit_result_);
+    
 
     void spawn_register(std::unique_ptr<Stage>& stage);
     void spawn_register(std::unique_ptr<Stage>&& stage);

@@ -4,20 +4,18 @@
 
 void Entity_Manager::update(const float elapsed_time)
 {
-
-    for (auto& entity : vec_entities)
-    {
-        entity->update(elapsed_time);
-    }
-
-
     for(auto& entity : vec_registers)
     {
         vec_entities.emplace_back(entity);
     }
     vec_registers.clear();
 
-    
+
+    for (auto& entity : vec_entities)
+    {
+        entity->update(elapsed_time);
+    }
+
     for (auto& entity : vec_removes)
     {
         auto it = std::find(vec_entities.begin(), vec_entities.end(), entity);

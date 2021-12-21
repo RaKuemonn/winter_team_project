@@ -199,6 +199,7 @@
     <ClCompile Include="Factolier\Code\sphere_vehicle.cpp" />
     <ClCompile Include="Factolier\Code\sprite.cpp" />
     <ClCompile Include="Factolier\Code\sprite_batch.cpp" />
+    <ClCompile Include="Factolier\Code\stage.cpp" />
     <ClCompile Include="Factolier\Code\stage_1.cpp" />
     <ClCompile Include="Factolier\Code\stage_manager.cpp" />
     <ClCompile Include="Factolier\Code\state_manager.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Factolier\Code\ability.h" />
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
+    <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\enemy.h" />
     <ClInclude Include="Factolier\Code\enemy_none.h" />
     <ClInclude Include="Factolier\Code\enemy_spawner.h" />
