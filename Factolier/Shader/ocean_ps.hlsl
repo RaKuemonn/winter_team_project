@@ -24,6 +24,11 @@ float4 main(VS_OUT pin) : SV_TARGET
 	//カラーテクスチャの合成
 	float4 diffuse_color = diffuse_color2 * blend_alpha + diffuse_color1 * (1 - blend_alpha);
 
+	// Inverse gamma process
+	const float GAMMA = 2.2;
+	diffuse_color.rgb = pow(diffuse_color.rgb, GAMMA);
+	diffuse_color.rgb = pow(diffuse_color.rgb, 1.0f / GAMMA);
+
 	float3 E = normalize(pin.world_position.xyz - camera_position.xyz);
 	float3 L = normalize(light_direction.xyz);
 

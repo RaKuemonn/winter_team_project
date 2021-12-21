@@ -424,6 +424,9 @@
     <FxCompile Include="Factolier\Shader\static_mesh_vs.hlsl">
       <Filter>Factolier\HLSL\Group</Filter>
     </FxCompile>
+    <FxCompile Include="Factolier\Shader\shadow_map_vs.hlsl">
+      <Filter>Factolier\HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Factolier\Shader\shading_function.hlsli">

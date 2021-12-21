@@ -61,6 +61,42 @@ void Shadow_Map::initialize(ID3D11Device* device)
 
 
 
+	//定数バッファオブジェクトの生成
+
+	//シーンバッファ
+	D3D11_BUFFER_DESC buffer_desc{};
+	buffer_desc.ByteWidth = sizeof(Scene_Constant);
+	buffer_desc.Usage = D3D11_USAGE_DEFAULT;
+	buffer_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	buffer_desc.CPUAccessFlags = 0;
+	buffer_desc.MiscFlags = 0;
+	buffer_desc.StructureByteStride = 0;
+
+	hr = device->CreateBuffer(&buffer_desc, nullptr, scene_buffer.GetAddressOf());
+	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
+
+
+
+	// サンプラステートの生成
+	D3D11_SAMPLER_DESC sampler_desc{};
+	sampler_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+	sampler_desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+	sampler_desc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+	sampler_desc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+	sampler_desc.MipLODBias = 0;
+	sampler_desc.MaxAnisotropy = 16;
+	sampler_desc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	sampler_desc.BorderColor[0] = FLT_MAX;
+	sampler_desc.BorderColor[1] = FLT_MAX;
+	sampler_desc.BorderColor[2] = FLT_MAX;
+	sampler_desc.BorderColor[3] = FLT_MAX;
+	sampler_desc.MinLOD = 0;
+	sampler_desc.MaxLOD = D3D11_FLOAT32_MAX;
+	hr = device->CreateSamplerState(&sampler_desc, shadow_sampler_state.GetAddressOf());
+
+
+
+
 	// シャドウマップ生成用シェーダー
 	D3D11_INPUT_ELEMENT_DESC input_element_desc[]
 	{
@@ -104,15 +140,37 @@ void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_tim
 	DirectX::XMMATRIX S, R, T;
 	DirectX::XMFLOAT4X4 world;
 	// ライトの位置から見た視線行列を生成
-	DirectX::XMVECTOR LightPosition = DirectX::XMLoadFloat4(&light_direction);
+	Light* light = Light_Manager::instance().get_light(Lights::DEFAULT);
+
+	DirectX::XMVECTOR LightPosition = DirectX::XMLoadFloat4(&light->light_position);
 	LightPosition = DirectX::XMVectorScale(LightPosition, -50);
 	DirectX::XMMATRIX V = DirectX::XMMatrixLookAtLH(LightPosition,
 		DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
 		DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 
-	// シャドウマップに描画したい範囲の射影行列を生成
+	// シャドウマップに描画したい範囲の正射影行列を生成
 	DirectX::XMMATRIX P = DirectX::XMMatrixOrthographicLH(SHADOW_DRAWRECT, SHADOW_DRAWRECT,
 		0.1f, 200.0f);
+
+
+
+	//定数バッファの更新
+	DirectX::XMFLOAT4X4 light_view_projection;
+	DirectX::XMStoreFloat4x4(&light_view_projection, V * P);
+
+	Scene_Constant scene{};
+	scene.view_projection = light_view_projection;
+	immediate_context->UpdateSubresource(scene_buffer.Get(), 0, 0, &scene, 0, 0);
+	immediate_context->VSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
+	immediate_context->PSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
+
+	Shadow_Constant shadow_map{};
+	shadow_map.light_view_projection = light_view_projection;
+	immediate_context->UpdateSubresource(shadow_buffer.Get(), 0, 0, &shadow_map, 0, 0);
+	immediate_context->VSSetConstantBuffers(6, 1, shadow_buffer.GetAddressOf());
+	immediate_context->PSSetConstantBuffers(6, 1, shadow_buffer.GetAddressOf());
+
+
 }
 
 

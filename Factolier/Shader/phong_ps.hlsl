@@ -18,6 +18,11 @@ float4 main(VS_OUT pin) : SV_TARGET
 {
 	float4 diffuse_color = diffuse_texture.Sample(sampler_states[ANISOTROPIC], pin.texcoord);
 
+	// Inverse gamma process
+	const float GAMMA = 2.2;
+	diffuse_color.rgb = pow(diffuse_color.rgb, GAMMA);
+	diffuse_color.rgb = pow(diffuse_color.rgb, 1.0f / GAMMA);
+
 
 	float3 E = normalize(pin.world_position.xyz - camera_position.xyz);
 	float3 L = normalize(light_direction.xyz);
