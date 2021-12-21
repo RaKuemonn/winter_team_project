@@ -183,6 +183,9 @@
     <ClCompile Include="Factolier\Code\stage_1.cpp">
       <Filter>Factolier\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_manager.cpp">
+      <Filter>Factolier\Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">

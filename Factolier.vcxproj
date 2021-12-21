@@ -199,6 +199,7 @@
     <ClCompile Include="Factolier\Code\sprite.cpp" />
     <ClCompile Include="Factolier\Code\sprite_batch.cpp" />
     <ClCompile Include="Factolier\Code\stage_1.cpp" />
+    <ClCompile Include="Factolier\Code\stage_manager.cpp" />
     <ClCompile Include="Factolier\Code\state_manager.cpp" />
     <ClCompile Include="Factolier\Code\static_mesh.cpp" />
     <ClCompile Include="Factolier\Code\sv_ball.cpp" />
