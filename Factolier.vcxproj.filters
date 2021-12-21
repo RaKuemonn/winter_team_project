@@ -186,6 +186,9 @@
     <ClCompile Include="Factolier\Code\stage_manager.cpp">
       <Filter>Factolier\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\light_manager.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -358,6 +361,9 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\stage_1.h">
       <Filter>Factolier\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\light_manager.h">
+      <Filter>Factolier\Accessibility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

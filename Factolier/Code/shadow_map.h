@@ -11,6 +11,9 @@ class Shadow_Map : Shader
 public:
     void initialize(ID3D11Device* device) override;
 
+    void begin(ID3D11DeviceContext* immediate_context, float elapsed_time = 0.0f) override;
+    void end(ID3D11DeviceContext* immediate_context) override;
+
 
     Microsoft::WRL::ComPtr<ID3D11DepthStencilView> shadow_depth_stencil_view;
     Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shadow_shader_resource_view;

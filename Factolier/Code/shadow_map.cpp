@@ -79,3 +79,46 @@ void Shadow_Map::initialize(ID3D11Device* device)
 		input_element_desc, ARRAYSIZE(input_element_desc));
 
 }
+
+
+void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_time)
+{
+	// シャドウマップ用の深度バッファに設定
+	immediate_context->ClearDepthStencilView(shadow_depth_stencil_view.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	immediate_context->OMSetRenderTargets(0, nullptr, shadow_depth_stencil_view.Get());
+	// ビューポートの設定
+	D3D11_VIEWPORT viewport{};
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.Width = static_cast<float>(SHADOW_WIDTH);
+	viewport.Height = static_cast<float>(SHADOW_HEIGHT);
+	viewport.MinDepth = 0.0f;
+	viewport.MaxDepth = 1.0f;
+	immediate_context->RSSetViewports(1, &viewport);
+	
+	// シェーダー設定
+	immediate_context->IASetInputLayout(input_layout.Get());
+	immediate_context->VSSetShader(vertex_shader.Get(), nullptr, 0);
+	immediate_context->PSSetShader(nullptr, nullptr, 0);
+
+	DirectX::XMMATRIX S, R, T;
+	DirectX::XMFLOAT4X4 world;
+	// ライトの位置から見た視線行列を生成
+	DirectX::XMVECTOR LightPosition = DirectX::XMLoadFloat4(&light_direction);
+	LightPosition = DirectX::XMVectorScale(LightPosition, -50);
+	DirectX::XMMATRIX V = DirectX::XMMatrixLookAtLH(LightPosition,
+		DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
+		DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
+
+	// シャドウマップに描画したい範囲の射影行列を生成
+	DirectX::XMMATRIX P = DirectX::XMMatrixOrthographicLH(SHADOW_DRAWRECT, SHADOW_DRAWRECT,
+		0.1f, 200.0f);
+}
+
+
+void Shadow_Map::end(ID3D11DeviceContext* immediate_context)
+{
+    
+}
+
+
