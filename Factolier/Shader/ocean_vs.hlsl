@@ -42,7 +42,7 @@ VS_OUT main(VS_IN vin)
 	float2 scroll_timer = { timer.x, timer.x };
 
 	vout.texcoord1 = vin.texcoord + scroll_direction * scroll_timer;
-	vout.texcoord2 = vin.texcoord - scroll_direction * scroll_timer;
+	vout.texcoord2 = vin.texcoord - scroll_direction * scroll_timer * 0.7f;
 
 	vout.color = material_color;
 

@@ -62,14 +62,14 @@ void Scene_Title::render(float elapsed_time)
 
     parent->state_manager()->setBS(BS::ALPHA);
 
-    parent->state_manager()->setRS(RS::SOLID_NONE);
+    parent->state_manager()->setRS(RS::SOLID_BACK);
 
 
     Shader* shader = parent->shader_manager()->get_shader(Shaders::SKY);
     
     shader->begin(parent->device_context());
     
-    sky_box->render(parent->device_context()); // ��Ԑ�ɕ`�悳����
+    sky_box->render(parent->device_context());
     
     shader->end(parent->device_context());
 
@@ -93,9 +93,13 @@ void Scene_Title::render(float elapsed_time)
     };
     //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
     DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 0.15f, 1.0f);
-    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
+    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(0), 0, 0);
     DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
-    DirectX::CXMMATRIX W = S * R * T;
+    DirectX::XMMATRIX W = S * R * T;
+
+    XMFLOAT4X4 coordinate_system_transforms = { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };	// 0:RHS Y-UP
+    XMMATRIX CW = XMLoadFloat4x4(&coordinate_system_transforms);
+    W *= CW;
     DirectX::XMStoreFloat4x4(&world, W);
 
     parent->state_manager()->setDS(DS::ON_ON);
