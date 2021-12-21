@@ -365,6 +365,9 @@
     <ClInclude Include="Factolier\Code\light_manager.h">
       <Filter>Factolier\Accessibility</Filter>
     </ClInclude>
+    <ClInclude Include="Factolier\Code\light.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
