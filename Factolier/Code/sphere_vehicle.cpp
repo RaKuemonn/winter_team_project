@@ -69,7 +69,7 @@ void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
 void Sphere_Vehicle::update_velocity(const float elapsed_time_)
 {
 
-    if (m_is_free) m_velocity->add(m_velocity->get());
+    //if (m_is_free) m_velocity->add(m_velocity->get());
 
     // ‘¬“x‚ÌXV
     m_velocity->update(elapsed_time_);
@@ -86,7 +86,7 @@ void Sphere_Vehicle::rotate(const float elapsed_time_)
     const DirectX::XMVECTOR rotate_axis = DirectX::XMVector3Normalize(DirectX::XMVector3Cross(xmvector_up, xmvector_velocity));
 
 
-    const DirectX::XMVECTOR xmvector_quaternion = DirectX::XMQuaternionRotationAxis(rotate_axis, -velocity_length * elapsed_time_);
+    const DirectX::XMVECTOR xmvector_quaternion = DirectX::XMQuaternionRotationAxis(rotate_axis, velocity_length);
 
     DirectX::XMFLOAT4 xmf4_quaternion = {};
     DirectX::XMStoreFloat4(&xmf4_quaternion, xmvector_quaternion);

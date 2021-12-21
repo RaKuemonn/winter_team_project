@@ -181,7 +181,7 @@ public:
     void set_position(const DirectX::XMFLOAT3& position_)                                   {                                         m_position.set(position_);                        m_was_transition = true; }
     void set_scale(const DirectX::XMFLOAT3& scale_)                                         {                                         m_scale.set(scale_);                              m_was_transition = true; }
     void set_euler(const DirectX::XMFLOAT3& euler_)                                         {                                         m_quaternion.set_euler(euler_);                   m_was_transition = true; }
-    void set_quaternion(const DirectX::XMFLOAT4& quaternion_)                               {                                         m_quaternion.set(quaternion_);                    m_was_transition = true; }
+    void set_quaternion(const DirectX::XMFLOAT4& quaternion_)                               { if(zero_check(quaternion_))return;      m_quaternion.set(quaternion_);                    m_was_transition = true; }
     void set_slerp_quaternion(const DirectX::XMFLOAT4& to_quaternion_, const float ratio)   { if(zero_check(to_quaternion_))return;   m_quaternion.set_slerp(to_quaternion_, ratio);    m_was_transition = true; }
     //void add_euler(const DirectX::XMFLOAT3& add_euler_)                                     { zero_check(add_euler_);       m_quaternion.add_euler(add_euler_);                   m_was_transition = true; }
     void add_position(const DirectX::XMFLOAT3& add_position_)                               { if(zero_check(add_position_))return;    m_position.add(add_position_);                    m_was_transition = true; }

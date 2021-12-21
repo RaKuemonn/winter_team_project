@@ -32,6 +32,7 @@ public:
     // Getterä÷êî //
     _NODISCARD Model*                      get_model()         const;
     _NODISCARD const DirectX::XMFLOAT3     get_position()      const;
+    _NODISCARD const DirectX::XMFLOAT4     get_quaternion()    const;
     _NODISCARD const DirectX::XMFLOAT3     get_scale()         const;
     _NODISCARD const DirectX::XMFLOAT3     get_axis_x()        const;
     _NODISCARD const DirectX::XMFLOAT3     get_axis_y()        const;
@@ -43,6 +44,7 @@ public:
     // Setterä÷êî //
     void set_position(const DirectX::XMFLOAT3& position_)   const;
     void add_position(const DirectX::XMFLOAT3& velocity)    const;
+    void set_quaternion(const DirectX::XMFLOAT4& quaternion_) const;
 
 
 protected:

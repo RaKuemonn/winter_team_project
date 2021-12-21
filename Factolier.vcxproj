@@ -198,6 +198,7 @@
     <ClCompile Include="Factolier\Code\sphere_vehicle.cpp" />
     <ClCompile Include="Factolier\Code\sprite.cpp" />
     <ClCompile Include="Factolier\Code\sprite_batch.cpp" />
+    <ClCompile Include="Factolier\Code\stage_1.cpp" />
     <ClCompile Include="Factolier\Code\state_manager.cpp" />
     <ClCompile Include="Factolier\Code\static_mesh.cpp" />
     <ClCompile Include="Factolier\Code\sv_ball.cpp" />
@@ -251,6 +252,9 @@
     <ClInclude Include="Factolier\Code\sphere_vehicle.h" />
     <ClInclude Include="Factolier\Code\sprite.h" />
     <ClInclude Include="Factolier\Code\sprite_batch.h" />
+    <ClInclude Include="Factolier\Code\stage.h" />
+    <ClInclude Include="Factolier\Code\stage_1.h" />
+    <ClInclude Include="Factolier\Code\stage_manager.h" />
     <ClInclude Include="Factolier\Code\state_manager.h" />
     <ClInclude Include="Factolier\Code\static_mesh.h" />
     <ClInclude Include="Factolier\Code\sv_ball.h" />

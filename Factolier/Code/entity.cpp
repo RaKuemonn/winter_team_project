@@ -33,6 +33,11 @@ const DirectX::XMFLOAT3 Entity::get_position() const
     return m_transform->get_position();
 }
 
+const DirectX::XMFLOAT4 Entity::get_quaternion() const
+{
+    return m_transform->get_quaternion();
+}
+
 const DirectX::XMFLOAT3 Entity::get_scale() const
 {
     return m_transform->get_scale();
@@ -84,6 +89,11 @@ void Entity::set_position(const DirectX::XMFLOAT3& position_) const
 void Entity::add_position(const DirectX::XMFLOAT3& velocity) const
 {
     m_transform->add_position(velocity);
+}
+
+void Entity::set_quaternion(const DirectX::XMFLOAT4& quaternion_) const
+{
+    m_transform->set_quaternion(quaternion_);
 }
 
 

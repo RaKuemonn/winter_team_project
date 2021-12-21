@@ -152,8 +152,6 @@ void Player::update_vehicle()
         {
             static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
 
-
-
             return;
         }
             
@@ -161,9 +159,6 @@ void Player::update_vehicle()
         reference_vehicle_position();
         return;
     }
-    
-    // ないのでweak_ptrを解放しておく
-    m_wkp_vehicle.reset();
 
     create_vehicle();
 }
@@ -182,6 +177,16 @@ bool Player::check_has_vehicle() const
 
 void Player::create_vehicle()
 {
+    DirectX::XMFLOAT4 quaternion = { 0.0f,0.0f,0.0f,1.0f };
+    
+    if (m_wkp_vehicle.expired() == false)
+    {
+        quaternion = m_wkp_vehicle.lock().get()->get_quaternion();
+    }
+
+    // weak_ptrを解放しておく
+    m_wkp_vehicle.reset();
+
     //std::shared_ptr<Entity> vehicle = std::make_shared<Sphere_Vehicle>(get_scene_manager());
     std::shared_ptr<Entity> vehicle = std::make_shared<SV_Ball>(get_scene_manager());
 
@@ -189,6 +194,9 @@ void Player::create_vehicle()
     DirectX::XMFLOAT3 position = get_position();
     position.y += -1.0f * pudding_y;
     vehicle->set_position(position);
+
+    // 回転値の設定
+    vehicle->set_quaternion(quaternion);
 
     // プレイヤーが参照する乗り物を変更
     m_wkp_vehicle = vehicle;

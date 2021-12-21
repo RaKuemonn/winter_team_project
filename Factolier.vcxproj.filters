@@ -52,6 +52,9 @@
     <Filter Include="Factolier\Entity\Manager">
       <UniqueIdentifier>{eb2634bf-d7ca-4ba6-8a01-b0080c1adfa9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Stage">
+      <UniqueIdentifier>{82948afa-ee6c-4c6c-8747-693ce9856657}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_manager.cpp">
@@ -176,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="Factolier\Code\enemy_none.cpp">
       <Filter>Factolier\Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_1.cpp">
+      <Filter>Factolier\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,6 +346,15 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\enemy_none.h">
       <Filter>Factolier\Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage.h">
+      <Filter>Factolier\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_manager.h">
+      <Filter>Factolier\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_1.h">
+      <Filter>Factolier\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
