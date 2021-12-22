@@ -17,6 +17,8 @@ public:
 
         m_velocity += (m_resultant / m_mass) * elapsed_time; // フレーム単位の加速力を加える
 
+        epsilon_cut(*this); // 閾値以下の切り捨て
+
         m_resultant = {};
     }
 
@@ -40,7 +42,7 @@ private:
 
 private:
     // 摩擦処理
-    static void update_friction(const float elapsed_time, Velocity& me)
+    inline static void update_friction(const float elapsed_time, Velocity& me)
     {
         // m_massとm_frictionの初期値が0なので、
         // set_mass()とset_friction()しないと計算上動かない
@@ -48,8 +50,20 @@ private:
     }
 
     // 空気抵抗処理
-    static void update_air_drag(const float elapsed_time, Velocity& me, const float air_drag_)
+    inline static void update_air_drag(const float elapsed_time, Velocity& me, const float air_drag_)
     {
         me.add(me.m_velocity * -1.0f * air_drag_);
+    }
+
+    // 閾値の切り捨て処理
+    inline static void epsilon_cut(Velocity& me)
+    {
+        // 速度が閾値以下のとき,値を切り捨てする
+        if (DirectX::XMVectorGetX(
+            DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&me.m_velocity))) <= FLT_EPSILON
+            )
+        {
+            me.m_velocity = {};
+        }
     }
 };

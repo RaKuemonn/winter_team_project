@@ -201,7 +201,9 @@
     <ClCompile Include="Factolier\Code\stage_2.cpp">
       <Filter>Factolier\Stage\stage_2</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\stage_1_movement.cpp" />
+    <ClCompile Include="Factolier\Code\stage_1_movement.cpp">
+      <Filter>Factolier\Stage\stage_1</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
