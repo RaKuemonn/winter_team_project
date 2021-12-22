@@ -20,7 +20,7 @@ public:
 
     void change_scene(Scene* next_scene);
     void clear();
-
+      
 private:
     ID3D11Device* device_ = nullptr;
     ID3D11DeviceContext* immediate_context_ = nullptr;

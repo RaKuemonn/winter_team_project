@@ -55,6 +55,12 @@
     <Filter Include="Factolier\Stage">
       <UniqueIdentifier>{82948afa-ee6c-4c6c-8747-693ce9856657}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Stage\stage_1">
+      <UniqueIdentifier>{d4cd678f-ea04-4b30-a28f-771dfc1ff63c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Stage\stage_2">
+      <UniqueIdentifier>{3d91e0d0-643e-4e5b-8f21-d9f37234f60c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_manager.cpp">
@@ -180,9 +186,6 @@
     <ClCompile Include="Factolier\Code\enemy_none.cpp">
       <Filter>Factolier\Entity\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\stage_1.cpp">
-      <Filter>Factolier\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="Factolier\Code\stage_manager.cpp">
       <Filter>Factolier\Stage</Filter>
     </ClCompile>
@@ -192,6 +195,13 @@
     <ClCompile Include="Factolier\Code\stage.cpp">
       <Filter>Factolier\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_1.cpp">
+      <Filter>Factolier\Stage\stage_1</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_2.cpp">
+      <Filter>Factolier\Stage\stage_2</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_1_movement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -362,9 +372,6 @@
     <ClInclude Include="Factolier\Code\stage_manager.h">
       <Filter>Factolier\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\stage_1.h">
-      <Filter>Factolier\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="Factolier\Code\light_manager.h">
       <Filter>Factolier\Accessibility</Filter>
     </ClInclude>
@@ -373,6 +380,15 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\collision.h">
       <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_1.h">
+      <Filter>Factolier\Stage\stage_1</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_2.h">
+      <Filter>Factolier\Stage\stage_2</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_1_movement.h">
+      <Filter>Factolier\Stage\stage_1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

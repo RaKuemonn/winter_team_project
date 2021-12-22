@@ -1,5 +1,6 @@
 
 #include "stage_manager.h"
+#include "scene_manager.h"
 #include "stage.h"
 #include "collision.h"
 
@@ -34,12 +35,26 @@ void Stage_Manager::update(const float elapsed_time)
 
 }
 
-void Stage_Manager::render()
+void Stage_Manager::render(Scene_Manager* scene_manager)
 {
+
+    ID3D11DeviceContext* ptr_device_context = scene_manager->device_context();
+
+    // シェーダの設定
+    scene_manager->state_manager()->setDS(DS::ON_ON);
+    Shader* ptr_shader = scene_manager->shader_manager()->get_shader(Shaders::PHONG);
+
+
+    // ー　モデルの描画　ー //
+    ptr_shader->begin(ptr_device_context);
+
     for(auto& stage : vec_stages)
     {
-        stage->render();
+        stage->render(ptr_device_context);
     }
+
+    ptr_shader->end(ptr_device_context);
+    // ーーーーーーーーーー //
 }
 
 void Stage_Manager::all_clear()

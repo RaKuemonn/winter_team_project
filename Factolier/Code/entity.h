@@ -42,9 +42,9 @@ public:
 
 
     // Setterä÷êî //
-    void set_position(const DirectX::XMFLOAT3& position_)   const;
-    void add_position(const DirectX::XMFLOAT3& velocity)    const;
-    void set_quaternion(const DirectX::XMFLOAT4& quaternion_) const;
+    void set_position(const DirectX::XMFLOAT3& position_)       const;
+    void add_position(const DirectX::XMFLOAT3& velocity)        const;
+    void set_quaternion(const DirectX::XMFLOAT4& quaternion_)   const;
 
 
 protected:

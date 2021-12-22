@@ -20,7 +20,7 @@ public:
     }
 
     void update(const float elapsed_time);
-    void render();
+    void render(class Scene_Manager* scene_manager);
     bool ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, struct Hit_Result* hit_result_);
     
 
