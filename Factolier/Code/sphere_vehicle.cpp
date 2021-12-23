@@ -16,7 +16,7 @@ Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_)
     m_velocity = std::make_unique<Velocity>();
     m_velocity->set_mass(1.0f);
 
-    constexpr float scale = 3.0f;
+    constexpr float scale = 2.0f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
 }

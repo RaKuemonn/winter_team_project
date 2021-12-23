@@ -3,6 +3,8 @@
 #include "scene_manager.h"
 #include "camera.h"
 #include "entity_manager.h"
+#include "stage_1.h"
+#include "stage_manager.h"
 #include "player.h"
 #include "enemy_none.h"
 
@@ -20,31 +22,43 @@ void Scene_Game::initialize()
         1280 / 720,
         0.1f,
         1000.0f);
-    
-    Entity_Manager::instance().spawn_register(std::make_unique<Player>(parent));
+
+    std::unique_ptr<Entity> player = std::make_unique<Player>(parent);
+    player->set_position({ 0.0f, 5.0f, 0.0f });
+    player->init();
+    Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
     enemy_spawner->set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f });
     enemy_spawner->set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f });
     enemy_spawner->set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f });
     enemy_spawner->set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f });
+
+    collision_manager = std::unique_ptr<Collision_Manager>();
+
+    Stage_Manager::instance().spawn_register(std::make_unique<Stage_1>(parent));
 }
 
 
 void Scene_Game::uninitialize()
 {
     Entity_Manager::instance().all_clear();
+    Stage_Manager::instance().all_clear();
 }
 
 
 void Scene_Game::update(float elapsed_time)
 {
+    Stage_Manager::instance().update(elapsed_time);
+
     Entity_Manager::instance().update(elapsed_time);
+
+    collision_manager->judge();
 }
 
 
 void Scene_Game::render(float elapsed_time)
 {
-    ID3D11DeviceContext* device_context_ = parent->device_context();
+    //ID3D11DeviceContext* device_context_ = parent->device_context();
 
     parent->state_manager()->setSS(SS::POINT);
     parent->state_manager()->setSS(SS::LINEAR);
@@ -56,6 +70,6 @@ void Scene_Game::render(float elapsed_time)
 
     parent->state_manager()->setRS(RS::SOLID_NONE);
 
-
+    Stage_Manager::instance().render(parent);
     Entity_Manager::instance().render();
 }

@@ -41,12 +41,12 @@ void Entity_Manager::render()
     }
 }
 
-Entity* Entity_Manager::get_entity(const short& index) const
+std::shared_ptr<Entity> Entity_Manager::get_entity(const short& index) const
 {
-    return vec_entities.at(index).get();
+    return vec_entities.at(index);
 }
 
-std::vector<short> Entity_Manager::get_entity(const Tag& tag_) const
+std::vector<short> Entity_Manager::get_entities(const Tag& tag_) const
 {
     std::vector<short> indices = {};
 

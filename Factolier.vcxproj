@@ -169,6 +169,7 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
+    <ClCompile Include="Factolier\Code\collision_manager.cpp" />
     <ClCompile Include="Factolier\Code\enemy.cpp" />
     <ClCompile Include="Factolier\Code\enemy_none.cpp" />
     <ClCompile Include="Factolier\Code\enemy_spawner.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Factolier\Code\shader_manager.cpp" />
     <ClCompile Include="Factolier\Code\model_resource.cpp" />
     <ClCompile Include="Factolier\Code\skinned_shader.cpp" />
+    <ClCompile Include="Factolier\Code\sphere_status.cpp" />
     <ClCompile Include="Factolier\Code\sphere_vehicle.cpp" />
     <ClCompile Include="Factolier\Code\sprite.cpp" />
     <ClCompile Include="Factolier\Code\sprite_batch.cpp" />
@@ -222,6 +224,7 @@
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
     <ClInclude Include="Factolier\Code\collision.h" />
+    <ClInclude Include="Factolier\Code\collision_manager.h" />
     <ClInclude Include="Factolier\Code\enemy.h" />
     <ClInclude Include="Factolier\Code\enemy_none.h" />
     <ClInclude Include="Factolier\Code\enemy_spawner.h" />
@@ -257,6 +260,7 @@
     <ClInclude Include="Factolier\Code\shader_manager.h" />
     <ClInclude Include="Factolier\Code\model_resource.h" />
     <ClInclude Include="Factolier\Code\skinned_shader.h" />
+    <ClInclude Include="Factolier\Code\sphere_status.h" />
     <ClInclude Include="Factolier\Code\sphere_vehicle.h" />
     <ClInclude Include="Factolier\Code\sprite.h" />
     <ClInclude Include="Factolier\Code\sprite_batch.h" />

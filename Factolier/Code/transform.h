@@ -177,7 +177,7 @@ public:
 
 
 
-    // Setterä÷êî //
+    // Setterä÷êî //  /* Ç±ÇÃsetterÇåƒÇÒÇ≈Ç‡ÇÕupdateÇí ÇÁÇ»Ç¢Ç∆épê®çXêVÇµÇ»Ç¢ */
     void set_position(const DirectX::XMFLOAT3& position_)                                   { if(same_check(position_,m_position.get()))return;        m_position.set(position_);                        m_was_transition = true; }
     void set_scale(const DirectX::XMFLOAT3& scale_)                                         { if(same_check(scale_,m_scale.get()))return;              m_scale.set(scale_);                              m_was_transition = true; }
     void set_euler(const DirectX::XMFLOAT3& euler_)                                         { if(same_check(euler_,m_quaternion.get_euler()))return;   m_quaternion.set_euler(euler_);                   m_was_transition = true; }

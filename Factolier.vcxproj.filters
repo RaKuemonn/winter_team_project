@@ -204,6 +204,10 @@
     <ClCompile Include="Factolier\Code\stage_1_movement.cpp">
       <Filter>Factolier\Stage\stage_1</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\collision_manager.cpp">
+      <Filter>Factolier\Entity\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\sphere_status.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -391,6 +395,12 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\stage_1_movement.h">
       <Filter>Factolier\Stage\stage_1</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\collision_manager.h">
+      <Filter>Factolier\Entity\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\sphere_status.h">
+      <Filter>Factolier\Entity\Status</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

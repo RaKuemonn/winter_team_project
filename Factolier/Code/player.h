@@ -44,7 +44,7 @@ public:
     Player(class Scene_Manager* ptr_scene_manager_);
     ~Player()                               override = default;
 
-    void init()                             override{};
+    void init()                             override;
     void update(const float elapsed_time_)  override;
     void render()                           override;
 
@@ -61,6 +61,6 @@ private:
     DirectX::XMFLOAT3 input_direction = {};
 
 private:
-    static constexpr float pudding_y = 5.0f;
+    static constexpr float pudding_y = 2.0f;
 
 };

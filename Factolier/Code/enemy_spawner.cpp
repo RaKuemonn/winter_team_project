@@ -18,13 +18,13 @@ void Enemy_Spawner::all_clear()
 {
     Entity_Manager& manager = Entity_Manager::instance();
 
-    const std::vector<short> vec_indices = manager.get_entity(Tag::Enemy);
+    const std::vector<short> vec_indices = manager.get_entities(Tag::Enemy);
 
     // entity_manager‚É‘¶İ‚·‚éEnemy‘S•”‚Ìíœ—\–ñ‚ğ‚·‚é
     Entity* enemy = nullptr;
     for (const auto& index : vec_indices)
     {
-        enemy = static_cast<Enemy*>(manager.get_entity(index));
+        enemy = static_cast<Enemy*>(manager.get_entity(index).get());
 
         // íœ—\–ñ
         manager.remove_register(enemy);

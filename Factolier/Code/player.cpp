@@ -92,6 +92,11 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
     get_transform()->Update();
 }
 
+void Player::init()
+{
+    get_transform()->Update();
+}
+
 void Player::update(const float elapsed_time_)
 {
     // “ü—Í’l‚ÌŽó‚¯Žæ‚è
@@ -173,7 +178,6 @@ bool Player::check_has_vehicle() const
 
     return false;
 }
-
 
 void Player::create_vehicle()
 {

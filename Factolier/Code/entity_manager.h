@@ -21,8 +21,8 @@ public:
 
 
     // Getter関数 //
-    _NODISCARD Entity*              get_entity(const short& index)  const;    // indexが範囲外だとアクセス違反になる
-    _NODISCARD std::vector<short>   get_entity(const Tag & tag_)    const;    // tag_と同じインスタンスのindexを全て返す
+    _NODISCARD std::shared_ptr<Entity> get_entity(const short& index)  const;    // indexが範囲外だとアクセス違反になる
+    _NODISCARD std::vector<short>      get_entities(const Tag & tag_)  const;    // tag_と同じインスタンスのindexを全て返す
 
     // Setter関数 //
     void spawn_register(std::unique_ptr<Entity>& entity);

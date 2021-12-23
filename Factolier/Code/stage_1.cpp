@@ -5,7 +5,7 @@
 
 Stage_1::Stage_1(Scene_Manager* ptr_scene_manager_)
 {
-    load_model(ptr_scene_manager_->model_manager()->load_model("./Data/nico.fbx"));
+    load_model(ptr_scene_manager_->model_manager()->load_model("./Data/stage_demo.fbx", true));
 }
 
 void Stage_1::update(const float elapsed_time)

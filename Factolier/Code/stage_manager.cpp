@@ -68,7 +68,8 @@ bool Stage_Manager::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFL
 {
     bool hit = false;
     Hit_Result result;
-    result.distance = FLT_MAX;
+    result.distance         = FLT_MAX;
+    hit_result_->distance   = FLT_MAX;
 
     for (auto& stage : vec_stages)
     {
