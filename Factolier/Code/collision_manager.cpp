@@ -13,14 +13,14 @@ inline bool ray_cast(std::weak_ptr<Entity> entity, Stage_Manager& s_manager, Hit
     const DirectX::XMFLOAT3 position    = entity.lock()->get_position();
 
     constexpr float offset_y = 50.0f;
-    const DirectX::XMFLOAT3 start       = { position.x, position.y + offset_y, position.z };
+    const DirectX::XMFLOAT3 start       = { position.x, position.y           , position.z };
     const DirectX::XMFLOAT3 end         = { position.x, position.y - offset_y, position.z };
 
 
     return s_manager.ray_cast(start, end, &hit_result_);
 }
 
-// 床へのレイキャスト
+// 床へのレイキャスト    [ entity_managerに登録している "" プレイヤー、敵、乗り物 "" が処理されている ]
 inline void ray_to_floor(
     Entity_Manager& e_manager,
     Stage_Manager& s_manager,
@@ -57,6 +57,17 @@ inline void ray_to_floor(
         std::shared_ptr<Entity> vehicle = e_manager.get_entity(index);
         if (ray_cast(vehicle, s_manager, result))
         {
+            // 乗り物(球体)の半径(スケール)分上へ加算する処理をする
+            //
+            // 理由 : 球のモデル原点が球の中心にあるので、
+            //        resultの値をそのまま使うと球がめり込んだ状態でset_positionされてしまうから
+
+
+#if 1   // ここを0と１で切り替えると結果処理が変わるよ
+            result.position.y += vehicle->get_scale().y;
+#endif
+
+
             vehicle->set_position(result.position);
         }
     }
