@@ -17,7 +17,7 @@ public:
     }
 
     void update(const float elapsed_time);
-    void render();
+    void render(Scene_Manager*);
 
 
     // GetterŠÖ” //

@@ -113,37 +113,36 @@ void Player::update(const float elapsed_time_)
     get_model()->play_animation(elapsed_time_, 0);
 }
 
-void Player::render()
+
+void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
 {
-    using managers = Scene_Manager;
-
-    managers* ptr_managers = get_scene_manager();
-    ID3D11DeviceContext* ptr_device_context = ptr_managers->device_context();
-
-    // シェーダの設定
-    ptr_managers->state_manager()->setDS(DS::ON_ON);
-    Shader* ptr_shader = ptr_managers->shader_manager()->get_shader(Shaders::PHONG);
+    input_direction_ = {};
 
 
-    // ー　モデルの描画　ー //
-    ptr_shader->begin(ptr_device_context);
+    if (input_.TRG(0) & PAD_UP)
+    {
+        input_direction_.z += 1.0f;
+    }
 
-    get_model()->render(ptr_device_context, get_transform()->get_matrix(), { 1.0f, 1.0f, 1.0f, 1.0f });
+    if (input_.TRG(0) & PAD_DOWN)
+    {
+        input_direction_.z += -1.0f;
+    }
 
-    ptr_shader->end(ptr_device_context);
-    // ーーーーーーーーーー //
-}
+    if (input_.TRG(0) & PAD_RIGHT)
+    {
+        input_direction_.x += 1.0f;
+    }
 
-
-void Player::reference_vehicle_position()
-{
-    // 1 frame 遅れている
-
-    DirectX::XMFLOAT3 vehicle_position = m_wkp_vehicle.lock()->get_position();
-    vehicle_position.y += pudding_y;
-
-    set_position(vehicle_position);
-
+    if (input_.TRG(0) & PAD_LEFT)
+    {
+        input_direction_.x += -1.0f;
+    }
+    
+    //const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
+    //
+    //input_direction_.x = input_direction_.x * camera_axis_z.x + input_direction_.z * camera_axis_z.x;
+    //input_direction_.z = input_direction_.x * camera_axis_z.z + input_direction_.z * camera_axis_z.z;
 }
 
 void Player::update_vehicle()
@@ -179,6 +178,22 @@ bool Player::check_has_vehicle() const
     return false;
 }
 
+void Player::control_vehicle()
+{
+    static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->move_direction(input_direction);
+}
+
+void Player::reference_vehicle_position()
+{
+    // 1 frame 遅れている
+
+    DirectX::XMFLOAT3 vehicle_position = m_wkp_vehicle.lock()->get_position();
+    vehicle_position.y                += m_wkp_vehicle.lock()->get_scale().y;
+
+    set_position(vehicle_position);
+
+}
+
 void Player::create_vehicle()
 {
     DirectX::XMFLOAT4 quaternion = { 0.0f,0.0f,0.0f,1.0f };
@@ -196,7 +211,7 @@ void Player::create_vehicle()
 
     // 位置の設定
     DirectX::XMFLOAT3 position = get_position();
-    position.y += -1.0f * pudding_y;
+    position.y += -1.0f * pudding_y + 5.0f;
     vehicle->set_position(position);
 
     // 回転値の設定
@@ -208,41 +223,5 @@ void Player::create_vehicle()
     Entity_Manager::instance().spawn_register(vehicle);
 }
 
-void Player::control_vehicle()
-{
-    static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->move_direction(input_direction);
-}
 
-
-
-void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
-{
-    input_direction_ = {};
-
-
-    if (input_.TRG(0) & PAD_UP)
-    {
-        input_direction_.z += 1.0f;
-    }
-
-    if (input_.TRG(0) & PAD_DOWN)
-    {
-        input_direction_.z += -1.0f;
-    }
-
-    if (input_.TRG(0) & PAD_RIGHT)
-    {
-        input_direction_.x += 1.0f;
-    }
-
-    if (input_.TRG(0) & PAD_LEFT)
-    {
-        input_direction_.x += -1.0f;
-    }
-    
-    //const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
-    //
-    //input_direction_.x = input_direction_.x * camera_axis_z.x + input_direction_.z * camera_axis_z.x;
-    //input_direction_.z = input_direction_.x * camera_axis_z.z + input_direction_.z * camera_axis_z.z;
-}
 

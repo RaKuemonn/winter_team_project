@@ -1,7 +1,6 @@
 #pragma once
 
 #include "entity.h"
-#include "velocity.h"
 
 class Sphere_Vehicle : public Entity
 {
@@ -11,7 +10,6 @@ public:
 
     virtual void init()                             override {};
     virtual void update(const float elapsed_time_)  override;
-    virtual void render()                           override;
 
 
     // GetterŠÖ” //
@@ -26,6 +24,5 @@ private:
     void rotate(const float elapsed_time_);
 
 private:
-    std::unique_ptr<Velocity> m_velocity = nullptr;
     bool m_is_free = false;                               // æ‚è•¨‚Ì“®‚«‚ª©—R‚© ( ‘©”›/‘€ì‚³‚ê‚Ä‚¢‚é = false , ©—R = true )
 };

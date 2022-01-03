@@ -27,6 +27,9 @@ public:
 
     // Setterä÷êî //
     void set(const DirectX::XMFLOAT3& velocity_)        { m_velocity = velocity_; }
+    void set_x(const float velocity_x_)                 { m_velocity.x = velocity_x_; }
+    void set_y(const float velocity_y_)                 { m_velocity.y = velocity_y_; }
+    void set_z(const float velocity_z_)                 { m_velocity.z = velocity_z_; }
     void add(const DirectX::XMFLOAT3& add_velocity_)    { m_resultant += add_velocity_; }     // Ç±Ç±Ç≈â¡ë¨ÇµÇΩílÇÕupdate()Çí ÇÈÇ‹Ç≈ÅAâ¡ë¨ÇµÇΩåãâ ÇÃm_velocityÇÕìæÇÁÇÍÇ»Ç¢
     void set_friction(const float friction_)            { m_friction = friction_; }
     void set_mass(const float mass_)                    { m_mass = mass_; }

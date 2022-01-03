@@ -46,15 +46,14 @@ public:
 
     void init()                             override;
     void update(const float elapsed_time_)  override;
-    void render()                           override;
 
 private:
-    void reference_vehicle_position();
+    inline static void input(DirectX::XMFLOAT3& input_direction, class Input_Manager& input_);
     void update_vehicle();
     _NODISCARD bool check_has_vehicle() const;
-    void create_vehicle();
     void control_vehicle();
-    inline static void input(DirectX::XMFLOAT3& input_direction, class Input_Manager& input_);
+    void reference_vehicle_position();
+    void create_vehicle();
 
 private:
     std::weak_ptr<Entity> m_wkp_vehicle;

@@ -12,7 +12,6 @@ public:
 
     virtual void init()                             override = 0;
     virtual void update(const float elapsed_time_)  override = 0;
-    virtual void render()                           override = 0;
 
 private:
 

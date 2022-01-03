@@ -1,5 +1,6 @@
 
 #include "entity_manager.h"
+#include "scene_manager.h"
 
 
 void Entity_Manager::update(const float elapsed_time)
@@ -33,12 +34,25 @@ void Entity_Manager::update(const float elapsed_time)
 
 }
 
-void Entity_Manager::render()
+void Entity_Manager::render(Scene_Manager* scene_manager_)
 {
+    ID3D11DeviceContext* ptr_device_context = scene_manager_->device_context();
+
+    // シェーダの設定
+    scene_manager_->state_manager()->setDS(DS::ON_ON);
+    Shader* ptr_shader = scene_manager_->shader_manager()->get_shader(Shaders::PHONG);
+
+
+    // ー　モデルの描画　ー //
+    ptr_shader->begin(ptr_device_context);
+
     for (auto& entity : vec_entities)
     {
-        entity->render();
+        entity->render(ptr_device_context);
     }
+
+    ptr_shader->end(ptr_device_context);
+    // ーーーーーーーーーー //
 }
 
 std::shared_ptr<Entity> Entity_Manager::get_entity(const short& index) const

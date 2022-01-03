@@ -1,4 +1,3 @@
-
 #include "entity.h"
 #include "transform.h"
 #include "ability.h"
@@ -6,7 +5,7 @@
 #include "utility.h"
 
 
-Entity::Entity() : m_transform(new Transform()), m_ability(new Ability())
+Entity::Entity() : m_transform(new Transform()), m_ability(new Ability()), m_velocity(std::make_unique<Velocity>())
 {
     
 }
@@ -19,6 +18,12 @@ Entity::~Entity()
 
 }
 
+void Entity::render(ID3D11DeviceContext* device_context)
+{
+    get_model()->render(device_context, get_transform()->get_matrix(), { 1.0f, 1.0f, 1.0f, 1.0f });
+}
+
+
 
 // Getter�֐� //
 
@@ -27,8 +32,12 @@ Model* Entity::get_model() const
     return m_model.get();
 }
 
+const DirectX::XMFLOAT3& Entity::get_velocity() const
+{
+    return m_velocity->get();
+}
 
-const DirectX::XMFLOAT3 Entity::get_position() const
+const DirectX::XMFLOAT3& Entity::get_position() const
 {
     return m_transform->get_position();
 }
@@ -85,6 +94,25 @@ void Entity::set_position(const DirectX::XMFLOAT3& position_) const
     m_transform->set_position(position_);
 }
 
+void Entity::set_velocity(const DirectX::XMFLOAT3& velocity_) const
+{
+    m_velocity->set(velocity_);
+}
+
+void Entity::set_velocity_x(const float velocity_x) const
+{
+    m_velocity->set_x(velocity_x);
+}
+
+void Entity::set_velocity_y(const float velocity_y) const
+{
+    m_velocity->set_y(velocity_y);
+}
+
+void Entity::set_velocity_z(const float velocity_z) const
+{
+    m_velocity->set_z(velocity_z);
+}
 
 void Entity::add_position(const DirectX::XMFLOAT3& velocity) const
 {

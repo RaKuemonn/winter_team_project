@@ -8,34 +8,34 @@
 
 
 // キーラベル
-const int PAD_UP = (1 << 0);
-const int PAD_DOWN = (1 << 1);
-const int PAD_LEFT = (1 << 2);
-const int PAD_RIGHT = (1 << 3);
-const int PAD_START = (1 << 4);
-const int PAD_TRG1 = (1 << 5);
-const int PAD_TRG2 = (1 << 6);
-const int PAD_TRG3 = (1 << 7);
-const int PAD_SELECT = (1 << 8);
-const int PAD_TRG4 = (1 << 9);
-const int PAD_L1 = (1 << 10);
-const int PAD_R1 = (1 << 11);
-const int PAD_L2 = (1 << 12);
-const int PAD_R2 = (1 << 13);
-const int PAD_L3 = (1 << 14);
-const int PAD_R3 = (1 << 15);
+constexpr int PAD_UP        = (1 << 0);
+constexpr int PAD_DOWN      = (1 << 1);
+constexpr int PAD_LEFT      = (1 << 2);
+constexpr int PAD_RIGHT     = (1 << 3);
+constexpr int PAD_START     = (1 << 4);
+constexpr int PAD_TRG1      = (1 << 5);
+constexpr int PAD_TRG2      = (1 << 6);
+constexpr int PAD_TRG3      = (1 << 7);
+constexpr int PAD_SELECT    = (1 << 8);
+constexpr int PAD_TRG4      = (1 << 9);
+constexpr int PAD_L1        = (1 << 10);
+constexpr int PAD_R1        = (1 << 11);
+constexpr int PAD_L2        = (1 << 12);
+constexpr int PAD_R2        = (1 << 13);
+constexpr int PAD_L3        = (1 << 14);
+constexpr int PAD_R3        = (1 << 15);
 
 // パッドの最大数
-const int	GAMEPAD_NUM = 4;
+constexpr int GAMEPAD_NUM   = 4;
 
 // ゲームパッド
 enum GamePad
 {
-    UP = 0,// dpad
+    UP      = 0,// dpad
     DOWN,
     RIGHT,
     LEFT,
-    A = 4, // buttons
+    A       = 4, // buttons
     B,
     X,
     Y,

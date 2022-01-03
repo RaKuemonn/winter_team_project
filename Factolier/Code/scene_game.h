@@ -19,4 +19,6 @@ public:
 private:
 	std::unique_ptr<Enemy_Spawner>		enemy_spawner = nullptr;
 	std::unique_ptr<Collision_Manager>	collision_manager = nullptr;
+
+	std::unique_ptr<class Camera_Controller> camera_controller = nullptr;
 };
