@@ -106,7 +106,7 @@ void Scene_Title::render(float elapsed_time)
 
     shader = parent->shader_manager()->get_shader(Shaders::OCEAN);
 
-    shader->begin(parent->device_context(), elapsed_time * 0.1f);
+    shader->begin(parent->device_context(), false, elapsed_time * 0.1f);
 
     test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.5f });
     //test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);

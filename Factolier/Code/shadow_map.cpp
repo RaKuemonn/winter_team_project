@@ -117,7 +117,7 @@ void Shadow_Map::initialize(ID3D11Device* device)
 }
 
 
-void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_time)
+void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, bool is_shadow_map, float elapsed_time)
 {
 	// シャドウマップ用の深度バッファに設定
 	immediate_context->ClearDepthStencilView(shadow_depth_stencil_view.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -167,8 +167,8 @@ void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_tim
 	Shadow_Constant shadow_map{};
 	shadow_map.light_view_projection = light_view_projection;
 	immediate_context->UpdateSubresource(shadow_buffer.Get(), 0, 0, &shadow_map, 0, 0);
-	immediate_context->VSSetConstantBuffers(6, 1, shadow_buffer.GetAddressOf());
-	immediate_context->PSSetConstantBuffers(6, 1, shadow_buffer.GetAddressOf());
+	immediate_context->VSSetConstantBuffers(4, 1, shadow_buffer.GetAddressOf());
+	immediate_context->PSSetConstantBuffers(4, 1, shadow_buffer.GetAddressOf());
 
 
 }
@@ -176,7 +176,8 @@ void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_tim
 
 void Shadow_Map::end(ID3D11DeviceContext* immediate_context)
 {
-    
+	ID3D11ShaderResourceView* clear_shader_resource_view[]{ nullptr };
+	immediate_context->PSSetShaderResources(4, 1, clear_shader_resource_view);
 }
 
 

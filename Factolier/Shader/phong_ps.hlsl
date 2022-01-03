@@ -8,8 +8,12 @@
 
 SamplerState sampler_states[3] : register(s0);
 
+SamplerState shadow_sampler_state : register(s4);
+
+
 Texture2D diffuse_texture : register(t0);
 Texture2D normal_texture : register(t1);
+Texture2D shadow_map : register(t2);
 
 
 static const float3 k_anbient = { 0.2f, 0.2f, 0.2f };
@@ -50,6 +54,15 @@ float4 main(VS_OUT pin) : SV_TARGET
 	color.a *= pin.color.a;
 	
 	color = CalcFog(color, fog_color, fog_range.xy, length(pin.world_position.xyz - camera_position.xyz));
+
+
+	// シャドウマップから深度値取得
+	float depth = shadow_map.Sample(shadow_sampler_state, pin.shadow_texcoord.xy).r;
+	// 深度値を比較して影かどうかを判定する
+	if (pin.shadow_texcoord.z - depth > shadow_bias)
+	{
+		color.rgb *= shadow_color.rgb;
+	}
 
 
 	return color;

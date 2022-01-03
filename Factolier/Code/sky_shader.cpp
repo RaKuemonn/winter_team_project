@@ -32,7 +32,7 @@ void Sky_Shader::initialize(ID3D11Device* device)
 }
 
 
-void Sky_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_time)
+void Sky_Shader::begin(ID3D11DeviceContext* immediate_context, bool is_shadow_map, float elapsed_time)
 {
     immediate_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     immediate_context->IASetInputLayout(input_layout.Get());

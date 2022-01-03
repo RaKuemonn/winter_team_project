@@ -63,7 +63,7 @@ protected:
 public:
     virtual void initialize(ID3D11Device* device) = 0;
 
-    virtual void begin(ID3D11DeviceContext* immediate_context, float elapsed_time = 0.0f) = 0;
+    virtual void begin(ID3D11DeviceContext* immediate_context, bool is_shadow_map = false, float elapsed_time = 0.0f) = 0;
     virtual void end(ID3D11DeviceContext* immediate_context) = 0;
 
     ID3D11VertexShader* get_vs() {return vertex_shader.Get();}

@@ -62,7 +62,7 @@ void Phong_Shader::initialize(ID3D11Device* device)
 }
 
 
-void Phong_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_time)
+void Phong_Shader::begin(ID3D11DeviceContext* immediate_context, bool is_shadow_map, float elapsed_time)
 {
     immediate_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     immediate_context->IASetInputLayout(input_layout.Get());
@@ -73,13 +73,16 @@ void Phong_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_t
 
     Camera& camera = Camera::Instance();
 
-    Scene_Constant scene_constant{};
-    DirectX::XMStoreFloat4x4(&scene_constant.view_projection, DirectX::XMLoadFloat4x4(&camera.get_view()) * DirectX::XMLoadFloat4x4(&camera.get_projection()));
-    scene_constant.camera_position = { camera.get_eye().x, camera.get_eye().y, camera.get_eye().z, 0 };
-    //scene_constant.camera_position = { 0.0f, 0.0f, 0.0f, 0.0f };
-    immediate_context->UpdateSubresource(scene_buffer.Get(), 0, 0, &scene_constant, 0, 0);
-    immediate_context->VSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
-    immediate_context->PSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
+    if (!is_shadow_map)
+    {
+        Scene_Constant scene_constant{};
+        DirectX::XMStoreFloat4x4(&scene_constant.view_projection, DirectX::XMLoadFloat4x4(&camera.get_view()) * DirectX::XMLoadFloat4x4(&camera.get_projection()));
+        scene_constant.camera_position = { camera.get_eye().x, camera.get_eye().y, camera.get_eye().z, 0 };
+        //scene_constant.camera_position = { 0.0f, 0.0f, 0.0f, 0.0f };
+        immediate_context->UpdateSubresource(scene_buffer.Get(), 0, 0, &scene_constant, 0, 0);
+        immediate_context->VSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
+        immediate_context->PSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
+    }
 
     Light_Constant light_constant{};
     light_constant.light_direction = { camera.get_front().x, camera.get_front().y, camera.get_front().z, 0 };
