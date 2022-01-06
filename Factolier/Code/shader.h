@@ -7,6 +7,11 @@
 #include "light_manager.h"
 
 
+CONST LONG SHADOW_WIDTH{ 1024 };
+CONST LONG SHADOW_HEIGHT{ 1024 };
+CONST float SHADOW_DRAWRECT{ 30 };
+
+
 HRESULT create_vs_from_cso(ID3D11Device* device, const char* cso_name, ID3D11VertexShader** vertex_shader,
     ID3D11InputLayout** input_layout, D3D11_INPUT_ELEMENT_DESC* input_element_desc, UINT num_elements);
 
@@ -54,16 +59,18 @@ protected:
     {
         DirectX::XMFLOAT4X4 light_view_projection{};	                        // ライトの位置から見た射影行列
         DirectX::XMFLOAT3	shadow_color{ 0.3f, 0.3f, 0.3f };			// 影色
-        float				shadow_bias{ 0.008f };			                    // 深度バイアス
+        float				shadow_bias{ 0.002f };			                    // 深度バイアス
     };
     Microsoft::WRL::ComPtr<ID3D11Buffer> shadow_buffer;
 
 
 
 public:
+    virtual ~Shader() {}
+
     virtual void initialize(ID3D11Device* device) = 0;
 
-    virtual void begin(ID3D11DeviceContext* immediate_context, bool is_shadow_map = false, float elapsed_time = 0.0f) = 0;
+    virtual void begin(ID3D11DeviceContext* immediate_context, float elapsed_time = 0.0f) = 0;
     virtual void end(ID3D11DeviceContext* immediate_context) = 0;
 
     ID3D11VertexShader* get_vs() {return vertex_shader.Get();}

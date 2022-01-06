@@ -13,6 +13,7 @@
 #include <memory>
 #include "scene_manager.h"
 #include "Keyboard.h"
+#include "utility.h"
 
 #ifdef USE_IMGUI
 #include "imgui.h"
@@ -23,10 +24,6 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam
 extern ImWchar glyphRangesJapanese[];
 #endif
 
-CONST LONG SCREEN_WIDTH{ 1280 };
-CONST LONG SCREEN_HEIGHT{ 720 };
-CONST BOOL FULLSCREEN{ FALSE };
-CONST LPWSTR APPLICATION_NAME{ L"X3DGP" };
 
 extern float fps;
 

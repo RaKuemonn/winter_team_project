@@ -16,6 +16,8 @@ public:
 	virtual void update(float elapsed_time) = 0;
 	virtual void render(float elapsed_time) = 0;
 
+	//virtual void post(float elapsed_time) = 0;
+
 protected:
 	Scene_Manager* parent = nullptr;
 	bool ready = false;

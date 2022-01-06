@@ -12,7 +12,7 @@
 class Scene_Manager
 {
 public:
-    void initialize(ID3D11Device* device, ID3D11DeviceContext* context, HRESULT hr);
+    void initialize(ID3D11Device* device, ID3D11DeviceContext* context, ID3D11RenderTargetView* render, ID3D11DepthStencilView* depth, HRESULT hr);
     void uninitialize();
 
     void update(float elapsed_time,const HWND& hwnd_);
@@ -24,6 +24,8 @@ public:
 private:
     ID3D11Device* device_ = nullptr;
     ID3D11DeviceContext* immediate_context_ = nullptr;
+    ID3D11RenderTargetView* render_target_view_ = nullptr;
+    ID3D11DepthStencilView* depth_stencil_view_ = nullptr;
 
     std::unique_ptr<State_Manager>              state_manager_ = nullptr;
     std::unique_ptr<Shader_Manager>             shader_manager_ = nullptr;
@@ -42,5 +44,7 @@ public:
 
     ID3D11Device* device() { return device_; }
     ID3D11DeviceContext* device_context() { return immediate_context_; }
+    ID3D11DepthStencilView* depth_stencil_view() { return depth_stencil_view_; }
+    ID3D11RenderTargetView* render_target_view() { return render_target_view_; }
 
 };

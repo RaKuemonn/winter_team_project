@@ -2,10 +2,12 @@
 #include "scene_manager.h"
 
 
-void Scene_Manager::initialize(ID3D11Device* device, ID3D11DeviceContext* context, HRESULT hr)
+void Scene_Manager::initialize(ID3D11Device* device, ID3D11DeviceContext* context, ID3D11RenderTargetView* render, ID3D11DepthStencilView* depth, HRESULT hr)
 {
     device_ = device;
     immediate_context_ = context;
+    render_target_view_ = render;
+    depth_stencil_view_ = depth;
 
     state_manager_  = std::make_unique<State_Manager>(device, context, hr);
     shader_manager_ = std::make_unique<Shader_Manager>(device);

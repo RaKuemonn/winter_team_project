@@ -10,6 +10,7 @@ enum class Shaders
     PHONG = 0,
     SKY,
     OCEAN,
+    SHADOW,
 };
 
 
