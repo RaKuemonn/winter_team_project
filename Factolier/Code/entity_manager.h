@@ -17,7 +17,7 @@ public:
     }
 
     void update(const float elapsed_time);
-    void render(Scene_Manager*);
+    void render(ID3D11DeviceContext* ptr_device_context);
 
 
     // Getterä÷êî //

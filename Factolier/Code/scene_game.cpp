@@ -1,6 +1,7 @@
 
 #include "scene_game.h"
 #include "scene_manager.h"
+#include "shader_manager.h"
 #include "camera.h"
 #include "entity_manager.h"
 #include "stage_1.h"
@@ -107,7 +108,6 @@ void Scene_Game::update(float elapsed_time)
 
 void Scene_Game::render(float elapsed_time) 
 {
-    //ID3D11DeviceContext* device_context_ = parent->device_context();
 
     parent->state_manager()->setSS(SS::POINT);
     parent->state_manager()->setSS(SS::LINEAR);
@@ -119,6 +119,39 @@ void Scene_Game::render(float elapsed_time)
 
     parent->state_manager()->setRS(RS::SOLID_NONE);
 
-    Stage_Manager::instance().render(parent);
-    Entity_Manager::instance().render(parent);
+
+    Shader* shader = nullptr;
+    ID3D11DeviceContext* ptr_device_context = parent->device_context();
+    //シャドウマップ生成
+    {
+        shader = parent->shader_manager()->get_shader(Shaders::SHADOW);
+
+        shader->begin(ptr_device_context, elapsed_time * 0.1f);
+
+        Entity_Manager::instance().render(ptr_device_context);
+
+        shader->end(ptr_device_context);
+    }
+
+    //レンダーターゲットビューと深度ステンシルビューを元に戻す
+    {
+        ID3D11RenderTargetView* rtv = parent->render_target_view();
+        ID3D11DepthStencilView* dsv = parent->depth_stencil_view();
+        FLOAT color[]{ 1.0f, 1.0f, 1.0f, 1.0f };
+
+        ptr_device_context->ClearRenderTargetView(rtv, color);
+        ptr_device_context->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+        ptr_device_context->OMSetRenderTargets(1, &rtv, dsv);
+    }
+
+
+    parent->state_manager()->setDS(DS::ON_ON);
+    shader = parent->shader_manager()->get_shader(Shaders::PHONG);
+
+    shader->begin(ptr_device_context);
+
+    Stage_Manager::instance().render(ptr_device_context);
+    Entity_Manager::instance().render(ptr_device_context);
+
+    shader->end(ptr_device_context);
 }

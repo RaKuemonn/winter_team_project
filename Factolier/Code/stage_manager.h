@@ -1,6 +1,7 @@
 #pragma once
 
 #include <DirectXMath.h>
+#include <d3d11.h>
 #include <memory>
 #include <vector>
 class Stage;
@@ -20,7 +21,7 @@ public:
     }
 
     void update(const float elapsed_time);
-    void render(class Scene_Manager* scene_manager);
+    void render(ID3D11DeviceContext* ptr_device_context);
     bool ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, struct Hit_Result* hit_result_);
     
 
