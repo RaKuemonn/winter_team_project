@@ -10,6 +10,6 @@ public:
     Collision_Manager() = default;
     ~Collision_Manager() = default;
 
-    void judge();
+    void judge(const float elapsed_time);
 
 };

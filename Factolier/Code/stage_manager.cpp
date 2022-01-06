@@ -80,6 +80,7 @@ bool Stage_Manager::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFL
 
         *hit_result_ = result;
         hit = true;
+        result.distance = FLT_MAX;
     }
 
     return hit;

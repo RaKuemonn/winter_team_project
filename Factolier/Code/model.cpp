@@ -270,7 +270,7 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 			DirectX::XMStoreFloat(&distance, WorldCrossLength);
 
 			// ƒqƒbƒgî•ñ•Û‘¶
-			if (hit_result->distance > distance)
+			if (distance < hit_result->distance)
 			{
 				DirectX::XMVECTOR WorldNormal = DirectX::XMVector3TransformNormal(HitNormal, WorldTransform);
 			

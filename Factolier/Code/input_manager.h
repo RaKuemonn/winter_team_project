@@ -24,6 +24,7 @@ constexpr int PAD_L2        = (1 << 12);
 constexpr int PAD_R2        = (1 << 13);
 constexpr int PAD_L3        = (1 << 14);
 constexpr int PAD_R3        = (1 << 15);
+constexpr int KEY_SPACE     = (1 << 16);
 
 // ƒpƒbƒh‚ÌÅ‘å”
 constexpr int GAMEPAD_NUM   = 4;

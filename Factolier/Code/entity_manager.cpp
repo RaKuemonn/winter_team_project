@@ -26,8 +26,7 @@ void Entity_Manager::update(const float elapsed_time)
             vec_entities.erase(it);
         }
 
-        if (entity == nullptr) continue;
-
+        if (entity.get() == nullptr) continue;
         entity.reset();
     }
     vec_removes.clear();
@@ -53,6 +52,19 @@ void Entity_Manager::render(Scene_Manager* scene_manager_)
 
     ptr_shader->end(ptr_device_context);
     // ーーーーーーーーーー //
+}
+
+std::shared_ptr<Entity> Entity_Manager::get_entity(Entity* entity_) const
+{
+    //auto it = std::find(vec_entities.begin(), vec_entities.end(), entity_);
+    //return *it;
+
+    for (auto& entity : vec_entities)
+    {
+        if(entity.get() != entity_) continue;
+    
+        return entity;
+    }
 }
 
 std::shared_ptr<Entity> Entity_Manager::get_entity(const short& index) const
@@ -97,7 +109,8 @@ void Entity_Manager::spawn_register(std::shared_ptr<Entity>& entity)
 
 void Entity_Manager::remove_register(Entity* entity)
 {
-    vec_removes.emplace_back(entity);
+    //vec_removes.emplace_back(entity);
+    vec_removes.emplace_back(get_entity(entity));
 }
 
 void Entity_Manager::all_clear()

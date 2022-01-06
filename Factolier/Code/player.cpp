@@ -119,24 +119,29 @@ void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
     input_direction_ = {};
 
 
-    if (input_.TRG(0) & PAD_UP)
+    if (input_.STATE(0) & PAD_UP)
     {
         input_direction_.z += 1.0f;
     }
 
-    if (input_.TRG(0) & PAD_DOWN)
+    if (input_.STATE(0) & PAD_DOWN)
     {
         input_direction_.z += -1.0f;
     }
 
-    if (input_.TRG(0) & PAD_RIGHT)
+    if (input_.STATE(0) & PAD_RIGHT)
     {
         input_direction_.x += 1.0f;
     }
 
-    if (input_.TRG(0) & PAD_LEFT)
+    if (input_.STATE(0) & PAD_LEFT)
     {
         input_direction_.x += -1.0f;
+    }
+
+    if(input_.TRG(0) & KEY_SPACE)
+    {
+         input_direction_.y += 1.0f;
     }
     
     //const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();

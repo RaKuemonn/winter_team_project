@@ -88,7 +88,7 @@ void Phong_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_t
     immediate_context->PSSetConstantBuffers(2, 1, light_buffer.GetAddressOf());
 
     Fog_Constant fog_constant{};
-    fog_constant.fog_range = { 0.0f, 100.0f, 0, 0 };
+    fog_constant.fog_range = { 0.0f, 1000.0f, 0, 0 };
     immediate_context->UpdateSubresource(fog_buffer.Get(), 0, 0, &fog_constant, 0, 0);
     immediate_context->VSSetConstantBuffers(3, 1, fog_buffer.GetAddressOf());
     immediate_context->PSSetConstantBuffers(3, 1, fog_buffer.GetAddressOf());

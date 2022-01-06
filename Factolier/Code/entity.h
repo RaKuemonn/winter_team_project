@@ -34,8 +34,8 @@ public:
     _NODISCARD Model*                      get_model()         const;
     _NODISCARD const DirectX::XMFLOAT3&    get_velocity()      const;
     _NODISCARD const DirectX::XMFLOAT3&    get_position()      const;
-    _NODISCARD const DirectX::XMFLOAT4     get_quaternion()    const;
-    _NODISCARD const DirectX::XMFLOAT3     get_scale()         const;
+    _NODISCARD const DirectX::XMFLOAT4&    get_quaternion()    const;
+    _NODISCARD const DirectX::XMFLOAT3&    get_scale()         const;
     _NODISCARD const DirectX::XMFLOAT3     get_axis_x()        const;
     _NODISCARD const DirectX::XMFLOAT3     get_axis_y()        const;
     _NODISCARD const DirectX::XMFLOAT3     get_axis_z()        const;
@@ -45,12 +45,14 @@ public:
 
     // Setterä÷êî //
     void set_position(const DirectX::XMFLOAT3& position_)       const;
+    void set_scale(const DirectX::XMFLOAT3& scale_)             const;
     void set_velocity(const DirectX::XMFLOAT3& velocity)        const;
     void set_velocity_x(const float velocity_x)                 const;
     void set_velocity_y(const float velocity_y)                 const;
     void set_velocity_z(const float velocity_z)                 const;
-    void add_position(const DirectX::XMFLOAT3& velocity)        const;
     void set_quaternion(const DirectX::XMFLOAT4& quaternion_)   const;
+    void add_position(const DirectX::XMFLOAT3& velocity)        const;
+    void add_quaternion(const DirectX::XMFLOAT4& quaternion_)   const;
 
 
 protected:

@@ -12,8 +12,8 @@ public:
 
     void update(const float elapsed_time)
     {
-        update_friction(elapsed_time, *this);
-        update_air_drag(elapsed_time, *this, /* ‹ó‹C’ïR—¦ */ 0.5f);
+        update_friction(*this);
+        update_air_drag(*this, /* ‹ó‹C’ïR—¦ */ 0.5f);
 
         m_velocity += (m_resultant / m_mass) * elapsed_time; // ƒtƒŒ[ƒ€’PˆÊ‚Ì‰Á‘¬—Í‚ğ‰Á‚¦‚é
 
@@ -45,15 +45,16 @@ private:
 
 private:
     // –€Cˆ—
-    inline static void update_friction(const float elapsed_time, Velocity& me)
+    inline static void update_friction(Velocity& me)
     {
         // m_mass‚Æm_friction‚Ì‰Šú’l‚ª0‚È‚Ì‚ÅA
-        // set_mass()‚Æset_friction()‚µ‚È‚¢‚ÆŒvZã“®‚©‚È‚¢
-        me.add(me.m_velocity * -1.0f * (me.m_mass * -gravity) * me.m_friction);
+        // set_mass()‚Æset_friction()‚µ‚È‚¢‚ÆŒvZã–€Cˆ—‚Í“®‚©‚È‚¢
+        DirectX::XMFLOAT3 friction = me.m_velocity * -1.0f * (me.m_mass * -gravity) * me.m_friction;
+        me.add(friction);
     }
 
     // ‹ó‹C’ïRˆ—
-    inline static void update_air_drag(const float elapsed_time, Velocity& me, const float air_drag_)
+    inline static void update_air_drag(Velocity& me, const float air_drag_)
     {
         me.add(me.m_velocity * -1.0f * air_drag_);
     }

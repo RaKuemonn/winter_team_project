@@ -25,4 +25,6 @@ private:
 
 private:
     bool m_is_free = false;                               // æ‚è•¨‚Ì“®‚«‚ª©—R‚© ( ‘©”›/‘€ì‚³‚ê‚Ä‚¢‚é = false , ©—R = true )
+    //std::unique_ptr<class Timer> m_timer = nullptr;
+
 };

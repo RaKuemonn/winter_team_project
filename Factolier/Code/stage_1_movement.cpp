@@ -6,19 +6,38 @@
 #include "transform.h"
 
 
-stage_1_movement::stage_1_movement(Scene_Manager* ptr_scene_manager_)
+Stage_1_Movement::Stage_1_Movement(Scene_Manager* ptr_scene_manager_)
 {
-    load_model(ptr_scene_manager_->model_manager()->load_model("./Data/nico.fbx"));
+    load_model(ptr_scene_manager_->model_manager()->load_model("./Data/propeller.fbx"));
+
+    //constexpr float scale = 0.1f;
+    //get_transform()->set_scale({ scale,scale,scale });
+    get_transform()->set_euler(m_euler);
+    get_transform()->Update();
 }
 
-void stage_1_movement::update(const float elapsed_time)
+void Stage_1_Movement::update(const float elapsed_time)
 {
     old_transform = get_transform()->get_matrix();
+    old_euler     = m_euler;
+
+    constexpr float pi = DirectX::XMConvertToRadians(90.0f);
+    const float rotate_speed = pi * elapsed_time;
+    m_euler.y += rotate_speed;
+    if(m_euler.y >= 2.0f * pi)
+    {
+        m_euler.y += -4.0f * pi;
+    }
+
+
+    DirectX::XMFLOAT4 quaternion;
+    DirectX::XMStoreFloat4(&quaternion, DirectX::XMQuaternionNormalize(DirectX::XMQuaternionRotationRollPitchYawFromVector(DirectX::XMLoadFloat3(&m_euler))));
+    get_transform()->set_quaternion(quaternion);
 
     get_transform()->Update();
 }
 
-bool stage_1_movement::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, Hit_Result* hit_result_)
+bool Stage_1_Movement::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, Hit_Result* hit_result_)
 {
     // 前回のワールド行列で逆行列を算出
     DirectX::XMMATRIX WorldOldTransform = DirectX::XMLoadFloat4x4(&old_transform);
@@ -45,6 +64,7 @@ bool stage_1_movement::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::X
     };
 
     Hit_Result local_result;
+    local_result.distance = FLT_MAX;
     if (get_model()->raycast(localStart,localEnd,unit_transform,&local_result))
     {
 
@@ -67,11 +87,13 @@ bool stage_1_movement::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::X
         hit_result_->distance = distance;
         hit_result_->material_index = local_result.material_index;
 
-        const DirectX::XMFLOAT3 euler = get_transform()->get_euler();
+        //const DirectX::XMFLOAT3 euler = get_transform()->get_euler(); // 欠陥 : 角度によって一意に値が求まらない場合があった
 
-        hit_result_->rotation.x = euler.x - old_euler.x;
-        hit_result_->rotation.y = euler.y - old_euler.y;
-        hit_result_->rotation.z = euler.z - old_euler.z;
+        // ↑欠陥があったので 個別に作った変数m_eulerで対応した
+        hit_result_->rotation.x = m_euler.x - old_euler.x;
+        hit_result_->rotation.y = m_euler.y - old_euler.y;
+        hit_result_->rotation.z = m_euler.z - old_euler.z;
+
 
         return true;
     }

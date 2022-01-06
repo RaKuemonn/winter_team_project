@@ -22,6 +22,7 @@ PadAssign keyAssign00[] = {
     //{ PAD_TRG4      , 'V' },                    // 'V'
 
     //{ PAD_L1        , Keyboard::Space },        // VK_SPACE
+    { KEY_SPACE        , Keyboard::Space },     // VK_SPACE
     //{ PAD_R1        , Keyboard::C },            // 
     //{ PAD_R2        , Keyboard::S },            // 
     //{ PAD_L3        , Keyboard::D },            // 

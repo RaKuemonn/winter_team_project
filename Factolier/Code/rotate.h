@@ -88,23 +88,52 @@ private:
 
 private:
 
-    // 多分これでクオータニオンからオイラーに変換できる
+    // 多分これでクオータニオンからオイラーに変換できる ※一意に角度が求まらない場合がある (値に-nan(ind)が入ることがある)
     static const DirectX::XMFLOAT3 convert_to_euler(const DirectX::XMFLOAT4& q)
     {
         const auto sy = 2 * q.x * q.z + 2 * q.y * q.w;
         const auto unlocked = std::abs(sy) < 0.99999f;
-
+        
         
         DirectX::XMFLOAT3 euler =
         {
             unlocked ? std::atan2(-(2 * q.y * q.z - 2 * q.x * q.w), 2 * q.w * q.w + 2 * q.z * q.z - 1)
             : std::atan2(2 * q.y * q.z + 2 * q.x * q.w, 2 * q.w * q.w + 2 * q.y * q.y - 1),
-
+        
             std::asin(sy),
-
+        
             unlocked ? std::atan2(-(2 * q.x * q.y - 2 * q.z * q.w), 2 * q.w * q.w + 2 * q.x * q.x - 1)
             : 0
         };
+
+        //DirectX::XMFLOAT3 euler = {};
+        /*double q0q0 = static_cast<double>(q.x) * static_cast<double>(q.x);
+        double q0q1 = static_cast<double>(q.x) * static_cast<double>(q.y);
+        double q0q2 = static_cast<double>(q.x) * static_cast<double>(q.z);
+        double q0q3 = static_cast<double>(q.x) * static_cast<double>(q.w);
+        double q1q1 = static_cast<double>(q.y) * static_cast<double>(q.y);
+        double q1q2 = static_cast<double>(q.y) * static_cast<double>(q.z);
+        double q1q3 = static_cast<double>(q.y) * static_cast<double>(q.w);
+        double q2q2 = static_cast<double>(q.z) * static_cast<double>(q.z);
+        double q2q3 = static_cast<double>(q.z) * static_cast<double>(q.w);
+        double q3q3 = static_cast<double>(q.w) * static_cast<double>(q.w);
+        euler.x = std::atan2(2.0 * (q2q3 + q0q1), q0q0 - q1q1 - q2q2 + q3q3);
+        euler.y = std::asin(2.0 * (q0q2 - q1q3));
+        euler.z = std::atan2(2.0 * (q1q2 + q0q3), q0q0 + q1q1 - q2q2 - q3q3);*/
+
+        /*DirectX::XMFLOAT4X4 matrix;
+        DirectX::XMStoreFloat4x4(&matrix, DirectX::XMMatrixRotationQuaternion(DirectX::XMLoadFloat4(&q)));
+        euler.x = std::atan2(matrix._32, matrix._33);
+        euler.y = std::asin(-matrix._31);
+        euler.z = std::atan2(matrix._21, matrix._11);*/
+
+
+        ////　TO_DO: テスト
+        //if (isnan(euler.y))
+        //{
+        //    int a = 0;
+        //    a = 1;
+        //}
 
         return euler;
     }

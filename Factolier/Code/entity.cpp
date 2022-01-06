@@ -42,12 +42,12 @@ const DirectX::XMFLOAT3& Entity::get_position() const
     return m_transform->get_position();
 }
 
-const DirectX::XMFLOAT4 Entity::get_quaternion() const
+const DirectX::XMFLOAT4& Entity::get_quaternion() const
 {
     return m_transform->get_quaternion();
 }
 
-const DirectX::XMFLOAT3 Entity::get_scale() const
+const DirectX::XMFLOAT3& Entity::get_scale() const
 {
     return m_transform->get_scale();
 }
@@ -94,6 +94,11 @@ void Entity::set_position(const DirectX::XMFLOAT3& position_) const
     m_transform->set_position(position_);
 }
 
+void Entity::set_scale(const DirectX::XMFLOAT3& scale_) const
+{
+    m_transform->set_scale(scale_);
+}
+
 void Entity::set_velocity(const DirectX::XMFLOAT3& velocity_) const
 {
     m_velocity->set(velocity_);
@@ -114,15 +119,21 @@ void Entity::set_velocity_z(const float velocity_z) const
     m_velocity->set_z(velocity_z);
 }
 
+void Entity::set_quaternion(const DirectX::XMFLOAT4& quaternion_) const
+{
+    m_transform->set_quaternion(quaternion_);
+}
+
 void Entity::add_position(const DirectX::XMFLOAT3& velocity) const
 {
     m_transform->add_position(velocity);
 }
 
-void Entity::set_quaternion(const DirectX::XMFLOAT4& quaternion_) const
+void Entity::add_quaternion(const DirectX::XMFLOAT4& quaternion_) const
 {
-    m_transform->set_quaternion(quaternion_);
+    m_transform->add_quaternion(quaternion_);
 }
+
 
 
 

@@ -1,12 +1,11 @@
-
-#include "enemy_none.h"
+ï»¿
+#include "enemy_move_closer.h"
 #include "transform.h"
 #include "model.h"
 #include "scene_manager.h"
 
 
-
-Enemy_None::Enemy_None(Scene_Manager* ptr_scene_manager_) : Enemy(ptr_scene_manager_, {})
+Enemy_Move_Closer::Enemy_Move_Closer(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, target_position_)
 {
     load_model(get_scene_manager()->model_manager()->load_model("./Data/nico.fbx"));
 
@@ -15,13 +14,11 @@ Enemy_None::Enemy_None(Scene_Manager* ptr_scene_manager_) : Enemy(ptr_scene_mana
     get_transform()->Update();
 }
 
-
-void Enemy_None::update(const float elapsed_time_)
+void Enemy_Move_Closer::update(const float elapsed_time_)
 {
-    // Žp¨‚ÌXV
+    // å§¿å‹¢ã®æ›´æ–°
     get_transform()->Update();
 
-    // ƒ‚ƒfƒ‹‚ÌXV
+    // ãƒ¢ãƒ‡ãƒ«ã®æ›´æ–°
     get_model()->play_animation(elapsed_time_, 0);
-
 }

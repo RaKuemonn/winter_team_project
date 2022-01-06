@@ -207,7 +207,15 @@
     <ClCompile Include="Factolier\Code\collision_manager.cpp">
       <Filter>Factolier\Entity\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\sphere_status.cpp" />
+    <ClCompile Include="Factolier\Code\Timer.cpp">
+      <Filter>Factolier\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\sphere_status.cpp">
+      <Filter>Factolier\Entity\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\enemy_move_closer.cpp">
+      <Filter>Factolier\Entity\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -401,6 +409,15 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\sphere_status.h">
       <Filter>Factolier\Entity\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\digits.h">
+      <Filter>Factolier\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\Timer.h">
+      <Filter>Factolier\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy_move_closer.h">
+      <Filter>Factolier\Entity\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
