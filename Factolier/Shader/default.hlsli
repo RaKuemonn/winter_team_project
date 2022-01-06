@@ -18,6 +18,7 @@ struct VS_OUT
     float4 world_binormal : BINORMAL;
     float4 world_tangent : TANGENT;
     float2 texcoord : TEXCOORD;
+    float3 shadow_texcoord : TEXCOORD1;
     float4 color : COLOR;
 };
 
@@ -51,6 +52,13 @@ cbuffer FOG_CONSTANT_BUFFER : register(b3)
 {
     float4 fog_color;
     float4 fog_range;
+};
+
+cbuffer SHADOW_CONSTANT_BUFFER : register(b4)
+{
+    row_major float4x4 light_view_projection;	    // ライトの位置から見た射影行列
+    float3 shadow_color;			                // 影色
+    float shadow_bias;			                    // 深度バイアス
 };
 
 

@@ -59,6 +59,17 @@ void Phong_Shader::initialize(ID3D11Device* device)
 
     hr = device->CreateBuffer(&buffer_desc, nullptr, fog_buffer.GetAddressOf());
     _ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
+
+    //シャドウバッファ
+    buffer_desc.ByteWidth = sizeof(Shadow_Constant);
+    buffer_desc.Usage = D3D11_USAGE_DEFAULT;
+    buffer_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+    buffer_desc.CPUAccessFlags = 0;
+    buffer_desc.MiscFlags = 0;
+    buffer_desc.StructureByteStride = 0;
+
+    hr = device->CreateBuffer(&buffer_desc, nullptr, shadow_buffer.GetAddressOf());
+    _ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 }
 
 
@@ -82,7 +93,7 @@ void Phong_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_t
     immediate_context->PSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
 
     Light_Constant light_constant{};
-    light_constant.light_direction = { camera.get_front().x, camera.get_front().y, camera.get_front().z, 0 };
+    light_constant.light_direction = Light_Manager::instance().get_light(Lights::DEFAULT)->light_direction;
     immediate_context->UpdateSubresource(light_buffer.Get(), 0, 0, &light_constant, 0, 0);
     immediate_context->VSSetConstantBuffers(2, 1, light_buffer.GetAddressOf());
     immediate_context->PSSetConstantBuffers(2, 1, light_buffer.GetAddressOf());
@@ -92,6 +103,30 @@ void Phong_Shader::begin(ID3D11DeviceContext* immediate_context, float elapsed_t
     immediate_context->UpdateSubresource(fog_buffer.Get(), 0, 0, &fog_constant, 0, 0);
     immediate_context->VSSetConstantBuffers(3, 1, fog_buffer.GetAddressOf());
     immediate_context->PSSetConstantBuffers(3, 1, fog_buffer.GetAddressOf());
+
+
+    // ライトの位置から見た視線行列を生成
+    Light* light = Light_Manager::instance().get_light(Lights::DEFAULT);
+
+    DirectX::XMVECTOR LightPosition = DirectX::XMLoadFloat4(&light->light_position);
+    LightPosition = DirectX::XMVectorScale(LightPosition, 1);
+    DirectX::XMMATRIX V = DirectX::XMMatrixLookAtLH(LightPosition,
+        DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
+        DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
+
+    // シャドウマップに描画したい範囲の正射影行列を生成
+    DirectX::XMMATRIX P = DirectX::XMMatrixOrthographicLH(SHADOW_DRAWRECT, SHADOW_DRAWRECT,
+        0.1f, 200.0f);
+
+
+    DirectX::XMFLOAT4X4 light_view_projection;
+    DirectX::XMStoreFloat4x4(&light_view_projection, V * P);
+
+    Shadow_Constant shadow_constant{};
+    shadow_constant.light_view_projection = light_view_projection;
+    immediate_context->UpdateSubresource(shadow_buffer.Get(), 0, 0, &shadow_constant, 0, 0);
+    immediate_context->VSSetConstantBuffers(4, 1, shadow_buffer.GetAddressOf());
+    immediate_context->PSSetConstantBuffers(4, 1, shadow_buffer.GetAddressOf());
 
 }
 

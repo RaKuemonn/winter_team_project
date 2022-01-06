@@ -1,11 +1,8 @@
 
 #include "shadow_map.h"
 #include "texture.h"
-
-
-CONST LONG SHADOW_WIDTH{ 1024 };
-CONST LONG SHADOW_HEIGHT{ 1024 };
-CONST float SHADOW_DRAWRECT{ 30 };
+#include "imgui.h"
+#include "utility.h"
 
 
 
@@ -109,7 +106,7 @@ void Shadow_Map::initialize(ID3D11Device* device)
 	};
 
 
-	create_vs_from_cso(device, "shadowmap_caster_vs.cso",
+	create_vs_from_cso(device, "./CSO/shadow_map_vs.cso",
 		vertex_shader.GetAddressOf(),
 		input_layout.GetAddressOf(),
 		input_element_desc, ARRAYSIZE(input_element_desc));
@@ -119,6 +116,10 @@ void Shadow_Map::initialize(ID3D11Device* device)
 
 void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_time)
 {
+	//リソースのリセット
+	ID3D11ShaderResourceView* clear_shader_resource_view[]{ nullptr };
+	immediate_context->PSSetShaderResources(2, 1, clear_shader_resource_view);
+
 	// シャドウマップ用の深度バッファに設定
 	immediate_context->ClearDepthStencilView(shadow_depth_stencil_view.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	immediate_context->OMSetRenderTargets(0, nullptr, shadow_depth_stencil_view.Get());
@@ -133,19 +134,19 @@ void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_tim
 	immediate_context->RSSetViewports(1, &viewport);
 	
 	// シェーダー設定
+	immediate_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	immediate_context->IASetInputLayout(input_layout.Get());
 	immediate_context->VSSetShader(vertex_shader.Get(), nullptr, 0);
 	immediate_context->PSSetShader(nullptr, nullptr, 0);
 
-	DirectX::XMMATRIX S, R, T;
-	DirectX::XMFLOAT4X4 world;
+
 	// ライトの位置から見た視線行列を生成
 	Light* light = Light_Manager::instance().get_light(Lights::DEFAULT);
 
 	DirectX::XMVECTOR LightPosition = DirectX::XMLoadFloat4(&light->light_position);
-	LightPosition = DirectX::XMVectorScale(LightPosition, -50);
+	LightPosition = DirectX::XMVectorScale(LightPosition, 1);
 	DirectX::XMMATRIX V = DirectX::XMMatrixLookAtLH(LightPosition,
-		DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f),
+		LightPosition + XMLoadFloat4(&light->light_direction),
 		DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 
 	// シャドウマップに描画したい範囲の正射影行列を生成
@@ -164,19 +165,46 @@ void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_tim
 	immediate_context->VSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
 	immediate_context->PSSetConstantBuffers(1, 1, scene_buffer.GetAddressOf());
 
-	Shadow_Constant shadow_map{};
-	shadow_map.light_view_projection = light_view_projection;
-	immediate_context->UpdateSubresource(shadow_buffer.Get(), 0, 0, &shadow_map, 0, 0);
-	immediate_context->VSSetConstantBuffers(6, 1, shadow_buffer.GetAddressOf());
-	immediate_context->PSSetConstantBuffers(6, 1, shadow_buffer.GetAddressOf());
-
-
 }
 
 
 void Shadow_Map::end(ID3D11DeviceContext* immediate_context)
 {
-    
+	//レンダーターゲットビューの初期化
+	immediate_context->OMSetRenderTargets(0, nullptr, nullptr);
+
+
+	//ビューポートの再設定
+	D3D11_VIEWPORT viewport{};
+
+	viewport.TopLeftX = 0;									//画面左上のx座標
+	viewport.TopLeftY = 0;									//画面左上のy座標
+	viewport.Width = static_cast<float>(SCREEN_WIDTH);		//画面の横サイズ
+	viewport.Height = static_cast<float>(SCREEN_HEIGHT);	//画面の縦サイズ
+	viewport.MinDepth = 0.0f;								//深度値の最小値
+	viewport.MaxDepth = 1.0f;								//深度値の最大値
+
+	immediate_context->RSSetViewports(1, &viewport);		//ビューポートを設定
+
+
+	//シャドウマップテクスチャのバインド
+	immediate_context->PSSetShaderResources(2, 1, shadow_shader_resource_view.GetAddressOf());
+	immediate_context->PSSetSamplers(4, 1, shadow_sampler_state.GetAddressOf());
+
+
+	ImGui::Begin("ImGui");
+	
+	ImGui::Separator();
+	if (ImGui::TreeNode("texture"))
+	{
+		
+		ImGui::Text("shadow_map");
+		ImGui::Image(shadow_shader_resource_view.Get(), { 256, 256 }, { 0, 0 }, { 1, 1 }, { 1, 1, 1, 1 });
+	
+		ImGui::TreePop();
+	}
+	
+	ImGui::End();
 }
 
 

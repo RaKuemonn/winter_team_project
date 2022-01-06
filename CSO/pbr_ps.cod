@@ -53,7 +53,8 @@
 // BINORMAL                 0   xyzw        3     NONE   float   xyz 
 // TANGENT                  0   xyzw        4     NONE   float   xyz 
 // TEXCOORD                 0   xy          5     NONE   float   xy  
-// COLOR                    0   xyzw        6     NONE   float       
+// TEXCOORD                 1   xyz         6     NONE   float       
+// COLOR                    0   xyzw        7     NONE   float       
 //
 //
 // Output signature:
@@ -90,7 +91,8 @@ dcl_temps 12
 //   v3.x <- pin.world_binormal.x; v3.y <- pin.world_binormal.y; v3.z <- pin.world_binormal.z; v3.w <- pin.world_binormal.w; 
 //   v4.x <- pin.world_tangent.x; v4.y <- pin.world_tangent.y; v4.z <- pin.world_tangent.z; v4.w <- pin.world_tangent.w; 
 //   v5.x <- pin.texcoord.x; v5.y <- pin.texcoord.y; 
-//   v6.x <- pin.color.x; v6.y <- pin.color.y; v6.z <- pin.color.z; v6.w <- pin.color.w; 
+//   v6.x <- pin.shadow_texcoord.x; v6.y <- pin.shadow_texcoord.y; v6.z <- pin.shadow_texcoord.z; 
+//   v7.x <- pin.color.x; v7.y <- pin.color.y; v7.z <- pin.color.z; v7.w <- pin.color.w; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
 #line 19 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\pbr_ps.hlsl"
