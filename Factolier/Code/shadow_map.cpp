@@ -73,19 +73,6 @@ void Shadow_Map::initialize(ID3D11Device* device)
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 
-	//シャドウバッファ
-	//buffer_desc = {};
-	//buffer_desc.ByteWidth = sizeof(Shadow_Constant);
-	//buffer_desc.Usage = D3D11_USAGE_DEFAULT;
-	//buffer_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	//buffer_desc.CPUAccessFlags = 0;
-	//buffer_desc.MiscFlags = 0;
-	//buffer_desc.StructureByteStride = 0;
-	//
-	//hr = device->CreateBuffer(&buffer_desc, nullptr, shadow_buffer.GetAddressOf());
-	//_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
-
-
 
 	// サンプラステートの生成
 	D3D11_SAMPLER_DESC sampler_desc{};
@@ -183,8 +170,11 @@ void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_tim
 
 void Shadow_Map::end(ID3D11DeviceContext* immediate_context)
 {
+	//レンダーターゲットビューの初期化
 	immediate_context->OMSetRenderTargets(0, nullptr, nullptr);
 
+
+	//ビューポートの再設定
 	D3D11_VIEWPORT viewport{};
 
 	viewport.TopLeftX = 0;									//画面左上のx座標
@@ -196,6 +186,8 @@ void Shadow_Map::end(ID3D11DeviceContext* immediate_context)
 
 	immediate_context->RSSetViewports(1, &viewport);		//ビューポートを設定
 
+
+	//シャドウマップテクスチャのバインド
 	immediate_context->PSSetShaderResources(2, 1, shadow_shader_resource_view.GetAddressOf());
 	immediate_context->PSSetSamplers(4, 1, shadow_sampler_state.GetAddressOf());
 

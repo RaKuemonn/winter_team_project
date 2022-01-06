@@ -21,6 +21,4 @@ public:
     Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shadow_shader_resource_view;
     Microsoft::WRL::ComPtr<ID3D11SamplerState> shadow_sampler_state;
 
-    Microsoft::WRL::ComPtr<ID3D11DepthStencilView> org_depth_stencil_view;
-
 };

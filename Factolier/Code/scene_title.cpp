@@ -83,80 +83,60 @@ void Scene_Title::render(float elapsed_time)
     DirectX::XMStoreFloat4x4(&world, W);
 
 
-    //Shader* shader = parent->shader_manager()->get_shader(Shaders::SHADOW);
-    //
-    //shader->begin(parent->device_context(), false, elapsed_time * 0.1f);
+    Shader* shader = nullptr;
 
-    //
-    ////stage_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-    //test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-    //
-    //shader->end(parent->device_context());
+    //シャドウマップ生成
+    {
+        shader = parent->shader_manager()->get_shader(Shaders::SHADOW);
+
+        shader->begin(parent->device_context(), elapsed_time * 0.1f);
 
 
-    Shader* shader = parent->shader_manager()->get_shader(Shaders::SHADOW);
+        //stage_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+        test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
 
-    shader->begin(parent->device_context(), elapsed_time * 0.1f);
-
-
-    //stage_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-
-    shader->end(parent->device_context());
+        shader->end(parent->device_context());
+    }
 
 
+    //レンダーターゲットビューと深度ステンシルビューを元に戻す
+    {
+        ID3D11RenderTargetView* rtv = parent->render_target_view();
+        ID3D11DepthStencilView* dsv = parent->depth_stencil_view();
+        FLOAT color[]{ 1.0f, 1.0f, 1.0f, 1.0f };
 
-    ID3D11RenderTargetView* rtv = parent->render_target_view();
-    ID3D11DepthStencilView* dsv = parent->depth_stencil_view();
-    FLOAT color[]{ 1.0f, 1.0f, 1.0f, 1.0f };
-    
-    parent->device_context()->ClearRenderTargetView(rtv, color);
-    parent->device_context()->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-    parent->device_context()->OMSetRenderTargets(1, &rtv, dsv);
-
-    parent->state_manager()->setSS(SS::POINT);
-    parent->state_manager()->setSS(SS::LINEAR);
-    parent->state_manager()->setSS(SS::ANISOTROPIC);
-
-    parent->state_manager()->setDS(DS::ON_ON);
-
-    parent->state_manager()->setBS(BS::ALPHA);
-
-    parent->state_manager()->setRS(RS::SOLID_BACK);
-
+        parent->device_context()->ClearRenderTargetView(rtv, color);
+        parent->device_context()->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+        parent->device_context()->OMSetRenderTargets(1, &rtv, dsv);
+    }
 
 
     parent->state_manager()->setDS(DS::OFF_OFF);
 
-    shader = parent->shader_manager()->get_shader(Shaders::SKY);
-    
-    shader->begin(parent->device_context());
-    
-    sky_box->render(parent->device_context());
-    
-    shader->end(parent->device_context());
+    //スカイボックス描画
+    {
+        shader = parent->shader_manager()->get_shader(Shaders::SKY);
 
+        shader->begin(parent->device_context());
 
-    //title_back->begin(device_context_);
-    //
-    //for (int i = 0; i < 1; i++)
-    //{
-    //    title_back->render(device_context_, 0, 0, 2, 2, 0, 0, 616, 353, 0, 0, 1, 1, 1, 1, 0);
-    //}
-    //
-    //title_back->end(device_context_);
+        sky_box->render(parent->device_context());
+
+        shader->end(parent->device_context());
+    }
 
 
     parent->state_manager()->setDS(DS::ON_ON);
 
+    //エンティティ描画
+    {
+        shader = parent->shader_manager()->get_shader(Shaders::PHONG);
 
-    shader = parent->shader_manager()->get_shader(Shaders::PHONG);
-    
-    shader->begin(parent->device_context(), elapsed_time * 0.1f);
-    
-    stage_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-    
-    shader->end(parent->device_context());
+        shader->begin(parent->device_context(), elapsed_time * 0.1f);
+
+        stage_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+        test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+
+        shader->end(parent->device_context());
+    }
 
 }
