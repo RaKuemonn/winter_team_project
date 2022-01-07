@@ -61,7 +61,7 @@ void Scene_Title::render(float elapsed_time)
 
     parent->state_manager()->setDS(DS::ON_ON);
 
-    parent->state_manager()->setBS(BS::ALPHA);
+    parent->state_manager()->setBS(BS::COVERAGE);
 
     parent->state_manager()->setRS(RS::SOLID_BACK);
 
