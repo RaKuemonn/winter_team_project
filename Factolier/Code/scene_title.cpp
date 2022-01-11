@@ -2,9 +2,13 @@
 #include "scene_title.h"
 #include "scene_manager.h"
 #include "camera.h"
+#include "scene_loading.h"
+#include "scene_game.h"
 
-void Scene_Title::initialize()
+void Scene_Title::initialize(Scene_Manager* parent_)
 {
+    parent = parent_;
+
     //title_back = std::make_unique<Sprite_Batch>(parent->device(), "./Data/cyberpunk.jpg", 1000);
 
     //sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/_.wav"));
@@ -50,6 +54,7 @@ void Scene_Title::update(float elapsed_time)
 
     //test_model->play_animation(elapsed_time, 1);
 
+    //parent->change_scene(new Scene_Loading(new Scene_Game()));
 }
 
 

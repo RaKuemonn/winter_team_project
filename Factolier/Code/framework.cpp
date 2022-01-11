@@ -3,6 +3,7 @@
 
 #include "scene_game.h"
 #include "scene_title.h"
+#include "scene_loading.h"
 
 float fps{ 0 };
 
@@ -18,8 +19,9 @@ bool Framework::initialize()
 	//シーンマネージャー生成
 	scene_manager = std::make_unique<Scene_Manager>();
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
-	//scene_manager->change_scene(new Scene_Game);
-	scene_manager->change_scene(new Scene_Title);
+	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
+	scene_manager->change_scene(new Scene_Loading(new Scene_Title));
+	//scene_manager->change_scene(new Scene_Title);
 	
 
 
@@ -61,6 +63,8 @@ void Framework::update(float elapsed_time/*Elapsed seconds from last frame*/)
 
 void Framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 {
+	std::lock_guard<std::mutex> lock(scene_manager->mutex());
+
 	//FLOAT color[]{ 1.0f, 1.0f, 1.0f, 1.0f };
 	//
 	//immediate_context->ClearRenderTargetView(render_target_view.Get(), color);

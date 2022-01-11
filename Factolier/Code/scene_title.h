@@ -16,7 +16,7 @@ class Scene_Title : public Scene
 public:
 	~Scene_Title() override {}
 
-	void initialize() override;
+	void initialize(Scene_Manager* parent_) override;
 	void uninitialize() override;
 	void update(float elapsed_time) override;
 	void render(float elapsed_time) override;

@@ -14,6 +14,7 @@ void Scene_Manager::initialize(ID3D11Device* device, ID3D11DeviceContext* contex
     model_manager_  = std::make_unique<Model_Manager>(device);
     sound_manager_  = std::make_unique<Sound_Manager>();
     input_manager_  = std::make_unique<Input_Manager_Interface>();
+    effect_manager_ = std::make_unique<Effect_Manager>(device, context);
 }
 
 
@@ -50,11 +51,10 @@ void Scene_Manager::change_scene(Scene* next_scene)
     clear();
 
     scene = next_scene;
-    scene->set_parent(this);
 
     if (!scene->is_ready())
     {
-        scene->initialize();
+        scene->initialize(this);
     }
 }
 
