@@ -16,6 +16,7 @@ float4 main(VS_OUT pin) : SV_TARGET
     // Inverse gamma process
     const float GAMMA = 2.2;
     color.rgb = pow(color.rgb, GAMMA);
+    color.rgb = pow(color.rgb, 1.0f / GAMMA);
 #endif
 
     return float4(color.rgb, alpha) * pin.color;

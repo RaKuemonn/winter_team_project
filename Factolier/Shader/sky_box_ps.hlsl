@@ -17,7 +17,10 @@ float4 main(VS_OUT pin) : SV_TARGET
 	float3 env_vector = normalize(pin.local_position);
 	float4 color = sky_box_texture.SampleLevel(sampler_states[2], env_vector, 0);
 
-	//color.w = 0.6f;
+	// Inverse gamma process
+	const float GAMMA = 2.2;
+	color.rgb = pow(color.rgb, GAMMA);
+	color.rgb = pow(color.rgb, 1.0f / GAMMA);
 
 	return color;
 }

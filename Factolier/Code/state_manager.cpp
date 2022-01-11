@@ -272,7 +272,7 @@ void State_Manager::generate_state(ID3D11Device* device, HRESULT hr)
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 
-	//ブレンドモード : CLEARNESS
+	//ブレンドモード : COVERAGE
 	blend_desc.AlphaToCoverageEnable = TRUE;												//ピクセルをレンダーターゲットに設定するとき、アルファからカバレッジをマルチサンプリング手法として使用するかどうか
 	blend_desc.IndependentBlendEnable = FALSE;												//同時レンダーターゲットで独立したブレンディングを有効にするかどうか
 	blend_desc.RenderTarget[0].BlendEnable = TRUE;											//ブレンディングの有無

@@ -26,6 +26,5 @@ public:
 
     void init()                             override {};
     void update(const float elapsed_time_)  override;
-    void render()                           override;
 
 };

@@ -47,7 +47,27 @@ sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v2.xyxx, t0.xyzw, 
 #line 13
 mov r0.w, r0.w  // r0.w <- alpha
 
+<<<<<<< HEAD
 #line 21
 mul o0.xyzw, r0.xyzw, v1.xyzw
 ret 
 // Approximately 4 instruction slots used
+=======
+#line 17
+mov r1.x, l(2.200000)  // r1.x <- GAMMA
+
+#line 18
+log r1.yzw, r0.xxyz
+mul r1.xyz, r1.yzwy, r1.xxxx
+exp r1.xyz, r1.xyzx  // r1.x <- color.x; r1.y <- color.y; r1.z <- color.z
+
+#line 19
+log r1.xyz, r1.xyzx
+mul r1.xyz, r1.xyzx, l(0.454545, 0.454545, 0.454545, 0.000000)
+exp r0.xyz, r1.xyzx  // r0.x <- color.x; r0.y <- color.y; r0.z <- color.z
+
+#line 22
+mul o0.xyzw, r0.xyzw, v1.xyzw
+ret 
+// Approximately 11 instruction slots used
+>>>>>>> 4a64919872198cee6ced59185def5eaf21f3a553

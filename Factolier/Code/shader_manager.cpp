@@ -3,6 +3,7 @@
 #include "phong_shader.h"
 #include "sky_shader.h"
 #include "ocean_shader.h"
+#include "shadow_map.h"
 
 
 void Shader_Manager::initialize(ID3D11Device* device)
@@ -10,6 +11,7 @@ void Shader_Manager::initialize(ID3D11Device* device)
     shaders.emplace_back(new Phong_Shader());
     shaders.emplace_back(new Sky_Shader());
     shaders.emplace_back(new Ocean_Shader());
+    shaders.emplace_back(new Shadow_Map());
 
     for (Shader* s : shaders)
     {

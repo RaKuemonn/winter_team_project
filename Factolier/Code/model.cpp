@@ -1,6 +1,7 @@
 
 #include "model.h"
 #include "model_manager.h"
+#include "collision.h"
 
 
 
@@ -120,7 +121,7 @@ void Model::render_exmesh(ID3D11DeviceContext* immediate_context, const DirectX:
 }
 
 
-bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, const DirectX::XMFLOAT4X4& world)
+bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, const DirectX::XMFLOAT4X4& world, Hit_Result* hit_result)
 {
 	using namespace DirectX;
 
@@ -269,15 +270,16 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 			DirectX::XMStoreFloat(&distance, WorldCrossLength);
 
 			// ƒqƒbƒgî•ñ•Û‘¶
-			//if (result.distance > distance)
-			//{
-			//	DirectX::XMVECTOR WorldNormal = DirectX::XMVector3TransformNormal(HitNormal, WorldTransform);
-			//
-			//	result.distance = distance;
-			//	DirectX::XMStoreFloat3(&result.position, WorldPosition);
-			//	DirectX::XMStoreFloat3(&result.normal, DirectX::XMVector3Normalize(WorldNormal));
-			//	hit = true;
-			//}
+			if (distance < hit_result->distance)
+			{
+				DirectX::XMVECTOR WorldNormal = DirectX::XMVector3TransformNormal(HitNormal, WorldTransform);
+			
+				hit_result->distance = distance;
+				hit_result->material_index = materialIndex;
+				DirectX::XMStoreFloat3(&hit_result->position, WorldPosition);
+				DirectX::XMStoreFloat3(&hit_result->normal, DirectX::XMVector3Normalize(WorldNormal));
+				hit = true;
+			}
         }
 		
 	}

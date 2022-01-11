@@ -169,10 +169,16 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
+    <ClCompile Include="Factolier\Code\collision_manager.cpp" />
+    <ClCompile Include="Factolier\Code\easing.cpp" />
     <ClCompile Include="Factolier\Code\enemy.cpp" />
+    <ClCompile Include="Factolier\Code\enemy_move_closer.cpp" />
+    <ClCompile Include="Factolier\Code\enemy_none.cpp" />
+    <ClCompile Include="Factolier\Code\enemy_spawner.cpp" />
     <ClCompile Include="Factolier\Code\entity.cpp" />
     <ClCompile Include="Factolier\Code\entity_manager.cpp" />
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
+    <ClCompile Include="Factolier\Code\light_manager.cpp" />
     <ClCompile Include="Factolier\Code\ocean_shader.cpp" />
     <ClCompile Include="Factolier\Code\phong_shader.cpp" />
     <ClCompile Include="Factolier\Code\player.cpp" />
@@ -180,12 +186,11 @@
     <ClCompile Include="Factolier\Code\scene_loading.cpp" />
     <ClCompile Include="Factolier\Code\scene_select.cpp" />
     <ClCompile Include="Factolier\Code\scene_title.cpp" />
+    <ClCompile Include="Factolier\Code\shadow_map.cpp" />
     <ClCompile Include="Factolier\Code\sky_box.cpp" />
     <ClCompile Include="Factolier\Code\sky_shader.cpp" />
     <ClCompile Include="Factolier\Code\sound_manager.cpp" />
-    <ClCompile Include="Factolier\Code\framebuffer.cpp" />
     <ClCompile Include="Factolier\Code\framework.cpp" />
-    <ClCompile Include="Factolier\Code\fullscreen_quad.cpp" />
     <ClCompile Include="Factolier\Code\geometric_primitive.cpp" />
     <ClCompile Include="Factolier\Code\main.cpp" />
     <ClCompile Include="Factolier\Code\model.cpp" />
@@ -195,13 +200,20 @@
     <ClCompile Include="Factolier\Code\shader_manager.cpp" />
     <ClCompile Include="Factolier\Code\model_resource.cpp" />
     <ClCompile Include="Factolier\Code\skinned_shader.cpp" />
+    <ClCompile Include="Factolier\Code\sphere_status.cpp" />
     <ClCompile Include="Factolier\Code\sphere_vehicle.cpp" />
     <ClCompile Include="Factolier\Code\sprite.cpp" />
     <ClCompile Include="Factolier\Code\sprite_batch.cpp" />
+    <ClCompile Include="Factolier\Code\stage.cpp" />
+    <ClCompile Include="Factolier\Code\stage_1.cpp" />
+    <ClCompile Include="Factolier\Code\stage_1_movement.cpp" />
+    <ClCompile Include="Factolier\Code\stage_2.cpp" />
+    <ClCompile Include="Factolier\Code\stage_manager.cpp" />
     <ClCompile Include="Factolier\Code\state_manager.cpp" />
     <ClCompile Include="Factolier\Code\static_mesh.cpp" />
     <ClCompile Include="Factolier\Code\sv_ball.cpp" />
     <ClCompile Include="Factolier\Code\texture.cpp" />
+    <ClCompile Include="Factolier\Code\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -215,10 +227,19 @@
     <ClInclude Include="Factolier\Code\ability.h" />
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
+    <ClInclude Include="Factolier\Code\collision.h" />
+    <ClInclude Include="Factolier\Code\collision_manager.h" />
+    <ClInclude Include="Factolier\Code\digits.h" />
+    <ClInclude Include="Factolier\Code\easing.h" />
     <ClInclude Include="Factolier\Code\enemy.h" />
+    <ClInclude Include="Factolier\Code\enemy_move_closer.h" />
+    <ClInclude Include="Factolier\Code\enemy_none.h" />
+    <ClInclude Include="Factolier\Code\enemy_spawner.h" />
     <ClInclude Include="Factolier\Code\entity.h" />
     <ClInclude Include="Factolier\Code\entity_manager.h" />
     <ClInclude Include="Factolier\Code\input_manager.h" />
+    <ClInclude Include="Factolier\Code\light.h" />
+    <ClInclude Include="Factolier\Code\light_manager.h" />
     <ClInclude Include="Factolier\Code\math_xmfloat.h" />
     <ClInclude Include="Factolier\Code\ocean_shader.h" />
     <ClInclude Include="Factolier\Code\phong_shader.h" />
@@ -230,13 +251,12 @@
     <ClInclude Include="Factolier\Code\scene_loading.h" />
     <ClInclude Include="Factolier\Code\scene_select.h" />
     <ClInclude Include="Factolier\Code\scene_title.h" />
+    <ClInclude Include="Factolier\Code\shadow_map.h" />
     <ClInclude Include="Factolier\Code\sky_box.h" />
     <ClInclude Include="Factolier\Code\sky_shader.h" />
     <ClInclude Include="Factolier\Code\sound.h" />
     <ClInclude Include="Factolier\Code\sound_manager.h" />
-    <ClInclude Include="Factolier\Code\framebuffer.h" />
     <ClInclude Include="Factolier\Code\framework.h" />
-    <ClInclude Include="Factolier\Code\fullscreen_quad.h" />
     <ClInclude Include="Factolier\Code\geometric_primitive.h" />
     <ClInclude Include="Factolier\Code\high_resolution_timer.h" />
     <ClInclude Include="Factolier\Code\misc.h" />
@@ -248,13 +268,20 @@
     <ClInclude Include="Factolier\Code\shader_manager.h" />
     <ClInclude Include="Factolier\Code\model_resource.h" />
     <ClInclude Include="Factolier\Code\skinned_shader.h" />
+    <ClInclude Include="Factolier\Code\sphere_status.h" />
     <ClInclude Include="Factolier\Code\sphere_vehicle.h" />
     <ClInclude Include="Factolier\Code\sprite.h" />
     <ClInclude Include="Factolier\Code\sprite_batch.h" />
+    <ClInclude Include="Factolier\Code\stage.h" />
+    <ClInclude Include="Factolier\Code\stage_1.h" />
+    <ClInclude Include="Factolier\Code\stage_1_movement.h" />
+    <ClInclude Include="Factolier\Code\stage_2.h" />
+    <ClInclude Include="Factolier\Code\stage_manager.h" />
     <ClInclude Include="Factolier\Code\state_manager.h" />
     <ClInclude Include="Factolier\Code\static_mesh.h" />
     <ClInclude Include="Factolier\Code\sv_ball.h" />
     <ClInclude Include="Factolier\Code\texture.h" />
+    <ClInclude Include="Factolier\Code\timer.h" />
     <ClInclude Include="Factolier\Code\transform.h" />
     <ClInclude Include="Factolier\Code\utility.h" />
     <ClInclude Include="Factolier\Code\velocity.h" />
@@ -310,6 +337,13 @@
     </FxCompile>
     <FxCompile Include="Factolier\Shader\phong_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Factolier\Shader\shadow_map_vs.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

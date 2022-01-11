@@ -29,8 +29,3 @@ void SV_Ball::update(const float elapsed_time_)
 {
     Sphere_Vehicle::update(elapsed_time_);
 }
-
-void SV_Ball::render()
-{
-    Sphere_Vehicle::render();
-}

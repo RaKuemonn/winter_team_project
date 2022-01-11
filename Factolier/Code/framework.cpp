@@ -18,9 +18,15 @@ bool Framework::initialize()
 
 	//シーンマネージャー生成
 	scene_manager = std::make_unique<Scene_Manager>();
+<<<<<<< HEAD
 	scene_manager->initialize(device.Get(), immediate_context.Get(), hr);
 	//scene_manager->change_scene(new Scene_Title);
 	scene_manager->change_scene(new Scene_Select);
+=======
+	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
+	//scene_manager->change_scene(new Scene_Game);
+	scene_manager->change_scene(new Scene_Title);
+>>>>>>> 4a64919872198cee6ced59185def5eaf21f3a553
 	
 
 
@@ -62,11 +68,12 @@ void Framework::update(float elapsed_time/*Elapsed seconds from last frame*/)
 
 void Framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 {
-	FLOAT color[]{ 1.0f, 1.0f, 1.0f, 1.0f };
+	//FLOAT color[]{ 1.0f, 1.0f, 1.0f, 1.0f };
+	//
+	//immediate_context->ClearRenderTargetView(render_target_view.Get(), color);
+	//immediate_context->ClearDepthStencilView(depth_stencil_view.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	//immediate_context->OMSetRenderTargets(1, render_target_view.GetAddressOf(), depth_stencil_view.Get());
 	
-	immediate_context->ClearRenderTargetView(render_target_view.Get(), color);
-	immediate_context->ClearDepthStencilView(depth_stencil_view.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-	immediate_context->OMSetRenderTargets(1, render_target_view.GetAddressOf(), depth_stencil_view.Get());
 	//immediate_context->OMSetRenderTargets(1, render_target_view.GetAddressOf(), nullptr);
 
 

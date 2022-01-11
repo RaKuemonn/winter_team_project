@@ -17,25 +17,31 @@ void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
     angle.x += ay * speed;
 #endif
 
-    if (input_manager->STATE(0) & PAD_UP)
+
+
+    if(GetAsyncKeyState('I'))//if (input_manager->STATE(0) & PAD_UP)
     {
         angle.x += 1.0f * elapsedTime;
     }
 
-    if (input_manager->STATE(0) & PAD_DOWN)
+    if (GetAsyncKeyState('K'))//if (input_manager->STATE(0) & PAD_DOWN)
     {
         angle.x -= 1.0f * elapsedTime;
     }
 
-    if (input_manager->STATE(0) & PAD_LEFT)
+    if (GetAsyncKeyState('J'))//if (input_manager->STATE(0) & PAD_LEFT)
     {
         angle.y += 1.0f * elapsedTime;
     }
 
-    if (input_manager->STATE(0) & PAD_RIGHT)
+    if (GetAsyncKeyState('L'))//if (input_manager->STATE(0) & PAD_RIGHT)
     {
         angle.y -= 1.0f * elapsedTime;
     }
+
+
+    constexpr float	max_angle = DirectX::XMConvertToRadians(80);
+    constexpr float	min_angle = DirectX::XMConvertToRadians(-80);
 
 
     //X軸のカメラ回転を制限
@@ -70,10 +76,23 @@ void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
 
     //注視点から後ろベクトル方向に一定距離離れたカメラ視点を求める
     DirectX::XMFLOAT3 eye;
-    eye.x = target.x - front.x * range;
-    eye.y = target.y - front.y * range;
-    eye.z = target.z - front.z * range;
 
-    //カメラの視点と注視点を設定
-    Camera::Instance().set_lookat(eye, target, DirectX::XMFLOAT3(0, 1, 0));
+    if (ptr_target == nullptr)
+    {
+        eye.x = target.x - front.x * range;
+        eye.y = target.y - front.y * range;
+        eye.z = target.z - front.z * range;
+        //カメラの視点と注視点を設定
+        Camera::Instance().set_lookat(eye, target, DirectX::XMFLOAT3(0, 1, 0));
+    }
+
+    else
+    {
+        eye.x = ptr_target->x - front.x * range;
+        eye.y = ptr_target->y - front.y * range;
+        eye.z = ptr_target->z - front.z * range;
+        //カメラの視点と注視点を設定
+        Camera::Instance().set_lookat(eye, *ptr_target, DirectX::XMFLOAT3(0, 1, 0));
+    }
+
 }

@@ -40,6 +40,18 @@ VS_OUT main(VS_IN vin)
 
 	vout.texcoord = vin.texcoord;
 
+	// シャドウマップ用のパラメーター計算
+	{
+		// ライトから見たNDC座標を算出
+		float4 wvpPos = mul(vin.position, mul(world, light_view_projection));
+		// NDC座標からUV座標を算出する
+		wvpPos /= wvpPos.w;
+		wvpPos.y = -wvpPos.y;
+		wvpPos.xy = 0.5f * wvpPos.xy + 0.5f;
+		vout.shadow_texcoord = wvpPos.xyz;
+	}
+
+
 	vout.color = material_color;
 
 

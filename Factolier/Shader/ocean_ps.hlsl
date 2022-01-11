@@ -14,7 +14,7 @@ Texture2D normal_texture : register(t1);
 
 static const float3 k_anbient = { 0.2f, 0.2f, 0.2f };
 static const float blend_alpha = 0.5f;
-static const float reflectional = 0.1f;
+static const float reflectional = 0.5f;
 
 float4 main(VS_OUT pin) : SV_TARGET
 {
@@ -23,6 +23,11 @@ float4 main(VS_OUT pin) : SV_TARGET
 
 	//カラーテクスチャの合成
 	float4 diffuse_color = diffuse_color2 * blend_alpha + diffuse_color1 * (1 - blend_alpha);
+
+	// Inverse gamma process
+	const float GAMMA = 2.2;
+	diffuse_color.rgb = pow(diffuse_color.rgb, GAMMA);
+	diffuse_color.rgb = pow(diffuse_color.rgb, 1.0f / GAMMA);
 
 	float3 E = normalize(pin.world_position.xyz - camera_position.xyz);
 	float3 L = normalize(light_direction.xyz);
@@ -62,8 +67,8 @@ float4 main(VS_OUT pin) : SV_TARGET
 	
 	float3 fresnel = reflectional + (1 - reflectional) * (pow(1 - dot(eye_vec, N), 5));
 	
-	directional_diffuse *= fresnel;
-	directional_specular *= fresnel;
+	diffuse_color.rgb *= fresnel;
+	//directional_specular *= fresnel;
 
 
 	float4 color = float4(ambient, diffuse_color.a);
