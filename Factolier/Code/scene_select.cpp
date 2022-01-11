@@ -107,7 +107,7 @@ void Scene_Select::render(float elapsed_time)
 {
     ID3D11DeviceContext* device_context_ = parent->device_context();
 
-    parent->state_manager()->setSS(SS::POINT);
+ /*   parent->state_manager()->setSS(SS::POINT);
     parent->state_manager()->setSS(SS::LINEAR);
     parent->state_manager()->setSS(SS::ANISOTROPIC);
 
@@ -115,7 +115,16 @@ void Scene_Select::render(float elapsed_time)
 
     parent->state_manager()->setBS(BS::ALPHA);
 
-    parent->state_manager()->setRS(RS::SOLID_NONE);
+    parent->state_manager()->setRS(RS::SOLID_NONE);*/
+    parent->state_manager()->setSS(SS::POINT);
+    parent->state_manager()->setSS(SS::LINEAR);
+    parent->state_manager()->setSS(SS::ANISOTROPIC);
+
+    parent->state_manager()->setDS(DS::ON_ON);
+
+    parent->state_manager()->setBS(BS::COVERAGE);
+
+    parent->state_manager()->setRS(RS::SOLID_BACK);
 
     //select_back->render(device_context_,
     //    0, 0,  //position
