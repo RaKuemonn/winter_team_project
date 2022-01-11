@@ -178,6 +178,7 @@
     <ClCompile Include="Factolier\Code\player.cpp" />
     <ClCompile Include="Factolier\Code\scene_game.cpp" />
     <ClCompile Include="Factolier\Code\scene_loading.cpp" />
+    <ClCompile Include="Factolier\Code\scene_select.cpp" />
     <ClCompile Include="Factolier\Code\scene_title.cpp" />
     <ClCompile Include="Factolier\Code\sky_box.cpp" />
     <ClCompile Include="Factolier\Code\sky_shader.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="Factolier\Code\scale.h" />
     <ClInclude Include="Factolier\Code\scene_game.h" />
     <ClInclude Include="Factolier\Code\scene_loading.h" />
+    <ClInclude Include="Factolier\Code\scene_select.h" />
     <ClInclude Include="Factolier\Code\scene_title.h" />
     <ClInclude Include="Factolier\Code\sky_box.h" />
     <ClInclude Include="Factolier\Code\sky_shader.h" />

@@ -30,7 +30,12 @@ void Scene_Title::initialize()
     DirectX::XMFLOAT3 target = { 0.0f, 0.0f, 0.0f };
     camera_controller->set_target(target);
 
-    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_cube.fbx"));
+    //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_cube.fbx"));
+    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_tree.fbx"));
+
+
+    
+
     //test_model->append_animation("./Data/Animations/Idle.fbx");
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
 
@@ -94,7 +99,7 @@ void Scene_Title::render(float elapsed_time)
         0.0f, 0.0f, 0.0f, 1.0f
     };
     //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 0.15f, 1.0f);
+    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.006f, 0.006f, 0.006f);
     DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
     DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
     DirectX::CXMMATRIX W = S * R * T;
@@ -102,13 +107,15 @@ void Scene_Title::render(float elapsed_time)
 
     parent->state_manager()->setDS(DS::ON_ON);
 
-    shader = parent->shader_manager()->get_shader(Shaders::OCEAN);
+    
+
+    shader = parent->shader_manager()->get_shader(Shaders::PHONG);
 
     shader->begin(parent->device_context(), elapsed_time * 0.5f);
 
-    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.5f });
-    //test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);
-
+    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+   // test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);
+   
     shader->end(parent->device_context());
 
     //DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
