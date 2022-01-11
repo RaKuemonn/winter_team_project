@@ -39,6 +39,10 @@ void Scene_Title::initialize(Scene_Manager* parent_)
     //test_model->append_animation("./Data/Animations/Idle.fbx");
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
 
+    test_effect = std::make_unique<Effect>(parent->effect_manager(), parent->mutex(), "./Data/Effect/dummy.efk");
+
+    test_effect->play({ 0.0f, 0.0f, 0.0 }, parent->effect_manager());
+
 }
 
 
@@ -53,6 +57,8 @@ void Scene_Title::update(float elapsed_time)
     camera_controller->update(elapsed_time, parent->input_manager());
 
     //test_model->play_animation(elapsed_time, 1);
+
+    parent->effect_manager()->update(elapsed_time);
 
     //parent->change_scene(new Scene_Loading(new Scene_Game()));
 }
@@ -166,6 +172,12 @@ void Scene_Title::render(float elapsed_time)
         test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
 
         shader->end(parent->device_context());
+    }
+
+
+    //エフェクト描画
+    {
+        parent->effect_manager()->render(Camera::Instance().get_view(), Camera::Instance().get_projection());
     }
 
 }
