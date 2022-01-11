@@ -170,6 +170,7 @@
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
     <ClCompile Include="Factolier\Code\collision_manager.cpp" />
+    <ClCompile Include="Factolier\Code\easing.cpp" />
     <ClCompile Include="Factolier\Code\enemy.cpp" />
     <ClCompile Include="Factolier\Code\enemy_move_closer.cpp" />
     <ClCompile Include="Factolier\Code\enemy_none.cpp" />
@@ -211,7 +212,7 @@
     <ClCompile Include="Factolier\Code\static_mesh.cpp" />
     <ClCompile Include="Factolier\Code\sv_ball.cpp" />
     <ClCompile Include="Factolier\Code\texture.cpp" />
-    <ClCompile Include="Factolier\Code\Timer.cpp" />
+    <ClCompile Include="Factolier\Code\timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -228,6 +229,7 @@
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
     <ClInclude Include="Factolier\Code\digits.h" />
+    <ClInclude Include="Factolier\Code\easing.h" />
     <ClInclude Include="Factolier\Code\enemy.h" />
     <ClInclude Include="Factolier\Code\enemy_move_closer.h" />
     <ClInclude Include="Factolier\Code\enemy_none.h" />
@@ -277,7 +279,7 @@
     <ClInclude Include="Factolier\Code\static_mesh.h" />
     <ClInclude Include="Factolier\Code\sv_ball.h" />
     <ClInclude Include="Factolier\Code\texture.h" />
-    <ClInclude Include="Factolier\Code\Timer.h" />
+    <ClInclude Include="Factolier\Code\timer.h" />
     <ClInclude Include="Factolier\Code\transform.h" />
     <ClInclude Include="Factolier\Code\utility.h" />
     <ClInclude Include="Factolier\Code\velocity.h" />

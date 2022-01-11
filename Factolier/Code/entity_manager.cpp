@@ -52,6 +52,8 @@ std::shared_ptr<Entity> Entity_Manager::get_entity(Entity* entity_) const
     
         return entity;
     }
+
+    return nullptr;
 }
 
 std::shared_ptr<Entity> Entity_Manager::get_entity(const short& index) const
