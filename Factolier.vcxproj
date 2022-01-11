@@ -88,10 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\Source;.\External\DirectXTex-master;.\External\imgui;.l\cereal-master\include\cereal;.\External\stb;.\External\Effekseer153a\include\Effekseer;.\External\Effekseer153a\include\EffekseerRendererDX11</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>.\External\Effekseer153a\lib\vs2019\MT\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;xinput.lib;winmm.lib;Effekseerd.lib;EffekseerRendererDX11d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -102,12 +105,15 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>.\Source;.\External\DirectXTex-master;.\External\imgui;.l\cereal-master\include\cereal;.\External\stb;.\External\Effekseer153a\include\Effekseer;.\External\Effekseer153a\include\EffekseerRendererDX11</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>.\External\Effekseer153a\lib\vs2019\MT\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;xinput.lib;winmm.lib;Effekseer.lib;EffekseerRendererDX11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,14 +123,14 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions);USE_IMGUI</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>.\External\DirectXTK-master\Inc;.\External\DirectXTK-master\Audio;.\External\DirectXTK-master\Src;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;.\External\cereal-master\include;.\External\imgui;.\External\DirectXTex-master\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\Source;.\External\DirectXTex-master;.\External\imgui;.l\cereal-master\include\cereal;.\External\stb;.\External\Effekseer153a\include\Effekseer;.\External\Effekseer153a\include\EffekseerRendererDX11</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\External\DirectXTK-master\Bin\Desktop_2019\x64\Debug;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\debug;.\External\DirectXTK-master\Audio\Bin\Desktop_2019\x64\Debug;$(ProjectDir)External\DirectXTex-master\DirectXTex\Bin\Desktop_2019\x64\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>zlib-md.lib;libxml2-md.lib;libfbxsdk-md.lib;d3d11.lib;dxgi.lib;DirectXTK.lib;Advapi32.lib;DirectXTKAudioWin8.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\External\Effekseer153a\lib\vs2019\MT\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;xinput.lib;winmm.lib;Effekseerd.lib;EffekseerRendererDX11d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -141,7 +147,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);USE_IMGUI</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>.\External\DirectXTK-master\Inc;.\External\DirectXTK-master\Audio;.\External\DirectXTK-master\Src;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;.\External\cereal-master\include;.\External\imgui;.\External\DirectXTex-master\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\Source;.\External\DirectXTex-master;.\External\imgui;.l\cereal-master\include\cereal;.\External\stb;.\External\Effekseer153a\include\Effekseer;.\External\Effekseer153a\include\EffekseerRendererDX11</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -150,8 +156,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\External\DirectXTK-master\Bin\Desktop_2019\x64\Release;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\release;.\External\DirectXTK-master\Audio\Bin\Desktop_2019\x64\Release;$(ProjectDir)External\DirectXTex-master\DirectXTex\Bin\Desktop_2019\x64\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>zlib-md.lib;libxml2-md.lib;libfbxsdk-md.lib;d3d11.lib;dxgi.lib;DirectXTK.lib;Advapi32.lib;DirectXTKAudioWin8.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\External\Effekseer153a\lib\vs2019\MT\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;xinput.lib;winmm.lib;Effekseer.lib;EffekseerRendererDX11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -171,6 +177,8 @@
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
     <ClCompile Include="Factolier\Code\collision_manager.cpp" />
     <ClCompile Include="Factolier\Code\easing.cpp" />
+    <ClCompile Include="Factolier\Code\effect.cpp" />
+    <ClCompile Include="Factolier\Code\effect_manager.cpp" />
     <ClCompile Include="Factolier\Code\enemy.cpp" />
     <ClCompile Include="Factolier\Code\enemy_move_closer.cpp" />
     <ClCompile Include="Factolier\Code\enemy_none.cpp" />
@@ -231,6 +239,8 @@
     <ClInclude Include="Factolier\Code\collision_manager.h" />
     <ClInclude Include="Factolier\Code\digits.h" />
     <ClInclude Include="Factolier\Code\easing.h" />
+    <ClInclude Include="Factolier\Code\effect.h" />
+    <ClInclude Include="Factolier\Code\effect_manager.h" />
     <ClInclude Include="Factolier\Code\enemy.h" />
     <ClInclude Include="Factolier\Code\enemy_move_closer.h" />
     <ClInclude Include="Factolier\Code\enemy_none.h" />

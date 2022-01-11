@@ -7,16 +7,17 @@
 #include "sky_box.h"
 #include "model.h"
 #include "camera_controller.h" 
-#include "input_manager.h"
-#include "sprite.h"
 
+
+
+class Scene_Manager;
 
 class Scene_Select : public Scene
 {
 public:
     ~Scene_Select() override {}
 
-	void initialize() override;
+	void initialize(Scene_Manager* parent_) override;
 	void uninitialize() override;
 	void update(float elapsed_time) ;
 	void move(float elapsedTime, Input_Manager* input_manager);

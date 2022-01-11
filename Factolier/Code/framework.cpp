@@ -3,7 +3,11 @@
 
 #include "scene_game.h"
 #include "scene_title.h"
+<<<<<<< HEAD
 #include "scene_select.h"
+=======
+#include "scene_loading.h"
+>>>>>>> 4ffdf1a69f3ebe00f30f0452631dfa75c25ad24d
 
 float fps{ 0 };
 
@@ -23,10 +27,11 @@ bool Framework::initialize()
 	//scene_manager->change_scene(new Scene_Title);
 //=======
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
-	//scene_manager->change_scene(new Scene_Select);
-	//scene_manager->change_scene(new Scene_Game);
-	scene_manager->change_scene(new Scene_Title);
-//>>>>>>> 4a64919872198cee6ced59185def5eaf21f3a553
+
+	scene_manager->change_scene(new Scene_Select);
+	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
+	//scene_manager->change_scene(new Scene_Loading(new Scene_Title));
+	//scene_manager->change_scene(new Scene_Title);
 	
 
 
@@ -68,6 +73,8 @@ void Framework::update(float elapsed_time/*Elapsed seconds from last frame*/)
 
 void Framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 {
+	std::lock_guard<std::mutex> lock(scene_manager->mutex());
+
 	//FLOAT color[]{ 1.0f, 1.0f, 1.0f, 1.0f };
 	//
 	//immediate_context->ClearRenderTargetView(render_target_view.Get(), color);

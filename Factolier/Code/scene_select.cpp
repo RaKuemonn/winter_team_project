@@ -27,7 +27,7 @@ void Scene_Select::DrawDebugGUI()
     ImGui::End();
 }
 
-void Scene_Select::initialize()
+void Scene_Select::initialize(Scene_Manager* parent_)
 {
     select_back = make_unique<Sprite_Batch>(parent->device(), "Data/back.png", 1);
     select_stage1 = make_unique<Sprite_Batch>(parent->device(), "Data/select1.png", 1);

@@ -47,8 +47,9 @@ inline void imgui()
 }
 
 
-void Scene_Game::initialize()
+void Scene_Game::initialize(Scene_Manager* parent_)
 {
+    parent = parent_;
 
     Camera& camera = Camera::Instance();
     camera.set_lookat(

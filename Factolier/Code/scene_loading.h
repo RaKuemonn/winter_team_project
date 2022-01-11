@@ -9,7 +9,7 @@ class Scene_Loading : public Scene
 public:
 	Scene_Loading(Scene* nextScene) : next_scene(nextScene) {}
 
-	void initialize() override;
+	void initialize(Scene_Manager* parent_) override;
 	void uninitialize() override;
 	void update(float elapsed_time) override;
 	void render(float elapsed_time) override;

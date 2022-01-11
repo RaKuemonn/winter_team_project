@@ -3,6 +3,7 @@ Debug/
 CSO/
 Win32/
 x64/
+External/
 
 *.ini
 *.vs
