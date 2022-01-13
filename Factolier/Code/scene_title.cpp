@@ -23,10 +23,10 @@ void Scene_Title::initialize(Scene_Manager* parent_)
         DirectX::XMFLOAT3(0, 0, 0),
         DirectX::XMFLOAT3(0, 1, 0)
     );
-    camera.set_perspective_fov(DirectX::XMConvertToRadians(90),
+    camera.set_perspective_fov(DirectX::XMConvertToRadians(70),
         1280 / 720,
         0.1f,
-        1000.0f);
+        100.0f);
 
 
     camera_controller = make_unique<Camera_Controller>();
@@ -34,7 +34,7 @@ void Scene_Title::initialize(Scene_Manager* parent_)
     DirectX::XMFLOAT3 target = { 0.0f, 0.0f, 0.0f };
     camera_controller->set_target(target);
 
-    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_tree.fbx"));
+    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_tree_winter.fbx"));
     stage_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/stage_demo.fbx"));
     //test_model->append_animation("./Data/Animations/Idle.fbx");
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
@@ -169,6 +169,8 @@ void Scene_Title::render(float elapsed_time)
         shader->begin(parent->device_context(), elapsed_time * 0.1f);
 
         stage_model->render(parent->device_context(), world_stage, { 1.0f, 1.0f, 1.0f, 1.0f });
+
+        parent->state_manager()->setRS(RS::SOLID_NONE);
         test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
 
         shader->end(parent->device_context());
