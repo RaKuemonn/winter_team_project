@@ -31,12 +31,15 @@ public:
 private:
 
 	float position = 0;
-	float left_max = 500;
+	float left_max = -500;
 	float light_max = 500;
 	float move_left = 0; // 左に動く分
 	float move_right = 0;  // 右に動く分
 	bool left_flag = false; // 左に動く式のフラグ
 	bool right_flag = false;  // 左に動く式のフラグ
+
+	float time = 0.0f;
+	float eas = 0.0;
 
 	std::unique_ptr<Sprite_Batch> select_back = nullptr; //　背景
 	std::unique_ptr<Sprite_Batch> select_stage1; //　背景

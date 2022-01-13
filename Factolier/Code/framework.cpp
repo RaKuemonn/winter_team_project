@@ -3,11 +3,8 @@
 
 #include "scene_game.h"
 #include "scene_title.h"
-<<<<<<< HEAD
 #include "scene_select.h"
-=======
 #include "scene_loading.h"
->>>>>>> 4ffdf1a69f3ebe00f30f0452631dfa75c25ad24d
 
 float fps{ 0 };
 

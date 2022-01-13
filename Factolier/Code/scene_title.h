@@ -8,6 +8,8 @@
 #include "model.h"
 #include "camera_controller.h" 
 
+#include "effect.h"
+//#include "player.h"
 
 
 
@@ -28,6 +30,7 @@ private:
 	std::unique_ptr<Model> test_model = nullptr;
 	std::unique_ptr<Model> stage_model = nullptr;
 
+	std::unique_ptr<Effect> test_effect = nullptr;
 
 	std::unique_ptr<Camera_Controller> camera_controller = nullptr;
 

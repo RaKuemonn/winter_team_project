@@ -2,7 +2,7 @@
 #include "effect.h"
 
 
-Effect::Effect(const char* filename, std::mutex& mutex, Effect_Manager* effect_manager)
+Effect::Effect(Effect_Manager* effect_manager, std::mutex& mutex, const char* filename)
 {
     //エフェクトを読み込みする前にロックする
     //＊マルチスレッドでEffectを作成するとDeviceContextに同時アクセスして
