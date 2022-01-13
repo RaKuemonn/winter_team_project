@@ -48,7 +48,6 @@ public:
     void update(const float elapsed_time_)  override;
 
 private:
-    inline static void input(DirectX::XMFLOAT3& input_direction, class Input_Manager& input_);
     void update_vehicle();
     _NODISCARD bool check_has_vehicle() const;
     void control_vehicle();

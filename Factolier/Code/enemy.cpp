@@ -11,3 +11,12 @@ Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_
     set_tag(Tag::Enemy);
 
 }
+
+void Enemy::update_velocity(const float elapsed_time_)
+{
+    constexpr DirectX::XMFLOAT3 gravity = { 0.0f,-3.0f * 9.8f,0.0f };
+    m_velocity->add(gravity);
+
+    // ‘¬“x‚ÌXV
+    m_velocity->update(elapsed_time_);
+}

@@ -44,7 +44,7 @@ namespace ray_functions
         // すでに位置が更新されたあとなのでこの計算になっている entityの更新で速度更新->位置更新->床の当たり判定
         // 始点が前回位置、終点が現在位置
 
-        constexpr float offset_y = 5.0f;
+        constexpr float offset_y = 2.0f;
         const float scale_epsilon = static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() ? SPHERE_SCALE_DECREASE * elapsed_time : 0.0f;
 
         const DirectX::XMFLOAT3 position = entity.lock()->get_position();
@@ -184,15 +184,26 @@ inline void ray_to_floor(
     Stage_Manager& s_manager,
     vectors& vectors_)
 {
-    // プレイヤー
+    // 交差結果用のローカル変数
     Hit_Result result;
+
+    // 摩擦係数の定数
+    // TODO : 現在固定値だが、床によって摩擦係数が変わるようにする
+    constexpr float friction_ratio = 0.1f;
+
+
+
+    // プレイヤー
     for (auto index : std::get<0>(vectors_))
     {
         std::shared_ptr<Entity> player = e_manager.get_entity(index);
+        player->set_friction(0.0f);
+
         if (ray_cast_floor(elapsed_time,player, s_manager, result))
         {
             player->set_position(result.position);
             player->set_velocity_y(0.0f);
+            player->set_friction(friction_ratio);
         }
     }
     
@@ -201,10 +212,12 @@ inline void ray_to_floor(
     for (auto index : std::get<1>(vectors_))
     {
         std::shared_ptr<Entity> enemy = e_manager.get_entity(index);
+        enemy->set_friction(0.0f);
         if (ray_cast_floor(elapsed_time, enemy, s_manager, result))
         {
             enemy->set_position(result.position);
             enemy->set_velocity_y(0.0f);
+            enemy->set_friction(friction_ratio);
         }
     }
 
@@ -214,6 +227,7 @@ inline void ray_to_floor(
     {
         std::shared_ptr<Entity>     vehicle = e_manager.get_entity(index);
         const DirectX::XMFLOAT3&    scale   = vehicle->get_scale();
+        vehicle->set_friction(0.0f);
 
         if (ray_cast_floor(elapsed_time, vehicle, scale, s_manager, result))
         {
@@ -234,6 +248,7 @@ inline void ray_to_floor(
 
             vehicle->set_position(result.position);
             vehicle->set_velocity_y(0.0f);
+            vehicle->set_friction(friction_ratio);
         }
 
     }
@@ -251,10 +266,13 @@ inline void ray_to_wall(
     /*for (auto index : std::get<0>(vectors_))
     {
         std::shared_ptr<Entity> player = e_manager.get_entity(index);
-        if (ray_cast_floor(elapsed_time, player, s_manager, result))
+        if (ray_cast_wall(elapsed_time, player, s_manager, result, wall_vec))
         {
-            player->set_position(result.position);
-            player->set_velocity_y(0.0f);
+            const DirectX::XMFLOAT3 velocity = player->get_velocity() * elapsed_time;
+            const DirectX::XMFLOAT3 position = player->get_position();
+            player->set_position({ position.x - velocity.x, position.y, position.z - velocity.z });
+            player->add_position({ wall_vec.x,0.0f,wall_vec.z });
+            player->set_velocity({});
         }
     }*/
 
@@ -263,10 +281,13 @@ inline void ray_to_wall(
     for (auto index : std::get<1>(vectors_))
     {
         std::shared_ptr<Entity> enemy = e_manager.get_entity(index);
-        if (ray_cast_floor(elapsed_time, enemy, s_manager, result))
+        if (ray_cast_wall(elapsed_time, enemy, s_manager, result, wall_vec))
         {
-            enemy->set_position(result.position);
-            enemy->set_velocity_y(0.0f);
+            const DirectX::XMFLOAT3 velocity = enemy->get_velocity() * elapsed_time;
+            const DirectX::XMFLOAT3 position = enemy->get_position();
+            enemy->set_position({ position.x - velocity.x, position.y, position.z - velocity.z });
+            enemy->add_position({ wall_vec.x,0.0f,wall_vec.z });
+            enemy->set_velocity({});
         }
     }*/
 
@@ -285,6 +306,7 @@ inline void ray_to_wall(
             const DirectX::XMFLOAT3 position = vehicle->get_position();
             vehicle->set_position({ position.x - velocity.x, position.y, position.z - velocity.z });
             vehicle->add_position({ wall_vec.x,0.0f,wall_vec.z });
+            //vehicle->set_velocity({});
         }
 
     }

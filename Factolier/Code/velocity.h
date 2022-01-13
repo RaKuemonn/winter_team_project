@@ -13,7 +13,7 @@ public:
     void update(const float elapsed_time)
     {
         update_friction(*this);
-        update_air_drag(*this, /* 空気抵抗率 */ 0.5f);
+        update_air_drag(*this, /* 空気抵抗率 */ 0.1f);
 
         m_velocity += (m_resultant / m_mass) * elapsed_time; // フレーム単位の加速力を加える
 
@@ -49,7 +49,7 @@ private:
     {
         // m_massとm_frictionの初期値が0なので、
         // set_mass()とset_friction()しないと計算上摩擦処理は動かない
-        DirectX::XMFLOAT3 friction = me.m_velocity * -1.0f * (me.m_mass * -gravity) * me.m_friction;
+        const DirectX::XMFLOAT3 friction = me.m_velocity * -1.0f * (me.m_mass * -gravity) * me.m_friction;
         me.add(friction);
     }
 

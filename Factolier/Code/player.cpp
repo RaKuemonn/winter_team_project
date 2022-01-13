@@ -80,6 +80,48 @@ void Player::render()
 #include "sv_ball.h"
 
 
+inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
+{
+    input_direction_ = {};
+
+
+    if (input_.STATE(0) & PAD_UP)
+    {
+        input_direction_.z += 1.0f;
+    }
+
+    if (input_.STATE(0) & PAD_DOWN)
+    {
+        input_direction_.z += -1.0f;
+    }
+
+    if (input_.STATE(0) & PAD_RIGHT)
+    {
+        input_direction_.x += 1.0f;
+    }
+
+    if (input_.STATE(0) & PAD_LEFT)
+    {
+        input_direction_.x += -1.0f;
+    }
+
+    if (input_.TRG(0) & KEY_SPACE)
+    {
+        input_direction_.y += 1.0f;
+    }
+
+    DirectX::XMFLOAT2 direction = {};
+    DirectX::XMStoreFloat2(&direction, DirectX::XMVector2Normalize(DirectX::XMVectorSet(input_direction_.x, input_direction_.z, 0.0f, 0.0f)));
+
+    // ÉJÉÅÉâï˚å¸Ç…
+    const DirectX::XMFLOAT3& camera_axis_x = Camera::Instance().get_right();
+    const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
+
+    input_direction_.x = direction.x * camera_axis_x.x + direction.y * camera_axis_z.x;
+    input_direction_.z = direction.x * camera_axis_x.z + direction.y * camera_axis_z.z;
+}
+
+
 Player::Player(Scene_Manager* ptr_scene_manager_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
@@ -113,44 +155,6 @@ void Player::update(const float elapsed_time_)
     get_model()->play_animation(elapsed_time_, 0);
 }
 
-
-void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
-{
-    input_direction_ = {};
-
-
-    if (input_.STATE(0) & PAD_UP)
-    {
-        input_direction_.z += 1.0f;
-    }
-
-    if (input_.STATE(0) & PAD_DOWN)
-    {
-        input_direction_.z += -1.0f;
-    }
-
-    if (input_.STATE(0) & PAD_RIGHT)
-    {
-        input_direction_.x += 1.0f;
-    }
-
-    if (input_.STATE(0) & PAD_LEFT)
-    {
-        input_direction_.x += -1.0f;
-    }
-
-    if(input_.TRG(0) & KEY_SPACE)
-    {
-         input_direction_.y += 1.0f;
-    }
-
-    // ÉJÉÅÉâï˚å¸Ç…
-    const DirectX::XMFLOAT3& camera_axis_x = Camera::Instance().get_right();
-    const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
-    
-    input_direction_.x = input_direction_.x * camera_axis_x.x + input_direction_.z * camera_axis_z.x;
-    input_direction_.z = input_direction_.x * camera_axis_x.z + input_direction_.z * camera_axis_z.z;
-}
 
 void Player::update_vehicle()
 {
@@ -229,6 +233,4 @@ void Player::create_vehicle()
 
     Entity_Manager::instance().spawn_register(vehicle);
 }
-
-
 

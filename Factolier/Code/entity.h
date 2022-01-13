@@ -46,6 +46,7 @@ public:
     // Setterä÷êî //
     void set_position(const DirectX::XMFLOAT3& position_)       const;
     void set_scale(const DirectX::XMFLOAT3& scale_)             const;
+    void set_friction(const float friction_)                    const;
     void set_velocity(const DirectX::XMFLOAT3& velocity)        const;
     void set_velocity_x(const float velocity_x)                 const;
     void set_velocity_y(const float velocity_y)                 const;

@@ -10,6 +10,7 @@
 
 
 // 一定間隔でスケールを削っていく関数
+// TODO : 速度が0.0fに近づくにつれてスケールも0.0fに近づけたい
 inline void scale_decreases(const float elapsed_time, Sphere_Vehicle& me)
 {
     if (me.get_is_free() == false) return;
@@ -42,6 +43,7 @@ Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_)
     set_tag(Tag::Vehicle);
     
     m_velocity->set_mass(1.0f);
+    m_velocity->set_friction(0.3f);
 
     constexpr float scale = 2.0f;
     get_transform()->set_scale({ scale,scale,scale });
@@ -71,17 +73,21 @@ void Sphere_Vehicle::update(const float elapsed_time_)
 
 void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
 {
-    constexpr float speed = 10.0f;
+    constexpr float speed = 30.0f;
 
     // 引数の方向に加速
-    m_velocity->add({ direction_.x * speed, direction_.y * 1000.0f * speed, direction_.z * speed });
+    m_velocity->add({ direction_.x * speed, direction_.y * 510.0f * speed, direction_.z * speed });
 }
 
 
 void Sphere_Vehicle::update_velocity(const float elapsed_time_)
 {
 
-    //if (m_is_free) m_velocity->add(m_velocity->get());
+    if (m_is_free)
+    {
+        m_velocity->set_friction(0.01f);
+        m_velocity->set_mass((get_scale().x < 1.0f) ? get_scale().x * 0.1f : 1.0f);
+    }
 
     constexpr DirectX::XMFLOAT3 gravity = { 0.0f,-3.0f * 9.8f,0.0f };
     m_velocity->add(gravity);

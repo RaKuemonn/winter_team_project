@@ -20,6 +20,5 @@ private:
 	DirectX::XMFLOAT3	target = { 0, 0, 0 };
 	const DirectX::XMFLOAT3*	ptr_target = nullptr;
 	DirectX::XMFLOAT3	angle = { 0, 0, 0 };
-	float				range = 5.0f;
 
 };

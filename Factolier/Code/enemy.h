@@ -15,6 +15,7 @@ public:
 
 protected:
     _NODISCARD const DirectX::XMFLOAT3& get_target_position() const { return target_position; }
+    void update_velocity(const float elapsed_time_);
 
 private:
     const DirectX::XMFLOAT3& target_position;   // このゲームの敵は９割方プレイヤーの位置を使うので、変数をここに入れている。　（使わないもの : チュートリアル用の的）
