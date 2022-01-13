@@ -143,11 +143,13 @@ void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
     {
          input_direction_.y += 1.0f;
     }
+
+    // ÉJÉÅÉâï˚å¸Ç…
+    const DirectX::XMFLOAT3& camera_axis_x = Camera::Instance().get_right();
+    const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
     
-    //const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
-    //
-    //input_direction_.x = input_direction_.x * camera_axis_z.x + input_direction_.z * camera_axis_z.x;
-    //input_direction_.z = input_direction_.x * camera_axis_z.z + input_direction_.z * camera_axis_z.z;
+    input_direction_.x = input_direction_.x * camera_axis_x.x + input_direction_.z * camera_axis_z.x;
+    input_direction_.z = input_direction_.x * camera_axis_x.z + input_direction_.z * camera_axis_z.z;
 }
 
 void Player::update_vehicle()

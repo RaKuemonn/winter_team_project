@@ -2,6 +2,7 @@
 #include "sphere_vehicle.h"
 
 #include "entity_manager.h"
+#include "imgui.h"
 #include "transform.h"
 #include "model.h"
 #include "scene_manager.h"
@@ -15,8 +16,7 @@ inline void scale_decreases(const float elapsed_time, Sphere_Vehicle& me)
 
     DirectX::XMFLOAT3 scale = me.get_scale();
 
-    constexpr float decrease = -0.25f;
-    constexpr DirectX::XMFLOAT3 xmf3_decrease = { decrease,decrease,decrease };
+    constexpr DirectX::XMFLOAT3 xmf3_decrease = { SPHERE_SCALE_DECREASE,SPHERE_SCALE_DECREASE,SPHERE_SCALE_DECREASE };
 
     scale += xmf3_decrease * elapsed_time;
 
@@ -74,7 +74,7 @@ void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
     constexpr float speed = 10.0f;
 
     // ˆø”‚Ì•ûŒü‚É‰Á‘¬
-    m_velocity->add({ direction_.x * speed, direction_.y * 500.0f * speed, direction_.z * speed });
+    m_velocity->add({ direction_.x * speed, direction_.y * 1000.0f * speed, direction_.z * speed });
 }
 
 
@@ -83,7 +83,7 @@ void Sphere_Vehicle::update_velocity(const float elapsed_time_)
 
     //if (m_is_free) m_velocity->add(m_velocity->get());
 
-    constexpr DirectX::XMFLOAT3 gravity = { 0.0f,-1.0f * 9.8f,0.0f };
+    constexpr DirectX::XMFLOAT3 gravity = { 0.0f,-3.0f * 9.8f,0.0f };
     m_velocity->add(gravity);
 
     // ‘¬“x‚ÌXV
