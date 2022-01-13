@@ -45,7 +45,7 @@
 // Name                 Index   Mask Register SysValue  Format   Used
 // -------------------- ----- ------ -------- -------- ------- ------
 // SV_POSITION              0   xyzw        0      POS   float   xyzw
-// COLOR                    0   xyzw        1     NONE   float   xyz 
+// COLOR                    0   xyzw        1     NONE   float   xyzw
 // TEXCOORD                 0   xy          2     NONE   float   xy  
 // POSITION                 0   xyzw        3     NONE   float   xyzw
 // NORMAL                   0   xyzw        4     NONE   float   xyzw
@@ -58,7 +58,7 @@ dcl_input v0.xyzw
 dcl_input v1.xyz
 dcl_input v2.xy
 dcl_output_siv o0.xyzw, position
-dcl_output o1.xyz
+dcl_output o1.xyzw
 dcl_output o2.xy
 dcl_output o3.xyzw
 dcl_output o4.xyzw
@@ -68,14 +68,13 @@ dcl_temps 5
 //   v0.x <- position.x; v0.y <- position.y; v0.z <- position.z; v0.w <- position.w; 
 //   v1.x <- normal.x; v1.y <- normal.y; v1.z <- normal.z; v1.w <- normal.w; 
 //   v2.x <- texcoord.x; v2.y <- texcoord.y; 
-//   o1.w <- <main return value>.color.w; 
 //   o4.x <- <main return value>.world_normal.x; o4.y <- <main return value>.world_normal.y; o4.z <- <main return value>.world_normal.z; o4.w <- <main return value>.world_normal.w; 
 //   o3.x <- <main return value>.world_position.x; o3.y <- <main return value>.world_position.y; o3.z <- <main return value>.world_position.z; o3.w <- <main return value>.world_position.w; 
 //   o2.x <- <main return value>.texcoord.x; o2.y <- <main return value>.texcoord.y; 
-//   o1.x <- <main return value>.color.x; o1.y <- <main return value>.color.y; o1.z <- <main return value>.color.z; 
+//   o1.x <- <main return value>.color.x; o1.y <- <main return value>.color.y; o1.z <- <main return value>.color.z; o1.w <- <main return value>.color.w; 
 //   o0.x <- <main return value>.position.x; o0.y <- <main return value>.position.y; o0.z <- <main return value>.position.z; o0.w <- <main return value>.position.w
 //
-#line 7 "C:\Users\2200259\Desktop\winter_team_project\Factolier\Shader\static_mesh_vs.hlsl"
+#line 7 "C:\Users\2200433\Desktop\後期2回目\Factolier\Shader\static_mesh_vs.hlsl"
 mul r0.xyzw, cb0[0].xxxx, cb1[0].xyzw
 mul r1.xyzw, cb0[0].yyyy, cb1[1].xyzw
 add r0.xyzw, r0.xyzw, r1.xyzw
@@ -140,13 +139,17 @@ mul r2.xyzw, r2.xyzw, r3.xxxx  // r2.x <- vout.world_normal.x; r2.y <- vout.worl
 mov r3.xyz, cb0[4].xyzx  // r3.x <- vout.color.x; r3.y <- vout.color.y; r3.z <- vout.color.z
 
 #line 15
+mov r3.w, l(1.000000)  // r3.w <- vout.color.w
+
+#line 16
 mov r4.xy, v2.xyxx  // r4.x <- vout.texcoord.x; r4.y <- vout.texcoord.y
 
-#line 17
+#line 18
 mov o0.xyzw, r0.xyzw
+mov o1.xyz, r3.xyzx
+mov o1.w, r3.w
 mov o3.xyzw, r1.xyzw
 mov o4.xyzw, r2.xyzw
-mov o1.xyz, r3.xyzx
 mov o2.xy, r4.xyxx
 ret 
-// Approximately 61 instruction slots used
+// Approximately 63 instruction slots used

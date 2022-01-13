@@ -25,7 +25,7 @@ void Entity::render(ID3D11DeviceContext* device_context)
 
 
 
-// Getter�֐� //
+// Getter
 
 Model* Entity::get_model() const
 {
@@ -87,7 +87,7 @@ Ability& Entity::get_ability() const
 
 
 
-// Setter�֐� //
+// Setter
 
 void Entity::set_position(const DirectX::XMFLOAT3& position_) const
 {

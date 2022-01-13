@@ -11,7 +11,7 @@ class Scene
 public:
 	virtual ~Scene() {};
 
-	virtual void initialize() = 0;
+	virtual void initialize(Scene_Manager* parent_) = 0;
 	virtual void uninitialize() = 0;
 	virtual void update(float elapsed_time) = 0;
 	virtual void render(float elapsed_time) = 0;

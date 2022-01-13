@@ -7,6 +7,7 @@
 #include "sky_box.h"
 #include "model.h"
 #include "camera_controller.h"
+#include "effect.h"
 //#include "player.h"
 
 
@@ -16,7 +17,7 @@ class Scene_Title : public Scene
 public:
 	~Scene_Title() override {}
 
-	void initialize() override;
+	void initialize(Scene_Manager* parent_) override;
 	void uninitialize() override;
 	void update(float elapsed_time) override;
 	void render(float elapsed_time) override;
@@ -27,6 +28,8 @@ private:
 	std::unique_ptr<Sky_Box> sky_box = nullptr;
 	std::unique_ptr<Model> test_model = nullptr;
 	std::unique_ptr<Model> stage_model = nullptr;
+
+	std::unique_ptr<Effect> test_effect = nullptr;
 
 	std::unique_ptr<Camera_Controller> camera_controller = nullptr;
 

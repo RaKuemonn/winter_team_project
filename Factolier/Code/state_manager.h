@@ -31,7 +31,7 @@ enum class BS
 	LIGHTEN,
 	DARKEN,
 	SCREEN,
-	CLEARNESS,
+	COVERAGE,
 };
 
 enum class RS

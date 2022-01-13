@@ -7,9 +7,6 @@
     <Filter Include="Factolier\Admin">
       <UniqueIdentifier>{ec796f9b-03dd-4fd3-9f32-22c2f5130a81}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Factolier\Scene">
-      <UniqueIdentifier>{c607bb3a-e8a1-4979-ba08-e5bdc1c84f5d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Factolier\Graphic">
       <UniqueIdentifier>{f4634b9e-1f61-4b12-997f-d4adbccb5d81}</UniqueIdentifier>
     </Filter>
@@ -60,6 +57,9 @@
     </Filter>
     <Filter Include="Factolier\Stage\stage_2">
       <UniqueIdentifier>{3d91e0d0-643e-4e5b-8f21-d9f37234f60c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Scene">
+      <UniqueIdentifier>{c607bb3a-e8a1-4979-ba08-e5bdc1c84f5d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,14 +207,26 @@
     <ClCompile Include="Factolier\Code\collision_manager.cpp">
       <Filter>Factolier\Entity\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\Timer.cpp">
-      <Filter>Factolier\Utility</Filter>
-    </ClCompile>
     <ClCompile Include="Factolier\Code\sphere_status.cpp">
       <Filter>Factolier\Entity\Status</Filter>
     </ClCompile>
     <ClCompile Include="Factolier\Code\enemy_move_closer.cpp">
       <Filter>Factolier\Entity\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\easing.cpp">
+      <Filter>Factolier\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\timer.cpp">
+      <Filter>Factolier\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\effect.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\effect_manager.cpp">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\scene_select.cpp">
+      <Filter>Factolier\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -413,11 +425,23 @@
     <ClInclude Include="Factolier\Code\digits.h">
       <Filter>Factolier\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\Timer.h">
-      <Filter>Factolier\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Factolier\Code\enemy_move_closer.h">
       <Filter>Factolier\Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\easing.h">
+      <Filter>Factolier\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\timer.h">
+      <Filter>Factolier\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\effect.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\effect_manager.h">
+      <Filter>Factolier\Accessibility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\scene_select.h">
+      <Filter>Factolier\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
