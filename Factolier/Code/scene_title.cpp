@@ -35,7 +35,7 @@ void Scene_Title::initialize(Scene_Manager* parent_)
     camera_controller->set_target(target);
 
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_tree_winter.fbx"));
-    stage_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/stage_demo.fbx"));
+   stage_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/stage_demo.fbx"));
     //test_model->append_animation("./Data/Animations/Idle.fbx");
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
 
