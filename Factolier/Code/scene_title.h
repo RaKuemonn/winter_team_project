@@ -6,8 +6,7 @@
 #include "sound.h"
 #include "sky_box.h"
 #include "model.h"
-#include "camera_controller.h" 
-
+#include "camera_controller.h"
 #include "effect.h"
 //#include "player.h"
 

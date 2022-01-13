@@ -60,52 +60,6 @@ void Scene_Select::update(float elapsed_time)
 
 void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
 {
-    //if (position >= -1990)
-    //{
-    //    if (left_flag == false)
-    //    {
-    //        if (input_manager->TRG(0) & PAD_LEFT)
-    //        {
-    //            left_flag = true;
-    //        }
-    //    }
-    //    if (left_flag == true)
-    //    {
-    //        move_left += (left_max - move_left) * 0.015f;
-    //        if (move_left >= left_max - 10)
-    //        {
-    //            left_max += 500;
-    //            left_flag = false;
-    //        }
-    //    }
-    //}
-  
-
-   /*if (position != 0)
-    {
-        if (right_flag == false)
-        {
-            if (input_manager->TRG(0) & PAD_RIGHT)
-            {
-                right_flag = true;
-            }
-        }
-        if (right_flag == true)
-        {
-            move_right += (-light_max - move_right) * 0.015f;
-            if (move_right < -light_max + 10)
-            {
-                light_max += 500;
-                right_flag = false;
-            }
-        }
-    }
-    position = -move_left - move_right;
-    if (position <= -1990)
-    {
-        position -= 10;
-    }*/
-   
     if (position > -2000)
     {
         if (input_manager->TRG(0) & PAD_LEFT)
@@ -153,25 +107,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
             }
         }
     }
-    //if (left_flag == false)
-    //{
-    //    if (input_manager->TRG(0) & PAD_LEFT)
-    //    {
-    //        left_flag = true;
-    //    }
-    //}
-    //if (left_flag == true)
-    //{
-    //    move_left += easing::in_quart(1, 2, 2, 2);
-    //  
-    //    if (move_left >= 50)
-    //    {
-    //        //left_max += 500;
-    //        left_flag = false;
-    //    }
-    //}
-    //position -= move_left;
-     
+  
 }
 
 void Scene_Select::render(float elapsed_time)

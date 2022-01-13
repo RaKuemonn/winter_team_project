@@ -25,10 +25,10 @@ bool Framework::initialize()
 //=======
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
 
-	scene_manager->change_scene(new Scene_Select);
+	//scene_manager->change_scene(new Scene_Select);
 	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
 	//scene_manager->change_scene(new Scene_Loading(new Scene_Title));
-	//scene_manager->change_scene(new Scene_Title);
+	scene_manager->change_scene(new Scene_Title);
 	
 
 

@@ -23,10 +23,10 @@ void Scene_Title::initialize(Scene_Manager* parent_)
         DirectX::XMFLOAT3(0, 0, 0),
         DirectX::XMFLOAT3(0, 1, 0)
     );
-    camera.set_perspective_fov(DirectX::XMConvertToRadians(90),
+    camera.set_perspective_fov(DirectX::XMConvertToRadians(70),
         1280 / 720,
         0.1f,
-        1000.0f);
+        100.0f);
 
 
     camera_controller = make_unique<Camera_Controller>();
@@ -34,19 +34,11 @@ void Scene_Title::initialize(Scene_Manager* parent_)
     DirectX::XMFLOAT3 target = { 0.0f, 0.0f, 0.0f };
     camera_controller->set_target(target);
 
-//<<<<<<< HEAD
-//    //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_cube.fbx"));
-//    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_tree.fbx"));
-//
-//
-//    
-//
-//=======
-//    test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_tree.fbx"));
-//    stage_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/stage_demo.fbx"));
-//>>>>>>> 4a64919872198cee6ced59185def5eaf21f3a553
+    //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/test_tree_winter.fbx"));
+    stage_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/stage_demo.fbx"));
     //test_model->append_animation("./Data/Animations/Idle.fbx");
     //test_model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/green.fbx"));
+
     test_effect = std::make_unique<Effect>(parent->effect_manager(), parent->mutex(), "./Data/Effect/dummy.efk");
 
     test_effect->play({ 0.0f, 0.0f, 0.0 }, parent->effect_manager());
@@ -93,56 +85,6 @@ void Scene_Title::render(float elapsed_time)
         0.0f, 0.0f, 0.0f, 1.0f
     };
 
-    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.006f, 0.006f, 0.006f);
-    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
-    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
-    DirectX::CXMMATRIX W = S * R * T;
-    DirectX::XMStoreFloat4x4(&world, W);
-
-    parent->state_manager()->setDS(DS::ON_ON);
-
-    Shader* shader = nullptr;
-
-    shader = parent->shader_manager()->get_shader(Shaders::PHONG);
-
-    shader->begin(parent->device_context(), elapsed_time * 0.5f);
-
-    test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-   // test_model->render_mesh(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f }, 0);
-   
-    shader->end(parent->device_context());
-
-    //DirectX::XMMATRIX scale = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-    //
-    //DirectX::XMFLOAT4X4 world = {
-    //    1.0f, 0.0f, 0.0f, 0.0f,
-    //    0.0f, 1.0f, 0.0f, 0.0f,
-    //    0.0f, 0.0f, 1.0f, 0.0f,
-    //    0.0f, 0.0f, 0.0f, 1.0f
-    //};
-    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
-    //DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(0, 0, 0);
-    //DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
-    //DirectX::CXMMATRIX W = S * R * T;
-    //DirectX::XMStoreFloat4x4(&world, W);
-    //
-    //DirectX::XMMATRIX World = DirectX::XMLoadFloat4x4(&world);
-    //World = scale;
-    //DirectX::XMStoreFloat4x4(&world, World);
-    //
-    //parent->state_manager()->setDS(DS::ON_ON);
-    //
-    //shader = parent->shader_manager()->get_shader(0);
-    //
-    //shader->begin(parent->device_context());
-    //
-    //test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-    //
-    //shader->end(parent->device_context());
-    //player->render();
-//=======
-
     DirectX::XMFLOAT4X4 world_stage = {
             1.0f, 0.0f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f, 0.0f,
@@ -176,7 +118,7 @@ void Scene_Title::render(float elapsed_time)
 
 
 
-    //Shader* shader = nullptr;
+    Shader* shader = nullptr;
 
     //シャドウマップ生成
     {
@@ -186,7 +128,7 @@ void Scene_Title::render(float elapsed_time)
 
 
         //stage_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
-        test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+        //test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
 
         shader->end(parent->device_context());
     }
@@ -227,10 +169,13 @@ void Scene_Title::render(float elapsed_time)
         shader->begin(parent->device_context(), elapsed_time * 0.1f);
 
         stage_model->render(parent->device_context(), world_stage, { 1.0f, 1.0f, 1.0f, 1.0f });
-        test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
+
+        parent->state_manager()->setRS(RS::SOLID_NONE);
+       // test_model->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 1.0f });
 
         shader->end(parent->device_context());
     }
+
 
     //エフェクト描画
     {
