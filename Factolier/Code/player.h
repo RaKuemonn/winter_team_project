@@ -48,11 +48,11 @@ public:
     void update(const float elapsed_time_)  override;
 
 private:
-    void update_vehicle();
+    void update_vehicle(const float elapsed_time_);
     _NODISCARD bool check_has_vehicle() const;
     void control_vehicle();
     void reference_vehicle_position();
-    void create_vehicle();
+    void create_vehicle(const float elapsed_time_);
 
 private:
     std::weak_ptr<Entity> m_wkp_vehicle;

@@ -5,9 +5,9 @@ namespace Model_Paths
     namespace Entity
     {
         
-#ifdef _DEBUG
+//#ifdef _DEBUG
         inline constexpr char* const test               = "./Data/nico.fbx";
-#endif
+//#endif
 
 
         inline constexpr char* const player             = test;

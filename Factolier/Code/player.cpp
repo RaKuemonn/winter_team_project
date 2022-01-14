@@ -146,7 +146,7 @@ void Player::update(const float elapsed_time_)
     input(input_direction, *get_scene_manager()->input_manager());
 
     // 乗り物の更新 ・ 位置の更新
-    update_vehicle();
+    update_vehicle(elapsed_time_);
     
 
     // 姿勢の更新
@@ -157,7 +157,7 @@ void Player::update(const float elapsed_time_)
 }
 
 
-void Player::update_vehicle()
+void Player::update_vehicle(const float elapsed_time_)
 {
     //  乗ってる乗り物があるか
     if(check_has_vehicle())
@@ -176,7 +176,7 @@ void Player::update_vehicle()
         return;
     }
 
-    create_vehicle();
+    create_vehicle(elapsed_time_);
 }
 
 bool Player::check_has_vehicle() const
@@ -206,13 +206,15 @@ void Player::reference_vehicle_position()
 
 }
 
-void Player::create_vehicle()
+void Player::create_vehicle(const float elapsed_time_)
 {
     DirectX::XMFLOAT4 quaternion = { 0.0f,0.0f,0.0f,1.0f };
+    DirectX::XMFLOAT3 velocity = {};
     
     if (m_wkp_vehicle.expired() == false)
     {
         quaternion = m_wkp_vehicle.lock().get()->get_quaternion();
+        velocity = m_wkp_vehicle.lock().get()->get_velocity() * elapsed_time_;
     }
 
     // weak_ptrを解放しておく
@@ -222,7 +224,7 @@ void Player::create_vehicle()
     std::shared_ptr<Entity> vehicle = std::make_shared<SV_Ball>(get_scene_manager());
 
     // 位置の設定
-    DirectX::XMFLOAT3 position = get_position();
+    DirectX::XMFLOAT3 position = get_position() - velocity;
     position.y += -1.0f * pudding_y + 5.0f;
     vehicle->set_position(position);
 

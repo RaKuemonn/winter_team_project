@@ -82,6 +82,12 @@ public:
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGui::GetIO().Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\consola.ttf", 14.0f, nullptr, glyphRangesJapanese);
+
+		// ƒŠƒŠ[ƒXimgui.ini‚ğo—Í‚³‚¹‚È‚¢
+#ifdef NDEBUG
+		ImGui::GetIO().IniFilename = 0;
+#endif
+
 		ImGui_ImplWin32_Init(hwnd);
 		ImGui_ImplDX11_Init(device.Get(), immediate_context.Get());
 		ImGui::StyleColorsDark();

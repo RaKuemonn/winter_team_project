@@ -191,8 +191,8 @@ void Shadow_Map::end(ID3D11DeviceContext* immediate_context)
 	immediate_context->PSSetShaderResources(2, 1, shadow_shader_resource_view.GetAddressOf());
 	immediate_context->PSSetSamplers(4, 1, shadow_sampler_state.GetAddressOf());
 
-
-	ImGui::Begin("ImGui");
+#ifdef _DEBUG
+	ImGui::Begin("Shadow_Map");
 	
 	ImGui::Separator();
 	if (ImGui::TreeNode("texture"))
@@ -205,6 +205,8 @@ void Shadow_Map::end(ID3D11DeviceContext* immediate_context)
 	}
 	
 	ImGui::End();
+#endif
+
 }
 
 

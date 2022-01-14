@@ -43,7 +43,7 @@ Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_, const char* fi
     set_tag(Tag::Vehicle);
     
     m_velocity->set_mass(1.0f);
-    m_velocity->set_friction(0.3f);
+    m_velocity->set_friction(0.0f);
 
     constexpr float scale = 2.0f;
     get_transform()->set_scale({ scale,scale,scale });
