@@ -237,6 +237,7 @@
     <ClInclude Include="Factolier\Code\camera_controller.h" />
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
+    <ClInclude Include="Factolier\Code\data_filepaths.h" />
     <ClInclude Include="Factolier\Code\digits.h" />
     <ClInclude Include="Factolier\Code\easing.h" />
     <ClInclude Include="Factolier\Code\effect.h" />

@@ -443,6 +443,9 @@
     <ClInclude Include="Factolier\Code\scene_select.h">
       <Filter>Factolier\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Factolier\Code\data_filepaths.h">
+      <Filter>Factolier\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
