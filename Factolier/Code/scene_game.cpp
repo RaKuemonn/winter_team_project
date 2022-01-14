@@ -28,16 +28,12 @@ inline void imgui()
 
         if (entity)
         {
+            DirectX::XMFLOAT3 pos = entity->get_position();
+            ImGui::InputFloat3("position", &pos.x);
             DirectX::XMFLOAT3 velo = entity->get_velocity();
             ImGui::InputFloat3("velocity", &velo.x);
             float velo_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&velo)));
             ImGui::InputFloat("velocity_length", &velo_length);
-
-            if(velo_length > 3.0f)
-            {
-                int a = 1;
-                a++;
-            }
 
         }
     }

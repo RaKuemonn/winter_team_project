@@ -8,6 +8,15 @@
 #include "stage_manager.h"
 #include "stage.h"
 
+
+// ローカル関数
+// 符号判定用のローカル関数 (正1.0f か 負-1.0f, ゼロ0.0f)が返る
+inline float sign(const float value_)
+{
+    return static_cast<float>((value_ > 0.0f) - (value_ < 0.0f));
+};
+
+
 // レイを用いた衝突判定の関数群
 namespace ray_functions
 {
@@ -18,6 +27,9 @@ namespace ray_functions
 
         // そもそも移動していなければ　早期returnさせる
         if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
+
+        // 速度が下向き以外は早期return
+        if (velocity.y >= 0.0f) return false;
 
         // entityのこのフレームでの移動分からレイを作っている
         // すでに位置が更新されたあとなのでこの計算になっている entityの更新で速度更新->位置更新->床の当たり判定
@@ -40,11 +52,14 @@ namespace ray_functions
         // // そもそも移動していなければ　早期returnさせる
         // if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
+        // 速度が下向き以外は早期return
+        if (velocity.y >= 0.0f) return false;
+
         // entityのこのフレームでの移動分からレイを作っている
         // すでに位置が更新されたあとなのでこの計算になっている entityの更新で速度更新->位置更新->床の当たり判定
         // 始点が前回位置、終点が現在位置
 
-        constexpr float offset_y = 2.0f;
+        constexpr float offset_y = 1.0f;
         const float scale_epsilon = static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() ? SPHERE_SCALE_DECREASE * elapsed_time : 0.0f;
 
         const DirectX::XMFLOAT3 position = entity.lock()->get_position();
@@ -88,15 +103,10 @@ namespace ray_functions
         const DirectX::XMFLOAT3 velocity = entity.lock()->get_velocity() * elapsed_time;
 
         // そもそも移動していなければ　早期returnさせる
-        if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
+        //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
         const DirectX::XMFLOAT3 position = entity.lock()->get_position();
-
-        // 符号判定用のローカル関数 (正1.0f か 負-1.0f, ゼロ0.0f)が返る
-        auto sign = [](const float value_) -> float
-        {
-            return static_cast<float>((value_ > 0.0f) - (value_ < 0.0f));
-        };
+        
 
         // 一回目 x
         DirectX::XMVECTOR xmvec_1;

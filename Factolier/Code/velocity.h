@@ -13,7 +13,7 @@ public:
     void update(const float elapsed_time)
     {
         update_friction(*this);
-        update_air_drag(*this, /* 空気抵抗率 */ 0.1f);
+        update_air_drag(*this, /* 空気抵抗率 */ 0.3f);
 
         m_velocity += (m_resultant / m_mass) * elapsed_time; // フレーム単位の加速力を加える
 
