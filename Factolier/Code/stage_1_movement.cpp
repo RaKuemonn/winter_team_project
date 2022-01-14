@@ -5,11 +5,12 @@
 #include "collision.h"
 #include "imgui.h"
 #include "transform.h"
+#include "model_filepaths.h"
 
 
 Stage_1_Movement::Stage_1_Movement(Scene_Manager* ptr_scene_manager_)
 {
-    load_model(ptr_scene_manager_->model_manager()->load_model("./Data/propeller.fbx"));
+    load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::propeller));
 
     //constexpr float scale = 0.1f;
     //get_transform()->set_scale({ scale,scale,scale });
