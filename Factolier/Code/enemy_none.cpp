@@ -3,10 +3,11 @@
 #include "transform.h"
 #include "model.h"
 #include "scene_manager.h"
+#include "model_filepaths.h"
 
 
 
-Enemy_None::Enemy_None(Scene_Manager* ptr_scene_manager_) : Enemy(ptr_scene_manager_, {})
+Enemy_None::Enemy_None(Scene_Manager* ptr_scene_manager_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_none, {})
 {
     load_model(get_scene_manager()->model_manager()->load_model("./Data/nico.fbx"));
 

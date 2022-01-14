@@ -78,6 +78,7 @@ void Player::render()
 #include "input_manager.h"
 #include "sphere_vehicle.h"
 #include "sv_ball.h"
+#include "model_filepaths.h"
 
 
 inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
@@ -125,7 +126,7 @@ inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
 Player::Player(Scene_Manager* ptr_scene_manager_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
-    load_model(get_scene_manager()->model_manager()->load_model("./Data/nico.fbx"));
+    load_model(get_scene_manager()->model_manager()->load_model(Model_Paths::Entity::player));
 
     set_tag(Tag::Player);
 

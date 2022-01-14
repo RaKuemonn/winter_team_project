@@ -7,7 +7,7 @@ constexpr float SPHERE_SCALE_DECREASE = -0.25f;
 class Sphere_Vehicle : public Entity
 {
 public:
-    Sphere_Vehicle(class Scene_Manager* ptr_scene_manager_);
+    Sphere_Vehicle(class Scene_Manager* ptr_scene_manager_, const char* filename_);
     ~Sphere_Vehicle()                       override = default;
 
     virtual void init()                             override {};

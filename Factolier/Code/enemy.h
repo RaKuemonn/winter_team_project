@@ -7,7 +7,7 @@
 class Enemy : public Entity
 {
 public:
-    Enemy(class Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_);
+    Enemy(class Scene_Manager* ptr_scene_manager_, const char* filename_, const DirectX::XMFLOAT3& target_position_);
     virtual ~Enemy()                                override = default;
 
     virtual void init()                             override = 0;

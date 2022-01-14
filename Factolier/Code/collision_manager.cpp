@@ -98,7 +98,6 @@ namespace ray_functions
 
     inline bool ray_cast_wall(const float elapsed_time, std::weak_ptr<Entity> entity, const DirectX::XMFLOAT3& scale, Stage_Manager& s_manager, Hit_Result& hit_result_, DirectX::XMFLOAT3& wall_vec)
     {
-        bool hit = false;
 
         const DirectX::XMFLOAT3 velocity = entity.lock()->get_velocity() * elapsed_time;
 
@@ -118,7 +117,7 @@ namespace ray_functions
 
             xmvec_1 = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&start));
 
-            hit = s_manager.ray_cast(start, end, &hit_result_);
+            s_manager.ray_cast(start, end, &hit_result_);
         }
 
         Hit_Result result = {}; // 比較用
@@ -133,7 +132,7 @@ namespace ray_functions
 
             xmvec_2 = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&start));
 
-            hit = s_manager.ray_cast(start, end, &result);
+            s_manager.ray_cast(start, end, &result);
         }
 
         // 当たり判定の結果判断
@@ -143,17 +142,18 @@ namespace ray_functions
             {
                 hit_result_ = result;
                 DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
-                DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_2, DirectX::XMVectorMultiply(DirectX::XMVector3Dot(xmvec_2, Normal), Normal)));
+                DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_2, DirectX::XMVectorScale(Normal,DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_2, Normal)))));
             }
             else
             {
                 DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
-                DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_1, DirectX::XMVectorMultiply(DirectX::XMVector3Dot(xmvec_1, Normal), Normal)));
+                DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_1, DirectX::XMVectorScale(Normal,DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_1, Normal)))));
             }
 
+            return true;
         }
 
-        return hit;
+        return false;
     }
 
 

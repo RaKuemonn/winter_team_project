@@ -4,10 +4,11 @@
 #include "scene_manager.h"
 
 
-Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : target_position(target_position_)
+Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const char* filename_, const DirectX::XMFLOAT3& target_position_) : target_position(target_position_)
 {
 
     set_ptr_scene_manager(ptr_scene_manager_);
+    load_model(get_scene_manager()->model_manager()->load_model(filename_));
     set_tag(Tag::Enemy);
 
 }

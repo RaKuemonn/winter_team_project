@@ -34,11 +34,11 @@ inline void scale_decreases(const float elapsed_time, Sphere_Vehicle& me)
 
 
 
-Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_)
+Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_, const char* filename_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
 
-    load_model(get_scene_manager()->model_manager()->load_model("./Data/ball_demo.fbx",true));
+    load_model(get_scene_manager()->model_manager()->load_model(filename_,true));
 
     set_tag(Tag::Vehicle);
     
