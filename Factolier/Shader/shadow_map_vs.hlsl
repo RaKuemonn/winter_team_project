@@ -1,12 +1,10 @@
-#include "default.hlsli"
+#include "shadow_map.hlsli"
 
 
 
-float4 main(VS_IN vin) : SV_POSITION
+VS_OUT main(VS_IN vin)
 {
-	//VS_OUT vout;
-	//
-	//vout.world_position = mul(vin.position, mul(world, view_projection));
+	VS_OUT vout;
 
 	float4 blended_position = { 0, 0, 0, 1 };
 
@@ -17,7 +15,13 @@ float4 main(VS_IN vin) : SV_POSITION
 
 	vin.position = float4(blended_position.xyz, 1.0f);
 
-	return mul(vin.position, mul(world, view_projection));
+	vout.position = mul(vin.position, mul(world, view_projection));
+	vout.texcoord = vin.texcoord;
+
+	float4 depth = { vout.position.z / vout.position.w, 0.0f, 0.0f, 1.0f };
+	vout.color = depth;
+
+	return vout;
 }
 
 

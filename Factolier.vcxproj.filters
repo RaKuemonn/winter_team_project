@@ -505,8 +505,11 @@
     <FxCompile Include="Factolier\Shader\static_mesh_vs.hlsl">
       <Filter>Factolier\HLSL\Group</Filter>
     </FxCompile>
+    <FxCompile Include="Factolier\Shader\shadow_map_ps.hlsl">
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
+    </FxCompile>
     <FxCompile Include="Factolier\Shader\shadow_map_vs.hlsl">
-      <Filter>Factolier\HLSL</Filter>
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -533,6 +536,9 @@
     </None>
     <None Include="Factolier\Shader\static_mesh.hlsli">
       <Filter>Factolier\HLSL\Group</Filter>
+    </None>
+    <None Include="Factolier\Shader\shadow_map.hlsli">
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
     </None>
   </ItemGroup>
 </Project>
