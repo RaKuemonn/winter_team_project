@@ -34,27 +34,3 @@ cbuffer SCENE_CONSTANT_BUFFER : register(b1)
     float4 camera_position;		            //カメラ位置
     float4 timer;                           //経過時間
 };
-
-cbuffer LIGHT_CONSTANT_BUFFER : register(b2)
-{
-    float4 ambient_color;
-    float4 light_direction;		            //ライトの向き
-    float4 light_radiance;		            //ライトの向き
-    float4 light_color;
-};
-
-cbuffer FOG_CONSTANT_BUFFER : register(b3)
-{
-    float4 fog_color;
-    float4 fog_range;
-};
-
-cbuffer SHADOW_CONSTANT_BUFFER : register(b4)
-{
-    row_major float4x4 light_view_projection;	    // ライトの位置から見た射影行列
-    float3 shadow_color;			                // 影色
-    float shadow_bias;			                    // 深度バイアス
-};
-
-
-#include "shading_function.hlsli"
