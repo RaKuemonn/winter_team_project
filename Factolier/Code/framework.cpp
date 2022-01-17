@@ -95,7 +95,7 @@ void Framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 #endif
 
 
-	UINT sync_interval{ 0 }; //1にすると60FPSの固定フレームレートで動作する
+	//UINT sync_interval{ 0 }; //1にすると60FPSの固定フレームレートで動作する
 
 	//レンダリングされた画像を描画する
 	swap_chain->Present(

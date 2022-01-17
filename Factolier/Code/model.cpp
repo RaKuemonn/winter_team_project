@@ -125,10 +125,10 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 {
 	using namespace DirectX;
 
-	DirectX::XMVECTOR WorldStart = DirectX::XMLoadFloat3(&start);
-	DirectX::XMVECTOR WorldEnd = DirectX::XMLoadFloat3(&end);
-	DirectX::XMVECTOR WorldRayVec = DirectX::XMVectorSubtract(WorldEnd, WorldStart);
-	DirectX::XMVECTOR WorldRayLenght = DirectX::XMVector3Length(WorldRayVec);
+	const DirectX::XMVECTOR WorldStart = DirectX::XMLoadFloat3(&start);
+	const DirectX::XMVECTOR WorldEnd = DirectX::XMLoadFloat3(&end);
+	const DirectX::XMVECTOR WorldRayVec = DirectX::XMVectorSubtract(WorldEnd, WorldStart);
+	//DirectX::XMVECTOR WorldRayLenght = DirectX::XMVector3Length(WorldRayVec);
 
 
 	bool hit = false;
@@ -151,11 +151,11 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 		DirectX::XMMATRIX WorldTransform = DirectX::XMLoadFloat4x4(&node.global_transform) * DirectX::XMLoadFloat4x4(&world);
 		DirectX::XMMATRIX InverseWorldTransform = DirectX::XMMatrixInverse(nullptr, WorldTransform);
 
-		DirectX::XMVECTOR Start = DirectX::XMVector3TransformCoord(WorldStart, InverseWorldTransform);
-		DirectX::XMVECTOR End = DirectX::XMVector3TransformCoord(WorldEnd, InverseWorldTransform);
-		DirectX::XMVECTOR Vec = DirectX::XMVectorSubtract(End, Start);
-		DirectX::XMVECTOR Dir = DirectX::XMVector3Normalize(Vec);
-		DirectX::XMVECTOR Length = DirectX::XMVector3Length(Vec);
+		const DirectX::XMVECTOR Start = DirectX::XMVector3TransformCoord(WorldStart, InverseWorldTransform);
+		const DirectX::XMVECTOR End = DirectX::XMVector3TransformCoord(WorldEnd, InverseWorldTransform);
+		const DirectX::XMVECTOR Vec = DirectX::XMVectorSubtract(End, Start);
+		const DirectX::XMVECTOR Dir = DirectX::XMVector3Normalize(Vec);
+		const DirectX::XMVECTOR Length = DirectX::XMVector3Length(Vec);
 
 		//レイの長さ
 		float neart;
@@ -254,7 +254,8 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 				neart = t;
 
 				//交点と法線を更新
-				HitPosition = Position;
+
+			    HitPosition = Position;
 				HitNormal = Normal;
 				materialIndex = subset.material_index;
 			}
