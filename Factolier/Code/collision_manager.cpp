@@ -78,15 +78,24 @@ namespace ray_functions
         const DirectX::XMFLOAT3 velocity    = entity.lock()->get_velocity() * elapsed_time;
 
         // そもそも移動していなければ　早期returnさせる
-        if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
+        //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
         const DirectX::XMFLOAT3 position    = entity.lock()->get_position();
-        const DirectX::XMFLOAT3 start       = { position.x - velocity.x, position.y, position.z - velocity.z };
+        const DirectX::XMFLOAT3 scale       = entity.lock()->get_scale();
+
+        const DirectX::XMFLOAT3 offset      = { -1.0f * sign(velocity.x) * scale.x * 0.13f,
+                                                0.0f,
+                                                -1.0f * sign(velocity.z) * scale.z * 0.13f };
+
+        const DirectX::XMFLOAT3 start       = { position.x - velocity.x + offset.x,
+                                                    position.y,
+                                                position.z - velocity.z + offset.z };
         const DirectX::XMFLOAT3 end         = position;
 
         if(s_manager.ray_cast(start, end, &hit_result_))
         {
-            DirectX::XMVECTOR xmvec = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&start));
+            const DirectX::XMFLOAT3 origin_start = start - offset;
+            const DirectX::XMVECTOR xmvec = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&origin_start));
 
             DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
             DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec, DirectX::XMVectorScale(Normal, DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec, Normal)))));
@@ -105,101 +114,116 @@ namespace ray_functions
         //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
         const DirectX::XMFLOAT3 position = entity.lock()->get_position();
+        const DirectX::XMFLOAT3 detect = { position.x - velocity.x,        position.y, position.z - velocity.z };
         
 
         // 一回目 x
-        DirectX::XMVECTOR xmvec_1;
-        const float l_sign_x = sign(velocity.x);  // l_ は local変数
-        const float offset_x = scale.x * l_sign_x;
-        const float pudding_x = -1.0f * offset_x * 0.25f;
+        DirectX::XMVECTOR xmvec_x;
+        const float offset_x = scale.x * sign(velocity.x);
+        const float pudding_x = -1.0f * offset_x * 0.5f;
         {
-            const DirectX::XMFLOAT3 detect  = { position.x - velocity.x,        position.y, position.z - velocity.z };
-            const DirectX::XMFLOAT3 start   = { detect.x + offset_x + pudding_x,    detect.y,   detect.z };
-            const DirectX::XMFLOAT3 end     = { position.x + offset_x,              position.y, position.z };
+            const DirectX::XMFLOAT3 start   = { detect.x + offset_x + pudding_x,    detect.y,       detect.z };
+            const DirectX::XMFLOAT3 end     = { position.x + offset_x,              position.y,     position.z };
 
-            xmvec_1 = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&start));
-
+            // レイキャスト
             s_manager.ray_cast(start, end, &hit_result_);
+
+            
+            const DirectX::XMFLOAT3 origin_start = { start.x - pudding_x, start.y, start.z };
+            xmvec_x = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&origin_start));
         }
 
         Hit_Result result = {}; // 比較用
         // 二回目 z
-        const float l_sign_z = sign(velocity.z);  // l_ は local変数
-        const float offset_z = scale.z * l_sign_z;
+        const float offset_z = scale.z * sign(velocity.z);
         const float pudding_z   = -1.0f * offset_z * 0.5f;
-        DirectX::XMVECTOR xmvec_2;
+        DirectX::XMVECTOR xmvec_z;
         {
-            const DirectX::XMFLOAT3 detect  = { position.x - velocity.x, position.y, position.z - velocity.z };
-            const DirectX::XMFLOAT3 start   = { detect.x,                   detect.y,       detect.z + offset_z + pudding_z };
-            const DirectX::XMFLOAT3 end     = { position.x,                 position.y,     position.z + offset_z };
+            const DirectX::XMFLOAT3 start   = { detect.x,   detect.y,   detect.z + offset_z + pudding_z };
+            const DirectX::XMFLOAT3 end     = { position.x, position.y, position.z + offset_z };
 
-            xmvec_2 = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&start));
-
+            // レイキャスト
             s_manager.ray_cast(start, end, &result);
+
+            const DirectX::XMFLOAT3 origin_start = { start.x, start.y, start.z - pudding_z };
+            xmvec_z = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&origin_start));
         }
 
         // 当たり判定の結果判断
         if (result.material_index + hit_result_.material_index > -2)
         {
-            if (result.distance < hit_result_.distance)
-            {
-                hit_result_ = result;
-                DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
-                DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_2, DirectX::XMVectorScale(Normal,DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_2, Normal)))));
 
-                // レイを出力ウィンドウに出力
 #ifdef _DEBUG
-                if (entity.lock().get()->get_tag() == Tag::Vehicle)
-                {
-                    if (static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() == false)
-                    {
-                        using namespace std;
-
-                        std::wstring out1 = std::to_wstring(position.x - velocity.x) + L" , ";
-                        std::wstring out2 = std::to_wstring(position.y) + L" , ";
-                        std::wstring out3 = std::to_wstring(position.z - velocity.z + offset_z + pudding_z) + L"\n";
-
-                        std::wstring out4 = std::to_wstring(position.x) + L" , ";
-                        std::wstring out5 = std::to_wstring(position.y) + L" , ";
-                        std::wstring out6 = std::to_wstring(position.z + offset_z);
-                        
-                        std::wstring outputMe = L"z \nstart" + out1 + out2 + out3 + L"end" + out4 + out5 + out6 + L"\n\n";
-                        OutputDebugString(outputMe.c_str());
-
-                    }
-                }
+            std::wstring axis;
 #endif
 
+            /*if(result.material_index >= 0 && hit_result_.material_index >= 0)
+            {
+                axis = L"x & z\n";
+
+
+                DirectX::XMVECTOR x_Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
+                DirectX::XMVECTOR z_Normal = DirectX::XMLoadFloat3(&result.normal);
+                DirectX::XMVECTOR x_vec = DirectX::XMVectorSubtract(xmvec_1, DirectX::XMVectorScale(x_Normal, DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_1, x_Normal))));
+                DirectX::XMVECTOR z_vec = DirectX::XMVectorSubtract(xmvec_2, DirectX::XMVectorScale(z_Normal, DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_2, z_Normal))));
+
+                DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorAdd(x_vec,z_vec));
+
+            }
+
+            else */if (result.distance < hit_result_.distance)
+            {
+#ifdef _DEBUG 
+                axis = L"z\n";
+#endif
+                hit_result_ = result;
+                DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
+                DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_z, DirectX::XMVectorScale(Normal,DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_z, Normal)))));
 
             }
             else
             {
-                DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
-                DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_1, DirectX::XMVectorScale(Normal,DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_1, Normal)))));
-
-                // レイを出力ウィンドウに出力
 #ifdef _DEBUG
-                if (entity.lock().get()->get_tag() == Tag::Vehicle)
-                {
-                    if (static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() == false)
-                    {
-                        using namespace std;
-
-                        std::wstring out1 = std::to_wstring(position.x - velocity.x + offset_x + pudding_x) + L" , ";
-                        std::wstring out2 = std::to_wstring(position.y) + L" , ";
-                        std::wstring out3 = std::to_wstring(position.z - velocity.z) + L"\n";
-
-                        std::wstring out4 = std::to_wstring(position.x + offset_x) + L" , ";
-                        std::wstring out5 = std::to_wstring(position.y) + L" , ";
-                        std::wstring out6 = std::to_wstring(position.z);
-
-                        std::wstring outputMe = L"x \nstart" + out1 + out2 + out3 + L"end" + out4 + out5 + out6 + L"\n\n";
-                        OutputDebugString(outputMe.c_str());
-                    }
-                }
+                axis = L"x\n";
 #endif
+                DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
+                DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_x, DirectX::XMVectorScale(Normal,DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_x, Normal)))));
 
             }
+
+            // レイの結果を出力ウィンドウに出力
+#ifdef _DEBUG
+            if (entity.lock().get()->get_tag() == Tag::Vehicle)
+            {
+                if (static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() == false)
+                {
+                    using namespace std;
+
+
+                    const DirectX::XMFLOAT3 start = { detect.x + offset_x + pudding_x,    detect.y,       detect.z };
+                    const DirectX::XMFLOAT3 end = { position.x + offset_x,              position.y,     position.z };
+                    //
+                    std::wstring out1 = std::to_wstring(start.x) + L" , ";
+                    std::wstring out2 = std::to_wstring(start.y) + L" , ";
+                    std::wstring out3 = std::to_wstring(start.z) + L"\n";
+                    //
+                    std::wstring out4 = std::to_wstring(end.x) + L" , ";
+                    std::wstring out5 = std::to_wstring(end.y) + L" , ";
+                    std::wstring out6 = std::to_wstring(end.z) + L"\n";
+
+                    std::wstring out7 = std::to_wstring(position.x - velocity.x + wall_vec.x) + L" , ";
+                    std::wstring out8 = std::to_wstring(position.y) + L" , ";
+                    std::wstring out9 = std::to_wstring(position.z - velocity.z + wall_vec.z) + L"\n";;
+
+                    std::wstring out10 = std::to_wstring(hit_result_.position.x) + L" , ";
+                    std::wstring out11 = std::to_wstring(hit_result_.position.y) + L" , ";
+                    std::wstring out12 = std::to_wstring(hit_result_.position.z) + L"\n";
+
+                    std::wstring outputMe = axis + L"start " + out1 + out2 + out3 + L"end   " + out4 + out5 + out6 + L"result" + out7 + out8 + out9 + L"hit   " + out10 + out11 + out12 + L"\n\n";
+                    OutputDebugString(outputMe.c_str());
+                }
+            }
+#endif
 
             return true;
         }
@@ -312,6 +336,12 @@ inline void ray_to_floor(
             vehicle->set_position(result.position);
             vehicle->set_velocity_y(0.0f);
             vehicle->set_friction(friction_ratio);
+
+            if (static_cast<Sphere_Vehicle*>(vehicle.get())->get_on_ground() == false)
+            {
+                // 生成後一度しか呼ばれない ( 以後trueのまま )
+                static_cast<Sphere_Vehicle*>(vehicle.get())->set_on_ground();
+            }
         }
 
     }
@@ -371,7 +401,12 @@ inline void ray_to_wall(
             vehicle->set_position({ position.x - velocity.x, position.y, position.z - velocity.z });
             vehicle->add_position({ wall_vec.x,0.0f,wall_vec.z });
 
-            vehicle->set_friction(0.9f);
+            //vehicle->set_position(result.position);
+
+            if (velocity.y < 0.0f)
+            {
+                vehicle->set_friction(0.8f);
+            }
         }
 
     }
@@ -396,11 +431,11 @@ void Collision_Manager::judge(const float elapsed_time)
     };
 
     // 床へのレイキャスト
-    //ray_to_floor(
-    //    elapsed_time,
-    //    e_manager, s_manager,
-    //    vectors_
-    //);
+    ray_to_floor(
+        elapsed_time,
+        e_manager, s_manager,
+        vectors_
+    );
 
     ray_to_wall(
         elapsed_time,

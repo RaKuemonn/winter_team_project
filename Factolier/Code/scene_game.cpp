@@ -63,7 +63,8 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
     std::unique_ptr<Entity> player = std::make_unique<Player>(parent);
     //player->set_position({ 0.0f, 5.0f, 0.0f });
-    player->set_position({ 0.0f, -92.0f, -640.0f });
+    ////player->set_position({ 0.0f, -92.0f, -640.0f });
+    player->set_position({ 0.0f, -92.0f, -150.0f });
     //player->set_position({ 0.0f, -80.0f, 550.0f });
     player->init();
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());

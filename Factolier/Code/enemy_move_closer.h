@@ -10,4 +10,12 @@ public:
 
     void init() override {};
     void update(const float elapsed_time_) override;
+
+private:
+    bool search_to_area();
+    bool find_target();
+
+    void look_to_target(const float elapsed_time_);
+    void move_to_target(const float elapsed_time_);
+    
 };

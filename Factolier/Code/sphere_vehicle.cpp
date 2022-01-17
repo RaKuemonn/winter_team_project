@@ -73,6 +73,9 @@ void Sphere_Vehicle::update(const float elapsed_time_)
 
 void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
 {
+    // 一度でも着地していれば　操作を受け付けるようにしている
+    if (m_on_ground == false)return;
+
     constexpr float speed = 30.0f;
 
     // 引数の方向に加速
