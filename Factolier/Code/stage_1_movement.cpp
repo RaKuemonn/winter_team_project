@@ -12,10 +12,10 @@ Stage_1_Movement::Stage_1_Movement(Scene_Manager* ptr_scene_manager_)
 {
     load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::propeller));
 
-    //constexpr float scale = 0.1f;
-    //get_transform()->set_scale({ scale,scale,scale });
+    constexpr float scale = 0.2f;
+    get_transform()->set_scale({ scale,scale,scale });
     get_transform()->set_euler(m_euler);
-    get_transform()->set_position({ 0.0f,-50.0f,200.0f });
+    get_transform()->set_position({ 0.0f,0.0f,40.0f });
     get_transform()->Update();
 }
 

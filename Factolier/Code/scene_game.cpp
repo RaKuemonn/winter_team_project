@@ -9,22 +9,32 @@
 #include "stage_manager.h"
 #include "player.h"
 #include "enemy_none.h"
+#include "enemy_move_closer.h"
 #include "camera_controller.h"
 #include "imgui.h"
+#include "utility.h"
 
 inline void imgui()
 {
 #ifdef _DEBUG
-    ImGui::Begin("Vehicle");
+    ImGui::Begin("Entity");
 
-    std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Vehicle);
+    std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Player);
+    ImGui::Text("Player");
+    std::shared_ptr<Entity> player = Entity_Manager::instance().get_entity(vec.at(0));
+    DirectX::XMFLOAT3 pos = player->get_position();
+    ImGui::InputFloat3("position", &pos.x);
+    ImGui::Spacing();
+
+    vec = Entity_Manager::instance().get_entities(Tag::Enemy);
     const int size = static_cast<int>(vec.size());
 
+    ImGui::Text("Enemy");
     for(int i = 0; i < size; ++i)
     {
         ImGui::Text("Number %d", i);
 
-        Entity* entity = Entity_Manager::instance().get_entity(vec.at(i)).get();
+        std::shared_ptr<Entity> entity = Entity_Manager::instance().get_entity(vec.at(i));
 
         if (entity)
         {
@@ -53,33 +63,33 @@ void Scene_Game::initialize(Scene_Manager* parent_)
         DirectX::XMFLOAT3(0, 0, 0),
         DirectX::XMFLOAT3(0, 1, 0)
     );
-    camera.set_perspective_fov(DirectX::XMConvertToRadians(90),
-        1280 / 720,
+    camera.set_perspective_fov(DirectX::XMConvertToRadians(60),
+        CAST_F(SCREEN_WIDTH) / CAST_F(SCREEN_HEIGHT),
         0.1f,
         1000.0f);
 
 
 
 
-    std::unique_ptr<Entity> player = std::make_unique<Player>(parent);
-    //player->set_position({ 0.0f, 5.0f, 0.0f });
-    ////player->set_position({ 0.0f, -92.0f, -640.0f });
-    player->set_position({ 0.0f, -92.0f, -150.0f });
-    //player->set_position({ 0.0f, -80.0f, 550.0f });
-    player->init();
+    std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
+
+    player->set_position({ 0.0f, -7.0f, -125.0f });
+
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
 
     Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
-    enemy_spawner->set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f });
-    enemy_spawner->set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f });
-    enemy_spawner->set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f });
-    enemy_spawner->set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f });
+    enemy_spawner->set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {});
+    enemy_spawner->set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {});
+    enemy_spawner->set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {});
+    enemy_spawner->set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {});
+    enemy_spawner->set_enemy<Enemy_Move_Closer>({ 0.0f,0.0f,0.0f }, player->get_position());
+
 
     collision_manager = std::unique_ptr<Collision_Manager>();
 
     Stage_Manager::instance().spawn_register(std::make_unique<Stage_1>(parent));
-    Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
+    //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
 }
 
 

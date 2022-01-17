@@ -1,5 +1,6 @@
 #pragma once
 
+// すべてのモデルのファイルパス
 namespace Model_Paths
 {
     namespace Entity
@@ -19,7 +20,7 @@ namespace Model_Paths
 
     namespace Stage
     {
-        inline constexpr char* const stage_1    = "./Data/stage1_tentative.fbx";
+        inline constexpr char* const stage_1    = "./Data/stage1_test.fbx";
         inline constexpr char* const propeller  = "./Data/propeller.fbx";
 
     };

@@ -11,6 +11,9 @@ Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const char* filename_, const Dir
     load_model(get_scene_manager()->model_manager()->load_model(filename_));
     set_tag(Tag::Enemy);
 
+    m_velocity->set_mass(1.0f);
+    m_velocity->set_friction(0.7f);
+
 }
 
 void Enemy::update_velocity(const float elapsed_time_)

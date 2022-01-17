@@ -18,7 +18,7 @@ public:
 
 
     template<typename T>
-    void set_enemy(const DirectX::XMFLOAT3& position_)
+    void set_enemy(const DirectX::XMFLOAT3& position_, const DirectX::XMFLOAT3& target)
     {
 
         std::unique_ptr<Entity> enemy;
@@ -27,7 +27,7 @@ public:
         {
             if constexpr (std::is_base_of<Enemy, T>{})
             {
-                enemy = std::make_unique<T>(ptr_scene_manager);
+                enemy = std::make_unique<T>(ptr_scene_manager, target);
             }
         }
 

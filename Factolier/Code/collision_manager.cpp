@@ -437,6 +437,7 @@ void Collision_Manager::judge(const float elapsed_time)
         vectors_
     );
 
+    // 壁へのレイキャスト
     ray_to_wall(
         elapsed_time,
         e_manager, s_manager,
