@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "scene_loading.h"
 #include "scene_game.h"
+#include "utility.h"
 
 void Scene_Title::initialize(Scene_Manager* parent_)
 {
@@ -24,7 +25,7 @@ void Scene_Title::initialize(Scene_Manager* parent_)
         DirectX::XMFLOAT3(0, 1, 0)
     );
     camera.set_perspective_fov(DirectX::XMConvertToRadians(70),
-        1280 / 720,
+        CAST_F(1280) / CAST_F(720),
         0.1f,
         100.0f);
 
