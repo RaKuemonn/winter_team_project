@@ -352,11 +352,11 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="Factolier\Shader\shadow_map_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="Factolier\Shader\shadow_map_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -393,6 +393,7 @@
     <None Include="Factolier\Shader\default.hlsli" />
     <None Include="Factolier\Shader\ocean.hlsli" />
     <None Include="Factolier\Shader\shading_function.hlsli" />
+    <None Include="Factolier\Shader\shadow_map.hlsli" />
     <None Include="Factolier\Shader\sky_box.hlsli" />
     <None Include="Factolier\Shader\sprite.hlsli" />
     <None Include="Factolier\Shader\static_mesh.hlsli" />
