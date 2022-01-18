@@ -70,8 +70,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
             if (time <= 1.0f)
             {
                 time += elapsedTime;
-               // eas = -easing::in_quart(time, 1, 500.0f, 0.0f);
-                eas = -easing::out_bounce(time, 1, 500.0f, 0.0f);
+                eas = -easing::in_quart(time, 1, 500.0f, 0.0f);
             }
             else
             {

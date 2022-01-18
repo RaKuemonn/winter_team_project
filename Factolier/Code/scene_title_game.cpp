@@ -59,6 +59,9 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     return_title = make_unique<Sprite>(parent->device(), "Data/enter_‰¼.png");
     audio_set = make_unique<Sprite>(parent->device(), "Data/audio_‰¼.png");
 
+    //sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/_.wav"));
+    //sound->play(true);
+
 
 }
 
