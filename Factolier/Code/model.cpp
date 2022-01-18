@@ -102,22 +102,46 @@ void Model::play_animation(float elapsed_time, int anime_num, bool loop, float b
 
 void Model::render(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color)
 {
+	//座標変換
+	DirectX::XMFLOAT4X4 coordinate_system_transforms = { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };	// 0:RHS Y-UP
+	DirectX::XMMATRIX CW = XMLoadFloat4x4(&coordinate_system_transforms);
+	DirectX::XMMATRIX W = DirectX::XMLoadFloat4x4(&world);
+
+	DirectX::XMFLOAT4X4 c_world;
+	DirectX::XMStoreFloat4x4(&c_world, CW * W);
+
 	//全てのメッシュを描画
-	resource->render(immediate_context, world, material_color, &now_key);
+	resource->render(immediate_context, c_world, material_color, &now_key);
 }
 
 
 void Model::render_mesh(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color, int mesh_num)
 {
+	//座標変換
+	DirectX::XMFLOAT4X4 coordinate_system_transforms = { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };	// 0:RHS Y-UP
+	DirectX::XMMATRIX CW = XMLoadFloat4x4(&coordinate_system_transforms);
+	DirectX::XMMATRIX W = DirectX::XMLoadFloat4x4(&world);
+
+	DirectX::XMFLOAT4X4 c_world;
+	DirectX::XMStoreFloat4x4(&c_world, CW * W);
+
 	//指定したメッシュのみ描画
-	resource->render_mesh(immediate_context, world, material_color, &now_key, mesh_num);
+	resource->render_mesh(immediate_context, c_world, material_color, &now_key, mesh_num);
 }
 
 
 void Model::render_exmesh(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color, int mesh_num)
 {
+	//座標変換
+	DirectX::XMFLOAT4X4 coordinate_system_transforms = { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };	// 0:RHS Y-UP
+	DirectX::XMMATRIX CW = XMLoadFloat4x4(&coordinate_system_transforms);
+	DirectX::XMMATRIX W = DirectX::XMLoadFloat4x4(&world);
+
+	DirectX::XMFLOAT4X4 c_world;
+	DirectX::XMStoreFloat4x4(&c_world, CW * W);
+
 	//指定したメッシュ以外を描画
-	resource->render_exmesh(immediate_context, world, material_color, &now_key, mesh_num);
+	resource->render_exmesh(immediate_context, c_world, material_color, &now_key, mesh_num);
 }
 
 
@@ -125,10 +149,10 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 {
 	using namespace DirectX;
 
-	DirectX::XMVECTOR WorldStart = DirectX::XMLoadFloat3(&start);
-	DirectX::XMVECTOR WorldEnd = DirectX::XMLoadFloat3(&end);
-	DirectX::XMVECTOR WorldRayVec = DirectX::XMVectorSubtract(WorldEnd, WorldStart);
-	DirectX::XMVECTOR WorldRayLenght = DirectX::XMVector3Length(WorldRayVec);
+	const DirectX::XMVECTOR WorldStart = DirectX::XMLoadFloat3(&start);
+	const DirectX::XMVECTOR WorldEnd = DirectX::XMLoadFloat3(&end);
+	const DirectX::XMVECTOR WorldRayVec = DirectX::XMVectorSubtract(WorldEnd, WorldStart);
+	//DirectX::XMVECTOR WorldRayLenght = DirectX::XMVector3Length(WorldRayVec);
 
 
 	bool hit = false;
@@ -151,11 +175,11 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 		DirectX::XMMATRIX WorldTransform = DirectX::XMLoadFloat4x4(&node.global_transform) * DirectX::XMLoadFloat4x4(&world);
 		DirectX::XMMATRIX InverseWorldTransform = DirectX::XMMatrixInverse(nullptr, WorldTransform);
 
-		DirectX::XMVECTOR Start = DirectX::XMVector3TransformCoord(WorldStart, InverseWorldTransform);
-		DirectX::XMVECTOR End = DirectX::XMVector3TransformCoord(WorldEnd, InverseWorldTransform);
-		DirectX::XMVECTOR Vec = DirectX::XMVectorSubtract(End, Start);
-		DirectX::XMVECTOR Dir = DirectX::XMVector3Normalize(Vec);
-		DirectX::XMVECTOR Length = DirectX::XMVector3Length(Vec);
+		const DirectX::XMVECTOR Start = DirectX::XMVector3TransformCoord(WorldStart, InverseWorldTransform);
+		const DirectX::XMVECTOR End = DirectX::XMVector3TransformCoord(WorldEnd, InverseWorldTransform);
+		const DirectX::XMVECTOR Vec = DirectX::XMVectorSubtract(End, Start);
+		const DirectX::XMVECTOR Dir = DirectX::XMVector3Normalize(Vec);
+		const DirectX::XMVECTOR Length = DirectX::XMVector3Length(Vec);
 
 		//レイの長さ
 		float neart;
@@ -254,7 +278,8 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 				neart = t;
 
 				//交点と法線を更新
-				HitPosition = Position;
+
+			    HitPosition = Position;
 				HitNormal = Normal;
 				materialIndex = subset.material_index;
 			}

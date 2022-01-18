@@ -3,16 +3,19 @@
 #include "scene_manager.h"
 #include "model.h"
 #include "collision.h"
+#include "imgui.h"
 #include "transform.h"
+#include "model_filepaths.h"
 
 
 Stage_1_Movement::Stage_1_Movement(Scene_Manager* ptr_scene_manager_)
 {
-    load_model(ptr_scene_manager_->model_manager()->load_model("./Data/propeller.fbx"));
+    load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::propeller));
 
-    //constexpr float scale = 0.1f;
-    //get_transform()->set_scale({ scale,scale,scale });
+    constexpr float scale = 0.2f;
+    get_transform()->set_scale({ scale,scale,scale });
     get_transform()->set_euler(m_euler);
+    get_transform()->set_position({ 0.0f,0.0f,40.0f });
     get_transform()->Update();
 }
 
@@ -22,7 +25,8 @@ void Stage_1_Movement::update(const float elapsed_time)
     old_euler     = m_euler;
 
     constexpr float pi = DirectX::XMConvertToRadians(90.0f);
-    const float rotate_speed = pi * elapsed_time;
+    constexpr float half_pi = DirectX::XMConvertToRadians(45.0f);
+    const float rotate_speed = half_pi * elapsed_time;
     m_euler.y += rotate_speed;
     if(m_euler.y >= 2.0f * pi)
     {
@@ -37,8 +41,12 @@ void Stage_1_Movement::update(const float elapsed_time)
     get_transform()->Update();
 }
 
+
+
+
 bool Stage_1_Movement::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, Hit_Result* hit_result_)
 {
+
     // 前回のワールド行列で逆行列を算出
     DirectX::XMMATRIX WorldOldTransform = DirectX::XMLoadFloat4x4(&old_transform);
     DirectX::XMMATRIX InverseWorldOldTransform = DirectX::XMMatrixInverse(nullptr, WorldOldTransform);
@@ -94,10 +102,8 @@ bool Stage_1_Movement::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::X
         hit_result_->rotation.y = m_euler.y - old_euler.y;
         hit_result_->rotation.z = m_euler.z - old_euler.z;
 
-
         return true;
     }
-
 
     return false;
 }

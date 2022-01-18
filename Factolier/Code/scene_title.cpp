@@ -4,6 +4,7 @@
 #include "camera.h"
 #include "scene_loading.h"
 #include "scene_game.h"
+#include "utility.h"
 
 void Scene_Title::initialize(Scene_Manager* parent_)
 {
@@ -15,8 +16,6 @@ void Scene_Title::initialize(Scene_Manager* parent_)
 
     //sound->play(false);
 
-   
-
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
 
     Camera& camera = Camera::Instance();
@@ -26,7 +25,7 @@ void Scene_Title::initialize(Scene_Manager* parent_)
         DirectX::XMFLOAT3(0, 1, 0)
     );
     camera.set_perspective_fov(DirectX::XMConvertToRadians(70),
-        1280 / 720,
+        CAST_F(1280) / CAST_F(720),
         0.1f,
         100.0f);
 
@@ -95,7 +94,7 @@ void Scene_Title::render(float elapsed_time)
     };
 
     {
-        DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.005f, 0.005f, 0.005f);
+        DirectX::XMMATRIX S = DirectX::XMMatrixScaling(0.01f, 0.01f, 0.01f);
         //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f);
         //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 0.15f, 1.0f);
         DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(0), 0, DirectX::XMConvertToRadians(0));

@@ -10,7 +10,7 @@ void Scene_Select::DrawDebugGUI()
     ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
     ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
-    if (ImGui::Begin("Select", nullptr, ImGuiWindowFlags_None))
+    if (ImGui::Begin("Player", nullptr, ImGuiWindowFlags_None))
     {
         // ÉgÉâÉìÉXÉtÉHÅ[ÉÄ
         if (ImGui::CollapsingHeader("transform", ImGuiTreeNodeFlags_DefaultOpen))
@@ -33,6 +33,8 @@ void Scene_Select::DrawDebugGUI()
 void Scene_Select::initialize(Scene_Manager* parent_)
 {
     parent = parent_;
+    select_back = make_unique<Sprite_Batch>(parent->device(), "Data/back.png", 1);
+    select_stage1 = make_unique<Sprite_Batch>(parent->device(), "Data/select1.png", 1);
     back = make_unique<Sprite>(parent->device(), "Data/back.png");
     stage1 = make_unique<Sprite>(parent->device(), "Data/select1.png");
     stage2 = make_unique<Sprite>(parent->device(), "Data/select2.png");
@@ -40,8 +42,7 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     stage4 = make_unique<Sprite>(parent->device(), "Data/select4.png");
     stage5 = make_unique<Sprite>(parent->device(), "Data/select5.png");
     choice = make_unique<Sprite>(parent->device(), "Data/waku.png");
-    //ÉVÅ[ÉìÉ}ÉlÅ[ÉWÉÉÅ[ê∂ê¨
-    scene_manager = std::make_unique<Scene_Manager>();
+
    
 }
 
@@ -70,8 +71,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
             if (time <= 1.0f)
             {
                 time += elapsedTime;
-               // eas = -easing::in_quart(time, 1, 500.0f, 0.0f);
-                eas = -easing::out_bounce(time, 1, 500.0f, 0.0f);
+                eas = -easing::in_quart(time, 1, 500.0f, 0.0f);
             }
             else
             {
@@ -143,6 +143,14 @@ void Scene_Select::render(float elapsed_time)
 
     parent->state_manager()->setRS(RS::SOLID_NONE);
 
+    select_back->render(device_context_,
+        0, 0,  //position
+        1, 1,     // scal
+        1280, 720,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        1280, 720,   // size
+        0, 0,         // pibot
+        1, 1, 1, 1,   // rgba
+        0); // angle
 
     back->render(
             device_context_,
@@ -154,53 +162,53 @@ void Scene_Select::render(float elapsed_time)
             1, 1, 1, 1,   // rgba
             0); // angle
     choice->render(device_context_,
-            500, 250,
-            0.8f, 0.8f, 
-            320, 320,    
-            320, 320, 
-            0, 0,        
-            1, 1, 1, 1, 
-            0);
+            500, 250,  //position
+            0.8f, 0.8f,     // scal
+            320, 320,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            320, 320,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
     stage1->render(device_context_,
-            550 + position + eas, 300, 
-            0.5f, 0.5f,     
-            320, 320,    
-            320, 320,   
-            0, 0,         
-            1, 1, 1, 1,   
-            0); 
+            550 + position + eas, 300,  //position
+            0.5f, 0.5f,     // scal
+            320, 320,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            320, 320,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
     stage2->render(device_context_,
-            1050 + position + eas, 300, 
-            0.5f, 0.5f,     
-            320, 320,   
-            320, 320,   
-            0, 0,         
-            1, 1, 1, 1,   
-            0); 
+            1050 + position + eas, 300,  //position
+            0.5f, 0.5f,     // scal
+            320, 320,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            320, 320,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
     stage3->render(device_context_,
-            1550 + position + eas, 300,  
-            0.5f, 0.5f,    
-            320, 320,   
-            320, 320,
-            0, 0,      
-            1, 1, 1, 1,   
-            0); 
+            1550 + position + eas, 300,  //position
+            0.5f, 0.5f,     // scal
+            320, 320,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            320, 320,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
     stage4->render(device_context_,
-        2050 + position + eas, 300,  
-        0.5f, 0.5f,    
-        320, 320,  
-        320, 320,  
-        0, 0,        
-        1, 1, 1, 1, 
-        0); 
+        2050 + position + eas, 300,  //position
+        0.5f, 0.5f,     // scal
+        320, 320,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        320, 320,   // size
+        0, 0,         // pibot
+        1, 1, 1, 1,   // rgba
+        0); // angle
     stage5->render(device_context_,
-        2550 + position + eas, 300, 
-        0.5f, 0.5f,   
-        320, 320,    
-        320, 320,   
-        0, 0,         
-        1, 1, 1, 1,   
-        0); 
+        2550 + position + eas, 300,  //position
+        0.5f, 0.5f,     // scal
+        320, 320,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        320, 320,   // size
+        0, 0,         // pibot
+        1, 1, 1, 1,   // rgba
+        0); // angle
 
     DrawDebugGUI();
 
