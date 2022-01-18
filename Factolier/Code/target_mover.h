@@ -19,7 +19,8 @@ private:
     static void move_front(Enemy& type_)
     {
         constexpr float speed = 1.5f;
-        type_.add_velocity(type_.get_axis_z() * speed);
+        const DirectX::XMFLOAT3& front_dir = type_.get_axis_z();
+        type_.add_velocity({ front_dir.x * speed, front_dir.y * speed, front_dir.z * speed });
     }
 
     static void look_target(Enemy& me, const DirectX::XMFLOAT3& target_, const float elapsed_time_)

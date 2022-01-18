@@ -36,7 +36,8 @@ namespace ray_functions
         // 始点が前回位置、終点が現在位置
 
         const DirectX::XMFLOAT3 position = entity.lock()->get_position();
-        const DirectX::XMFLOAT3 start = position - velocity;
+        const float scale_y = entity.lock()->get_scale().y;
+        const DirectX::XMFLOAT3 start = { position.x - velocity.x, position.y - velocity.y + scale_y * 0.5f, position.y - velocity.y };
         const DirectX::XMFLOAT3 end = position/*{ position.x - velocity.x, position.y, position.z - velocity.z }*/;
 
 

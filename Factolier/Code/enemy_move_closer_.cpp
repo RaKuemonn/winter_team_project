@@ -23,7 +23,7 @@ Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const 
 
     Base_Move<_this_type_>* area_mover      = new Area_Mover<_this_type_>();
     Base_Move<_this_type_>* target_mover    = new Target_Mover<_this_type_>();
-    m_move_phase = std::make_unique<Move_Phase<_this_type_>>();
+    m_move_phase                            = std::make_unique<Move_Phase<_this_type_>>();
 
     // 初期行動
     m_move_phase->set(area_mover)
@@ -53,8 +53,8 @@ void Enemy_Move_Closer_::update(const float elapsed_time_)
     m_move_phase->update(elapsed_time_, *this);
 
     // 速度更新
-    //update_velocity(elapsed_time_);   // 重力がかかっている
-    m_velocity->update(elapsed_time_);
+    update_velocity(elapsed_time_);   // 重力がかかっている
+    //m_velocity->update(elapsed_time_);
 
     // 位置の更新
     add_position(m_velocity->get() * elapsed_time_);
