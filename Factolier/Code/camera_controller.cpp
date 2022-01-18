@@ -1,42 +1,173 @@
 #include "camera_controller.h"
 #include "camera.h"
-//#include "Input/Input.h"
+#include "utility.h"
 
 //更新処理
-void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
+void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_manager, float elapsed_time)
 {
-#if 0
-    GamePad& gamePad = Input::Instance().GetGamePad();
-    float ax = gamePad.GetAxisRX();
-    float ay = gamePad.GetAxisRY();
-    //カメラの回転速度
-    float speed = roll_speed * elapsedTime;
+    if (input_manager->TRG_RELEASE(0) & PAD_SELECT)
+    {
+        SetCursorPos(static_cast<int>(SCREEN_WIDTH / 2), static_cast<int>(SCREEN_HEIGHT / 2));
+        ShowCursor(false);
+    }
 
-    //スティックの入力値に合わせてX軸とY軸を回転
-    angle.y += ax * speed;
-    angle.x += ay * speed;
-#endif
+    if (input_manager->TRG(0) & PAD_SELECT)
+    {
+        ShowCursor(true);
+    }
+
+
+    if (input_manager->STATE(0) & PAD_SELECT)
+    {
+        
+    }
+
+    else
+    {
+        //マウス取得
+        DirectX::XMFLOAT2 mouse = { CAST_F(input_manager->getCursorPosX()), CAST_F(input_manager->getCursorPosY()) };
+
+        //ビューポート
+        D3D11_VIEWPORT viewport;
+        UINT numViewports = 1;
+        dc->RSGetViewports(&numViewports, &viewport);
+
+        //変換行列
+        DirectX::XMMATRIX View = DirectX::XMLoadFloat4x4(&Camera::Instance().get_view());
+        DirectX::XMMATRIX Projection = DirectX::XMLoadFloat4x4(&Camera::Instance().get_projection());
+        DirectX::XMMATRIX World = DirectX::XMMatrixIdentity();
+
+
+        //画面中央の座標
+        DirectX::XMFLOAT3 DefPos = { viewport.Width / 2, viewport.Height / 2, viewport.MinDepth };
+
+        //二つのワールド座標に変換
+        DirectX::XMVECTOR NearPos = DirectX::XMVector3Unproject(
+            DirectX::XMLoadFloat3(&DefPos),		        //スクリーン座標(near)
+            viewport.TopLeftX,							//ビューポート左上X位置
+            viewport.TopLeftY,							//ビューポート左上Y位置
+            viewport.Width,								//ビューポート幅
+            viewport.Height,							//ビューポート高さ
+            viewport.MinDepth,							//深度値の範囲を表す最小値(0.0でよい)
+            viewport.MaxDepth,							//深度値の範囲を表す最大値(1.0でよい)
+            Projection,									//プロジェクション行列
+            View,										//ビュー行列
+            World										//ワールド行列(単位行列でよい)
+        );
+
+        DefPos.z = viewport.MaxDepth;
+        DirectX::XMVECTOR FarPos = DirectX::XMVector3Unproject(
+            DirectX::XMLoadFloat3(&DefPos),		        //スクリーン座標(far)
+            viewport.TopLeftX,							//ビューポート左上X位置
+            viewport.TopLeftY,							//ビューポート左上Y位置
+            viewport.Width,								//ビューポート幅
+            viewport.Height,							//ビューポート高さ
+            viewport.MinDepth,							//深度値の範囲を表す最小値(0.0でよい)
+            viewport.MaxDepth,							//深度値の範囲を表す最大値(1.0でよい)
+            Projection,									//プロジェクション行列
+            View,										//ビュー行列
+            World										//ワールド行列(単位行列でよい)
+        );
+
+        //デフォルトのレイを作成
+        DirectX::XMVECTOR DefRayVec = DirectX::XMVectorSubtract(FarPos, NearPos);
+        DefRayVec = DirectX::XMVector3Normalize(DefRayVec);
+
+        DirectX::XMFLOAT3 ScreenPosition;
+
+        if (mouse.x != static_cast<int>(viewport.Width / 2))
+        {
+            //マウスカーソル座標を取得
+            ScreenPosition.x = mouse.x;
+            ScreenPosition.y = viewport.Height / 2;
+            ScreenPosition.z = viewport.MaxDepth;
+
+            //ワールド座標に変換
+            DirectX::XMVECTOR FarPosX = DirectX::XMVector3Unproject(
+                DirectX::XMLoadFloat3(&ScreenPosition),		//スクリーン座標(far)
+                viewport.TopLeftX,							//ビューポート左上X位置
+                viewport.TopLeftY,							//ビューポート左上Y位置
+                viewport.Width,								//ビューポート幅
+                viewport.Height,							//ビューポート高さ
+                viewport.MinDepth,							//深度値の範囲を表す最小値(0.0でよい)
+                viewport.MaxDepth,							//深度値の範囲を表す最大値(1.0でよい)
+                Projection,									//プロジェクション行列
+                View,										//ビュー行列
+                World										//ワールド行列(単位行列でよい)
+            );
+
+            //マウスのレイを作成
+            DirectX::XMVECTOR MouseRayVecX = DirectX::XMVectorSubtract(FarPosX, NearPos);
+            MouseRayVecX = DirectX::XMVector3Normalize(MouseRayVecX);
+
+            //回転した角度を求める
+            float angleX;
+            DirectX::XMStoreFloat(&angleX, DirectX::XMVector3Dot(MouseRayVecX, DefRayVec));
+            if (mouse.x > (viewport.Width / 2)) angleX = acosf(angleX);
+            else angleX = -acosf(angleX);
+
+            //現在の角度に加算する
+            angle.y += angleX * sens;
+        }
+
+        if (mouse.y != static_cast<int>(viewport.Height / 2))
+        {
+            //マウスカーソル座標を取得
+            ScreenPosition.x = viewport.Width / 2;
+            ScreenPosition.y = mouse.y;
+            ScreenPosition.z = viewport.MaxDepth;
+
+            //ワールド座標に変換
+            DirectX::XMVECTOR FarPosY = DirectX::XMVector3Unproject(
+                DirectX::XMLoadFloat3(&ScreenPosition),		//スクリーン座標(far)
+                viewport.TopLeftX,							//ビューポート左上X位置
+                viewport.TopLeftY,							//ビューポート左上Y位置
+                viewport.Width,								//ビューポート幅
+                viewport.Height,							//ビューポート高さ
+                viewport.MinDepth,							//深度値の範囲を表す最小値(0.0でよい)
+                viewport.MaxDepth,							//深度値の範囲を表す最大値(1.0でよい)
+                Projection,									//プロジェクション行列
+                View,										//ビュー行列
+                World										//ワールド行列(単位行列でよい)
+            );
+
+            //マウスのレイを作成
+            DirectX::XMVECTOR MouseRayVecY = DirectX::XMVectorSubtract(FarPosY, NearPos);
+            MouseRayVecY = DirectX::XMVector3Normalize(MouseRayVecY);
+
+            //回転した角度を求める
+            float angleY;
+            DirectX::XMStoreFloat(&angleY, DirectX::XMVector3Dot(MouseRayVecY, DefRayVec));
+            if (mouse.y > (viewport.Height / 2)) angleY = acosf(angleY);
+            else angleY = -acosf(angleY);
+
+            //現在の角度に加算する
+            angle.x += angleY * sens;
+        }
+
+        SetCursorPos(static_cast<int>(viewport.Width / 2), static_cast<int>(viewport.Height / 2));
+    }
 
 
 
     if(GetAsyncKeyState('I'))//if (input_manager->STATE(0) & PAD_UP)
     {
-        angle.x += 1.0f * elapsedTime;
+        angle.x += 1.0f * elapsed_time;
     }
 
     if (GetAsyncKeyState('K'))//if (input_manager->STATE(0) & PAD_DOWN)
     {
-        angle.x -= 1.0f * elapsedTime;
+        angle.x -= 1.0f * elapsed_time;
     }
 
     if (GetAsyncKeyState('J'))//if (input_manager->STATE(0) & PAD_LEFT)
     {
-        angle.y += 1.0f * elapsedTime;
+        angle.y += 1.0f * elapsed_time;
     }
 
     if (GetAsyncKeyState('L'))//if (input_manager->STATE(0) & PAD_RIGHT)
     {
-        angle.y -= 1.0f * elapsedTime;
+        angle.y -= 1.0f * elapsed_time;
     }
 
 

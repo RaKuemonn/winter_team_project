@@ -108,7 +108,7 @@ void Scene_Game::update(float elapsed_time)
     Entity_Manager::instance().update(elapsed_time);
 
 
-    camera_controller->update(elapsed_time,nullptr);
+    camera_controller->update(parent->device_context(), parent->input_manager(), elapsed_time);
 
     collision_manager->judge(elapsed_time);
 

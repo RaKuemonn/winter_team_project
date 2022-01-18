@@ -12,7 +12,6 @@ bool Framework::initialize()
 {
 	HRESULT hr{ S_OK }; //ここに初期値の成否(関数の戻り値)が入る
 
-
 	//フレーム作成
 	GenerateFrame(hr);
 
@@ -43,6 +42,8 @@ bool Framework::initialize()
 
 	/*************ここまで**************/
 
+
+	ShowCursor(false);
 
 	return true;
 }

@@ -15,7 +15,7 @@ PadAssign keyAssign00[] = {
     { PAD_RIGHT     , Keyboard::D },            // 'D'
 
     { PAD_START     , Keyboard::Enter },        // VK_RETURN
-    { PAD_SELECT    , Keyboard::Back },         // VK_BACK
+    { PAD_SELECT    , Keyboard::LeftAlt },      // VK_BACK
     { PAD_TRG1      , Keyboard::N },            // 'N'
     { PAD_TRG2      , Keyboard::M },            // 'M'
 
