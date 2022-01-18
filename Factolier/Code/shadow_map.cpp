@@ -10,10 +10,8 @@ void Shadow_Map::initialize(ID3D11Device* device)
 {
 	HRESULT hr{ S_OK };
 
-	//ライトから見たシーンの深度描画用のバッファ生成
+	// ライトから見たシーンの深度描画用のバッファ生成
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> depth_buffer{};
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> render_buffer{};
-
 	D3D11_TEXTURE2D_DESC texture2d_desc{};
 
 	texture2d_desc.Width = SHADOW_WIDTH;
@@ -24,22 +22,15 @@ void Shadow_Map::initialize(ID3D11Device* device)
 	texture2d_desc.SampleDesc.Count = 1;
 	texture2d_desc.SampleDesc.Quality = 0;
 	texture2d_desc.Usage = D3D11_USAGE_DEFAULT;
-	texture2d_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	texture2d_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL | D3D11_BIND_SHADER_RESOURCE;
 	texture2d_desc.CPUAccessFlags = 0;
 	texture2d_desc.MiscFlags = 0;
 
-	//深度ステンシルビュー用
 	hr = device->CreateTexture2D(&texture2d_desc, NULL, depth_buffer.GetAddressOf());
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
-	//レンダーターゲットビュー用
-	texture2d_desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	texture2d_desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	hr = device->CreateTexture2D(&texture2d_desc, NULL, render_buffer.GetAddressOf());
-	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
-
-	//深度ステンシルビュー生成
+	//	深度ステンシルビュー生成
 	D3D11_DEPTH_STENCIL_VIEW_DESC depth_stencil_view_desc{};
 
 	depth_stencil_view_desc.Format = DXGI_FORMAT_D32_FLOAT;
@@ -52,22 +43,15 @@ void Shadow_Map::initialize(ID3D11Device* device)
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
 
-	//レンダーターゲットビュー生成
-	hr = device->CreateRenderTargetView(render_buffer.Get(),
-		NULL,
-		shadow_render_target_view.GetAddressOf());
-	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
-
-
-	//シェーダーリソースビュー生成
+	//	シェーダーリソースビュー生成
 	D3D11_SHADER_RESOURCE_VIEW_DESC shader_resource_view_desc{};
 
-	shader_resource_view_desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	shader_resource_view_desc.Format = DXGI_FORMAT_R32_FLOAT;
 	shader_resource_view_desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	shader_resource_view_desc.Texture2D.MostDetailedMip = 0;
 	shader_resource_view_desc.Texture2D.MipLevels = 1;
 
-	hr = device->CreateShaderResourceView(render_buffer.Get(),
+	hr = device->CreateShaderResourceView(depth_buffer.Get(),
 		&shader_resource_view_desc,
 		shadow_shader_resource_view.GetAddressOf());
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
@@ -90,7 +74,7 @@ void Shadow_Map::initialize(ID3D11Device* device)
 
 
 
-	//サンプラステートの生成
+	// サンプラステートの生成
 	D3D11_SAMPLER_DESC sampler_desc{};
 	sampler_desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 	sampler_desc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
@@ -110,7 +94,7 @@ void Shadow_Map::initialize(ID3D11Device* device)
 
 
 
-	//シャドウマップ生成用シェーダー
+	// シャドウマップ生成用シェーダー
 	D3D11_INPUT_ELEMENT_DESC input_element_desc[]
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -127,9 +111,6 @@ void Shadow_Map::initialize(ID3D11Device* device)
 		input_layout.GetAddressOf(),
 		input_element_desc, ARRAYSIZE(input_element_desc));
 
-	create_ps_from_cso(device, "./CSO/shadow_map_ps.cso",
-		pixel_shader.GetAddressOf());
-
 }
 
 
@@ -139,14 +120,10 @@ void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_tim
 	ID3D11ShaderResourceView* clear_shader_resource_view[]{ nullptr };
 	immediate_context->PSSetShaderResources(2, 1, clear_shader_resource_view);
 
-	// シャドウマップ用のバッファに設定
-	FLOAT color[]{ 1.0f, 0.0f, 0.0f, 1.0f };
-	
-	immediate_context->ClearRenderTargetView(shadow_render_target_view.Get(), color);
+	// シャドウマップ用の深度バッファに設定
 	immediate_context->ClearDepthStencilView(shadow_depth_stencil_view.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-	immediate_context->OMSetRenderTargets(1, shadow_render_target_view.GetAddressOf(), shadow_depth_stencil_view.Get());
-
-	//ビューポートの設定
+	immediate_context->OMSetRenderTargets(0, nullptr, shadow_depth_stencil_view.Get());
+	// ビューポートの設定
 	D3D11_VIEWPORT viewport{};
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
@@ -156,14 +133,14 @@ void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_tim
 	viewport.MaxDepth = 1.0f;
 	immediate_context->RSSetViewports(1, &viewport);
 	
-	//シェーダー設定
+	// シェーダー設定
 	immediate_context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	immediate_context->IASetInputLayout(input_layout.Get());
 	immediate_context->VSSetShader(vertex_shader.Get(), nullptr, 0);
-	immediate_context->PSSetShader(pixel_shader.Get(), nullptr, 0);
+	immediate_context->PSSetShader(nullptr, nullptr, 0);
 
 
-	//ライトの位置から見た視線行列を生成
+	// ライトの位置から見た視線行列を生成
 	Light* light = Light_Manager::instance().get_light(Lights::DEFAULT);
 
 	DirectX::XMVECTOR LightPosition = DirectX::XMLoadFloat4(&light->light_position);
@@ -172,7 +149,7 @@ void Shadow_Map::begin(ID3D11DeviceContext* immediate_context, float elapsed_tim
 		LightPosition + XMLoadFloat4(&light->light_direction),
 		DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 
-	//シャドウマップに描画したい範囲の正射影行列を生成
+	// シャドウマップに描画したい範囲の正射影行列を生成
 	DirectX::XMMATRIX P = DirectX::XMMatrixOrthographicLH(SHADOW_DRAWRECT, SHADOW_DRAWRECT,
 		0.1f, 200.0f);
 

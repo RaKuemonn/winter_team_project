@@ -11,9 +11,9 @@ Player::Player(Scene_Manager* sm)
 {
     scale = DirectX::XMFLOAT3{0.01f, 0.01f, 0.01f};
     speed.x = 0.5f;
-    // parent‚Ìİ’è
+    // parentï¿½Ìİ’ï¿½
     set_parent(sm);
-    // player“Ç‚İ‚İ
+    // playerï¿½Ç‚İï¿½ï¿½ï¿½
     model = std::make_unique<Model>(parent->model_manager()->load_model("./Data/Jummo/Jummo.mdl"));
 }
 
@@ -78,10 +78,43 @@ void Player::render()
 #include "input_manager.h"
 #include "sphere_vehicle.h"
 #include "sv_ball.h"
-#include "model_filepaths.h"
 
 
-inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
+Player::Player(Scene_Manager* ptr_scene_manager_)
+{
+    set_ptr_scene_manager(ptr_scene_manager_);
+    load_model(get_scene_manager()->model_manager()->load_model("./Data/nico.fbx"));
+
+    set_tag(Tag::Player);
+
+    constexpr float scale = 0.01f;
+    get_transform()->set_scale({ scale,scale,scale });
+    get_transform()->Update();
+}
+
+void Player::init()
+{
+    get_transform()->Update();
+}
+
+void Player::update(const float elapsed_time_)
+{
+    // ï¿½ï¿½ï¿½Í’lï¿½Ìó‚¯ï¿½ï¿½
+    input(input_direction, *get_scene_manager()->input_manager());
+
+    // ï¿½ï¿½è•¨ï¿½ÌXï¿½V ï¿½E ï¿½Ê’uï¿½ÌXï¿½V
+    update_vehicle();
+    
+
+    // ï¿½pï¿½ï¿½ï¿½ÌXï¿½V
+    get_transform()->Update();
+
+    // ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½ÌXï¿½V
+    get_model()->play_animation(elapsed_time_, 0);
+}
+
+
+void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
 {
     input_direction_ = {};
 
@@ -106,63 +139,23 @@ inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
         input_direction_.x += -1.0f;
     }
 
-    if (input_.TRG(0) & KEY_SPACE)
+    if(input_.TRG(0) & KEY_SPACE)
     {
-        input_direction_.y += 1.0f;
+         input_direction_.y += 1.0f;
     }
-
-    DirectX::XMFLOAT2 direction = {};
-    DirectX::XMStoreFloat2(&direction, DirectX::XMVector2Normalize(DirectX::XMVectorSet(input_direction_.x, input_direction_.z, 0.0f, 0.0f)));
-
-    // ƒJƒƒ‰•ûŒü‚É
-    const DirectX::XMFLOAT3& camera_axis_x = Camera::Instance().get_right();
-    const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
-
-    input_direction_.x = direction.x * camera_axis_x.x + direction.y * camera_axis_z.x;
-    input_direction_.z = direction.x * camera_axis_x.z + direction.y * camera_axis_z.z;
-}
-
-
-Player::Player(Scene_Manager* ptr_scene_manager_)
-{
-    set_ptr_scene_manager(ptr_scene_manager_);
-    load_model(get_scene_manager()->model_manager()->load_model(Model_Paths::Entity::player));
-
-    set_tag(Tag::Player);
-
-    constexpr float scale = 0.01f;
-    get_transform()->set_scale({ scale,scale,scale });
-    get_transform()->Update();
-}
-
-void Player::init()
-{
-    get_transform()->Update();
-}
-
-void Player::update(const float elapsed_time_)
-{
-    // “ü—Í’l‚Ìó‚¯æ‚è
-    input(input_direction, *get_scene_manager()->input_manager());
-
-    // æ‚è•¨‚ÌXV E ˆÊ’u‚ÌXV
-    update_vehicle(elapsed_time_);
     
-
-    // p¨‚ÌXV
-    get_transform()->Update();
-
-    // ƒ‚ƒfƒ‹‚ÌXV
-    get_model()->play_animation(elapsed_time_, 0);
+    //const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
+    //
+    //input_direction_.x = input_direction_.x * camera_axis_z.x + input_direction_.z * camera_axis_z.x;
+    //input_direction_.z = input_direction_.x * camera_axis_z.z + input_direction_.z * camera_axis_z.z;
 }
 
-
-void Player::update_vehicle(const float elapsed_time_)
+void Player::update_vehicle()
 {
-    //  æ‚Á‚Ä‚éæ‚è•¨‚ª‚ ‚é‚©
+    //  ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½è•¨ï¿½ï¿½ï¿½ï¿½ï¿½é‚©
     if(check_has_vehicle())
     {
-        // ‚ ‚é‚Ì‚ÅXV‚·‚é
+        // ï¿½ï¿½ï¿½ï¿½Ì‚ÅXï¿½Vï¿½ï¿½ï¿½ï¿½
 
         if(get_scene_manager()->input_manager()->TRG(0) & PAD_START)
         {
@@ -176,12 +169,12 @@ void Player::update_vehicle(const float elapsed_time_)
         return;
     }
 
-    create_vehicle(elapsed_time_);
+    create_vehicle();
 }
 
 bool Player::check_has_vehicle() const
 {
-    // QÆæ‚ª‚ ‚é‚©          (expired()‚ÍQÆæ‚ª–³‚¢‚Æ‚«‚Étrue‚É‚È‚é)
+    // ï¿½Qï¿½Ææ‚ªï¿½ï¿½ï¿½é‚©          (expired()ï¿½ÍQï¿½Ææ‚ªï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ï¿½trueï¿½É‚È‚ï¿½)
     if (m_wkp_vehicle.expired() == false)
     {
         return (static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->get_is_free() == false);
@@ -197,7 +190,7 @@ void Player::control_vehicle()
 
 void Player::reference_vehicle_position()
 {
-    // 1 frame ’x‚ê‚Ä‚¢‚é
+    // 1 frame ï¿½xï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 
     DirectX::XMFLOAT3 vehicle_position = m_wkp_vehicle.lock()->get_position();
     vehicle_position.y                += m_wkp_vehicle.lock()->get_scale().y;
@@ -206,34 +199,34 @@ void Player::reference_vehicle_position()
 
 }
 
-void Player::create_vehicle(const float elapsed_time_)
+void Player::create_vehicle()
 {
     DirectX::XMFLOAT4 quaternion = { 0.0f,0.0f,0.0f,1.0f };
-    DirectX::XMFLOAT3 velocity = {};
     
     if (m_wkp_vehicle.expired() == false)
     {
         quaternion = m_wkp_vehicle.lock().get()->get_quaternion();
-        velocity = m_wkp_vehicle.lock().get()->get_velocity() * elapsed_time_;
     }
 
-    // weak_ptr‚ğ‰ğ•ú‚µ‚Ä‚¨‚­
+    // weak_ptrï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
     m_wkp_vehicle.reset();
 
     //std::shared_ptr<Entity> vehicle = std::make_shared<Sphere_Vehicle>(get_scene_manager());
     std::shared_ptr<Entity> vehicle = std::make_shared<SV_Ball>(get_scene_manager());
 
-    // ˆÊ’u‚Ìİ’è
+    // ï¿½Ê’uï¿½Ìİ’ï¿½
     DirectX::XMFLOAT3 position = get_position() - velocity;
     position.y += -1.0f * vehicle->get_scale().y * 0.5f;
     vehicle->set_position(position);
 
-    // ‰ñ“]’l‚Ìİ’è
+    // ï¿½ï¿½]ï¿½lï¿½Ìİ’ï¿½
     vehicle->set_quaternion(quaternion);
 
-    // ƒvƒŒƒCƒ„[‚ªQÆ‚·‚éæ‚è•¨‚ğ•ÏX
+    // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Qï¿½Æ‚ï¿½ï¿½ï¿½ï¿½è•¨ï¿½ï¿½ÏX
     m_wkp_vehicle = vehicle;
 
     Entity_Manager::instance().spawn_register(vehicle);
 }
+
+
 

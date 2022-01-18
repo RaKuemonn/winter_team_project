@@ -89,15 +89,15 @@ public:
     void play(bool is_loop)
     {
         if (!music) return;
-        music_inst = music->CreateInstance(DirectX::SoundEffectInstance_Default);
+        music_inst = music->CreateInstance(DirectX::SoundEffectInstance_Use3D | DirectX::SoundEffectInstance_ReverbUseFilters);
         //music_inst->Apply3D()
         music_inst->Play(is_loop);
-        cur_volume = def_volume;
-        music_inst->SetVolume(cur_volume);
-        fade_volume = cur_volume;
-        add = 0.0f;
-        pitch = 0.0f;
-        pan = 0.0f;
+        //cur_volume = def_volume;
+        //music_inst->SetVolume(cur_volume);
+        //fade_volume = cur_volume;
+        //add = 0.0f;
+        //pitch = 0.0f;
+        //pan = 0.0f;
     }
 
     

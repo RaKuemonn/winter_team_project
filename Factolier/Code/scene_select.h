@@ -41,15 +41,14 @@ private:
 	float time = 0.0f;
 	float eas = 0.0;
 
-	std::unique_ptr<Sprite_Batch> select_back = nullptr; //Å@îwåi
-	std::unique_ptr<Sprite_Batch> select_stage1; //Å@îwåi
-	std::unique_ptr<Sprite> back = nullptr;
-	std::unique_ptr<Sprite> stage1 = nullptr;
+
+	std::unique_ptr<Sprite> back = nullptr; // îwåi
+	std::unique_ptr<Sprite> stage1 = nullptr; 
 	std::unique_ptr<Sprite> stage2 = nullptr;
 	std::unique_ptr<Sprite> stage3 = nullptr;
 	std::unique_ptr<Sprite> stage4 = nullptr;
 	std::unique_ptr<Sprite> stage5 = nullptr;
-	std::unique_ptr<Sprite> choice = nullptr;
+	std::unique_ptr<Sprite> choice = nullptr; // ògÅ@ç°ÇÕçïÇ¢éläp
 	std::unique_ptr<Scene_Manager> scene_manager = nullptr;
 
 };

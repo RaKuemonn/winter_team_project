@@ -48,11 +48,12 @@ public:
     void update(const float elapsed_time_)  override;
 
 private:
-    void update_vehicle(const float elapsed_time_);
+    inline static void input(DirectX::XMFLOAT3& input_direction, class Input_Manager& input_);
+    void update_vehicle();
     _NODISCARD bool check_has_vehicle() const;
     void control_vehicle();
     void reference_vehicle_position();
-    void create_vehicle(const float elapsed_time_);
+    void create_vehicle();
 
 private:
     std::weak_ptr<Entity> m_wkp_vehicle;

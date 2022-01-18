@@ -17,7 +17,7 @@ using DirectX::AudioEngine_Debug;
 Sound_Manager::Sound_Manager()
 {
     // Create DirectXTK for Audio objects
-    AUDIO_ENGINE_FLAGS eflags = AudioEngine_Default;
+    AUDIO_ENGINE_FLAGS eflags = AudioEngine_EnvironmentalReverb | AudioEngine_ReverbUseFilters;
 #ifdef _DEBUG
     eflags = eflags | AudioEngine_Debug;
 #endif
@@ -25,7 +25,7 @@ Sound_Manager::Sound_Manager()
     //            for (auto &p : sound_volume) p = 1.0f;TODO
 
     audio_engine = std::make_unique<AudioEngine>(eflags);
-    //audio_engine->SetReverb(DirectX::Reverb_Off);
+    audio_engine->SetReverb(DirectX::Reverb_Off);
 }
 
 

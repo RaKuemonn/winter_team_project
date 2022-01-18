@@ -46,14 +46,12 @@ public:
     // Setterä÷êî //
     void set_position(const DirectX::XMFLOAT3& position_)       const;
     void set_scale(const DirectX::XMFLOAT3& scale_)             const;
-    void set_friction(const float friction_)                    const;
     void set_velocity(const DirectX::XMFLOAT3& velocity)        const;
     void set_velocity_x(const float velocity_x)                 const;
     void set_velocity_y(const float velocity_y)                 const;
     void set_velocity_z(const float velocity_z)                 const;
     void set_quaternion(const DirectX::XMFLOAT4& quaternion_)   const;
     void add_position(const DirectX::XMFLOAT3& velocity)        const;
-    void add_velocity(const DirectX::XMFLOAT3& velocity)        const;
     void add_quaternion(const DirectX::XMFLOAT4& quaternion_)   const;
 
 

@@ -99,11 +99,6 @@ void Entity::set_scale(const DirectX::XMFLOAT3& scale_) const
     m_transform->set_scale(scale_);
 }
 
-void Entity::set_friction(const float friction_) const
-{
-    m_velocity->set_friction(friction_);
-}
-
 void Entity::set_velocity(const DirectX::XMFLOAT3& velocity_) const
 {
     m_velocity->set(velocity_);
@@ -132,11 +127,6 @@ void Entity::set_quaternion(const DirectX::XMFLOAT4& quaternion_) const
 void Entity::add_position(const DirectX::XMFLOAT3& velocity) const
 {
     m_transform->add_position(velocity);
-}
-
-void Entity::add_velocity(const DirectX::XMFLOAT3& velocity_) const
-{
-    m_velocity->add(velocity_);
 }
 
 void Entity::add_quaternion(const DirectX::XMFLOAT4& quaternion_) const

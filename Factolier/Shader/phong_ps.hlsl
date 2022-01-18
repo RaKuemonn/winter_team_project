@@ -52,6 +52,9 @@ float4 main(VS_OUT pin) : SV_TARGET
 	color.rgb += diffuse_color.rgb * directional_diffuse;
 	color.rgb += directional_specular;
 	color.a *= pin.color.a;
+	
+	color = CalcFog(color, fog_color, fog_range.xy, length(pin.world_position.xyz - camera_position.xyz));
+
 
 	// シャドウマップから深度値取得
 	float depth = shadow_map.Sample(shadow_sampler_state, pin.shadow_texcoord.xy).r;
@@ -61,8 +64,6 @@ float4 main(VS_OUT pin) : SV_TARGET
 	{
 		color.rgb *= shadow_color.rgb;
 	}
-	
-	color = CalcFog(color, fog_color, fog_range.xy, length(pin.world_position.xyz - camera_position.xyz));
 
 
 	return color;
