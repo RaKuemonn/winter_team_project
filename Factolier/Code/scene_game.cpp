@@ -122,11 +122,11 @@ void Scene_Game::render(float elapsed_time)
     parent->state_manager()->setSS(SS::LINEAR);
     parent->state_manager()->setSS(SS::ANISOTROPIC);
 
-    parent->state_manager()->setDS(DS::OFF_OFF);
+    parent->state_manager()->setDS(DS::ON_ON);
 
     parent->state_manager()->setBS(BS::ALPHA);
 
-    parent->state_manager()->setRS(RS::SOLID_NONE);
+    parent->state_manager()->setRS(RS::SOLID_BACK);
 
 
     Shader* shader = nullptr;
@@ -137,6 +137,7 @@ void Scene_Game::render(float elapsed_time)
 
         shader->begin(ptr_device_context, elapsed_time * 0.1f);
 
+        Stage_Manager::instance().render(ptr_device_context);
         Entity_Manager::instance().render(ptr_device_context);
 
         shader->end(ptr_device_context);

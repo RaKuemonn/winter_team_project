@@ -102,22 +102,46 @@ void Model::play_animation(float elapsed_time, int anime_num, bool loop, float b
 
 void Model::render(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color)
 {
+	//座標変換
+	DirectX::XMFLOAT4X4 coordinate_system_transforms = { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };	// 0:RHS Y-UP
+	DirectX::XMMATRIX CW = XMLoadFloat4x4(&coordinate_system_transforms);
+	DirectX::XMMATRIX W = DirectX::XMLoadFloat4x4(&world);
+
+	DirectX::XMFLOAT4X4 c_world;
+	DirectX::XMStoreFloat4x4(&c_world, CW * W);
+
 	//全てのメッシュを描画
-	resource->render(immediate_context, world, material_color, &now_key);
+	resource->render(immediate_context, c_world, material_color, &now_key);
 }
 
 
 void Model::render_mesh(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color, int mesh_num)
 {
+	//座標変換
+	DirectX::XMFLOAT4X4 coordinate_system_transforms = { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };	// 0:RHS Y-UP
+	DirectX::XMMATRIX CW = XMLoadFloat4x4(&coordinate_system_transforms);
+	DirectX::XMMATRIX W = DirectX::XMLoadFloat4x4(&world);
+
+	DirectX::XMFLOAT4X4 c_world;
+	DirectX::XMStoreFloat4x4(&c_world, CW * W);
+
 	//指定したメッシュのみ描画
-	resource->render_mesh(immediate_context, world, material_color, &now_key, mesh_num);
+	resource->render_mesh(immediate_context, c_world, material_color, &now_key, mesh_num);
 }
 
 
 void Model::render_exmesh(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color, int mesh_num)
 {
+	//座標変換
+	DirectX::XMFLOAT4X4 coordinate_system_transforms = { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };	// 0:RHS Y-UP
+	DirectX::XMMATRIX CW = XMLoadFloat4x4(&coordinate_system_transforms);
+	DirectX::XMMATRIX W = DirectX::XMLoadFloat4x4(&world);
+
+	DirectX::XMFLOAT4X4 c_world;
+	DirectX::XMStoreFloat4x4(&c_world, CW * W);
+
 	//指定したメッシュ以外を描画
-	resource->render_exmesh(immediate_context, world, material_color, &now_key, mesh_num);
+	resource->render_exmesh(immediate_context, c_world, material_color, &now_key, mesh_num);
 }
 
 
