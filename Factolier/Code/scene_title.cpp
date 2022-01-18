@@ -15,6 +15,8 @@ void Scene_Title::initialize(Scene_Manager* parent_)
 
     //sound->play(false);
 
+   
+
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
 
     Camera& camera = Camera::Instance();

@@ -4,6 +4,7 @@
 #include "scene_game.h"
 #include "scene_title.h"
 #include "scene_select.h"
+#include "scene_title_game.h"
 #include "scene_loading.h"
 
 float fps{ 0 };
@@ -25,8 +26,9 @@ bool Framework::initialize()
 //=======
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
 
-	scene_manager->change_scene(new Scene_Select);
-	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
+	//scene_manager->change_scene(new Scene_Title_Game);
+	//scene_manager->change_scene(new Scene_Select);
+	scene_manager->change_scene(new Scene_Loading(new Scene_Game));
 	//scene_manager->change_scene(new Scene_Loading(new Scene_Title));
 	//scene_manager->change_scene(new Scene_Title);
 	

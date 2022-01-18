@@ -228,6 +228,9 @@
     <ClCompile Include="Factolier\Code\scene_select.cpp">
       <Filter>Factolier\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\scene_title_game.cpp">
+      <Filter>Factolier\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -441,6 +444,9 @@
       <Filter>Factolier\Accessibility</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\scene_select.h">
+      <Filter>Factolier\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\scene_title_game.h">
       <Filter>Factolier\Scene</Filter>
     </ClInclude>
   </ItemGroup>
