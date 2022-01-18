@@ -58,7 +58,4 @@ private:
     std::weak_ptr<Entity> m_wkp_vehicle;
     DirectX::XMFLOAT3 input_direction = {};
 
-private:
-    static constexpr float pudding_y = 2.0f;
-
 };

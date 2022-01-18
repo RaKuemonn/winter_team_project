@@ -67,8 +67,6 @@ private:
     DirectX::XMFLOAT3 m_area_target_position    = {};
     DirectX::XMFLOAT3 m_area_origin_position    = {};
     DirectX::XMFLOAT3 m_area_size               = {};
-    bool m_is_find_target       = false;
-    bool m_is_move_phase_init   = true;
 
     std::unique_ptr<Move_Phase<Enemy_Move_Closer_>> m_move_phase = nullptr;
 

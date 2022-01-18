@@ -28,10 +28,10 @@ Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const 
     // 初期行動
     m_move_phase->set(area_mover)
     // 遷移元と遷移先と遷移条件
-        .add_transition(area_mover, area_mover,     [&](float) {return ((is_find_target(*this) == false) && (m_timer.NowTime() > 3.0f)) ? stop_velocity()/*true返す*/ : false; })
-        .add_transition(area_mover, target_mover,   [&](float) {return is_find_target(*this) ? stop_velocity()/*true返す*/ : false; })
+        .add_transition(area_mover, area_mover,     [&](float) {return ((is_find_target(*this) == false) && (m_timer.NowTime() > 3.0f))     ? stop_velocity()/*true返す*/ : false; })
+        .add_transition(area_mover, target_mover,   [&](float) {return is_find_target(*this)                                                ? stop_velocity()/*true返す*/ : false; })
         .add_transition(target_mover, area_mover,   [&](float) {return (is_find_target(*this) == false) && (m_timer.NowTime() > 3.0f); })
-        .add_transition(target_mover, target_mover, [&](float) {return (is_find_target(*this) && (m_timer.NowTime() > 0.6f)) ? true : false; })
+        .add_transition(target_mover, target_mover, [&](float) {return (is_find_target(*this) && (m_timer.NowTime() > 0.6f)); })
     // 初期化、終了
         .set_initialize(area_mover,     [&]() {this->init_in_area();        m_timer.Reset();})
         .set_finalize(area_mover,           [&]() { m_timer.Reset();})
@@ -54,7 +54,6 @@ void Enemy_Move_Closer_::update(const float elapsed_time_)
 
     // 速度更新
     update_velocity(elapsed_time_);   // 重力がかかっている
-    //m_velocity->update(elapsed_time_);
 
     // 位置の更新
     add_position(m_velocity->get() * elapsed_time_);

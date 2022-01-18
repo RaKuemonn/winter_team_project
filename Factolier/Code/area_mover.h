@@ -20,8 +20,5 @@ private:
         const DirectX::XMFLOAT3& front_dir = type_.get_axis_z();
         type_.add_velocity({ front_dir.x * speed, front_dir.y * speed, front_dir.z * speed });
     }
-
-private:
-    float timer = 0.0f;
     
 };

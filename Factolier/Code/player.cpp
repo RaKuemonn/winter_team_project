@@ -225,7 +225,7 @@ void Player::create_vehicle(const float elapsed_time_)
 
     // ˆÊ’u‚Ìİ’è
     DirectX::XMFLOAT3 position = get_position() - velocity;
-    position.y += -1.0f * pudding_y + 5.0f;
+    position.y += -1.0f * vehicle->get_scale().y * 0.5f;
     vehicle->set_position(position);
 
     // ‰ñ“]’l‚Ìİ’è
