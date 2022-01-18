@@ -13,8 +13,10 @@ public:
     virtual void init()                             override = 0;
     virtual void update(const float elapsed_time_)  override = 0;
 
-protected:
+    // Getterä÷êî //
     _NODISCARD const DirectX::XMFLOAT3& get_target_position() const { return target_position; }
+
+protected:
     void update_velocity(const float elapsed_time_);
 
 private:

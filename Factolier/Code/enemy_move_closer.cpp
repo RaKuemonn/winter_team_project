@@ -103,8 +103,7 @@ void Enemy_Move_Closer::search_in_area(const float elapsed_time_)
         }
         else
         {
-            // リセット
-            m_is_move_phase_init = true;
+            deinit_in_area(elapsed_time_);
         }
     }
 }
@@ -115,6 +114,12 @@ void Enemy_Move_Closer::init_in_area(const float elased_time_)
     look_in_area(elased_time_);
     m_is_move_phase_init = false;
     m_timer.Reset();
+}
+
+void Enemy_Move_Closer::deinit_in_area(const float elased_time_)
+{
+    // リセット
+    m_is_move_phase_init = true;
 }
 
 void Enemy_Move_Closer::find_in_area(const float elapsed_time_)
@@ -171,10 +176,7 @@ void Enemy_Move_Closer::seek_to_target(const float elapsed_time_)
          
     else // 3秒経ったら一度リセット
     {
-
-        m_is_move_phase_init    = true;
-        m_is_find_target        = false;
-
+        deinit_to_target(elapsed_time_);
     }
 }
 
@@ -183,6 +185,12 @@ void Enemy_Move_Closer::init_to_target(const float elapsed_time_)
     m_is_move_phase_init = false;
     m_timer.Reset();
     m_velocity->set({ 0.0f,0.0f,0.0f });
+}
+
+void Enemy_Move_Closer::deinit_to_target(const float elased_time_)
+{
+    m_is_move_phase_init = true;
+    m_is_find_target = false;
 }
 
 void Enemy_Move_Closer::look_to_target(const float elapsed_time_)

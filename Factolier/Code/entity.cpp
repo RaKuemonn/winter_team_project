@@ -134,6 +134,11 @@ void Entity::add_position(const DirectX::XMFLOAT3& velocity) const
     m_transform->add_position(velocity);
 }
 
+void Entity::add_velocity(const DirectX::XMFLOAT3& velocity_) const
+{
+    m_velocity->add(velocity_);
+}
+
 void Entity::add_quaternion(const DirectX::XMFLOAT4& quaternion_) const
 {
     m_transform->add_quaternion(quaternion_);

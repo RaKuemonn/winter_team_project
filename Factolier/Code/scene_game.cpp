@@ -10,6 +10,7 @@
 #include "player.h"
 #include "enemy_none.h"
 #include "enemy_move_closer.h"
+#include "enemy_move_closer_.h"
 #include "camera_controller.h"
 #include "imgui.h"
 #include "utility.h"
@@ -83,7 +84,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     enemy_spawner->set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {});
     enemy_spawner->set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {});
     enemy_spawner->set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {});
-    enemy_spawner->set_enemy<Enemy_Move_Closer>({ 0.0f,0.0f,0.0f }, player->get_position());
+    enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,0.0f,0.0f }, player->get_position());
 
 
     collision_manager = std::unique_ptr<Collision_Manager>();

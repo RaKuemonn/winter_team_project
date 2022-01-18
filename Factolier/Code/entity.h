@@ -53,6 +53,7 @@ public:
     void set_velocity_z(const float velocity_z)                 const;
     void set_quaternion(const DirectX::XMFLOAT4& quaternion_)   const;
     void add_position(const DirectX::XMFLOAT3& velocity)        const;
+    void add_velocity(const DirectX::XMFLOAT3& velocity)        const;
     void add_quaternion(const DirectX::XMFLOAT4& quaternion_)   const;
 
 

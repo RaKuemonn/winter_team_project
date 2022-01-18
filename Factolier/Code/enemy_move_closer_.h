@@ -3,38 +3,32 @@
 #include "enemy.h"
 #include "transform.h"
 #include "timer.h"
+#include "base_move_phase.h"
 
-class Enemy_Move_Closer final : public Enemy
+
+class Enemy_Move_Closer_ final : public Enemy
 {
 public:
-    Enemy_Move_Closer(class Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_);
-    ~Enemy_Move_Closer()override = default;
+    Enemy_Move_Closer_(class Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_);
+    ~Enemy_Move_Closer_()override = default;
 
     void init() override {};
     void update(const float elapsed_time_) override;
 
 private:
-    //static bool is_search_to_area();
-    static bool is_find_target(const Enemy_Move_Closer& me);    // エリア内で敵を見つけたかどうか
+    static bool is_find_target(const Enemy_Move_Closer_& me);    // エリア内で敵を見つけたかどうか
+    
+    void init_in_area();                                        // 初期化
+    void find_in_area();                                        // エリア内の探索位置を決定
+    void look_in_area();                                        // 探索位置に向く
 
-    void move_phase(const float elapsed_time_);
+    bool stop_velocity()
+    {
+        m_velocity->set({ 0.0f,0.0f,0.0f });
+        return true;
+    }
 
-    void search_in_area(const float elapsed_time_);             // エリア内の探索
-    void init_in_area(const float elased_time_);                // 初期化
-    void deinit_in_area(const float elased_time_);              // 終了
-    void find_in_area(const float elapsed_time_);               // エリア内の探索位置を決定
-    void move_in_area(const float elapsed_time_);               // 探索位置に向けて移動 (自分の前方方向に進む)
-    void look_in_area(const float elapsed_time_);               // 探索位置に向く
-    void idle_in_area(const float elapsed_time_);               // 待機                 (なにもしていない)
-
-
-    void seek_to_target(const float elapsed_time_);             // 目標を見つけた
-    void init_to_target(const float elapsed_time_);             // 初期化
-    void deinit_to_target(const float elased_time_);            // 終了
-    void look_to_target(const float elapsed_time_);             // 目標方向に向きを変える
-    void move_to_target(const float elapsed_time_);             // 目標に向かって移動する　・　３秒継続
-
-    static inline void look_target(Enemy_Move_Closer& me, const DirectX::XMFLOAT3& target_, const float elapsed_time_)
+    static inline void look_target(Enemy_Move_Closer_& me, const DirectX::XMFLOAT3& target_)
     {
         const DirectX::XMFLOAT3 axis_x = me.get_axis_x();
         const DirectX::XMVECTOR right_direction = DirectX::XMLoadFloat3(&axis_x);
@@ -57,11 +51,8 @@ private:
 
 
         const DirectX::XMVECTOR cross = DirectX::XMVector3Normalize(DirectX::XMVector3Cross(front_direction, to_target_direction));   // 正規化されたベクトルによる外積
-        const float radian = elapsed_time_ == 0.0f ?
-                                acosf(dot)/*回転量*/ /*回転方向*/ :
-                                acosf(dot)/*回転量*/ /*回転方向*/ * 2.0f * elapsed_time_/*フレームレート*/;
-
-        // TODO : 今は回転速度が一定 , 補間して自然にする
+        const float radian = acosf(dot)/*回転量*/;
+        
 
         const DirectX::XMVECTOR xmvec_quaternion = DirectX::XMQuaternionNormalize(DirectX::XMQuaternionRotationAxis(cross, radian));
         DirectX::XMFLOAT4 xmf4_quaternion;
@@ -78,4 +69,7 @@ private:
     DirectX::XMFLOAT3 m_area_size               = {};
     bool m_is_find_target       = false;
     bool m_is_move_phase_init   = true;
+
+    std::unique_ptr<Move_Phase<Enemy_Move_Closer_>> m_move_phase = nullptr;
+
 };
