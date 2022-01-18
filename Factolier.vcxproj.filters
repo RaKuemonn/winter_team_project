@@ -61,6 +61,12 @@
     <Filter Include="Factolier\Scene">
       <UniqueIdentifier>{c607bb3a-e8a1-4979-ba08-e5bdc1c84f5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Entity\Enemy\Move_Phase">
+      <UniqueIdentifier>{9cd93a42-3872-4586-86a3-b4ddb4603bed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Entity\Enemy\Moves">
+      <UniqueIdentifier>{e33deea6-0136-4295-87bc-99d98c1ce6f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_manager.cpp">
@@ -228,8 +234,8 @@
     <ClCompile Include="Factolier\Code\scene_select.cpp">
       <Filter>Factolier\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\scene_title_game.cpp">
-      <Filter>Factolier\Scene</Filter>
+    <ClCompile Include="Factolier\Code\enemy_move_closer_.cpp">
+      <Filter>Factolier\Entity\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -446,8 +452,26 @@
     <ClInclude Include="Factolier\Code\scene_select.h">
       <Filter>Factolier\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\scene_title_game.h">
-      <Filter>Factolier\Scene</Filter>
+    <ClInclude Include="Factolier\Code\model_filepaths.h">
+      <Filter>Factolier\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\sprite_filepaths.h">
+      <Filter>Factolier\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\base_move_phase.h">
+      <Filter>Factolier\Entity\Enemy\Move_Phase</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy_move_closer_.h">
+      <Filter>Factolier\Entity\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\area_mover.h">
+      <Filter>Factolier\Entity\Enemy\Moves</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\base_move.h">
+      <Filter>Factolier\Entity\Enemy\Move_Phase</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\target_mover.h">
+      <Filter>Factolier\Entity\Enemy\Moves</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -505,8 +529,11 @@
     <FxCompile Include="Factolier\Shader\static_mesh_vs.hlsl">
       <Filter>Factolier\HLSL\Group</Filter>
     </FxCompile>
+    <FxCompile Include="Factolier\Shader\shadow_map_ps.hlsl">
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
+    </FxCompile>
     <FxCompile Include="Factolier\Shader\shadow_map_vs.hlsl">
-      <Filter>Factolier\HLSL</Filter>
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -533,6 +560,9 @@
     </None>
     <None Include="Factolier\Shader\static_mesh.hlsli">
       <Filter>Factolier\HLSL\Group</Filter>
+    </None>
+    <None Include="Factolier\Shader\shadow_map.hlsli">
+      <Filter>Factolier\HLSL\Post_Effect</Filter>
     </None>
   </ItemGroup>
 </Project>

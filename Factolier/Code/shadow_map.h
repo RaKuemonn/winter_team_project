@@ -17,6 +17,7 @@ public:
     void end(ID3D11DeviceContext* immediate_context) override;
 
 
+    Microsoft::WRL::ComPtr<ID3D11RenderTargetView> shadow_render_target_view;
     Microsoft::WRL::ComPtr<ID3D11DepthStencilView> shadow_depth_stencil_view;
     Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> shadow_shader_resource_view;
     Microsoft::WRL::ComPtr<ID3D11SamplerState> shadow_sampler_state;

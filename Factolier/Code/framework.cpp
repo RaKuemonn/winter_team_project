@@ -4,7 +4,6 @@
 #include "scene_game.h"
 #include "scene_title.h"
 #include "scene_select.h"
-#include "scene_title_game.h"
 #include "scene_loading.h"
 
 float fps{ 0 };
@@ -20,17 +19,12 @@ bool Framework::initialize()
 
 	//シーンマネージャー生成
 	scene_manager = std::make_unique<Scene_Manager>();
-//<<<<<<< HEAD
-	//scene_manager->initialize(device.Get(), immediate_context.Get(), hr);
-	//scene_manager->change_scene(new Scene_Title);
-//=======
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
 
-	//scene_manager->change_scene(new Scene_Title_Game);
 	//scene_manager->change_scene(new Scene_Select);
 	scene_manager->change_scene(new Scene_Loading(new Scene_Game));
 	//scene_manager->change_scene(new Scene_Loading(new Scene_Title));
-	//scene_manager->change_scene(new Scene_Title);
+	//scene_manager->change_scene(new Scene_Game);
 	
 
 
@@ -101,7 +95,7 @@ void Framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 #endif
 
 
-	UINT sync_interval{ 0 }; //1にすると60FPSの固定フレームレートで動作する
+	//UINT sync_interval{ 0 }; //1にすると60FPSの固定フレームレートで動作する
 
 	//レンダリングされた画像を描画する
 	swap_chain->Present(

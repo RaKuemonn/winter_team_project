@@ -147,17 +147,18 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions);USE_IMGUI</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>.\Source;.\External\DirectXTex-master;.\External\imgui;.l\cereal-master\include\cereal;.\External\stb;.\External\Effekseer153a\include\Effekseer;.\External\Effekseer153a\include\EffekseerRendererDX11</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\External\DirectXTex-master\DirectXTex;.\External\imgui;.\External\cereal-master\include;C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\include;.\External\Effekseer153a\include\Effekseer;.\External\Effekseer153a\include\EffekseerRendererDX11;.\External\DirectXTK-master\Inc;.\External\DirectXTK-master\Audio;.\External\DirectXTK-master\Src</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>.\External\Effekseer153a\lib\vs2019\MT\$(PlatformTarget)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>d3d11.lib;dxgi.lib;xinput.lib;winmm.lib;Effekseer.lib;EffekseerRendererDX11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>.\External\DirectXTK-master\Bin\Desktop_2019\x64\$(Configuration);C:\Program Files\Autodesk\FBX\FBX SDK\2020.2\lib\vs2019\x64\release;.\External\DirectXTK-master\Audio\Bin\Desktop_2019\x64\$(Configuration);$(ProjectDir)External\DirectXTex-master\DirectXTex\Bin\Desktop_2019\x64\$(Configuration);.\External\Effekseer153a\lib\vs2019\MD\$(PlatformTarget)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>d3d11.lib;dxgi.lib;xinput.lib;winmm.lib;Effekseer.lib;EffekseerRendererDX11.lib;zlib-md.lib;libxml2-md.lib;libfbxsdk-md.lib;DirectXTK.lib;Advapi32.lib;DirectXTKAudioWin8.lib;DirectXTex.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
@@ -181,6 +182,7 @@
     <ClCompile Include="Factolier\Code\effect_manager.cpp" />
     <ClCompile Include="Factolier\Code\enemy.cpp" />
     <ClCompile Include="Factolier\Code\enemy_move_closer.cpp" />
+    <ClCompile Include="Factolier\Code\enemy_move_closer_.cpp" />
     <ClCompile Include="Factolier\Code\enemy_none.cpp" />
     <ClCompile Include="Factolier\Code\enemy_spawner.cpp" />
     <ClCompile Include="Factolier\Code\entity.cpp" />
@@ -194,7 +196,6 @@
     <ClCompile Include="Factolier\Code\scene_loading.cpp" />
     <ClCompile Include="Factolier\Code\scene_select.cpp" />
     <ClCompile Include="Factolier\Code\scene_title.cpp" />
-    <ClCompile Include="Factolier\Code\scene_title_game.cpp" />
     <ClCompile Include="Factolier\Code\shadow_map.cpp" />
     <ClCompile Include="Factolier\Code\sky_box.cpp" />
     <ClCompile Include="Factolier\Code\sky_shader.cpp" />
@@ -234,10 +235,15 @@
     <ClInclude Include="External\imgui\imstb_textedit.h" />
     <ClInclude Include="External\imgui\imstb_truetype.h" />
     <ClInclude Include="Factolier\Code\ability.h" />
+    <ClInclude Include="Factolier\Code\area_mover.h" />
+    <ClInclude Include="Factolier\Code\base_move.h" />
+    <ClInclude Include="Factolier\Code\base_move_phase.h" />
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
+    <ClInclude Include="Factolier\Code\enemy_move_closer_.h" />
+    <ClInclude Include="Factolier\Code\model_filepaths.h" />
     <ClInclude Include="Factolier\Code\digits.h" />
     <ClInclude Include="Factolier\Code\easing.h" />
     <ClInclude Include="Factolier\Code\effect.h" />
@@ -262,7 +268,6 @@
     <ClInclude Include="Factolier\Code\scene_loading.h" />
     <ClInclude Include="Factolier\Code\scene_select.h" />
     <ClInclude Include="Factolier\Code\scene_title.h" />
-    <ClInclude Include="Factolier\Code\scene_title_game.h" />
     <ClInclude Include="Factolier\Code\shadow_map.h" />
     <ClInclude Include="Factolier\Code\sky_box.h" />
     <ClInclude Include="Factolier\Code\sky_shader.h" />
@@ -284,6 +289,7 @@
     <ClInclude Include="Factolier\Code\sphere_vehicle.h" />
     <ClInclude Include="Factolier\Code\sprite.h" />
     <ClInclude Include="Factolier\Code\sprite_batch.h" />
+    <ClInclude Include="Factolier\Code\sprite_filepaths.h" />
     <ClInclude Include="Factolier\Code\stage.h" />
     <ClInclude Include="Factolier\Code\stage_1.h" />
     <ClInclude Include="Factolier\Code\stage_1_movement.h" />
@@ -292,6 +298,7 @@
     <ClInclude Include="Factolier\Code\state_manager.h" />
     <ClInclude Include="Factolier\Code\static_mesh.h" />
     <ClInclude Include="Factolier\Code\sv_ball.h" />
+    <ClInclude Include="Factolier\Code\target_mover.h" />
     <ClInclude Include="Factolier\Code\texture.h" />
     <ClInclude Include="Factolier\Code\timer.h" />
     <ClInclude Include="Factolier\Code\transform.h" />
@@ -351,10 +358,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="Factolier\Shader\shadow_map_ps.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="Factolier\Shader\shadow_map_vs.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">
@@ -392,6 +401,7 @@
     <None Include="Factolier\Shader\default.hlsli" />
     <None Include="Factolier\Shader\ocean.hlsli" />
     <None Include="Factolier\Shader\shading_function.hlsli" />
+    <None Include="Factolier\Shader\shadow_map.hlsli" />
     <None Include="Factolier\Shader\sky_box.hlsli" />
     <None Include="Factolier\Shader\sprite.hlsli" />
     <None Include="Factolier\Shader\static_mesh.hlsli" />

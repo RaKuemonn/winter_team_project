@@ -48,18 +48,14 @@ public:
     void update(const float elapsed_time_)  override;
 
 private:
-    inline static void input(DirectX::XMFLOAT3& input_direction, class Input_Manager& input_);
-    void update_vehicle();
+    void update_vehicle(const float elapsed_time_);
     _NODISCARD bool check_has_vehicle() const;
     void control_vehicle();
     void reference_vehicle_position();
-    void create_vehicle();
+    void create_vehicle(const float elapsed_time_);
 
 private:
     std::weak_ptr<Entity> m_wkp_vehicle;
     DirectX::XMFLOAT3 input_direction = {};
-
-private:
-    static constexpr float pudding_y = 2.0f;
 
 };

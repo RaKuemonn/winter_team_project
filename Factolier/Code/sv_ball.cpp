@@ -2,7 +2,7 @@
 
 #include "sv_ball.h"
 #include "sphere_vehicle.h"
-
+#include "model_filepaths.h"
 
 //SV_Ball::SV_Ball(Scene_Manager* ptr_scene_manager_)
 //{
@@ -20,7 +20,7 @@
 //}
 
 
-SV_Ball::SV_Ball(Scene_Manager* ptr_scene_manager_) : Sphere_Vehicle(ptr_scene_manager_)
+SV_Ball::SV_Ball(Scene_Manager* ptr_scene_manager_) : Sphere_Vehicle(ptr_scene_manager_, Model_Paths::Entity::ball)
 {
     
 }

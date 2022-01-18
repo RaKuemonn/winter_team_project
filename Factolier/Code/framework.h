@@ -24,7 +24,7 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam
 extern ImWchar glyphRangesJapanese[];
 #endif
 
-
+static constexpr int sync_interval = 0;
 extern float fps;
 
 class Framework
@@ -82,6 +82,12 @@ public:
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGui::GetIO().Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\consola.ttf", 14.0f, nullptr, glyphRangesJapanese);
+
+		// ƒŠƒŠ[ƒXŽžimgui.ini‚ðo—Í‚³‚¹‚È‚¢
+#ifdef NDEBUG
+		ImGui::GetIO().IniFilename = 0;
+#endif
+
 		ImGui_ImplWin32_Init(hwnd);
 		ImGui_ImplDX11_Init(device.Get(), immediate_context.Get());
 		ImGui::StyleColorsDark();
@@ -98,8 +104,15 @@ public:
 			{
 				tictoc.tick();
 				calculate_frame_stats();
-				update(tictoc.time_interval());
-				render(tictoc.time_interval());
+
+
+				float elapsed_time = sync_interval == 0
+					? tictoc.time_interval()
+					: sync_interval / 60
+					;
+
+				update(elapsed_time);
+				render(elapsed_time);
 			}
 		}
 
@@ -184,10 +197,12 @@ private:
 private:
 	high_resolution_timer tictoc;
 	uint32_t frames{ 0 };
-	float elapsed_time{ 0.0f };
+    float time_tlapsed = 0.0f;
+
 	void calculate_frame_stats()
 	{
-		if (++frames, (tictoc.time_stamp() - elapsed_time) >= 1.0f)
+		++frames;
+		if ((tictoc.time_stamp() - time_tlapsed) >= 1.0f)
 		{
 			fps = static_cast<float>(frames);
 			std::wostringstream outs;
@@ -196,7 +211,7 @@ private:
 			SetWindowTextW(hwnd, outs.str().c_str());
 
 			frames = 0;
-			elapsed_time += 1.0f;
+			time_tlapsed += 1.0f;
 		}
 	}
 };

@@ -77,6 +77,8 @@ void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
     //注視点から後ろベクトル方向に一定距離離れたカメラ視点を求める
     DirectX::XMFLOAT3 eye;
 
+    constexpr float range = 15.0f;
+
     if (ptr_target == nullptr)
     {
         eye.x = target.x - front.x * range;

@@ -78,43 +78,10 @@ void Player::render()
 #include "input_manager.h"
 #include "sphere_vehicle.h"
 #include "sv_ball.h"
+#include "model_filepaths.h"
 
 
-Player::Player(Scene_Manager* ptr_scene_manager_)
-{
-    set_ptr_scene_manager(ptr_scene_manager_);
-    load_model(get_scene_manager()->model_manager()->load_model("./Data/nico.fbx"));
-
-    set_tag(Tag::Player);
-
-    constexpr float scale = 0.01f;
-    get_transform()->set_scale({ scale,scale,scale });
-    get_transform()->Update();
-}
-
-void Player::init()
-{
-    get_transform()->Update();
-}
-
-void Player::update(const float elapsed_time_)
-{
-    // 入力値の受け取り
-    input(input_direction, *get_scene_manager()->input_manager());
-
-    // 乗り物の更新 ・ 位置の更新
-    update_vehicle();
-    
-
-    // 姿勢の更新
-    get_transform()->Update();
-
-    // モデルの更新
-    get_model()->play_animation(elapsed_time_, 0);
-}
-
-
-void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
+inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
 {
     input_direction_ = {};
 
@@ -139,18 +106,58 @@ void Player::input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
         input_direction_.x += -1.0f;
     }
 
-    if(input_.TRG(0) & KEY_SPACE)
+    if (input_.TRG(0) & KEY_SPACE)
     {
-         input_direction_.y += 1.0f;
+        input_direction_.y += 1.0f;
     }
-    
-    //const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
-    //
-    //input_direction_.x = input_direction_.x * camera_axis_z.x + input_direction_.z * camera_axis_z.x;
-    //input_direction_.z = input_direction_.x * camera_axis_z.z + input_direction_.z * camera_axis_z.z;
+
+    DirectX::XMFLOAT2 direction = {};
+    DirectX::XMStoreFloat2(&direction, DirectX::XMVector2Normalize(DirectX::XMVectorSet(input_direction_.x, input_direction_.z, 0.0f, 0.0f)));
+
+    // カメラ方向に
+    const DirectX::XMFLOAT3& camera_axis_x = Camera::Instance().get_right();
+    const DirectX::XMFLOAT3& camera_axis_z = Camera::Instance().get_front();
+
+    input_direction_.x = direction.x * camera_axis_x.x + direction.y * camera_axis_z.x;
+    input_direction_.z = direction.x * camera_axis_x.z + direction.y * camera_axis_z.z;
 }
 
-void Player::update_vehicle()
+
+Player::Player(Scene_Manager* ptr_scene_manager_)
+{
+    set_ptr_scene_manager(ptr_scene_manager_);
+    load_model(get_scene_manager()->model_manager()->load_model(Model_Paths::Entity::player));
+
+    set_tag(Tag::Player);
+
+    constexpr float scale = 0.01f;
+    get_transform()->set_scale({ scale,scale,scale });
+    get_transform()->Update();
+}
+
+void Player::init()
+{
+    get_transform()->Update();
+}
+
+void Player::update(const float elapsed_time_)
+{
+    // 入力値の受け取り
+    input(input_direction, *get_scene_manager()->input_manager());
+
+    // 乗り物の更新 ・ 位置の更新
+    update_vehicle(elapsed_time_);
+    
+
+    // 姿勢の更新
+    get_transform()->Update();
+
+    // モデルの更新
+    get_model()->play_animation(elapsed_time_, 0);
+}
+
+
+void Player::update_vehicle(const float elapsed_time_)
 {
     //  乗ってる乗り物があるか
     if(check_has_vehicle())
@@ -169,7 +176,7 @@ void Player::update_vehicle()
         return;
     }
 
-    create_vehicle();
+    create_vehicle(elapsed_time_);
 }
 
 bool Player::check_has_vehicle() const
@@ -199,13 +206,15 @@ void Player::reference_vehicle_position()
 
 }
 
-void Player::create_vehicle()
+void Player::create_vehicle(const float elapsed_time_)
 {
     DirectX::XMFLOAT4 quaternion = { 0.0f,0.0f,0.0f,1.0f };
+    DirectX::XMFLOAT3 velocity = {};
     
     if (m_wkp_vehicle.expired() == false)
     {
         quaternion = m_wkp_vehicle.lock().get()->get_quaternion();
+        velocity = m_wkp_vehicle.lock().get()->get_velocity() * elapsed_time_;
     }
 
     // weak_ptrを解放しておく
@@ -215,8 +224,8 @@ void Player::create_vehicle()
     std::shared_ptr<Entity> vehicle = std::make_shared<SV_Ball>(get_scene_manager());
 
     // 位置の設定
-    DirectX::XMFLOAT3 position = get_position();
-    position.y += -1.0f * pudding_y + 5.0f;
+    DirectX::XMFLOAT3 position = get_position() - velocity;
+    position.y += -1.0f * vehicle->get_scale().y * 0.5f;
     vehicle->set_position(position);
 
     // 回転値の設定
@@ -227,6 +236,4 @@ void Player::create_vehicle()
 
     Entity_Manager::instance().spawn_register(vehicle);
 }
-
-
 

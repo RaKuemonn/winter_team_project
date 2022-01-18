@@ -7,10 +7,10 @@
 #include "light_manager.h"
 
 
-CONST LONG MAG{ 2 };
+CONST LONG MAG{ 10 };
 CONST LONG SHADOW_WIDTH{ 1024 * MAG };
 CONST LONG SHADOW_HEIGHT{ 1024 * MAG };
-CONST float SHADOW_DRAWRECT{ 30 };
+CONST float SHADOW_DRAWRECT{ 300 };
 
 
 HRESULT create_vs_from_cso(ID3D11Device* device, const char* cso_name, ID3D11VertexShader** vertex_shader,
