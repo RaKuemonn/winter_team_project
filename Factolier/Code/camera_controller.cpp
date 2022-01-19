@@ -1,61 +1,199 @@
+ï»¿
 #include "camera_controller.h"
 #include "camera.h"
 //#include "Input/Input.h"
+#include "utility.h"
 
-//XVˆ—
-void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
+//ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½
+void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_manager, float elapsed_time)
 {
 #if 0
-    GamePad& gamePad = Input::Instance().GetGamePad();
-    float ax = gamePad.GetAxisRX();
-    float ay = gamePad.GetAxisRY();
-    //ƒJƒƒ‰‚Ì‰ñ“]‘¬“x
-    float speed = roll_speed * elapsedTime;
-
-    //ƒXƒeƒBƒbƒN‚Ì“ü—Í’l‚É‡‚í‚¹‚ÄX²‚ÆY²‚ğ‰ñ“]
-    angle.y += ax * speed;
-    angle.x += ay * speed;
-#endif
-
-
-
-    if(GetAsyncKeyState('I'))//if (input_manager->STATE(0) & PAD_UP)
+    if (input_manager->TRG_RELEASE(0) & PAD_SELECT)
     {
-        angle.x += 1.0f * elapsedTime;
+        SetCursorPos(static_cast<int>(SCREEN_WIDTH / 2), static_cast<int>(SCREEN_HEIGHT / 2));
+        ShowCursor(false);
+    }
+
+    if (input_manager->TRG(0) & PAD_SELECT)
+    {
+        ShowCursor(true);
+    }
+    
+#endif
+    if (input_manager->STATE(0) & PAD_SELECT)
+    {
+        ShowCursor(true);
+    }
+
+    else
+    {
+        ShowCursor(false);
+
+        //ï¿½}ï¿½Eï¿½Xï¿½æ“¾
+        DirectX::XMFLOAT2 mouse = { CAST_F(input_manager->getCursorPosX()), CAST_F(input_manager->getCursorPosY()) };
+
+        //ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½g
+        D3D11_VIEWPORT viewport;
+        UINT numViewports = 1;
+        dc->RSGetViewports(&numViewports, &viewport);
+
+        //ï¿½ÏŠï¿½ï¿½sï¿½ï¿½
+        DirectX::XMMATRIX View = DirectX::XMLoadFloat4x4(&Camera::Instance().get_view());
+        DirectX::XMMATRIX Projection = DirectX::XMLoadFloat4x4(&Camera::Instance().get_projection());
+        DirectX::XMMATRIX World = DirectX::XMMatrixIdentity();
+
+
+        //ï¿½ï¿½Ê’ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½W
+        DirectX::XMFLOAT3 DefPos = { viewport.Width / 2, viewport.Height / 2, viewport.MinDepth };
+
+        //ï¿½ï¿½Â‚Ìƒï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Wï¿½É•ÏŠï¿½
+        DirectX::XMVECTOR NearPos = DirectX::XMVector3Unproject(
+            DirectX::XMLoadFloat3(&DefPos),		        //ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½W(near)
+            viewport.TopLeftX,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½Xï¿½Ê’u
+            viewport.TopLeftY,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½Yï¿½Ê’u
+            viewport.Width,								//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½
+            viewport.Height,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½
+            viewport.MinDepth,							//ï¿½[ï¿½xï¿½lï¿½Ì”ÍˆÍ‚ï¿½\ï¿½ï¿½ï¿½Åï¿½ï¿½l(0.0ï¿½Å‚æ‚¢)
+            viewport.MaxDepth,							//ï¿½[ï¿½xï¿½lï¿½Ì”ÍˆÍ‚ï¿½\ï¿½ï¿½ï¿½Å‘ï¿½l(1.0ï¿½Å‚æ‚¢)
+            Projection,									//ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
+            View,										//ï¿½rï¿½ï¿½ï¿½[ï¿½sï¿½ï¿½
+            World										//ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½sï¿½ï¿½(ï¿½Pï¿½Êsï¿½ï¿½Å‚æ‚¢)
+        );
+
+        DefPos.z = viewport.MaxDepth;
+        DirectX::XMVECTOR FarPos = DirectX::XMVector3Unproject(
+            DirectX::XMLoadFloat3(&DefPos),		        //ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½W(far)
+            viewport.TopLeftX,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½Xï¿½Ê’u
+            viewport.TopLeftY,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½Yï¿½Ê’u
+            viewport.Width,								//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½
+            viewport.Height,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½
+            viewport.MinDepth,							//ï¿½[ï¿½xï¿½lï¿½Ì”ÍˆÍ‚ï¿½\ï¿½ï¿½ï¿½Åï¿½ï¿½l(0.0ï¿½Å‚æ‚¢)
+            viewport.MaxDepth,							//ï¿½[ï¿½xï¿½lï¿½Ì”ÍˆÍ‚ï¿½\ï¿½ï¿½ï¿½Å‘ï¿½l(1.0ï¿½Å‚æ‚¢)
+            Projection,									//ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
+            View,										//ï¿½rï¿½ï¿½ï¿½[ï¿½sï¿½ï¿½
+            World										//ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½sï¿½ï¿½(ï¿½Pï¿½Êsï¿½ï¿½Å‚æ‚¢)
+        );
+
+        //ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½Ìƒï¿½ï¿½Cï¿½ï¿½ï¿½ì¬
+        DirectX::XMVECTOR DefRayVec = DirectX::XMVectorSubtract(FarPos, NearPos);
+        DefRayVec = DirectX::XMVector3Normalize(DefRayVec);
+
+        DirectX::XMFLOAT3 ScreenPosition;
+
+        if (mouse.x != static_cast<int>(viewport.Width / 2))
+        {
+            //ï¿½}ï¿½Eï¿½Xï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½æ“¾
+            ScreenPosition.x = mouse.x;
+            ScreenPosition.y = viewport.Height / 2;
+            ScreenPosition.z = viewport.MaxDepth;
+
+            //ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Wï¿½É•ÏŠï¿½
+            DirectX::XMVECTOR FarPosX = DirectX::XMVector3Unproject(
+                DirectX::XMLoadFloat3(&ScreenPosition),		//ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½W(far)
+                viewport.TopLeftX,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½Xï¿½Ê’u
+                viewport.TopLeftY,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½Yï¿½Ê’u
+                viewport.Width,								//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½
+                viewport.Height,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½
+                viewport.MinDepth,							//ï¿½[ï¿½xï¿½lï¿½Ì”ÍˆÍ‚ï¿½\ï¿½ï¿½ï¿½Åï¿½ï¿½l(0.0ï¿½Å‚æ‚¢)
+                viewport.MaxDepth,							//ï¿½[ï¿½xï¿½lï¿½Ì”ÍˆÍ‚ï¿½\ï¿½ï¿½ï¿½Å‘ï¿½l(1.0ï¿½Å‚æ‚¢)
+                Projection,									//ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
+                View,										//ï¿½rï¿½ï¿½ï¿½[ï¿½sï¿½ï¿½
+                World										//ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½sï¿½ï¿½(ï¿½Pï¿½Êsï¿½ï¿½Å‚æ‚¢)
+            );
+
+            //ï¿½}ï¿½Eï¿½Xï¿½Ìƒï¿½ï¿½Cï¿½ï¿½ï¿½ì¬
+            DirectX::XMVECTOR MouseRayVecX = DirectX::XMVectorSubtract(FarPosX, NearPos);
+            MouseRayVecX = DirectX::XMVector3Normalize(MouseRayVecX);
+
+            //ï¿½ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
+            float angleX;
+            DirectX::XMStoreFloat(&angleX, DirectX::XMVector3Dot(MouseRayVecX, DefRayVec));
+            if (mouse.x > (viewport.Width / 2)) angleX = acosf(angleX);
+            else angleX = -acosf(angleX);
+
+            //ï¿½ï¿½ï¿½İ‚ÌŠpï¿½xï¿½É‰ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½
+            angle.y += angleX * sens;
+        }
+
+        if (mouse.y != static_cast<int>(viewport.Height / 2))
+        {
+            //ï¿½}ï¿½Eï¿½Xï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½æ“¾
+            ScreenPosition.x = viewport.Width / 2;
+            ScreenPosition.y = mouse.y;
+            ScreenPosition.z = viewport.MaxDepth;
+
+            //ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Wï¿½É•ÏŠï¿½
+            DirectX::XMVECTOR FarPosY = DirectX::XMVector3Unproject(
+                DirectX::XMLoadFloat3(&ScreenPosition),		//ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½W(far)
+                viewport.TopLeftX,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½Xï¿½Ê’u
+                viewport.TopLeftY,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½Yï¿½Ê’u
+                viewport.Width,								//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½
+                viewport.Height,							//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½
+                viewport.MinDepth,							//ï¿½[ï¿½xï¿½lï¿½Ì”ÍˆÍ‚ï¿½\ï¿½ï¿½ï¿½Åï¿½ï¿½l(0.0ï¿½Å‚æ‚¢)
+                viewport.MaxDepth,							//ï¿½[ï¿½xï¿½lï¿½Ì”ÍˆÍ‚ï¿½\ï¿½ï¿½ï¿½Å‘ï¿½l(1.0ï¿½Å‚æ‚¢)
+                Projection,									//ï¿½vï¿½ï¿½ï¿½Wï¿½Fï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½
+                View,										//ï¿½rï¿½ï¿½ï¿½[ï¿½sï¿½ï¿½
+                World										//ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½sï¿½ï¿½(ï¿½Pï¿½Êsï¿½ï¿½Å‚æ‚¢)
+            );
+
+            //ï¿½}ï¿½Eï¿½Xï¿½Ìƒï¿½ï¿½Cï¿½ï¿½ï¿½ì¬
+            DirectX::XMVECTOR MouseRayVecY = DirectX::XMVectorSubtract(FarPosY, NearPos);
+            MouseRayVecY = DirectX::XMVector3Normalize(MouseRayVecY);
+
+            //ï¿½ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½xï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
+            float angleY;
+            DirectX::XMStoreFloat(&angleY, DirectX::XMVector3Dot(MouseRayVecY, DefRayVec));
+            if (mouse.y > (viewport.Height / 2)) angleY = acosf(angleY);
+            else angleY = -acosf(angleY);
+
+            //ï¿½ï¿½ï¿½İ‚ÌŠpï¿½xï¿½É‰ï¿½ï¿½Zï¿½ï¿½ï¿½ï¿½
+            angle.x += angleY * sens;
+        }
+
+        SetCursorPos(static_cast<int>(viewport.Width / 2), static_cast<int>(viewport.Height / 2));
+    }
+
+
+
+    if (GetAsyncKeyState('I'))//if (input_manager->STATE(0) & PAD_UP)
+    {
+        angle.x += 1.0f * elapsed_time;
     }
 
     if (GetAsyncKeyState('K'))//if (input_manager->STATE(0) & PAD_DOWN)
     {
-        angle.x -= 1.0f * elapsedTime;
+        angle.x -= 1.0f * elapsed_time;
     }
 
     if (GetAsyncKeyState('J'))//if (input_manager->STATE(0) & PAD_LEFT)
     {
-        angle.y += 1.0f * elapsedTime;
+        angle.y += 1.0f * elapsed_time;
     }
 
     if (GetAsyncKeyState('L'))//if (input_manager->STATE(0) & PAD_RIGHT)
     {
-        angle.y -= 1.0f * elapsedTime;
+        angle.y -= 1.0f * elapsed_time;
     }
+
+
 
 
     constexpr float	max_angle = DirectX::XMConvertToRadians(80);
     constexpr float	min_angle = DirectX::XMConvertToRadians(-80);
 
 
-    //X²‚ÌƒJƒƒ‰‰ñ“]‚ğ§ŒÀ
+    //Xï¿½ï¿½ï¿½ÌƒJï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½ğ§Œï¿½
     if (angle.x > max_angle)
     {
         angle.x = max_angle;
     }
-    
+
     if (angle.x < min_angle)
     {
         angle.x = min_angle;
     }
 
-    //Y²‚Ì‰ñ“]’l‚ğ-3.14~3.14‚Éû‚Ü‚é‚æ‚¤‚É‚·‚é
+    //Yï¿½ï¿½ï¿½Ì‰ï¿½]ï¿½lï¿½ï¿½-3.14~3.14ï¿½Éï¿½ï¿½Ü‚ï¿½æ‚¤ï¿½É‚ï¿½ï¿½ï¿½
     if (angle.y < -DirectX::XM_PI)
     {
         angle.y += DirectX::XM_2PI;
@@ -66,15 +204,15 @@ void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
         angle.y -= DirectX::XM_2PI;
     }
 
-    //ƒJƒƒ‰‰ñ“]’l‚ğ‰ñ“]s—ñ‚É•ÏŠ·
+    //ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½lï¿½ï¿½ï¿½ï¿½]ï¿½sï¿½ï¿½É•ÏŠï¿½
     DirectX::XMMATRIX Transform = DirectX::XMMatrixRotationRollPitchYaw(angle.x, angle.y, angle.z);
 
-    //‰ñ“]s—ñ‚©‚ç‘O•ûŒüƒxƒNƒgƒ‹‚ğæ‚èo‚·
+    //ï¿½ï¿½]ï¿½sï¿½ñ‚©‚ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½
     DirectX::XMVECTOR Front = Transform.r[2];
     DirectX::XMFLOAT3 front;
     DirectX::XMStoreFloat3(&front, Front);
 
-    //’‹“_‚©‚çŒã‚ëƒxƒNƒgƒ‹•ûŒü‚Éˆê’è‹——£—£‚ê‚½ƒJƒƒ‰‹“_‚ğ‹‚ß‚é
+    //ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éˆï¿½è‹—ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½ß‚ï¿½
     DirectX::XMFLOAT3 eye;
 
     constexpr float range = 15.0f;
@@ -84,7 +222,7 @@ void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
         eye.x = target.x - front.x * range;
         eye.y = target.y - front.y * range;
         eye.z = target.z - front.z * range;
-        //ƒJƒƒ‰‚Ì‹“_‚Æ’‹“_‚ğİ’è
+        //ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½_ï¿½Æ’ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½İ’ï¿½
         Camera::Instance().set_lookat(eye, target, DirectX::XMFLOAT3(0, 1, 0));
     }
 
@@ -93,7 +231,7 @@ void Camera_Controller::update(float elapsedTime, Input_Manager* input_manager)
         eye.x = ptr_target->x - front.x * range;
         eye.y = ptr_target->y - front.y * range;
         eye.z = ptr_target->z - front.z * range;
-        //ƒJƒƒ‰‚Ì‹“_‚Æ’‹“_‚ğİ’è
+        //ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½_ï¿½Æ’ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½İ’ï¿½
         Camera::Instance().set_lookat(eye, *ptr_target, DirectX::XMFLOAT3(0, 1, 0));
     }
 

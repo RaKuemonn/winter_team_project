@@ -43,6 +43,7 @@ bool Framework::initialize()
 
 	/*************‚±‚±‚Ü‚Å**************/
 
+	ShowCursor(false);
 
 	return true;
 }

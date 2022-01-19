@@ -55,7 +55,7 @@ void Scene_Title::uninitialize()
 
 void Scene_Title::update(float elapsed_time)
 {
-    camera_controller->update(elapsed_time, parent->input_manager());
+    camera_controller->update(parent->device_context(), parent->input_manager(), elapsed_time);
 
     //test_model->play_animation(elapsed_time, 1);
 
