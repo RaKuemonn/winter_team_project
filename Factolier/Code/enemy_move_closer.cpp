@@ -1,4 +1,6 @@
 ﻿
+#if 0
+
 #include "enemy_move_closer.h"
 #include "transform.h"
 #include "model.h"
@@ -203,3 +205,5 @@ void Enemy_Move_Closer::move_to_target(const float elapsed_time_)
     // 前フレームの前ベクトル
     move_front(get_axis_z(), m_velocity.get());
 }
+
+#endif
