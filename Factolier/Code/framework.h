@@ -171,6 +171,7 @@ public:
 		case WM_SYSKEYDOWN:
 		case WM_KEYUP:
 		case WM_SYSKEYUP:
+		case WM_MOUSEFIRST:
 			DirectX::Keyboard::ProcessMessage(msg, wparam, lparam);
 			break;
 			

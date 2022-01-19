@@ -1,34 +1,29 @@
 ﻿
 #include "camera_controller.h"
 #include "camera.h"
-//#include "Input/Input.h"
 #include "utility.h"
 
 //�X�V����
 void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_manager, float elapsed_time)
 {
-#if 0
     if (input_manager->TRG_RELEASE(0) & PAD_SELECT)
     {
-        SetCursorPos(static_cast<int>(SCREEN_WIDTH / 2), static_cast<int>(SCREEN_HEIGHT / 2));
+        bool i = SetCursorPos(static_cast<int>(SCREEN_WIDTH / 2), static_cast<int>(SCREEN_HEIGHT / 2));
         ShowCursor(false);
     }
-
+    
     if (input_manager->TRG(0) & PAD_SELECT)
     {
         ShowCursor(true);
     }
-    
-#endif
-    if (input_manager->STATE(0) & PAD_SELECT)
+
+
+    if (input_manager->STATE(0) & PAD_SELECT || input_manager->TRG_RELEASE(0) & PAD_SELECT)
     {
-        ShowCursor(true);
     }
 
     else
     {
-        ShowCursor(false);
-
         //�}�E�X�擾
         DirectX::XMFLOAT2 mouse = { CAST_F(input_manager->getCursorPosX()), CAST_F(input_manager->getCursorPosY()) };
 
