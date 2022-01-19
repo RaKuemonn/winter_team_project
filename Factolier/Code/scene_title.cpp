@@ -101,9 +101,6 @@ void Scene_Title::render(float elapsed_time)
         DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
         DirectX::XMMATRIX W = S * R * T;
 
-        XMFLOAT4X4 coordinate_system_transforms = { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };	// 0:RHS Y-UP
-        XMMATRIX CW = XMLoadFloat4x4(&coordinate_system_transforms);
-        W *= CW;
         DirectX::XMStoreFloat4x4(&world, W);
 
         
@@ -113,7 +110,6 @@ void Scene_Title::render(float elapsed_time)
         DirectX::XMMATRIX T_s = DirectX::XMMatrixTranslation(0, 0, 0);
         DirectX::XMMATRIX W_s = S_s * R_s * T_s;
 
-        W_s *= CW;
         DirectX::XMStoreFloat4x4(&world_stage, W_s);
     }
 
