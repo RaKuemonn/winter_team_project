@@ -79,5 +79,7 @@ private:
 	std::unique_ptr<Sprite> icon = nullptr;
 	std::unique_ptr<Sprite> option_start = nullptr;
 
+	//std::unique_ptr<Sound> sound = nullptr;
+
 
 };
