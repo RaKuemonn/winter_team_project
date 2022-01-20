@@ -4,12 +4,10 @@
 #include "scene_title.h"
 #include "easing.h"
 #include "scene_select.h"
-<<<<<<< HEAD
 #include "easing.h"
 #include "scene_loading.h"
-=======
 #include "utility.h"
->>>>>>> 84c52a1ea33953934ebb4fca952e22d593e864e2
+#include "option_manager.h"
 
 // デバッグ用GUI描画
 void Scene_Title_Game::DrawDebugGUI()
@@ -58,6 +56,9 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     icon = make_unique<Sprite>(parent->device(), "Data/team1_flower_90×90.png");
 
     option_start = make_unique<Sprite>(parent->device(), "Data/waku.png");
+
+    
+
     //option_back = make_unique<Sprite>(parent->device(), "Data/back.png");
 
     //option_1 = make_unique<Sprite>(parent->device(), "Data/meta1.png");
@@ -217,7 +218,7 @@ void Scene_Title_Game::slideshow(float elapsedTime)
 
 void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
 {
-    if (option_vo < 312)
+    /*if (option_vo < 312)
     {
         if (input_manager->STATE(0) & PAD_RIGHT)
         {
@@ -237,9 +238,12 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
             option_vo -= 1;
             gauge -= 1.2f;
         }
+    }*/
+    
+    if (input_manager->TRG(0) & PAD_START)
+    {
+        option_flag = false;
     }
-
-   
    
     
 }
@@ -276,8 +280,8 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,  //position
             1, 1,     // scal
-            1980, 1080,    // どれくらい描画するか
-            1980, 1080,   // size
+            1920, 1080,    // どれくらい描画するか
+            1920, 1080,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
@@ -286,8 +290,8 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,
             1, 1,
-            1980, 1080,
-            1980, 1080,
+            1920, 1080,
+            1920, 1080,
             0, 0,
             1, 1, 1, back_stage4_alpha,
             0);
@@ -296,8 +300,8 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,
             1, 1,
-            1980, 1080,
-            1980, 1080,
+            1920, 1080,
+            1920, 1080,
             0, 0,
             1, 1, 1, back_stage3_alpha,
             0);
@@ -306,8 +310,8 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,
             1, 1,
-            1980, 1080,
-            1980, 1080,
+            1920, 1080,
+            1920, 1080,
             0, 0,
             1, 1, 1, back_stage2_alpha,
             0);
@@ -316,8 +320,8 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,
             1, 1,
-            1980, 1080,
-            1980, 1080,
+            1920, 1080,
+            1920, 1080,
             0, 0,
             1, 1, 1, back_stage1_alpha,
             0);
@@ -325,13 +329,13 @@ void Scene_Title_Game::render(float elapsed_time)
 
     // タイトル
     title->render(device_context_,
-        300, 0,
+        100, 150,
         1.0f, 1.0f,
         900, 384,
         900, 384,
         0, 0,
         1, 1, 1, 1.0f,
-        15);
+        -15);
 
     // 点滅用
     timer++;
@@ -395,7 +399,10 @@ void Scene_Title_Game::render(float elapsed_time)
     }
     // オプション画面を開いたとき
     else
-    {/*
+    {
+        parent->option_manager()->render();
+        
+        /*
         option_back->render(device_context_,
             320, 180,
             1.0f, 1.0f,

@@ -9,8 +9,6 @@
 #include "sprite.h"
 
 
-
-
 class Scene_Select : public Scene
 {
 public:
@@ -48,6 +46,9 @@ private:
 	std::unique_ptr<Sprite> stage4 = nullptr;
 	std::unique_ptr<Sprite> stage5 = nullptr;
 	std::unique_ptr<Sprite> choice = nullptr;
-	std::unique_ptr<Scene_Manager> scene_manager = nullptr;
+
+	std::unique_ptr<Sprite> enter = nullptr;
+
+	
 
 };

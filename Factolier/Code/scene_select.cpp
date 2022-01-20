@@ -43,6 +43,8 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     stage5 = make_unique<Sprite>(parent->device(), "Data/select5.png");
     choice = make_unique<Sprite>(parent->device(), "Data/waku.png");
 
+    enter = make_unique<Sprite>(parent->device(), "Data/enter_op‰¼.png");
+
    
 }
 
@@ -166,13 +168,13 @@ void Scene_Select::render(float elapsed_time)
             device_context_,
             0, 0,  //position
             1, 1,     // scal
-        1980, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        1980, 1080,   // size
+        1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+        1920, 1080,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
     choice->render(device_context_,
-            820, 400,  //position
+            806, 386,  //position
             1.0f, 1.0f,     // scal
             308, 308,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
             308, 308,   // size
@@ -180,7 +182,7 @@ void Scene_Select::render(float elapsed_time)
             1, 1, 1, 1,   // rgba
             0); // angle
     stage1->render(device_context_,
-            876 + position + eas, 454,  //position
+            864 + position + eas, 444,  //position
             1.0f, 1.0f,     // scal
             192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
             192, 192,   // size
@@ -188,7 +190,7 @@ void Scene_Select::render(float elapsed_time)
             1, 1, 1, 1,   // rgba
             0); // angle
     stage2->render(device_context_,
-            1376 + position + eas, 454,  //position
+            1364 + position + eas, 444,  //position
             1.0f, 1.0f,     // scal
             192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
             192, 192,   // size
@@ -196,7 +198,7 @@ void Scene_Select::render(float elapsed_time)
             1, 1, 1, 1,   // rgba
             0); // angle
     stage3->render(device_context_,
-            1876 + position + eas, 454,  //position
+            1864 + position + eas, 444,  //position
             1.0f, 1.0f,     // scal
             192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
             192, 192,   // size
@@ -204,7 +206,7 @@ void Scene_Select::render(float elapsed_time)
             1, 1, 1, 1,   // rgba
             0); // angle
     stage4->render(device_context_,
-        2376 + position + eas, 454,  //position
+        2364 + position + eas, 444,  //position
         1.0f, 1.0f,     // scal
         192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
         192, 192,   // size
@@ -212,13 +214,25 @@ void Scene_Select::render(float elapsed_time)
         1, 1, 1, 1,   // rgba
         0); // angle
     stage5->render(device_context_,
-        2876 + position + eas, 454,  //position
+        2864 + position + eas, 444,  //position
         1.0f, 1.0f,     // scal
         192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
         192, 192,   // size
         0, 0,         // pibot
         1, 1, 1, 1,   // rgba
         0); // angle
+    if (eas == 0)
+    {
+        enter->render(device_context_,
+            800, 740,  //position
+            1.0f, 1.0f,     // scal
+            384, 64,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            384, 64,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+    }
+
 
     DrawDebugGUI();
 
