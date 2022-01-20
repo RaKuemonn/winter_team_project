@@ -255,6 +255,11 @@ namespace ray_functions
 // 立体図形を用いた衝突判定の関数群
 namespace detect_functions
 {
+    inline bool sphere_vs_sphere(const DirectX::XMFLOAT3& pos_a, const DirectX::XMFLOAT3& pos_b, const float radius_a, const float radius_b)
+    {
+        
+    }
+
     inline bool sphere_vs_sphere(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_, const float elapsed_time_)
     {
         // TODO: 未定義
