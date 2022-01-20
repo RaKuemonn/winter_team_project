@@ -58,7 +58,7 @@ private:
 	float back_stage4_alpha = 0; // stage4‚Ì”wŒi‚ÌƒAƒ‹ƒtƒ@’l
 
 	
-	
+	std::unique_ptr<Sprite> title = nullptr;
 
 	std::unique_ptr<Sprite> back_stage1 = nullptr;
 	std::unique_ptr<Sprite> back_stage2 = nullptr;
@@ -66,12 +66,12 @@ private:
 	std::unique_ptr<Sprite> back_stage4 = nullptr;
 	std::unique_ptr<Sprite> back_stage0 = nullptr;
 
-	std::unique_ptr<Sprite> option_back = nullptr;
-	std::unique_ptr<Sprite> option_1 = nullptr;
-	std::unique_ptr<Sprite> option_2= nullptr;
-	std::unique_ptr<Sprite> option_3 = nullptr;
-	std::unique_ptr<Sprite> return_title = nullptr;
-	std::unique_ptr<Sprite> audio_set = nullptr;
+	//std::unique_ptr<Sprite> option_back = nullptr;
+	//std::unique_ptr<Sprite> option_1 = nullptr;
+	//std::unique_ptr<Sprite> option_2= nullptr;
+	//std::unique_ptr<Sprite> option_3 = nullptr;
+	//std::unique_ptr<Sprite> return_title = nullptr;
+	//std::unique_ptr<Sprite> audio_set = nullptr;
 
 
 	std::unique_ptr<Sprite> start = nullptr;

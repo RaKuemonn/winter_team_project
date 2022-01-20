@@ -219,13 +219,12 @@ void Player::create_vehicle(const float elapsed_time_)
 
     // weak_ptr‚ğ‰ğ•ú‚µ‚Ä‚¨‚­
     m_wkp_vehicle.reset();
-
-    //std::shared_ptr<Entity> vehicle = std::make_shared<Sphere_Vehicle>(get_scene_manager());
+    
     std::shared_ptr<Entity> vehicle = std::make_shared<SV_Ball>(get_scene_manager());
 
     // ˆÊ’u‚Ìİ’è
     DirectX::XMFLOAT3 position = get_position() - velocity;
-    position.y += -1.0f * vehicle->get_scale().y * 0.5f;
+    position.y += vehicle->get_scale().y + 0.5f;
     vehicle->set_position(position);
 
     // ‰ñ“]’l‚Ìİ’è

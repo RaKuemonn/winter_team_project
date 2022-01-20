@@ -41,6 +41,7 @@ public:
     _NODISCARD const DirectX::XMFLOAT3     get_axis_z()        const;
     _NODISCARD const Tag&                  get_tag()           const;
     _NODISCARD       Ability&              get_ability()       const;
+    _NODISCARD const float                 get_mass()      const;
 
 
     // Setterä÷êî //

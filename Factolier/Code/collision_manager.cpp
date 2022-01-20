@@ -210,7 +210,7 @@ namespace ray_functions
             }
 
             // レイの結果を出力ウィンドウに出力
-#ifdef _DEBUG
+#if 0
             if (entity.lock().get()->get_tag() == Tag::Vehicle)
             {
                 if (static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() == false)
@@ -260,33 +260,98 @@ namespace detect_functions
     {
         const float length_sq = DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&pos_b), DirectX::XMLoadFloat3(&pos_a))));
         const float sum_radius = radius_a + radius_b;
-        return (length_sq < sum_radius * sum_radius);
+
+        return (length_sq < (sum_radius* sum_radius));
     }
 
-    inline bool sphere_vs_sphere(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_, const float elapsed_time_)
+    inline bool sphere_vs_sphere(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
     {
-        // TODO: 未定義
+        const float radius_a = (entity_a_.lock()->get_tag() == Tag::Vehicle) ? entity_a_.lock()->get_scale().x : 0.5f;
+        const float radius_b = (entity_b_.lock()->get_tag() == Tag::Vehicle) ? entity_b_.lock()->get_scale().x : 0.5f;
 
-        const DirectX::XMFLOAT3& velocity_a     = entity_a_.lock()->get_velocity() * elapsed_time_;
-        const DirectX::XMFLOAT3& velocity_b     = entity_b_.lock()->get_velocity() * elapsed_time_;
+        return sphere_vs_sphere(entity_a_.lock()->get_position(), entity_b_.lock()->get_position(), radius_a, radius_b);
+    }
 
+    inline void sphere_vs_sphere_extrusion(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_, const float elapsed_time_)
+    {
+        const DirectX::XMVECTOR velocity_a = DirectX::XMLoadFloat3(&entity_a_.lock()->get_velocity());
+        const DirectX::XMVECTOR velocity_b = DirectX::XMLoadFloat3(&entity_b_.lock()->get_velocity());
+
+
+        const DirectX::XMFLOAT3& xmf3_position_a = entity_a_.lock()->get_position();
+        const DirectX::XMFLOAT3& xmf3_position_b = entity_b_.lock()->get_position();
+        //const DirectX::XMVECTOR position_a = DirectX::XMLoadFloat3(&xmf3_position_a);
+        //const DirectX::XMVECTOR position_b = DirectX::XMLoadFloat3(&xmf3_position_b);
+        const DirectX::XMVECTOR position_a = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&xmf3_position_a),DirectX::XMVectorScale(velocity_a,elapsed_time_));
+        const DirectX::XMVECTOR position_b = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&xmf3_position_b),DirectX::XMVectorScale(velocity_b,elapsed_time_));
+
+
+        // a to b と b to a の単位ベクトル
+        const DirectX::XMVECTOR a_to_b_dir = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(position_b, position_a));
+        const DirectX::XMVECTOR b_to_a_dir = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(position_a, position_b));
+#if 1
+
+
+        // ぶつかったときの衝撃の大きさを計算
+        const float impact_length_a = DirectX::XMVectorGetX(DirectX::XMVector3Dot(DirectX::XMVectorScale(velocity_a, elapsed_time_), a_to_b_dir));
+        const float impact_length_b = DirectX::XMVectorGetX(DirectX::XMVector3Dot(DirectX::XMVectorScale(velocity_b, elapsed_time_), b_to_a_dir));
+
+        // 衝撃のベクトルを計算
+        const DirectX::XMVECTOR a_impact_vec = DirectX::XMVectorScale(b_to_a_dir, impact_length_b);
+        const DirectX::XMVECTOR b_impact_vec = DirectX::XMVectorScale(a_to_b_dir, impact_length_a);
         
-        const DirectX::XMFLOAT3& position_a     = entity_a_.lock()->get_position();
-        const DirectX::XMFLOAT3& position_b     = entity_b_.lock()->get_position();
-        const DirectX::XMFLOAT3& old_position_a = position_a - velocity_a;
-        const DirectX::XMFLOAT3& old_position_b = position_b - velocity_b;
 
-        // a to b のベクトル
-        const DirectX::XMVECTOR a_to_b_vec = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&position_b), DirectX::XMLoadFloat3(&position_a));
+        DirectX::XMFLOAT3 xmf3_calc_velocity_a;
+        DirectX::XMFLOAT3 xmf3_calc_velocity_b;
+        DirectX::XMStoreFloat3(&xmf3_calc_velocity_a, DirectX::XMVectorAdd(velocity_a, a_impact_vec));
+        DirectX::XMStoreFloat3(&xmf3_calc_velocity_b, DirectX::XMVectorAdd(velocity_b, b_impact_vec));
 
-        // a to b の距離
-        const float length = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(a_to_b_vec));
+        // 速度の修正
+        entity_a_.lock()->set_velocity(xmf3_calc_velocity_a);
+        entity_b_.lock()->set_velocity(xmf3_calc_velocity_b);
+#endif
 
-        // 定数 //
-        constexpr float radius      = 2.0f;             // 半径
-        constexpr float sum_radius  = radius + radius;  // 半径 + 半径
 
-        return (length < sum_radius);
+
+        // 位置の修正
+        const float length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(position_b, position_a)));
+        
+        float radius_a = 0.5f;
+        if (entity_a_.lock()->get_tag() == Tag::Vehicle)
+        {
+            const float difference_a = ((static_cast<Sphere_Vehicle*>(entity_a_.lock().get())->get_is_free()) ? SPHERE_SCALE_DECREASE * elapsed_time_ : 0.0f);
+            radius_a = entity_a_.lock()->get_scale().x + difference_a;
+        }
+        
+        float radius_b = 0.5f;
+        if (entity_b_.lock()->get_tag() == Tag::Vehicle)
+        {
+            const float difference_b = ((static_cast<Sphere_Vehicle*>(entity_b_.lock().get())->get_is_free()) ? SPHERE_SCALE_DECREASE * elapsed_time_ : 0.0f);
+            radius_b = entity_b_.lock()->get_scale().x + difference_b;
+        }
+
+        //const float radius_a = (entity_a_.lock()->get_tag() == Tag::Vehicle) ? entity_a_.lock()->get_scale().x * 0.5f : 0.5f;
+        //const float radius_b = (entity_b_.lock()->get_tag() == Tag::Vehicle) ? entity_b_.lock()->get_scale().x * 0.5f : 0.5f;
+
+        const float sum_radius = radius_a + radius_b;
+        
+        const float mass_a                  = entity_a_.lock()->get_mass();
+        const float mass_b                  = entity_b_.lock()->get_mass();
+        //const float penetration             = sum_radius - length;
+        const float penetration             = sum_radius - length;
+        const float half_sum_penetration    = penetration / (mass_a + mass_b);
+        const float penetration_a           = mass_a * half_sum_penetration;
+        const float penetration_b           = mass_b * half_sum_penetration;
+        //const float penetration_a           = penetration * 0.5f;
+        //const float penetration_b           = penetration * 0.5f;
+
+        DirectX::XMFLOAT3 new_position_a;
+        DirectX::XMFLOAT3 new_position_b;
+        DirectX::XMStoreFloat3(&new_position_a, DirectX::XMVectorAdd(position_a, DirectX::XMVectorScale(a_to_b_dir, penetration_a)));
+        DirectX::XMStoreFloat3(&new_position_b, DirectX::XMVectorAdd(position_b, DirectX::XMVectorScale(b_to_a_dir, penetration_b)));
+
+        entity_a_.lock()->set_position(new_position_a);
+        entity_b_.lock()->set_position(new_position_b);
     }
 
     inline bool box_vs_box(std::weak_ptr<Entity> entity, std::weak_ptr<Entity> entity_out)
@@ -461,7 +526,6 @@ inline void ray_to_wall(
 
 // ステージ外にでているか[ entity_managerに登録している "" プレイヤー、敵、乗り物 "" が処理されている ]
 inline void out_range(
-    const float elapsed_time,
     Entity_Manager& e_manager,
     const vectors& vectors_
 )
@@ -490,6 +554,43 @@ inline void out_range(
 }
 
 
+inline void entity_collide(
+    const float elapsed_time_,
+    Entity_Manager& e_manager,
+    const vectors& vectors_
+)
+{
+
+    std::vector<short> entities = {};
+    for (auto index : std::get<1>(vectors_))    // 敵
+    {
+        entities.emplace_back(index);
+    }
+    for (auto index : std::get<2>(vectors_))    // 乗り物
+    {
+        entities.emplace_back(index);
+    }
+
+    // 総当たり
+    const int size = static_cast<int>(entities.size());
+    for(int i = 0; i < size - 1; ++i)
+    {
+        for (int j = i + 1; j < size; ++j)
+        {
+            std::shared_ptr<Entity> entity_a = e_manager.get_entity(entities.at(i));
+            std::shared_ptr<Entity> entity_b = e_manager.get_entity(entities.at(j));
+
+            if (sphere_vs_sphere(entity_a,entity_b))
+            {
+                sphere_vs_sphere_extrusion(entity_a, entity_b, elapsed_time_);
+            }
+
+        }
+    }
+
+
+}
+
 
 void Collision_Manager::judge(const float elapsed_time)
 {
@@ -505,6 +606,14 @@ void Collision_Manager::judge(const float elapsed_time)
         vec_enemy_indices,
         vec_vehicle_indices
     };
+
+    // entity同士で当たり判定 (球)
+    entity_collide(
+        elapsed_time,
+        e_manager,
+        vectors_
+    );
+
 
     // 床へのレイキャスト
     ray_to_floor(
@@ -522,7 +631,6 @@ void Collision_Manager::judge(const float elapsed_time)
 
     // ステージ外にでているか
     out_range(
-        elapsed_time,
         e_manager,
         vectors_
     );

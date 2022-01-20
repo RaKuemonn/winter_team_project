@@ -1,6 +1,8 @@
 #pragma once
 
 #include <d3d11.h>
+#include "memory"
+#include "sprite.h"
 
 
 
@@ -12,8 +14,9 @@ public:
 
     void update();
     void render();
-
 private:
     ID3D11DeviceContext* immediate_context;
 
+    std::unique_ptr<Sprite> back = nullptr;
+    //std::unique_ptr<Sprite> option_1 = nullptr;
 };
