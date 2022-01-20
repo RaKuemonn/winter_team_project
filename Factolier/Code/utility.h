@@ -6,7 +6,7 @@
 
 CONST LONG SCREEN_WIDTH{ 1920 };
 CONST LONG SCREEN_HEIGHT{ 1080 };
-CONST BOOL FULLSCREEN{ FALSE };
+CONST BOOL FULLSCREEN{ TRUE };
 CONST LPWSTR APPLICATION_NAME{ L"Theme_Sphere" };
 
 
@@ -65,11 +65,11 @@ inline DirectX::XMFLOAT3 random_range_box(
 // --- ŒÅ’è --- //
 inline float clamp_float(const float value_, const float min_, const float max_)
 {
-    if (min_ < value_)
+    if (value_ < min_)
     {
         return min_;
     }
-    if (max_ > value_)
+    if (value_ > max_)
     {
         return max_;
     }

@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#if 0
+
 #include "enemy.h"
 #include "transform.h"
 #include "timer.h"
@@ -79,3 +81,5 @@ private:
     bool m_is_find_target       = false;
     bool m_is_move_phase_init   = true;
 };
+
+#endif

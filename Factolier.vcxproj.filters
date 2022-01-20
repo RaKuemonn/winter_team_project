@@ -237,6 +237,9 @@
     <ClCompile Include="Factolier\Code\enemy_move_closer_.cpp">
       <Filter>Factolier\Entity\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\scene_title_game.cpp">
+      <Filter>Factolier\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene.h">
@@ -472,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\target_mover.h">
       <Filter>Factolier\Entity\Enemy\Moves</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\scene_title_game.h">
+      <Filter>Factolier\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

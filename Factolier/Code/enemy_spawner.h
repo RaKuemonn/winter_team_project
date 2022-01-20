@@ -18,7 +18,7 @@ public:
 
 
     template<typename T>
-    void set_enemy(const DirectX::XMFLOAT3& position_, const DirectX::XMFLOAT3& target)
+    Enemy_Spawner& set_enemy(const DirectX::XMFLOAT3& position_, const DirectX::XMFLOAT3& target)
     {
 
         std::unique_ptr<Entity> enemy;
@@ -38,11 +38,13 @@ public:
         }
 
         
-        if (enemy.get() == nullptr)return;
+        assert(enemy.get());
 
         enemy->set_position(position_);
 
         Entity_Manager::instance().spawn_register(enemy);
+
+        return *this;
     }
 
     void all_clear();   // ‘S“G‚ğíœ

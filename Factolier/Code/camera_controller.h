@@ -1,5 +1,6 @@
 #pragma once
 
+#include <d3d11.h>
 #include <DirectXMath.h>
 #include "input_manager.h"
 
@@ -11,7 +12,7 @@ public:
 	~Camera_Controller() {}
 
 	//更新処理
-	void update(float elapsedTime, Input_Manager* input_manager);
+	void update(ID3D11DeviceContext* dc, Input_Manager* input_manager, float elapsed_time);
 
 	//ターゲット位置設定
 	void set_target(const DirectX::XMFLOAT3& target)	{ this->target = target; }
@@ -20,5 +21,5 @@ private:
 	DirectX::XMFLOAT3	target = { 0, 0, 0 };
 	const DirectX::XMFLOAT3*	ptr_target = nullptr;
 	DirectX::XMFLOAT3	angle = { 0, 0, 0 };
-
+	float sens = 1.0f;
 };

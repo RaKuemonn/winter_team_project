@@ -79,11 +79,12 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
     Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
-    enemy_spawner->set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {});
-    enemy_spawner->set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {});
-    enemy_spawner->set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {});
-    enemy_spawner->set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {});
-    enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,0.0f }, player->get_position());
+    enemy_spawner->
+         set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
+        .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
+        .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
+        .set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {})
+        .set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,0.0f }, player->get_position());
 
 
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
@@ -108,7 +109,7 @@ void Scene_Game::update(float elapsed_time)
     Entity_Manager::instance().update(elapsed_time);
 
 
-    camera_controller->update(elapsed_time,nullptr);
+    camera_controller->update(parent->device_context(),parent->input_manager(),elapsed_time);
 
     collision_manager->judge(elapsed_time);
 
