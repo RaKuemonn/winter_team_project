@@ -4,6 +4,7 @@
 #include "scene.h"
 #include "enemy_spawner.h"
 #include "collision_manager.h"
+#include "sky_box.h"
 
 
 class Scene_Game : public Scene
@@ -17,6 +18,8 @@ public:
 	void render(float elapsed_time) override;
 
 private:
+	std::unique_ptr<Sky_Box> sky_box = nullptr;
+
 	std::unique_ptr<Enemy_Spawner>		enemy_spawner = nullptr;
 	std::unique_ptr<Collision_Manager>	collision_manager = nullptr;
 
