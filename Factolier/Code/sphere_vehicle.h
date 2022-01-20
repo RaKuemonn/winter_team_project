@@ -2,7 +2,7 @@
 
 #include "entity.h"
 
-constexpr float SPHERE_SCALE_DECREASE = -0.25f;
+constexpr float SPHERE_SCALE_DECREASE = -0.15f;
 
 class Sphere_Vehicle : public Entity
 {

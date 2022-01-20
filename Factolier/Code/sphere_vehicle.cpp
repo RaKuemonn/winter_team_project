@@ -8,6 +8,8 @@
 #include "scene_manager.h"
 #include "Timer.h"
 
+// 定数
+constexpr float scale = 0.7f;
 
 // 一定間隔でスケールを削っていく関数
 // TODO : 速度が0.0fに近づくにつれてスケールも0.0fに近づけたい
@@ -42,10 +44,9 @@ Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_, const char* fi
 
     set_tag(Tag::Vehicle);
     
-    m_velocity->set_mass(1.0f);
+    m_velocity->set_mass(scale);
     m_velocity->set_friction(0.0f);
 
-    constexpr float scale = 2.0f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
 
@@ -91,10 +92,10 @@ void Sphere_Vehicle::update_velocity(const float elapsed_time_)
     if (m_is_free)
     {
         m_velocity->set_friction(0.01f);
-        m_velocity->set_mass((get_scale().x < 1.0f) ? get_scale().x * 0.1f : 1.0f);
+        m_velocity->set_mass((get_scale().x < scale) ? get_scale().x : 1.0f);
     }
 
-    constexpr DirectX::XMFLOAT3 gravity = { 0.0f,-3.0f * 9.8f,0.0f };
+    const DirectX::XMFLOAT3 gravity = { 0.0f,(2.0f + m_velocity->get_mass()) * -9.8f,0.0f };
     m_velocity->add(gravity);
 
     // 速度の更新
