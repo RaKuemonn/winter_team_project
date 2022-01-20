@@ -191,6 +191,7 @@
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
     <ClCompile Include="Factolier\Code\light_manager.cpp" />
     <ClCompile Include="Factolier\Code\ocean_shader.cpp" />
+    <ClCompile Include="Factolier\Code\option_manager.cpp" />
     <ClCompile Include="Factolier\Code\phong_shader.cpp" />
     <ClCompile Include="Factolier\Code\player.cpp" />
     <ClCompile Include="Factolier\Code\scene_game.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="Factolier\Code\light_manager.h" />
     <ClInclude Include="Factolier\Code\math_xmfloat.h" />
     <ClInclude Include="Factolier\Code\ocean_shader.h" />
+    <ClInclude Include="Factolier\Code\option_manager.h" />
     <ClInclude Include="Factolier\Code\phong_shader.h" />
     <ClInclude Include="Factolier\Code\player.h" />
     <ClInclude Include="Factolier\Code\position.h" />
