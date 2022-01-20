@@ -27,7 +27,7 @@ PadAssign keyAssign00[] = {
     //{ PAD_R2        , Keyboard::S },            // 
     //{ PAD_L3        , Keyboard::D },            // 
 
-    //{ PAD_START    , VK_LBUTTON },              // マウス左ボタン
+    { MOUSE_LEFT    , VK_LBUTTON },              // マウス左ボタン
     //{ PAD_TRG4     , VK_RBUTTON },              // マウス右ボタン
     //{ PAD_R3       , VK_MBUTTON },              // マウス中ボタン
 

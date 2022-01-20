@@ -2,6 +2,7 @@
 #include "camera_controller.h"
 #include "camera.h"
 #include "utility.h"
+#include "easing.h"
 
 //�X�V����
 void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_manager, float elapsed_time)
@@ -208,6 +209,12 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
     DirectX::XMStoreFloat3(&front, Front);
 
 
+    if (input_manager->TRG(0) & MOUSE_LEFT && !clear_flag)
+    {
+        clear_flag = true;
+    }
+
+
 
     constexpr float range = 15.0f;
 
@@ -222,11 +229,36 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
 
     else
     {
-        if (ptr_target->y > -10.0f)
+        if (ptr_target->y > -10.0f && !clear_flag)
         {
             eye.x = ptr_target->x - front.x * range;
             eye.y = ptr_target->y - front.y * range;
             eye.z = ptr_target->z - front.z * range;
+        }
+
+        else if (clear_flag)
+        {
+            clear_timer += elapsed_time;
+
+            if (clear_timer <= 1.0f)
+            {
+                eye.x = ptr_target->x + 2.0f;
+                eye.y = easing::in_out_circ(clear_timer, 1.0f, ptr_target->y + 5.0f, ptr_target->y);
+                eye.z = ptr_target->z + 2.0f;
+            }
+
+            else if (clear_timer > 1.5f && clear_timer < 2.0f)
+            {
+                eye.x = ptr_target->x;
+                eye.y = ptr_target->y + 1.0f;
+                eye.z = easing::in_out_quad(clear_timer - 1.5f, 0.5f, ptr_target->z + 10.0f, ptr_target->z + 5.0f);
+            }
+
+            else if (clear_timer > 3.0f)
+            {
+                clear_timer = 0.0f;
+                clear_flag = false;
+            }
         }
 
         Camera::Instance().set_lookat(eye, *ptr_target, DirectX::XMFLOAT3(0, 1, 0));
