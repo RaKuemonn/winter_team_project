@@ -24,6 +24,7 @@ public:
 
     // Getterä÷êî //
     _NODISCARD const auto& get() const                  { return m_velocity; }
+    _NODISCARD const auto& get_mass() const                 { return m_mass; }
 
     // Setterä÷êî //
     void set(const DirectX::XMFLOAT3& velocity_)        { m_velocity = velocity_; }

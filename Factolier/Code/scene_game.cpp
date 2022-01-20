@@ -21,11 +21,14 @@ inline void imgui()
     ImGui::Begin("Entity");
 
     std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Player);
-    ImGui::Text("Player");
-    std::shared_ptr<Entity> player = Entity_Manager::instance().get_entity(vec.at(0));
-    DirectX::XMFLOAT3 pos = player->get_position();
-    ImGui::InputFloat3("position", &pos.x);
-    ImGui::Spacing();
+    if (vec.size())
+    {
+        ImGui::Text("Player");
+        std::shared_ptr<Entity> player = Entity_Manager::instance().get_entity(vec.at(0));
+        DirectX::XMFLOAT3 pos = player->get_position();
+        ImGui::InputFloat3("position", &pos.x);
+        ImGui::Spacing();
+    }
 
     vec = Entity_Manager::instance().get_entities(Tag::Enemy);
     const int size = static_cast<int>(vec.size());
@@ -73,7 +76,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
 
     std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
-    player->set_position({ 0.0f, -7.0f, -125.0f });
+    player->set_position({ 0.0f, -2.0f, -125.0f });
 
 
 

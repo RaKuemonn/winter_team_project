@@ -83,6 +83,12 @@ Ability& Entity::get_ability() const
     return *m_ability;
 }
 
+const float Entity::get_mass() const
+{
+    return m_velocity->get_mass();
+}
+
+
 
 
 
