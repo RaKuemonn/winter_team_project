@@ -1,8 +1,9 @@
 #include <imgui.h>
 #include "scene_select.h"
 #include "scene_manager.h"
-#include "scene_title.h"
+#include "scene_title_game.h"
 #include "easing.h"
+#include "scene_loading.h"
 
 // ƒfƒoƒbƒO—pGUI•`‰æ
 void Scene_Select::DrawDebugGUI()
@@ -33,8 +34,7 @@ void Scene_Select::DrawDebugGUI()
 void Scene_Select::initialize(Scene_Manager* parent_)
 {
     parent = parent_;
-    select_back = make_unique<Sprite_Batch>(parent->device(), "Data/back.png", 1);
-    select_stage1 = make_unique<Sprite_Batch>(parent->device(), "Data/select1.png", 1);
+
     back = make_unique<Sprite>(parent->device(), "Data/back.png");
     stage1 = make_unique<Sprite>(parent->device(), "Data/select1.png");
     stage2 = make_unique<Sprite>(parent->device(), "Data/select2.png");
@@ -60,18 +60,21 @@ void Scene_Select::update(float elapsed_time)
 
 void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
 {
-    if (position > -2000)
+
+  
+    if (position > -2000 && right_flag == false)
     {
+        
         if (input_manager->TRG(0) & PAD_LEFT)
         {
             left_flag = true;
         }
         if (left_flag)
         {
-            if (time <= 1.0f)
+            if (time <= 0.7f)
             {
                 time += elapsedTime;
-                eas = -easing::in_quart(time, 1, 500.0f, 0.0f);
+                eas = -easing::out_quint(time, 0.7, 500.0f, 0.0f);
             }
             else
             {
@@ -83,19 +86,21 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
             }
         }
     }
-  
-    if (position != 0)
+
+    if (position != 0 && left_flag == false)
     {
+       
         if (input_manager->TRG(0) & PAD_RIGHT)
         {
             right_flag = true;
+            
         }
         if (right_flag)
         {
-            if (time <= 1.0f)
+            if (time <= 0.6f)
             {
                 time += elapsedTime;
-                eas = +easing::in_quart(time, 1, 500.0f, 0.0f);
+                eas = +easing::out_quint(time, 0.6, 500.0f, 0.0f);
             }
             else
             {
@@ -108,6 +113,18 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
         }
     }
   
+   
+    if (position == 0)
+    {
+        if (eas == 0)
+        {
+            if (input_manager->TRG(0) & PAD_START)
+            {
+                parent->change_scene(new Scene_Title_Game);
+            }
+        }
+        
+    }
 }
 
 void Scene_Select::render(float elapsed_time)
@@ -143,69 +160,62 @@ void Scene_Select::render(float elapsed_time)
 
     parent->state_manager()->setRS(RS::SOLID_NONE);
 
-    select_back->render(device_context_,
-        0, 0,  //position
-        1, 1,     // scal
-        1280, 720,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        1280, 720,   // size
-        0, 0,         // pibot
-        1, 1, 1, 1,   // rgba
-        0); // angle
+   
 
     back->render(
             device_context_,
             0, 0,  //position
             1, 1,     // scal
-            1280, 720,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-            1280, 720,   // size
+        1980, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+        1980, 1080,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
     choice->render(device_context_,
-            500, 250,  //position
-            0.8f, 0.8f,     // scal
-            320, 320,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-            320, 320,   // size
+            820, 400,  //position
+            1.0f, 1.0f,     // scal
+            308, 308,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            308, 308,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
     stage1->render(device_context_,
-            550 + position + eas, 300,  //position
-            0.5f, 0.5f,     // scal
-            320, 320,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-            320, 320,   // size
+            876 + position + eas, 454,  //position
+            1.0f, 1.0f,     // scal
+            192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            192, 192,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
     stage2->render(device_context_,
-            1050 + position + eas, 300,  //position
-            0.5f, 0.5f,     // scal
-            320, 320,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-            320, 320,   // size
+            1376 + position + eas, 454,  //position
+            1.0f, 1.0f,     // scal
+            192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            192, 192,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
     stage3->render(device_context_,
-            1550 + position + eas, 300,  //position
-            0.5f, 0.5f,     // scal
-            320, 320,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-            320, 320,   // size
+            1876 + position + eas, 454,  //position
+            1.0f, 1.0f,     // scal
+            192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            192, 192,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
     stage4->render(device_context_,
-        2050 + position + eas, 300,  //position
-        0.5f, 0.5f,     // scal
-        320, 320,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        320, 320,   // size
+        2376 + position + eas, 454,  //position
+        1.0f, 1.0f,     // scal
+        192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+        192, 192,   // size
         0, 0,         // pibot
         1, 1, 1, 1,   // rgba
         0); // angle
     stage5->render(device_context_,
-        2550 + position + eas, 300,  //position
-        0.5f, 0.5f,     // scal
-        320, 320,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        320, 320,   // size
+        2876 + position + eas, 454,  //position
+        1.0f, 1.0f,     // scal
+        192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+        192, 192,   // size
         0, 0,         // pibot
         1, 1, 1, 1,   // rgba
         0); // angle

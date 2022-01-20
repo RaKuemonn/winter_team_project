@@ -5,6 +5,7 @@
 #include "easing.h"
 #include "scene_select.h"
 #include "easing.h"
+#include "scene_loading.h"
 
 // デバッグ用GUI描画
 void Scene_Title_Game::DrawDebugGUI()
@@ -42,25 +43,27 @@ void Scene_Title_Game::DrawDebugGUI()
 void Scene_Title_Game::initialize(Scene_Manager* parent_)
 {
     parent = parent_;
-    back_stage1 = make_unique<Sprite>(parent->device(), "Data/back_stage1.jpg");
-    back_stage2 = make_unique<Sprite>(parent->device(), "Data/back_stage2.jpg");
-    back_stage3 = make_unique<Sprite>(parent->device(), "Data/back_stage3.jpg");
-    back_stage4 = make_unique<Sprite>(parent->device(), "Data/back_stage4.jpg");
-    back_stage0 = make_unique<Sprite>(parent->device(), "Data/back_stage1.jpg");
-    start = make_unique<Sprite>(parent->device(), "Data/team1_title_START_236×56.png");
+    title = make_unique<Sprite>(parent->device(), "Data/title_仮.png");
+
+    back_stage1 = make_unique<Sprite>(parent->device(), "Data/select1.png");
+    back_stage2 = make_unique<Sprite>(parent->device(), "Data/select2.png");
+    back_stage3 = make_unique<Sprite>(parent->device(), "Data/select3.png");
+    back_stage4 = make_unique<Sprite>(parent->device(), "Data/select4.png");
+    back_stage0 = make_unique<Sprite>(parent->device(), "Data/select1.png");
+    start = make_unique<Sprite>(parent->device(), "Data/waku.png");
     icon = make_unique<Sprite>(parent->device(), "Data/team1_flower_90×90.png");
 
-    option_start = make_unique<Sprite>(parent->device(), "Data/option_rogo.png");
-    option_back = make_unique<Sprite>(parent->device(), "Data/back.png");
+    option_start = make_unique<Sprite>(parent->device(), "Data/waku.png");
+    //option_back = make_unique<Sprite>(parent->device(), "Data/back.png");
 
-    option_1 = make_unique<Sprite>(parent->device(), "Data/meta1.png");
-    option_2 = make_unique<Sprite>(parent->device(), "Data/meta2.png");
-    option_3 = make_unique<Sprite>(parent->device(), "Data/meta3.png");
-    return_title = make_unique<Sprite>(parent->device(), "Data/enter_仮.png");
-    audio_set = make_unique<Sprite>(parent->device(), "Data/audio_仮.png");
+    //option_1 = make_unique<Sprite>(parent->device(), "Data/meta1.png");
+    //option_2 = make_unique<Sprite>(parent->device(), "Data/meta2.png");
+    //option_3 = make_unique<Sprite>(parent->device(), "Data/meta3.png");
+    //return_title = make_unique<Sprite>(parent->device(), "Data/enter_仮.png");
+    //audio_set = make_unique<Sprite>(parent->device(), "Data/audio_仮.png");
 
     //sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/_.wav"));
-    //sound->play(true);
+    ////sound->play(true);
 
 
 }
@@ -99,20 +102,20 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
                 if (time <= 0.5f)
                 {
                     time += elapsedTime;
-                    icon_eas = -easing::out_quint(time, 0.5f, 100.0f, 0.0f);
+                    icon_eas = -easing::out_quint(time, 0.5f, 200.0f, 0.0f);
                 }
                 else
                 {
                     icon_up_flag = false;
 
                     time = 0.0f;
-                    icon_pos -= 100.0f;
+                    icon_pos -= 200.0f;
                     icon_eas = 0.0f;
                 }
             }
         }
 
-        if (icon_pos < 100)
+        if (icon_pos < 200)
         {
             if (input_manager->TRG(0) & PAD_DOWN)
             {
@@ -123,14 +126,14 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
                 if (time <= 0.5f)
                 {
                     time += elapsedTime;
-                    icon_eas = +easing::out_quart(time, 0.5f, 100.0f, 0.0f);
+                    icon_eas = +easing::out_quart(time, 0.5f, 200.0f, 0.0f);
                 }
                 else
                 {
                     icon_down_flag = false;
 
                     time = 0.0f;
-                    icon_pos += 100.0f;
+                    icon_pos += 200.0f;
                     icon_eas = 0.0f;
                 }
             }
@@ -155,7 +158,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             }
         }
 
-        if (icon_pos == 100)
+        if (icon_pos == 200)
         {
             
             if (input_manager->TRG(0) & PAD_START)
@@ -232,10 +235,7 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
         }
     }
 
-    if (input_manager->TRG(0) & PAD_START)
-    {
-        option_flag = false;
-    }
+   
    
     
 }
@@ -272,8 +272,8 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,  //position
             1, 1,     // scal
-            1280, 720,    // どれくらい描画するか
-            1280, 720,   // size
+            1980, 1080,    // どれくらい描画するか
+            1980, 1080,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
@@ -282,8 +282,8 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,
             1, 1,
-            1280, 720,
-            1280, 720,
+            1980, 1080,
+            1980, 1080,
             0, 0,
             1, 1, 1, back_stage4_alpha,
             0);
@@ -292,8 +292,8 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,
             1, 1,
-            1280, 720,
-            1280, 720,
+            1980, 1080,
+            1980, 1080,
             0, 0,
             1, 1, 1, back_stage3_alpha,
             0);
@@ -302,8 +302,8 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,
             1, 1,
-            1280, 720,
-            1280, 720,
+            1980, 1080,
+            1980, 1080,
             0, 0,
             1, 1, 1, back_stage2_alpha,
             0);
@@ -312,12 +312,22 @@ void Scene_Title_Game::render(float elapsed_time)
             device_context_,
             0, 0,
             1, 1,
-            1280, 720,
-            1280, 720,
+            1980, 1080,
+            1980, 1080,
             0, 0,
             1, 1, 1, back_stage1_alpha,
             0);
     }
+
+    // タイトル
+    title->render(device_context_,
+        300, 0,
+        1.0f, 1.0f,
+        900, 384,
+        900, 384,
+        0, 0,
+        1, 1, 1, 1.0f,
+        15);
 
     // 点滅用
     timer++;
@@ -341,7 +351,7 @@ void Scene_Title_Game::render(float elapsed_time)
                 t_op = 1;
 
             }
-            else if (icon_pos == 100)
+            else if (icon_pos == 200)
             {
                 t_sta = 1;
             }
@@ -349,10 +359,10 @@ void Scene_Title_Game::render(float elapsed_time)
         if (t_sta)
         {
             start->render(device_context_,
-                1000, 250,
+                1400, 400,
                 1.0f, 1.0f,
-                236, 56,
-                236, 56,
+                384, 128,
+                384, 128,
                 0, 0,
                 1, 1, 1, 1,
                 0);
@@ -360,30 +370,31 @@ void Scene_Title_Game::render(float elapsed_time)
         if (t_op)
         {
             option_start->render(device_context_,
-                1000, 350,
-                0.8f, 0.8f,
-                256, 56,
-                256, 56,
+                1400, 600,
+                1.0f, 1.0f,
+                384, 128,
+                384, 128,
                 0, 0,
                 1, 1, 1, 1,
                 0); // angle
         }
 
         icon->render(device_context_,
-            900, 240 + icon_pos + icon_eas,
-            0.8f, 0.8f,
-            106, 106,
-            106, 106,
+            1200, 400 + icon_pos + icon_eas,
+            1.0f, 1.0f,
+            128, 128,
+            128, 128,
             0, 0,
             1, 1, 1, 1,
             0);
 
     }
+    // オプション画面を開いたとき
     else
-    {
+    {/*
         option_back->render(device_context_,
-            100, 100,
-            0.8f, 0.8f,
+            320, 180,
+            1.0f, 1.0f,
             1280, 720,
             1280, 720,
             0, 0,
@@ -393,7 +404,7 @@ void Scene_Title_Game::render(float elapsed_time)
 
         option_1->render(device_context_,
             400, 300,
-            0.8f, 0.8f,
+            1.0f, 1.0f,
             516, 256,
             516, 256,
             0, 0,
@@ -417,22 +428,24 @@ void Scene_Title_Game::render(float elapsed_time)
             0);
         return_title->render(device_context_,
             500, 470,
-            0.5f, 0.5f,
-            516, 256,
-            516, 256,
+            1.0f, 1.0f,
+            900, 384,
+            900, 384,
             0, 0,
             1, 1, 1, 1.0f,
             0);
         audio_set->render(device_context_,
             500, 170,
-            0.5f, 0.5f,
-            516, 256,
-            516, 256,
+            1.0f, 1.0f,
+            258, 128,
+            258, 128,
             0, 0,
             1, 1, 1, 1.0f,
-            0);
+            0);*/
     }
 
-    DrawDebugGUI();
+   
+
+    //DrawDebugGUI();
 
 }
