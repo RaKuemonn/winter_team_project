@@ -4,7 +4,7 @@
 #include "scene_title.h"
 #include "easing.h"
 #include "scene_select.h"
-#include "easing.h"
+#include "utility.h"
 
 // デバッグ用GUI描画
 void Scene_Title_Game::DrawDebugGUI()
@@ -323,8 +323,8 @@ void Scene_Title_Game::render(float elapsed_time)
     timer++;
     float t_sta = 0;
     float t_op = 0;
-    t_sta = timer / 180 % 2;
-    t_op = timer / 180 % 2;
+    t_sta = CAST_F(timer / 180 % 2);
+    t_op = CAST_F(timer / 180 % 2);
    
     if (!option_flag)
     {

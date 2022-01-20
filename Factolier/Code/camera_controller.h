@@ -23,4 +23,8 @@ private:
 	DirectX::XMFLOAT3	angle = { 0, 0, 0 };
 	DirectX::XMFLOAT3 eye = {};
 	float sens = 1.0f;
+
+	bool clear_flag = false;
+	float clear_timer = 0.0f;
+
 };

@@ -15,6 +15,7 @@ void Scene_Manager::initialize(ID3D11Device* device, ID3D11DeviceContext* contex
     sound_manager_  = std::make_unique<Sound_Manager>();
     input_manager_  = std::make_unique<Input_Manager_Interface>();
     effect_manager_ = std::make_unique<Effect_Manager>(device, context);
+    option_manager_ = std::make_unique<Option_Manager>(device, context);
 }
 
 

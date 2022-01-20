@@ -8,6 +8,7 @@
 #include "sound_manager.h"
 #include "input_manager.h"
 #include "effect_manager.h"
+#include "option_manager.h"
 #include "scene.h"
 
 
@@ -37,6 +38,7 @@ private:
     std::unique_ptr<Sound_Manager>              sound_manager_ = nullptr;
     std::unique_ptr<Input_Manager_Interface>    input_manager_ = nullptr;
     std::unique_ptr<Effect_Manager>             effect_manager_ = nullptr;
+    std::unique_ptr<Option_Manager>             option_manager_ = nullptr;
 
     Scene* scene = nullptr;
 
@@ -47,6 +49,7 @@ public:
     Sound_Manager*      sound_manager() { return sound_manager_.get(); }
     Input_Manager*      input_manager() { return input_manager_.get(); }
     Effect_Manager*     effect_manager(){ return effect_manager_.get(); }
+    Option_Manager*     option_manager(){ return option_manager_.get(); }
 
     ID3D11Device* device() { return device_; }
     ID3D11DeviceContext* device_context() { return immediate_context_; }

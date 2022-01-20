@@ -10,7 +10,6 @@
 
 
 
-class Scene_Manager;
 
 class Scene_Select : public Scene
 {

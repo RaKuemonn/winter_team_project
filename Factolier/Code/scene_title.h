@@ -8,7 +8,6 @@
 #include "model.h"
 #include "camera_controller.h"
 #include "effect.h"
-//#include "player.h"
 
 
 
