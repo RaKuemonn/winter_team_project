@@ -73,13 +73,16 @@ void Sphere_Vehicle::update(const float elapsed_time_)
 
 void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
 {
-    // 一度でも着地していれば　操作を受け付けるようにしている
-    //if (m_on_ground == false)return;
 
     constexpr float speed = 30.0f;
 
     // 引数の方向に加速
-    m_velocity->add({ direction_.x * speed, direction_.y * 180.0f * speed, direction_.z * speed });
+    m_velocity->add({ direction_.x * speed, 0.0f, direction_.z * speed });
+
+    // 一度でも着地していれば　操作を受け付けるようにしている
+    if (m_on_ground == false)return;
+
+    m_is_jump = static_cast<bool>(direction_.y);
 }
 
 
@@ -96,6 +99,11 @@ void Sphere_Vehicle::update_velocity(const float elapsed_time_)
 
     // 速度の更新
     m_velocity->update(elapsed_time_);
+
+
+    m_velocity->set_y(m_velocity->get().y + static_cast<float>(m_is_jump) * 20.0f);
+
+    m_is_jump = false;
 }
 
 void Sphere_Vehicle::rotate(const float elapsed_time_)

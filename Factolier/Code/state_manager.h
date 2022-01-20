@@ -47,7 +47,7 @@ class State_Manager
 {
 public:
 	State_Manager(ID3D11Device* device, ID3D11DeviceContext* context, HRESULT hr) { generate_state(device, hr); set_context(context); }
-	~State_Manager() {};
+	~State_Manager() = default;
 
 	void generate_state(ID3D11Device* device, HRESULT hr);
 	void set_context(ID3D11DeviceContext* context) { immediate_context = context; }

@@ -188,7 +188,8 @@ namespace ray_functions
 
             }
 
-            else */if (result.distance < hit_result_.distance)
+            else */
+            if (result.distance < hit_result_.distance)
             {
 #ifdef _DEBUG 
                 axis = L"z\n";
@@ -255,13 +256,37 @@ namespace ray_functions
 // 立体図形を用いた衝突判定の関数群
 namespace detect_functions
 {
-    inline bool sphere_vs_sphere(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
+    inline bool sphere_vs_sphere(const DirectX::XMFLOAT3& pos_a, const DirectX::XMFLOAT3& pos_b, const float radius_a, const float radius_b)
+    {
+        const float length_sq = DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&pos_b), DirectX::XMLoadFloat3(&pos_a))));
+        const float sum_radius = radius_a + radius_b;
+        return (length_sq < sum_radius * sum_radius);
+    }
+
+    inline bool sphere_vs_sphere(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_, const float elapsed_time_)
     {
         // TODO: 未定義
-        const DirectX::XMFLOAT3& position_a = entity_a_.lock()->get_position();
-        const DirectX::XMFLOAT3& position_b = entity_b_.lock()->get_position();
 
+        const DirectX::XMFLOAT3& velocity_a     = entity_a_.lock()->get_velocity() * elapsed_time_;
+        const DirectX::XMFLOAT3& velocity_b     = entity_b_.lock()->get_velocity() * elapsed_time_;
 
+        
+        const DirectX::XMFLOAT3& position_a     = entity_a_.lock()->get_position();
+        const DirectX::XMFLOAT3& position_b     = entity_b_.lock()->get_position();
+        const DirectX::XMFLOAT3& old_position_a = position_a - velocity_a;
+        const DirectX::XMFLOAT3& old_position_b = position_b - velocity_b;
+
+        // a to b のベクトル
+        const DirectX::XMVECTOR a_to_b_vec = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&position_b), DirectX::XMLoadFloat3(&position_a));
+
+        // a to b の距離
+        const float length = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(a_to_b_vec));
+
+        // 定数 //
+        constexpr float radius      = 2.0f;             // 半径
+        constexpr float sum_radius  = radius + radius;  // 半径 + 半径
+
+        return (length < sum_radius);
     }
 
     inline bool box_vs_box(std::weak_ptr<Entity> entity, std::weak_ptr<Entity> entity_out)
@@ -314,11 +339,11 @@ inline void ray_to_floor(
     }
     
     // 敵
-    result = {};
     for (auto index : std::get<1>(vectors_))
     {
         std::shared_ptr<Entity> enemy = e_manager.get_entity(index);
         enemy->set_friction(0.0f);
+        result = {};
         if (ray_cast_floor(elapsed_time, enemy, s_manager, result))
         {
             enemy->set_position(result.position);
@@ -328,13 +353,12 @@ inline void ray_to_floor(
     }
 
     // 乗り物
-    result = {};
     for (auto index : std::get<2>(vectors_))
     {
         std::shared_ptr<Entity>     vehicle = e_manager.get_entity(index);
         const DirectX::XMFLOAT3&    scale   = vehicle->get_scale();
         vehicle->set_friction(0.0f);
-
+        result = {};
         if (ray_cast_floor(elapsed_time, vehicle, scale, s_manager, result))
         {
             // 乗り物(球体)の半径(スケール)分上へ加算する処理をする
@@ -392,11 +416,11 @@ inline void ray_to_wall(
     }*/
 
     // 敵
-    result = {};
     wall_vec = {};
     for (auto index : std::get<1>(vectors_))
     {
         std::shared_ptr<Entity> enemy = e_manager.get_entity(index);
+        result = {};
         if (ray_cast_wall(elapsed_time, enemy, s_manager, result, wall_vec))
         {
             const DirectX::XMFLOAT3 velocity = enemy->get_velocity() * elapsed_time;
@@ -408,13 +432,13 @@ inline void ray_to_wall(
     }
 
     // 乗り物
-    result = {};
     wall_vec = {};
     for (auto index : std::get<2>(vectors_))
     {
-        std::shared_ptr<Entity>     vehicle = e_manager.get_entity(index);
+        std::shared_ptr<Entity>  vehicle = e_manager.get_entity(index);
         const DirectX::XMFLOAT3& scale = vehicle->get_scale();
 
+        result = {};
         //if (ray_cast_wall(elapsed_time, vehicle, s_manager, result, wall_vec))
         if (ray_cast_wall(elapsed_time, vehicle, scale, s_manager, result, wall_vec))
         {

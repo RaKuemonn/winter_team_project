@@ -92,6 +92,9 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
     Stage_Manager::instance().spawn_register(std::make_unique<Stage_1>(parent));
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
+
+
+    sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
 }
 
 
@@ -154,6 +157,21 @@ void Scene_Game::render(float elapsed_time)
         ptr_device_context->ClearRenderTargetView(rtv, color);
         ptr_device_context->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
         ptr_device_context->OMSetRenderTargets(1, &rtv, dsv);
+    }
+
+
+
+    parent->state_manager()->setDS(DS::OFF_OFF);
+
+    //スカイボックス描画
+    {
+        shader = parent->shader_manager()->get_shader(Shaders::SKY);
+
+        shader->begin(parent->device_context());
+
+        sky_box->render(parent->device_context());
+
+        shader->end(parent->device_context());
     }
 
 
