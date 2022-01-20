@@ -255,13 +255,30 @@ namespace ray_functions
 // 立体図形を用いた衝突判定の関数群
 namespace detect_functions
 {
-    inline bool sphere_vs_sphere(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
+    inline bool sphere_vs_sphere(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_, const float elapsed_time_)
     {
         // TODO: 未定義
-        const DirectX::XMFLOAT3& position_a = entity_a_.lock()->get_position();
-        const DirectX::XMFLOAT3& position_b = entity_b_.lock()->get_position();
 
+        const DirectX::XMFLOAT3& velocity_a     = entity_a_.lock()->get_velocity() * elapsed_time_;
+        const DirectX::XMFLOAT3& velocity_b     = entity_b_.lock()->get_velocity() * elapsed_time_;
 
+        
+        const DirectX::XMFLOAT3& position_a     = entity_a_.lock()->get_position();
+        const DirectX::XMFLOAT3& position_b     = entity_b_.lock()->get_position();
+        const DirectX::XMFLOAT3& old_position_a = position_a - velocity_a;
+        const DirectX::XMFLOAT3& old_position_b = position_b - velocity_b;
+
+        // a to b のベクトル
+        const DirectX::XMVECTOR a_to_b_vec = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&position_b), DirectX::XMLoadFloat3(&position_a));
+
+        // a to b の距離
+        const float length = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(a_to_b_vec));
+
+        // 定数 //
+        constexpr float radius      = 2.0f;             // 半径
+        constexpr float sum_radius  = radius + radius;  // 半径 + 半径
+
+        return (length < sum_radius);
     }
 
     inline bool box_vs_box(std::weak_ptr<Entity> entity, std::weak_ptr<Entity> entity_out)
