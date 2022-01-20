@@ -207,8 +207,7 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
     DirectX::XMFLOAT3 front;
     DirectX::XMStoreFloat3(&front, Front);
 
-    //�����_������x�N�g�������Ɉ�苗�����ꂽ�J�������_�����߂�
-    DirectX::XMFLOAT3 eye;
+
 
     constexpr float range = 15.0f;
 
@@ -217,16 +216,19 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
         eye.x = target.x - front.x * range;
         eye.y = target.y - front.y * range;
         eye.z = target.z - front.z * range;
-        //�J�����̎��_�ƒ����_��ݒ�
+
         Camera::Instance().set_lookat(eye, target, DirectX::XMFLOAT3(0, 1, 0));
     }
 
     else
     {
-        eye.x = ptr_target->x - front.x * range;
-        eye.y = ptr_target->y - front.y * range;
-        eye.z = ptr_target->z - front.z * range;
-        //�J�����̎��_�ƒ����_��ݒ�
+        if (ptr_target->y > -10.0f)
+        {
+            eye.x = ptr_target->x - front.x * range;
+            eye.y = ptr_target->y - front.y * range;
+            eye.z = ptr_target->z - front.z * range;
+        }
+
         Camera::Instance().set_lookat(eye, *ptr_target, DirectX::XMFLOAT3(0, 1, 0));
     }
 
