@@ -607,13 +607,6 @@ void Collision_Manager::judge(const float elapsed_time)
         vec_vehicle_indices
     };
 
-    // entity同士で当たり判定 (球)
-    entity_collide(
-        elapsed_time,
-        e_manager,
-        vectors_
-    );
-
 
     // 床へのレイキャスト
     ray_to_floor(
@@ -626,6 +619,13 @@ void Collision_Manager::judge(const float elapsed_time)
     ray_to_wall(
         elapsed_time,
         e_manager, s_manager,
+        vectors_
+    );
+
+    // entity同士で当たり判定 (球)
+    entity_collide(
+        elapsed_time,
+        e_manager,
         vectors_
     );
 
