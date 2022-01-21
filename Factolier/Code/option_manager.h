@@ -18,5 +18,7 @@ private:
     ID3D11DeviceContext* immediate_context;
 
     std::unique_ptr<Sprite> back = nullptr;
-    //std::unique_ptr<Sprite> option_1 = nullptr;
+    std::unique_ptr<Sprite> meter_back = nullptr;
+    std::unique_ptr<Sprite> bgm = nullptr;
+    std::unique_ptr<Sprite> se = nullptr;
 };
