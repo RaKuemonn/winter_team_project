@@ -24,7 +24,7 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam
 extern ImWchar glyphRangesJapanese[];
 #endif
 
-static constexpr int sync_interval = 0;
+static constexpr int sync_interval = 1;
 extern float fps;
 
 class Framework
