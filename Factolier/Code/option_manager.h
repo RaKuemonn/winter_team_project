@@ -3,11 +3,8 @@
 #include <d3d11.h>
 #include "memory"
 #include "sprite.h"
-<<<<<<< HEAD
 #include "binary_loader.h"
-=======
 #include "input_manager.h"
->>>>>>> 667e84f148c8f6b717b3b9629e885ba4895596ab
 
 
 
@@ -33,11 +30,9 @@ public:
     void DrawDebugGUI();
     void render();
 
-<<<<<<< HEAD
     void set_next_stage(Stage_Select next_stage) { now_stage = next_stage; }
     Stage_Select get_now_stage() { return now_stage; }
     Binary_Data& get_binary() { return binary_data; }
-=======
 
 public:
     float bgm_vo = 0;         // BGM‚Ìƒ{ƒŠƒ…[ƒ€ 1~0‚ÌŠÔ‚Å‘Ö‚¦‚¦‚Á‚Ä‚­‚é
@@ -64,19 +59,17 @@ public:
 
     int icon_select = 0;
 
-    
->>>>>>> 667e84f148c8f6b717b3b9629e885ba4895596ab
+
 
 private:
     ID3D11DeviceContext* immediate_context;
 
     std::unique_ptr<Sprite> back = nullptr;
-<<<<<<< HEAD
     //std::unique_ptr<Sprite> option_1 = nullptr;
 
     Stage_Select now_stage = Stage_Select::STAGE_1;
     Binary_Data binary_data {};
-=======
+
     std::unique_ptr<Sprite> bar_back = nullptr;
     std::unique_ptr<Sprite> bgm = nullptr;
     std::unique_ptr<Sprite> se = nullptr;
@@ -85,5 +78,4 @@ private:
     std::unique_ptr<Sprite> bar = nullptr;
     std::unique_ptr<Sprite> icon = nullptr;
     std::unique_ptr<Sprite> arrow = nullptr;
->>>>>>> 667e84f148c8f6b717b3b9629e885ba4895596ab
 };

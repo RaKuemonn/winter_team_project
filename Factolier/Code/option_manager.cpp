@@ -1,8 +1,6 @@
 #include <imgui.h>
 #include "option_manager.h"
-<<<<<<< HEAD
 #include "imgui.h"
-=======
 #include "easing.h"
 
 #define BGM 0
@@ -36,15 +34,14 @@ void Option_Manager::DrawDebugGUI()
     ImGui::End();
 }
 
->>>>>>> 667e84f148c8f6b717b3b9629e885ba4895596ab
 
 Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* context)
 {
     immediate_context = context;
     back = make_unique<Sprite>(device, "Data/back.png");
-<<<<<<< HEAD
+
     File_IO::open("save.dat", binary_data);
-=======
+
     bgm = make_unique<Sprite>(device, "Data/âπó _bgmâº.png");
     se = make_unique<Sprite>(device, "Data/âπó _seâº.png");
     camera = make_unique<Sprite>(device, "Data/ÉJÉÅÉâ_âº.png");
@@ -53,7 +50,6 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     option = make_unique<Sprite>(device, "Data/option_3âº.png");
     icon = make_unique<Sprite>(device, "Data/team1_flower_90Å~90.png");
     arrow = make_unique<Sprite>(device, "Data/ÉoÅ[ñÓàÛ(38,164).png");
->>>>>>> 667e84f148c8f6b717b3b9629e885ba4895596ab
 }
 
 
