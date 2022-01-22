@@ -11,6 +11,8 @@ Decotator_Supporter::Decotator_Supporter(Scene_Manager* ptr_scene_manager_)
     constexpr float scale = 0.5f;
     m_transform->set_scale({ scale,scale,scale });
     m_transform->Update();
+
+    m_range = { -100.0f,+100.0f };
 }
 
 #ifdef _DEBUG
@@ -23,14 +25,22 @@ void Decotator_Supporter::imgui_control()
 
 
     // imgui操作パラメーター群
-    ImGui::InputFloat3("position", &position.x, "%.2f");
-    //ImGui::SliderFloat3("position", &position.x, -400.0f, 400.0f, "%.2f");
-    ImGui::InputFloat3("scale   ", &scale.x, "%.3f");
-    //ImGui::SliderFloat3("scale   ", &scale.x, 0.01f, 2.0f, "%.3f");
+    //ImGui::InputFloat3("position", &position.x, "%.2f");
+    //m_transform->set_position(position);
+    //position = m_transform->get_position();
 
+    ImGui::InputFloat2("slider_range", &m_range.x, "%.3f");
 
+    ImGui::SliderFloat3("position", &position.x, m_range.x, m_range.y, "%.2f");
     m_transform->set_position(position);
+
+
+    //ImGui::InputFloat3("scale   ", &scale.x, "%.3f");
+    //m_transform->set_scale(scale);
+    //scale = m_transform->get_scale();
+    ImGui::SliderFloat3("scale   ", &scale.x, 0.01f, 2.0f, "%.3f");
     m_transform->set_scale(scale);
+    
 
 
     // 更新
