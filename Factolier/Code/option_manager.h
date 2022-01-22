@@ -21,9 +21,16 @@ public:
 
 
 public:
-    float bgm_vo = 0;      // BGMのボリューム
-    float se_vo = 0;       // SEのボリューム
-    float camera_set = 0;  // カメラ感度の設定
+    float bgm_vo = 0;         // BGMのボリューム 1~0の間で替ええってくる
+    float bgm_bar = 126;      // BGMのボリュームバーの中身をどれくらい表示させるか
+    float bgm_move = 0;       // BGMのボリュームバーの中身の描画が全体の何パーセントか
+    
+    float se_vo = 0;          // SEのボリューム 1~0の間で替ええってくる
+    float se_bar = 126;       // SEのボリュームバーの中身をどれくらい表示させるか
+    float se_move = 0;        // SEのボリュームバーの中身の描画が全体の何パーセントか
+    
+    float camera_bar = 252;     // カメラ感度バーの中身をどれくらい表示させるか
+    float camera_move = 0;    // カメラ感度バーの中身の描画が全体の何パーセントか
 
     float icon_eas = 0;     // アイコンの移動距離
     float icon_pos = 0;     //　アイコンの位置修正
@@ -39,7 +46,7 @@ private:
     ID3D11DeviceContext* immediate_context;
 
     std::unique_ptr<Sprite> back = nullptr;
-    std::unique_ptr<Sprite> meter_back = nullptr;
+    std::unique_ptr<Sprite> bar_back = nullptr;
     std::unique_ptr<Sprite> bgm = nullptr;
     std::unique_ptr<Sprite> se = nullptr;
     std::unique_ptr<Sprite> camera = nullptr;

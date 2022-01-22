@@ -59,16 +59,11 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
 
     
 
-    //option_back = make_unique<Sprite>(parent->device(), "Data/back.png");
-
-    //option_1 = make_unique<Sprite>(parent->device(), "Data/meta1.png");
-    //option_2 = make_unique<Sprite>(parent->device(), "Data/meta2.png");
-    //option_3 = make_unique<Sprite>(parent->device(), "Data/meta3.png");
-    //return_title = make_unique<Sprite>(parent->device(), "Data/enter_‰¼.png");
-    //audio_set = make_unique<Sprite>(parent->device(), "Data/audio_‰¼.png");
-
     sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/ƒ^ƒCƒgƒ‹.wav"));
     sound->play(true);
+   
+    se = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/se_‰¼.wav"));
+    
 
 
 }
@@ -240,13 +235,22 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
             gauge -= 1.2f;
         }
     }*/
-    sound->pause();
+    //sound->pause();
     parent->option_manager()->update(elapsedTime, input_manager);
-    //sound->set_volume(parent->option_manager()->icon_pos);
+    sound->set_volume(parent->option_manager()->bgm_vo);
+    se->set_volume(parent->option_manager()->se_vo);
+
+    if (parent->option_manager()->down_flag ||
+        parent->option_manager()->up_flag)
+    {
+        //se->stop();
+        se->play(false);
+    }
+
     if (input_manager->TRG(0) & PAD_START)
     {
         option_flag = false;
-        sound->resume();
+        //sound->resume();
     }
    
     

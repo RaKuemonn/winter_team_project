@@ -19,6 +19,8 @@ void Option_Manager::DrawDebugGUI()
             ImGui::Checkbox("up_flag", &up_flag);
             ImGui::Checkbox("down_flag", &down_flag);
             ImGui::InputFloat("bgm_vo", &bgm_vo);
+            ImGui::InputFloat("bgm_move", &bgm_move);
+            ImGui::InputFloat("bgm_move", &bgm_move);
         }
     }
     ImGui::End();
@@ -32,7 +34,7 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     bgm = make_unique<Sprite>(device, "Data/âπó _bgmâº.png");
     se = make_unique<Sprite>(device, "Data/âπó _seâº.png");
     camera = make_unique<Sprite>(device, "Data/ÉJÉÅÉâ_âº.png");
-    meter_back = make_unique<Sprite>(device, "Data/option_1âº.png");
+    bar_back = make_unique<Sprite>(device, "Data/option_1âº.png");
     bar = make_unique<Sprite>(device, "Data/option_2âº.png");
     option = make_unique<Sprite>(device, "Data/option_3âº.png");
     icon = make_unique<Sprite>(device, "Data/team1_flower_90Å~90.png");
@@ -97,19 +99,98 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
 
 void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 {
+    // ÉAÉCÉRÉìÇ™BGMÇÃÇ∆Ç±ÇÎÇ…Ç¢ÇΩÇÁ
     if (icon_pos == 0)
     {
-        if (input_manager->STATE(0) & PAD_RIGHT)
-        {            
-            bgm_vo += 1;
-        }
-        if (input_manager->STATE(0) & PAD_LEFT)
+        if (bgm_bar >= 0 && bgm_bar <= 504)
         {
-            bgm_vo -= 1;
+            if (input_manager->STATE(0) & PAD_RIGHT)
+            {
+                bgm_bar += 4;
+            }
+            
+            if (input_manager->STATE(0) & PAD_LEFT)
+            {
+              bgm_bar -= 4;
+            }
         }
+        if (bgm_bar <= 0)
+        {
+            bgm_bar = 0;
+        }
+        if (bgm_bar >= 504)
+        {
+            bgm_bar = 504;
+        }
+       
     }
-    
+    // âΩäÑÇ†ÇÈÇ©ÉpÅ[ÉZÉìÉgÇ≈èoÇ∑
+    // ï`âÊîÕàÕÅ@Åì
+    bgm_move = bgm_bar / 504;
+    // BGM É{ÉäÉÖÅ[ÉÄÅ@%
+    bgm_vo = 1 * bgm_move;
+
+    // SE
+    // Ç‚Ç¡ÇƒÇÈÇ±Ç∆ÇÕBGMÇ∆ìØÇ∂
+    if (icon_pos == 180)
+    {
+        if (se_bar >= 0 && se_bar <= 504)
+        {
+            if (input_manager->STATE(0) & PAD_RIGHT)
+            {
+               se_bar += 4;
+            }
+
+            if (input_manager->STATE(0) & PAD_LEFT)
+            {
+                se_bar -= 4;
+            }
+        }
+        if (se_bar <= 0)
+        {
+            se_bar = 0;
+        }
+        if (se_bar >= 504)
+        {
+            se_bar = 504;
+        }
+       
+    }
+    se_move = se_bar / 504;
+    se_vo = 1 * se_move;
+
+
+    // ÉJÉÅÉâÇÃÉoÅ[ÇìÆÇ©Ç∑èàóù
+    // BGMÇ∆ìØÇ∂
+    if (icon_pos == 360)
+    {
+        if (se_bar >= 0 && se_bar <= 504)
+        {
+            if (input_manager->STATE(0) & PAD_RIGHT)
+            {
+                camera_bar += 4;
+            }
+
+            if (input_manager->STATE(0) & PAD_LEFT)
+            {
+                camera_bar -= 4;
+            }
+        }
+        if (camera_bar <= 0)
+        {
+            camera_bar = 0;
+        }
+        if (camera_bar >= 504)
+        {
+            camera_bar = 504;
+        }
+
+    }
+    camera_move = camera_bar / 504;
+  
 }
+    
+
 
 
 void Option_Manager::render()
@@ -157,7 +238,7 @@ void Option_Manager::render()
             1, 1, 1, 1.0,   // rgba
             0); // angle
 
-        meter_back->render(
+        bar_back->render(
             immediate_context,
             800, 340,  //position
             1, 1,     // scal
@@ -169,10 +250,10 @@ void Option_Manager::render()
 
         bar->render(
             immediate_context,
-            800, 340,  //position
+            806, 346,  //position
             1, 1,     // scal
-            516, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
-            20 + bgm_vo, 128,   // size
+            504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            504 * bgm_move, 116,   // size
             0, 0,         // pibot
             1, 1, 1, 1.0,   // rgba
             0); // angle
@@ -190,7 +271,7 @@ void Option_Manager::render()
             1, 1, 1, 1.0,   // rgba
             0); // angle
 
-        meter_back->render(
+        bar_back->render(
             immediate_context,
             800, 520,  //position
             1, 1,     // scal
@@ -201,10 +282,10 @@ void Option_Manager::render()
             0); // angle
         bar->render(
             immediate_context,
-            800, 520,  //position
+            806, 526,  //position
             1, 1,     // scal
-            516, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
-            516, 128,   // size
+            504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            504 * se_move, 116,   // size
             0, 0,         // pibot
             1, 1, 1, 1.0,   // rgba
             0); // angle
@@ -223,7 +304,7 @@ void Option_Manager::render()
             0); // angle
 
 
-        meter_back->render(
+        bar_back->render(
             immediate_context,
             800, 700,  //position
             1, 1,     // scal
@@ -234,10 +315,10 @@ void Option_Manager::render()
             0); // angle
         bar->render(
             immediate_context,
-            800, 700,  //position
+            806, 706,  //position
             1, 1,     // scal
-            516, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
-            516, 128,   // size
+            504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            504 * camera_move, 116,   // size
             0, 0,         // pibot
             1, 1, 1, 1.0,   // rgba
             0); // angle

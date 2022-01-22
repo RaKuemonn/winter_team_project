@@ -66,19 +66,13 @@ private:
 	std::unique_ptr<Sprite> back_stage4 = nullptr;
 	std::unique_ptr<Sprite> back_stage0 = nullptr;
 
-	//std::unique_ptr<Sprite> option_back = nullptr;
-	//std::unique_ptr<Sprite> option_1 = nullptr;
-	//std::unique_ptr<Sprite> option_2= nullptr;
-	//std::unique_ptr<Sprite> option_3 = nullptr;
-	//std::unique_ptr<Sprite> return_title = nullptr;
-	//std::unique_ptr<Sprite> audio_set = nullptr;
-
 
 	std::unique_ptr<Sprite> start = nullptr;
 	std::unique_ptr<Sprite> icon = nullptr;
 	std::unique_ptr<Sprite> option_start = nullptr;
 
 	std::unique_ptr<Sound> sound = nullptr;
+	std::unique_ptr<Sound> se = nullptr;
 
 
 };
