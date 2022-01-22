@@ -4,9 +4,11 @@
 #include "entity_manager.h"
 #include "enemy.h"
 
-template <typename T>
-constexpr bool false_v = false;
-
+namespace enemy_spawner_template
+{
+    template <typename T>
+    constexpr bool false_v = false;
+};
 
 class Enemy_Spawner final
 {
@@ -34,7 +36,7 @@ public:
         else
         {
             // 和訳 : この型はサポートされてないよ！！　せめてEntityを継承している型を使用してね！
-            static_assert(false_v<T>, "This type is not supported.  Must be a type that inherits from Entity.");
+            static_assert(enemy_spawner_template::false_v<T>, "This type is not supported.  Must be a type that inherits from Entity.");
         }
 
         

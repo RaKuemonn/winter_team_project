@@ -97,6 +97,9 @@
     <Filter Include="Factolier\Accessibility\Collision">
       <UniqueIdentifier>{d4483b81-0fd4-47cb-933d-93eafba0841b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Stage\Decorator">
+      <UniqueIdentifier>{6aa6e834-a624-49f8-95ee-4a7d722d77c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_loading.cpp">
@@ -275,6 +278,12 @@
     </ClCompile>
     <ClCompile Include="Factolier\Code\option_manager.cpp">
       <Filter>Factolier\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\decotator_supporter.cpp">
+      <Filter>Factolier\Stage\Decorator</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_spawner.cpp">
+      <Filter>Factolier\Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -520,6 +529,12 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\option_manager.h">
       <Filter>Factolier\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\decotator_supporter.h">
+      <Filter>Factolier\Stage\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_spawner.h">
+      <Filter>Factolier\Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

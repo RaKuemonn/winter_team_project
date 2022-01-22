@@ -81,23 +81,26 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
 
     Entity_Manager::instance().spawn_register(player);
-    enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
-    enemy_spawner->
-         set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
-        .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
-        .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
-        .set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {})
-        .set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,0.0f }, player->get_position());
+    //enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
+    //enemy_spawner->
+    //     set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
+    //    .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
+    //    .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
+    //    .set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {})
+    //    .set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,0.0f }, player->get_position());
 
 
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
     collision_manager = std::unique_ptr<Collision_Manager>();
 
-    Stage_Manager::instance().spawn_register(std::make_unique<Stage_1>(parent));
+    stage_spawner = std::make_unique<Stage_Spawner>(parent);
+    stage_spawner->set_stage<Stage_1>();
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
 
 
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
+
+    debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_);
 }
 
 
@@ -120,6 +123,8 @@ void Scene_Game::update(float elapsed_time)
     collision_manager->judge(elapsed_time);
 
     imgui();
+
+    debug_decorator_supporter->imgui_control();
 }
 
 
@@ -185,6 +190,7 @@ void Scene_Game::render(float elapsed_time)
 
     Stage_Manager::instance().render(ptr_device_context);
     Entity_Manager::instance().render(ptr_device_context);
+    debug_decorator_supporter->render(ptr_device_context);
 
     shader->end(ptr_device_context);
 }

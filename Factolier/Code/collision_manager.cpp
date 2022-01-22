@@ -79,10 +79,10 @@ namespace ray_functions
         const float offset_y = scale.y * 0.5f;
         const float scale_epsilon = static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() ? SPHERE_SCALE_DECREASE * elapsed_time : 0.0f;
 
-        const DirectX::XMFLOAT3 position = entity.lock()->get_position();
+        const DirectX::XMFLOAT3 position = entity.lock()->get_latest_position();    //TODO: latest_position
         const DirectX::XMFLOAT3 tread = { position.x,position.y - scale.y + scale_epsilon, position.z };                                        // tread : 足下   (現在位置)
 
-        const DirectX::XMFLOAT3 start   = { tread.x - velocity.x, tread.y - velocity.y + offset_y, tread.z - velocity.z };   //                (前回位置)
+        const DirectX::XMFLOAT3 start   = { tread.x/* - velocity.x*/, tread.y - velocity.y + offset_y, tread.z/* - velocity.z*/ };   //                (前回位置)
         const DirectX::XMFLOAT3 end     = tread;
 
 
@@ -130,7 +130,7 @@ namespace ray_functions
         // そもそも移動していなければ　早期returnさせる
         //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
-        const DirectX::XMFLOAT3 position = entity.lock()->get_position();
+        const DirectX::XMFLOAT3 position = entity.lock()->get_position(); //TODO: latest_position
         const DirectX::XMFLOAT3 detect = { position.x - velocity.x,        position.y, position.z - velocity.z };
         
 
@@ -210,7 +210,7 @@ namespace ray_functions
             }
 
             // レイの結果を出力ウィンドウに出力
-#if 0
+#if _DEBUG
             if (entity.lock().get()->get_tag() == Tag::Vehicle)
             {
                 if (static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() == false)
@@ -218,8 +218,11 @@ namespace ray_functions
                     using namespace std;
 
 
-                    const DirectX::XMFLOAT3 start = { detect.x + offset_x + pudding_x,    detect.y,       detect.z };
-                    const DirectX::XMFLOAT3 end = { position.x + offset_x,              position.y,     position.z };
+                    //const DirectX::XMFLOAT3 start = { detect.x + offset_x + pudding_x,    detect.y,       detect.z };
+                    //const DirectX::XMFLOAT3 end = { position.x + offset_x,              position.y,     position.z };
+                    const DirectX::XMFLOAT3 start = { detect.x,   detect.y,   detect.z + offset_z + pudding_z };
+                    const DirectX::XMFLOAT3 end = { position.x, position.y, position.z + offset_z };
+
                     //
                     std::wstring out1 = std::to_wstring(start.x) + L" , ";
                     std::wstring out2 = std::to_wstring(start.y) + L" , ";
@@ -481,11 +484,11 @@ inline void ray_to_wall(
     }*/
 
     // 敵
-    wall_vec = {};
     for (auto index : std::get<1>(vectors_))
     {
         std::shared_ptr<Entity> enemy = e_manager.get_entity(index);
         result = {};
+        wall_vec = {};
         if (ray_cast_wall(elapsed_time, enemy, s_manager, result, wall_vec))
         {
             const DirectX::XMFLOAT3 velocity = enemy->get_velocity() * elapsed_time;
@@ -497,19 +500,19 @@ inline void ray_to_wall(
     }
 
     // 乗り物
-    wall_vec = {};
     for (auto index : std::get<2>(vectors_))
     {
         std::shared_ptr<Entity>  vehicle = e_manager.get_entity(index);
         const DirectX::XMFLOAT3& scale = vehicle->get_scale();
 
         result = {};
+        wall_vec = {};
         //if (ray_cast_wall(elapsed_time, vehicle, s_manager, result, wall_vec))
         if (ray_cast_wall(elapsed_time, vehicle, scale, s_manager, result, wall_vec))
         {
             
             const DirectX::XMFLOAT3 velocity = vehicle->get_velocity() * elapsed_time;
-            const DirectX::XMFLOAT3 position = vehicle->get_position();
+            const DirectX::XMFLOAT3 position = vehicle->get_position();  //TODO: latest_position
             vehicle->set_position({ position.x - velocity.x, position.y, position.z - velocity.z });
             vehicle->add_position({ wall_vec.x,0.0f,wall_vec.z });
 
@@ -517,7 +520,7 @@ inline void ray_to_wall(
 
             if (velocity.y < 0.0f)
             {
-                vehicle->set_friction(0.8f);
+                //vehicle->set_friction(0.8f);
             }
         }
 
@@ -527,8 +530,7 @@ inline void ray_to_wall(
 // ステージ外にでているか[ entity_managerに登録している "" プレイヤー、敵、乗り物 "" が処理されている ]
 inline void out_range(
     Entity_Manager& e_manager,
-    const vectors& vectors_
-)
+    const vectors& vectors_)
 {
 
     // プレイヤー
@@ -607,13 +609,12 @@ void Collision_Manager::judge(const float elapsed_time)
         vec_vehicle_indices
     };
 
-    // entity同士で当たり判定 (球)
-    entity_collide(
+    // 壁へのレイキャスト
+    ray_to_wall(
         elapsed_time,
-        e_manager,
+        e_manager, s_manager,
         vectors_
     );
-
 
     // 床へのレイキャスト
     ray_to_floor(
@@ -622,12 +623,13 @@ void Collision_Manager::judge(const float elapsed_time)
         vectors_
     );
 
-    // 壁へのレイキャスト
-    ray_to_wall(
-        elapsed_time,
-        e_manager, s_manager,
-        vectors_
-    );
+
+    //// entity同士で当たり判定 (球)
+    //entity_collide(
+    //    elapsed_time,
+    //    e_manager,
+    //    vectors_
+    //);
 
     // ステージ外にでているか
     out_range(

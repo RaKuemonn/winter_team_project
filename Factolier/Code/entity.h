@@ -31,17 +31,18 @@ public:
 
 public:
     // Getterä÷êî //
-    _NODISCARD Model*                      get_model()         const;
-    _NODISCARD const DirectX::XMFLOAT3&    get_velocity()      const;
-    _NODISCARD const DirectX::XMFLOAT3&    get_position()      const;
-    _NODISCARD const DirectX::XMFLOAT4&    get_quaternion()    const;
-    _NODISCARD const DirectX::XMFLOAT3&    get_scale()         const;
-    _NODISCARD const DirectX::XMFLOAT3     get_axis_x()        const;
-    _NODISCARD const DirectX::XMFLOAT3     get_axis_y()        const;
-    _NODISCARD const DirectX::XMFLOAT3     get_axis_z()        const;
-    _NODISCARD const Tag&                  get_tag()           const;
-    _NODISCARD       Ability&              get_ability()       const;
-    _NODISCARD const float                 get_mass()      const;
+    _NODISCARD Model*                      get_model()          const;
+    _NODISCARD const DirectX::XMFLOAT3&    get_velocity()       const;
+    _NODISCARD const DirectX::XMFLOAT3&    get_latest_position()const;
+    _NODISCARD const DirectX::XMFLOAT3&    get_position()       const;
+    _NODISCARD const DirectX::XMFLOAT4&    get_quaternion()     const;
+    _NODISCARD const DirectX::XMFLOAT3&    get_scale()          const;
+    _NODISCARD const DirectX::XMFLOAT3     get_axis_x()         const;
+    _NODISCARD const DirectX::XMFLOAT3     get_axis_y()         const;
+    _NODISCARD const DirectX::XMFLOAT3     get_axis_z()         const;
+    _NODISCARD const Tag&                  get_tag()            const;
+    _NODISCARD       Ability&              get_ability()        const;
+    _NODISCARD const float                 get_mass()           const;
 
 
     // Setterä÷êî //

@@ -130,7 +130,7 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
 
     set_tag(Tag::Player);
 
-    constexpr float scale = 0.01f;
+    constexpr float scale = 0.005f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
 }

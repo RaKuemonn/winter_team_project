@@ -161,7 +161,8 @@ public:
     }
 
     // Getterä÷êî //
-    _NODISCARD const auto& get_position()           const { return m_position.get(); }  // ç≈êVÇÃposition
+    _NODISCARD const auto& get_latest_position()    const { return m_position.get(); }  // ç≈êVÇÃposition
+    _NODISCARD const auto& get_position()           const { return m_offset; }
     _NODISCARD const auto& get_scale()              const { return m_latest_scale; }
     _NODISCARD const auto& get_quaternion()         const { return m_latest_quaternion; }
     _NODISCARD const auto& get_euler()              const { return m_latest_euler; }

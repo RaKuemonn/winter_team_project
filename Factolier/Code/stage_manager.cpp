@@ -59,6 +59,8 @@ bool Stage_Manager::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFL
 
     for (auto& stage : vec_stages)
     {
+        if(stage->get_is_raycast() == false) continue;
+
         if (stage->ray_cast(start, end, &result) == false) continue;
 
         if (result.distance > hit_result_->distance) continue;
