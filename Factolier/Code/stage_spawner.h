@@ -17,7 +17,7 @@ public:
     Stage_Spawner(class Scene_Manager* ptr_scene_manager_) : ptr_scene_manager(ptr_scene_manager_) {};
     ~Stage_Spawner() = default;
 
-    void set_enemies(class Scene_Manager* ptr_scene_manager);
+    void set_stages(class Scene_Manager* ptr_scene_manager);
 
 
 
