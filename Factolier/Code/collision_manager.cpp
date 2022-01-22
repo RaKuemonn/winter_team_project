@@ -484,11 +484,11 @@ inline void ray_to_wall(
     }*/
 
     // 敵
-    wall_vec = {};
     for (auto index : std::get<1>(vectors_))
     {
         std::shared_ptr<Entity> enemy = e_manager.get_entity(index);
         result = {};
+        wall_vec = {};
         if (ray_cast_wall(elapsed_time, enemy, s_manager, result, wall_vec))
         {
             const DirectX::XMFLOAT3 velocity = enemy->get_velocity() * elapsed_time;
@@ -500,13 +500,13 @@ inline void ray_to_wall(
     }
 
     // 乗り物
-    wall_vec = {};
     for (auto index : std::get<2>(vectors_))
     {
         std::shared_ptr<Entity>  vehicle = e_manager.get_entity(index);
         const DirectX::XMFLOAT3& scale = vehicle->get_scale();
 
         result = {};
+        wall_vec = {};
         //if (ray_cast_wall(elapsed_time, vehicle, s_manager, result, wall_vec))
         if (ray_cast_wall(elapsed_time, vehicle, scale, s_manager, result, wall_vec))
         {
@@ -520,7 +520,7 @@ inline void ray_to_wall(
 
             if (velocity.y < 0.0f)
             {
-                vehicle->set_friction(0.8f);
+                //vehicle->set_friction(0.8f);
             }
         }
 

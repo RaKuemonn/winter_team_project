@@ -208,7 +208,7 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
     DirectX::XMFLOAT3 front;
     DirectX::XMStoreFloat3(&front, Front);
 
-
+    
     if (input_manager->TRG(0) & MOUSE_LEFT && !clear_flag)
     {
         clear_flag = true;

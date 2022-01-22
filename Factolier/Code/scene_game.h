@@ -5,6 +5,7 @@
 #include "enemy_spawner.h"
 #include "collision_manager.h"
 #include "sky_box.h"
+#include "decotator_supporter.h"
 
 
 class Scene_Game : public Scene
@@ -23,5 +24,8 @@ private:
 	std::unique_ptr<Enemy_Spawner>		enemy_spawner = nullptr;
 	std::unique_ptr<Collision_Manager>	collision_manager = nullptr;
 
+
+
+	std::unique_ptr<Decotator_Supporter> debug_decorator_supporter = nullptr;
 	std::unique_ptr<class Camera_Controller> camera_controller = nullptr;
 };

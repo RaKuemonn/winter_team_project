@@ -80,6 +80,7 @@ void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
     // 引数の方向に加速
     m_velocity->add({ direction_.x * speed, 0.0f, direction_.z * speed });
 
+    // TODO: 一時的にコメントアウトしている
     // 一度でも着地していれば　操作を受け付けるようにしている
     //if (m_on_ground == false)return;
 

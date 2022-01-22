@@ -98,6 +98,8 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
 
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
+
+    debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_);
 }
 
 
@@ -120,6 +122,8 @@ void Scene_Game::update(float elapsed_time)
     collision_manager->judge(elapsed_time);
 
     imgui();
+
+    debug_decorator_supporter->imgui_control();
 }
 
 
@@ -185,6 +189,7 @@ void Scene_Game::render(float elapsed_time)
 
     Stage_Manager::instance().render(ptr_device_context);
     Entity_Manager::instance().render(ptr_device_context);
+    debug_decorator_supporter->render(ptr_device_context);
 
     shader->end(ptr_device_context);
 }

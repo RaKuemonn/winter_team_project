@@ -7,7 +7,10 @@ Decotator_Supporter::Decotator_Supporter(Scene_Manager* ptr_scene_manager_)
 {
     m_model = std::make_unique<Model>(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Entity::ball));
 
-    m_transform = std::unique_ptr<Transform>();
+    m_transform = std::make_unique<Transform>();
+    constexpr float scale = 0.5f;
+    m_transform->set_scale({ scale,scale,scale });
+    m_transform->Update();
 }
 
 #ifdef _DEBUG
@@ -21,7 +24,9 @@ void Decotator_Supporter::imgui_control()
 
     // imgui操作パラメーター群
     ImGui::InputFloat3("position", &position.x, "%.2f");
-    ImGui::InputFloat3("scale   ", &scale.x, "%.2f");
+    //ImGui::SliderFloat3("position", &position.x, -400.0f, 400.0f, "%.2f");
+    ImGui::InputFloat3("scale   ", &scale.x, "%.3f");
+    //ImGui::SliderFloat3("scale   ", &scale.x, 0.01f, 2.0f, "%.3f");
 
 
     m_transform->set_position(position);
@@ -33,6 +38,12 @@ void Decotator_Supporter::imgui_control()
     ImGui::End();
 }
 
+
+void Decotator_Supporter::render(ID3D11DeviceContext* device_context)
+{
+    m_model->render(device_context, m_transform->get_matrix(), { 1.0f, 1.0f, 1.0f, 1.0f });
+}
+
 #else
 
 void Decotator_Supporter::imgui_control()
@@ -42,5 +53,12 @@ void Decotator_Supporter::imgui_control()
 
 }
 
+void Decotator_Supporter::render(ID3D11DeviceContext* device_context)
+{
+
+}
+
 #endif
+
+
 

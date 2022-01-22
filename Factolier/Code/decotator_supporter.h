@@ -12,7 +12,7 @@ public:
 
 public:
     void imgui_control();
-    void render();
+    void render(ID3D11DeviceContext* device_context);
 
 private:
     std::unique_ptr<Transform>  m_transform;
