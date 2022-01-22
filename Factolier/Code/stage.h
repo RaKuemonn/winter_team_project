@@ -18,11 +18,15 @@ public:
 
     _NODISCARD Model* get_model()         const;
 
+    _NODISCARD bool get_is_raycast() const { return is_raycast; }
+
 protected:
     void load_model(std::shared_ptr<Model_Resource> model_);
     _NODISCARD Transform* get_transform();
 
+    _NODISCARD void set_is_raycast(bool is_) { is_raycast = is_; }      // レイキャストしたくないstageオブジェクトはこの関数でis_raycastをfalseにする
 private:
     std::unique_ptr<Model>  m_model     = nullptr;
     Transform*              m_transform = nullptr;
+    bool is_raycast                     = true;
 };
