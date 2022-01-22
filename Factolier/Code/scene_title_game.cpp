@@ -67,8 +67,8 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     //return_title = make_unique<Sprite>(parent->device(), "Data/enter_仮.png");
     //audio_set = make_unique<Sprite>(parent->device(), "Data/audio_仮.png");
 
-    //sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/_.wav"));
-    ////sound->play(true);
+    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/タイトル.wav"));
+    sound->play(true);
 
 
 }
@@ -80,6 +80,7 @@ void Scene_Title_Game::uninitialize()
 
 void Scene_Title_Game::update(float elapsed_time)
 {
+    
     slideshow(elapsed_time);
 
     if(!option_flag)
@@ -180,7 +181,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             }
         }
     }
-
+    
 }
 
 void Scene_Title_Game::slideshow(float elapsedTime)
@@ -239,12 +240,16 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
             gauge -= 1.2f;
         }
     }*/
-    
+    sound->pause();
+    parent->option_manager()->update(elapsedTime, input_manager);
+    //sound->set_volume(parent->option_manager()->icon_pos);
     if (input_manager->TRG(0) & PAD_START)
     {
         option_flag = false;
+        sound->resume();
     }
    
+    
     
 }
 
@@ -328,14 +333,16 @@ void Scene_Title_Game::render(float elapsed_time)
     }
 
     // タイトル
-    title->render(device_context_,
-        100, 150,
-        1.0f, 1.0f,
-        900, 384,
-        900, 384,
-        0, 0,
-        1, 1, 1, 1.0f,
-        -15);
+    /*{
+        title->render(device_context_,
+            100, 150,
+            1.0f, 1.0f,
+            900, 384,
+            900, 384,
+            0, 0,
+            1, 1, 1, 1.0f,
+            -15);
+    }*/
 
     // 点滅用
     timer++;
