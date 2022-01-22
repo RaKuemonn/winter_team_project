@@ -3,6 +3,9 @@
 #include "enemy.h"
 #include "Timer.h"
 
+
+// ‚±‚ÌƒNƒ‰ƒX‚ğ¶¬‚·‚é‚Æ‘Ì•”•ª‚à¶¬‚³‚ê‚é
+
 class Boss : public Enemy
 {
 public:
@@ -20,10 +23,12 @@ private:
     void init_move_4();
 
 private:
-    static constexpr int move_phase_size = 4;
+    static constexpr int move_phase_size    = 4;
+    static constexpr int body_size          = 3;
     Timer m_timer;
 
-    std::unique_ptr<Move_Phases<Boss>> m_move_phases = nullptr;
-    Move_Phase<Boss>* m_move_phase[move_phase_size]  = {};
+    std::weak_ptr<class Boss_Body> wkp_bodies[body_size]    = {};
+    std::unique_ptr<Move_Phases<Boss>> m_move_phases        = nullptr;
+    Move_Phase<Boss>* m_move_phase[move_phase_size]         = {};
 };
 

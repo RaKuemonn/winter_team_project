@@ -85,7 +85,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
     enemy_spawner->
-        set_enemy<Boss>({0.0f,5.0f,0.0f},player->get_position());
+        set_enemy<Boss>(player->get_position());
     //     set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
