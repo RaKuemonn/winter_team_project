@@ -1,10 +1,12 @@
 
 #include "option_manager.h"
+#include "imgui.h"
 
 Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* context)
 {
     immediate_context = context;
     back = make_unique<Sprite>(device, "Data/back.png");
+    File_IO::open("save.dat", binary_data);
 }
 
 

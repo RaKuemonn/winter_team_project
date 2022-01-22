@@ -94,7 +94,41 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     collision_manager = std::unique_ptr<Collision_Manager>();
 
     stage_spawner = std::make_unique<Stage_Spawner>(parent);
-    stage_spawner->set_stage<Stage_1>();
+
+    switch (CAST_I(parent->option_manager()->get_now_stage()))
+    {
+
+    case CAST_I(Stage_Select::STAGE_1):
+    {
+        stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_2):
+    {
+        //stage_spawner->set_stage<Stage_2>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_3):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_4):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_BOSS):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    }
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
 
 

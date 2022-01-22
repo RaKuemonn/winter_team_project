@@ -27,6 +27,8 @@ void Scene_Select::DrawDebugGUI()
             ImGui::InputFloat("eas", &eas);
             ImGui::InputFloat("time", &time);
         }
+
+        ImGui::InputInt("select_to_stage", &select_to_stage);
     }
     ImGui::End();
 }
@@ -50,7 +52,7 @@ void Scene_Select::initialize(Scene_Manager* parent_)
 
 void Scene_Select::uninitialize()
 {
- 
+    File_IO::write("save.dat", parent->option_manager()->get_binary());
 }
 
 
@@ -73,10 +75,10 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
         }
         if (left_flag)
         {
-            if (time <= 0.7f)
+            if (time <= 0.5f)
             {
                 time += elapsedTime;
-                eas = -easing::out_quint(time, 0.7f, 500.0f, 0.0f);
+                eas = -easing::out_quint(time, 0.5f, 500.0f, 0.0f);
             }
             else
             {
@@ -85,6 +87,8 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                 time = 0.0f;
                 position -= 500.0f;
                 eas = 0.0f;
+
+                select_to_stage++;
             }
         }
     }
@@ -99,10 +103,10 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
         }
         if (right_flag)
         {
-            if (time <= 0.6f)
+            if (time <= 0.5f)
             {
                 time += elapsedTime;
-                eas = +easing::out_quint(time, 0.6f, 500.0f, 0.0f);
+                eas = +easing::out_quint(time, 0.5f, 500.0f, 0.0f);
             }
             else
             {
@@ -111,6 +115,8 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                 time = 0.0f;
                 position += 500.0f;
                 eas = 0.0f;
+
+                select_to_stage--;
             }
         }
     }
@@ -123,6 +129,16 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
             if (input_manager->TRG(0) & PAD_START)
             {
                 parent->change_scene(new Scene_Title_Game);
+
+                switch (select_to_stage)
+                {
+                case CAST_I(Stage_Select::STAGE_1):
+                {
+                    parent->option_manager()->set_next_stage(Stage_Select::STAGE_1);
+                    break;
+                }
+
+                }
             }
         }
         
