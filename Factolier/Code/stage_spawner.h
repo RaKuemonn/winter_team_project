@@ -22,7 +22,7 @@ public:
 
 
     template<typename T>
-    Stage_Spawner& set_stage(const DirectX::XMFLOAT3 & position_)
+    Stage_Spawner& set_stage(const DirectX::XMFLOAT3 & position_ = {})
     {
 
         std::unique_ptr<Stage> stage;
@@ -41,7 +41,7 @@ public:
 
         assert(stage.get());
 
-        stage->set_position(position_);
+        //stage->set_position(position_);
 
         Stage_Manager::instance().spawn_register(stage);
 

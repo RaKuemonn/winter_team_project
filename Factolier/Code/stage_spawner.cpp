@@ -1,7 +1,7 @@
 #include "stage_spawner.h"
 #include "stage.h"
 
-void Stage_Spawner::set_enemies(Scene_Manager* ptr_scene_manager)
+void Stage_Spawner::set_stages(Scene_Manager* ptr_scene_manager)
 {
     Stage_Manager& manager = Stage_Manager::instance();
 

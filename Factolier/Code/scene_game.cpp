@@ -93,7 +93,8 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
     collision_manager = std::unique_ptr<Collision_Manager>();
 
-    Stage_Manager::instance().spawn_register(std::make_unique<Stage_1>(parent));
+    stage_spawner = std::make_unique<Stage_Spawner>(parent);
+    stage_spawner->set_stage<Stage_1>();
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
 
 
