@@ -15,6 +15,7 @@ namespace Model_Paths
         inline constexpr char* const ball               = "./Data/ball_demo.fbx";
         inline constexpr char* const enemy_none         = test;
         inline constexpr char* const enemy_move_closer  = test;
+        inline constexpr char* const enemy_boss_head    = "./Data/Boss/head/boss_head.fbx";
 
     };
 
