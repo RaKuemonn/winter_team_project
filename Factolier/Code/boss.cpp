@@ -3,7 +3,13 @@
 #include "ability.h"
 #include "model_filepaths.h"
 #include "scene_manager.h"
+#include "entity_manager.h"
 #include "transform.h"
+
+#include "boss_body_1.h"
+#include "boss_body_2.h"
+#include "boss_body_3.h"
+using namespace body;
 
 // 別名エイリアス
 using _this_type_ = Boss;
@@ -21,24 +27,41 @@ Boss::Boss(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_po
     // 体力の設定
     get_ability().set_init(4);
 
-    constexpr float scale = 0.5f;
+    
+
+    
+    {
+        std::shared_ptr<Boss_Body> body_1 = std::make_shared<Boss_Body_1>(ptr_scene_manager_, target_position_);
+        std::shared_ptr<Boss_Body> body_2 = std::make_shared<Boss_Body_2>(ptr_scene_manager_, target_position_, body_1);
+        std::shared_ptr<Boss_Body> body_3 = std::make_shared<Boss_Body_3>(ptr_scene_manager_, target_position_, body_1, body_2);
+
+        wkp_bodies[0] = body_1;
+        wkp_bodies[1] = body_2;
+        wkp_bodies[2] = body_3;
+
+
+        std::shared_ptr<Entity> e_body_1 = body_1;
+        std::shared_ptr<Entity> e_body_2 = body_2;
+        std::shared_ptr<Entity> e_body_3 = body_3;
+        Entity_Manager::instance().spawn_register(e_body_1);
+        Entity_Manager::instance().spawn_register(e_body_2);
+        Entity_Manager::instance().spawn_register(e_body_3);
+    }
+    
     get_transform()->set_scale({ scale,scale,scale });
+    const DirectX::XMFLOAT3& under_body_position        = wkp_bodies[2].lock()->get_position();
+    set_position({ under_body_position.x,under_body_position.y + body_height ,under_body_position.z });
     get_transform()->Update();
+
 }
 
 void Boss::update(const float elapsed_time_)
 {
     // 行動遷移用の時間更新
     m_timer.Update(elapsed_time_);
-
+    
     // 親の行動遷移
     m_move_phases->update(elapsed_time_, *this);
-
-    // 速度更新
-    update_velocity(elapsed_time_);   // 重力がかかっている
-
-    // 位置の更新
-    add_position(m_velocity->get() * elapsed_time_);
 
     // 姿勢の更新
     get_transform()->Update();

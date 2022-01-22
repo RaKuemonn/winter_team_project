@@ -176,6 +176,7 @@
     <ClCompile Include="External\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Factolier\Code\binary_loader.cpp" />
     <ClCompile Include="Factolier\Code\boss.cpp" />
+    <ClCompile Include="Factolier\Code\boss_body.cpp" />
     <ClCompile Include="Factolier\Code\boss_body_1.cpp" />
     <ClCompile Include="Factolier\Code\boss_body_2.cpp" />
     <ClCompile Include="Factolier\Code\boss_body_3.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="Factolier\Code\base_move_phase.h" />
     <ClInclude Include="Factolier\Code\binary_loader.h" />
     <ClInclude Include="Factolier\Code\boss.h" />
+    <ClInclude Include="Factolier\Code\boss_body.h" />
     <ClInclude Include="Factolier\Code\boss_body_1.h" />
     <ClInclude Include="Factolier\Code\boss_body_2.h" />
     <ClInclude Include="Factolier\Code\boss_body_3.h" />

@@ -309,6 +309,9 @@
     <ClCompile Include="Factolier\Code\boss_body_3.cpp">
       <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\boss_body.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene_loading.h">
@@ -573,6 +576,9 @@
       <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\boss_body_3.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\boss_body.h">
       <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
     </ClInclude>
   </ItemGroup>
