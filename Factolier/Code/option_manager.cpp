@@ -2,6 +2,13 @@
 #include "option_manager.h"
 #include "easing.h"
 
+#define BGM 0
+#define SE 180
+#define CAMERA 360
+#define BAR_MAX 504
+#define BAR_MIN 0
+
+
 // デバッグ用GUI描画
 void Option_Manager::DrawDebugGUI()
 {
@@ -38,6 +45,7 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     bar = make_unique<Sprite>(device, "Data/option_2仮.png");
     option = make_unique<Sprite>(device, "Data/option_3仮.png");
     icon = make_unique<Sprite>(device, "Data/team1_flower_90×90.png");
+    arrow = make_unique<Sprite>(device, "Data/バー矢印(38,164).png");
 }
 
 
@@ -99,46 +107,40 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
 
 void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 {
+    icon_select = static_cast<int>(icon_pos);
     // アイコンがBGMのところにいたら
-    if (icon_pos == 0)
+
+    switch (icon_select)
     {
-        if (bgm_bar >= 0 && bgm_bar <= 504)
+    case BGM:
+        if (bgm_bar >= BAR_MIN && bgm_bar <= BAR_MAX)
         {
             if (input_manager->STATE(0) & PAD_RIGHT)
             {
                 bgm_bar += 4;
             }
-            
+
             if (input_manager->STATE(0) & PAD_LEFT)
             {
-              bgm_bar -= 4;
+                bgm_bar -= 4;
             }
         }
-        if (bgm_bar <= 0)
+        if (bgm_bar <= BAR_MIN)
         {
-            bgm_bar = 0;
+            bgm_bar = BAR_MIN;
         }
-        if (bgm_bar >= 504)
+        if (bgm_bar >= BAR_MAX)
         {
-            bgm_bar = 504;
+            bgm_bar = BAR_MAX;
         }
-       
-    }
-    // 何割あるかパーセントで出す
-    // 描画範囲　％
-    bgm_move = bgm_bar / 504;
-    // BGM ボリューム　%
-    bgm_vo = 1 * bgm_move;
+        break;
 
-    // SE
-    // やってることはBGMと同じ
-    if (icon_pos == 180)
-    {
-        if (se_bar >= 0 && se_bar <= 504)
+    case SE:
+        if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
         {
             if (input_manager->STATE(0) & PAD_RIGHT)
             {
-               se_bar += 4;
+                se_bar += 4;
             }
 
             if (input_manager->STATE(0) & PAD_LEFT)
@@ -146,25 +148,18 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
                 se_bar -= 4;
             }
         }
-        if (se_bar <= 0)
+        if (se_bar <= BAR_MIN)
         {
-            se_bar = 0;
+            se_bar = BAR_MIN;
         }
-        if (se_bar >= 504)
+        if (se_bar >= BAR_MAX)
         {
-            se_bar = 504;
+            se_bar = BAR_MAX;
         }
-       
-    }
-    se_move = se_bar / 504;
-    se_vo = 1 * se_move;
+        break;
 
-
-    // カメラのバーを動かす処理
-    // BGMと同じ
-    if (icon_pos == 360)
-    {
-        if (se_bar >= 0 && se_bar <= 504)
+    case CAMERA:
+        if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
         {
             if (input_manager->STATE(0) & PAD_RIGHT)
             {
@@ -176,17 +171,28 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
                 camera_bar -= 4;
             }
         }
-        if (camera_bar <= 0)
+        if (camera_bar <= BAR_MIN)
         {
-            camera_bar = 0;
+            camera_bar = BAR_MIN;
         }
-        if (camera_bar >= 504)
+        if (camera_bar >= BAR_MAX)
         {
-            camera_bar = 504;
+            camera_bar = BAR_MAX;
         }
-
+        break;
     }
-    camera_move = camera_bar / 504;
+    // 何割あるかパーセントで出す
+    // 描画範囲　％
+    bgm_move = bgm_bar / BAR_MAX;
+    // BGM ボリューム　%
+    bgm_vo = 1 * bgm_move;
+    // SE
+    // やってることはBGMと同じ
+    se_move = se_bar / BAR_MAX;
+    se_vo = 1 * se_move;
+    // カメラのバーを動かす処理
+    // BGMと同じ
+    camera_move = camera_bar / BAR_MAX;
   
 }
     
@@ -224,6 +230,7 @@ void Option_Manager::render()
         0, 0,
         1, 1, 1, 1,
         0);
+
 
 
     // BGM設定
@@ -323,6 +330,32 @@ void Option_Manager::render()
             1, 1, 1, 1.0,   // rgba
             0); // angle
     }
+
+
+    // 矢印
+    switch (icon_select)
+    {
+    case BGM:
+        arrow_x = 806;
+        arrow_y = 298;
+        break;
+    case SE:
+        arrow_x = 806;
+        arrow_y = 478;
+        break;
+    case CAMERA:
+        arrow_x = 806;
+        arrow_y = 658;
+        break;
+    }
+    arrow->render(immediate_context,
+        arrow_x, arrow_y,
+        1.0f, 1.0f,
+        38, 164,
+        38, 164,
+        0, 0,
+        1, 1, 1, 1,
+        0);
 
     DrawDebugGUI();
 }

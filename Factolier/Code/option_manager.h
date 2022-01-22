@@ -37,8 +37,13 @@ public:
 
     float time = 0; // Œo‰ßŽžŠÔ
 
+    float arrow_x = 0;
+    float arrow_y = 0;
+
     bool up_flag = false;
     bool down_flag = false;
+
+    int icon_select = 0;
 
     
 
@@ -53,4 +58,5 @@ private:
     std::unique_ptr<Sprite> option = nullptr;
     std::unique_ptr<Sprite> bar = nullptr;
     std::unique_ptr<Sprite> icon = nullptr;
+    std::unique_ptr<Sprite> arrow = nullptr;
 };
