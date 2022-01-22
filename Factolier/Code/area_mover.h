@@ -5,7 +5,7 @@
 #include "math_xmfloat.h"
 
 template<typename Enemy>
-class Area_Mover : public Base_Move<Enemy>
+class Area_Mover final : public Base_Move<Enemy>
 {
 public:
     void update(float elapsed_time_, Enemy& type_) override

@@ -100,6 +100,18 @@
     <Filter Include="Factolier\Stage\Decorator">
       <UniqueIdentifier>{6aa6e834-a624-49f8-95ee-4a7d722d77c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Entity\Enemy\Eneies">
+      <UniqueIdentifier>{e87564f8-2baf-472c-8aa1-5db8442e06c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Entity\Enemy\test">
+      <UniqueIdentifier>{540a3463-536b-4a1b-bd9d-adbdf815108e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Entity\Enemy\Eneies\Weak">
+      <UniqueIdentifier>{94e996a2-604b-4e1d-9595-89c36bcbb2da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Entity\Enemy\Eneies\Boss">
+      <UniqueIdentifier>{70bee231-49cb-4723-81cb-5c8e1ef4da70}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_loading.cpp">
@@ -216,9 +228,6 @@
     <ClCompile Include="Factolier\Code\sphere_status.cpp">
       <Filter>Factolier\Entity\Status</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\enemy_move_closer.cpp">
-      <Filter>Factolier\Entity\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Factolier\Code\easing.cpp">
       <Filter>Factolier\Utility</Filter>
     </ClCompile>
@@ -227,9 +236,6 @@
     </ClCompile>
     <ClCompile Include="Factolier\Code\scene_select.cpp">
       <Filter>Factolier\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Factolier\Code\enemy_move_closer_.cpp">
-      <Filter>Factolier\Entity\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Factolier\Code\scene_title_game.cpp">
       <Filter>Factolier\Scene</Filter>
@@ -284,6 +290,27 @@
     </ClCompile>
     <ClCompile Include="Factolier\Code\stage_spawner.cpp">
       <Filter>Factolier\Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\enemy_move_closer.cpp">
+      <Filter>Factolier\Entity\Enemy\test</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\enemy_move_closer_.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\boss.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\boss_body_1.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\boss_body_2.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\boss_body_3.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\boss_body.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -437,9 +464,6 @@
     <ClInclude Include="Factolier\Code\digits.h">
       <Filter>Factolier\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\enemy_move_closer.h">
-      <Filter>Factolier\Entity\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Factolier\Code\easing.h">
       <Filter>Factolier\Utility</Filter>
     </ClInclude>
@@ -457,9 +481,6 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\base_move_phase.h">
       <Filter>Factolier\Entity\Enemy\Move_Phase</Filter>
-    </ClInclude>
-    <ClInclude Include="Factolier\Code\enemy_move_closer_.h">
-      <Filter>Factolier\Entity\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\area_mover.h">
       <Filter>Factolier\Entity\Enemy\Moves</Filter>
@@ -535,6 +556,30 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\stage_spawner.h">
       <Filter>Factolier\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy_move_closer.h">
+      <Filter>Factolier\Entity\Enemy\test</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy_move_closer_.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\boss.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\idle.h">
+      <Filter>Factolier\Entity\Enemy\Moves</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\boss_body_1.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\boss_body_2.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\boss_body_3.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\boss_body.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

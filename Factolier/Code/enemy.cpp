@@ -8,7 +8,7 @@ Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const char* filename_, const Dir
 {
 
     set_ptr_scene_manager(ptr_scene_manager_);
-    load_model(get_scene_manager()->model_manager()->load_model(filename_));
+    load_model(get_scene_manager()->model_manager()->load_model(filename_, true));
     set_tag(Tag::Enemy);
 
     m_velocity->set_mass(1.0f);

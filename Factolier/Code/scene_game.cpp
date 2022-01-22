@@ -1,5 +1,7 @@
 
 #include "scene_game.h"
+
+#include "boss.h"
 #include "scene_manager.h"
 #include "shader_manager.h"
 #include "camera.h"
@@ -81,8 +83,9 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
 
     Entity_Manager::instance().spawn_register(player);
-    //enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
+    enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
     //enemy_spawner->
+    //    set_enemy<Boss>(player->get_position());
     //     set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
@@ -94,6 +97,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     collision_manager = std::unique_ptr<Collision_Manager>();
 
     stage_spawner = std::make_unique<Stage_Spawner>(parent);
+<<<<<<< HEAD
 
     switch (CAST_I(parent->option_manager()->get_now_stage()))
     {
@@ -129,6 +133,9 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     }
 
     }
+=======
+    //stage_spawner->set_stage<Stage_1>();
+>>>>>>> 667e84f148c8f6b717b3b9629e885ba4895596ab
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
 
 
