@@ -9,7 +9,7 @@
 #include "Timer.h"
 
 // 定数
-constexpr float scale = 0.7f;
+constexpr float scale = 2.0f;
 
 // 一定間隔でスケールを削っていく関数
 // TODO : 速度が0.0fに近づくにつれてスケールも0.0fに近づけたい
@@ -44,7 +44,7 @@ Sphere_Vehicle::Sphere_Vehicle(Scene_Manager* ptr_scene_manager_, const char* fi
 
     set_tag(Tag::Vehicle);
     
-    m_velocity->set_mass(scale);
+    m_velocity->set_mass(2.0f);
     m_velocity->set_friction(0.0f);
 
     get_transform()->set_scale({ scale,scale,scale });
@@ -81,7 +81,7 @@ void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
     m_velocity->add({ direction_.x * speed, 0.0f, direction_.z * speed });
 
     // 一度でも着地していれば　操作を受け付けるようにしている
-    if (m_on_ground == false)return;
+    //if (m_on_ground == false)return;
 
     m_is_jump = static_cast<bool>(direction_.y);
 }

@@ -42,7 +42,7 @@ private:
         const float sign = (dot_right_or_left > 0.0f) ? +1.0f : -1.0f;
         const float dot = DirectX::XMVectorGetX(DirectX::XMVector3Dot(to_target_direction, front_direction));           // 正規化されたベクトルによる内積
 
-        if (dot >= 1.0f - FLT_EPSILON) return;
+        if (std::abs(dot) >= 1.0f - FLT_EPSILON) return;
 
 
         const DirectX::XMVECTOR cross = DirectX::XMVector3Normalize(DirectX::XMVector3Cross(front_direction, to_target_direction));   // 正規化されたベクトルによる外積

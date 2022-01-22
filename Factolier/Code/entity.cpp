@@ -42,6 +42,12 @@ const DirectX::XMFLOAT3& Entity::get_position() const
     return m_transform->get_position();
 }
 
+const DirectX::XMFLOAT3& Entity::get_latest_position() const
+{
+    return m_transform->get_latest_position();
+}
+
+
 const DirectX::XMFLOAT4& Entity::get_quaternion() const
 {
     return m_transform->get_quaternion();

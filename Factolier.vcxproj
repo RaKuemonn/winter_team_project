@@ -178,6 +178,7 @@
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
     <ClCompile Include="Factolier\Code\collision_manager.cpp" />
+    <ClCompile Include="Factolier\Code\decotator_supporter.cpp" />
     <ClCompile Include="Factolier\Code\easing.cpp" />
     <ClCompile Include="Factolier\Code\effect.cpp" />
     <ClCompile Include="Factolier\Code\effect_manager.cpp" />
@@ -222,6 +223,7 @@
     <ClCompile Include="Factolier\Code\stage_1_movement.cpp" />
     <ClCompile Include="Factolier\Code\stage_2.cpp" />
     <ClCompile Include="Factolier\Code\stage_manager.cpp" />
+    <ClCompile Include="Factolier\Code\stage_spawner.cpp" />
     <ClCompile Include="Factolier\Code\state_manager.cpp" />
     <ClCompile Include="Factolier\Code\static_mesh.cpp" />
     <ClCompile Include="Factolier\Code\sv_ball.cpp" />
@@ -246,6 +248,7 @@
     <ClInclude Include="Factolier\Code\camera_controller.h" />
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
+    <ClInclude Include="Factolier\Code\decotator_supporter.h" />
     <ClInclude Include="Factolier\Code\enemy_move_closer_.h" />
     <ClInclude Include="Factolier\Code\model_filepaths.h" />
     <ClInclude Include="Factolier\Code\digits.h" />
@@ -301,6 +304,7 @@
     <ClInclude Include="Factolier\Code\stage_1_movement.h" />
     <ClInclude Include="Factolier\Code\stage_2.h" />
     <ClInclude Include="Factolier\Code\stage_manager.h" />
+    <ClInclude Include="Factolier\Code\stage_spawner.h" />
     <ClInclude Include="Factolier\Code\state_manager.h" />
     <ClInclude Include="Factolier\Code\static_mesh.h" />
     <ClInclude Include="Factolier\Code\sv_ball.h" />
