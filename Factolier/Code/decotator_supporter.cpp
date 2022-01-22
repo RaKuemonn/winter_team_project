@@ -12,7 +12,7 @@ Decotator_Supporter::Decotator_Supporter(Scene_Manager* ptr_scene_manager_)
     m_transform->set_scale({ scale,scale,scale });
     m_transform->Update();
 
-    m_range = { -100.0f,+100.0f };
+    m_range = { -20.0f,+20.0f };
 }
 
 #ifdef _DEBUG

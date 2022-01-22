@@ -211,7 +211,7 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
     
     if (input_manager->TRG(0) & MOUSE_LEFT && !clear_flag)
     {
-        clear_flag = true;
+        //clear_flag = true;
     }
 
 
