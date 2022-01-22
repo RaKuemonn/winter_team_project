@@ -616,12 +616,12 @@ void Collision_Manager::judge(const float elapsed_time)
         vectors_
     );
 
-    //// 床へのレイキャスト
-    //ray_to_floor(
-    //    elapsed_time,
-    //    e_manager, s_manager,
-    //    vectors_
-    //);
+    // 床へのレイキャスト
+    ray_to_floor(
+        elapsed_time,
+        e_manager, s_manager,
+        vectors_
+    );
 
 
     //// entity同士で当たり判定 (球)

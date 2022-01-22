@@ -4,6 +4,8 @@
 
 constexpr float SPHERE_SCALE_DECREASE = -0.15f;
 
+// 重要 :　スケール値が""""半径""""!!!!!
+
 class Sphere_Vehicle : public Entity
 {
 public:
