@@ -28,7 +28,8 @@ public:
     void setvolume(float elapsedTime, Input_Manager* input_manager);
     // デバッグ用GUI描画
     void DrawDebugGUI();
-    void render();
+    void title_render();
+    void game_render();
 
     void set_next_stage(Stage_Select next_stage) { now_stage = next_stage; }
     Stage_Select get_now_stage() { return now_stage; }
@@ -83,5 +84,6 @@ private:
     std::unique_ptr<Sprite> icon = nullptr;
     std::unique_ptr<Sprite> arrow = nullptr;
     std::unique_ptr<Sprite> enter = nullptr;
+    std::unique_ptr<Sprite> title = nullptr;
 
 };

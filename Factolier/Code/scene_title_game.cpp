@@ -20,17 +20,7 @@ void Scene_Title_Game::DrawDebugGUI()
         // トランスフォーム
         if (ImGui::CollapsingHeader("transform", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            /*ImGui::InputFloat("time", &time);
-            ImGui::InputFloat("elapsedTime", &icon_eas);
-            ImGui::InputFloat("slide", &slide_bebug);
-            ImGui::InputFloat("slidetimer", &slidetimer);
-            ImGui::InputFloat("back_stage1_alpha", &back_stage1_alpha);
-            ImGui::InputFloat("back_stage2_alpha", &back_stage2_alpha);
-            ImGui::InputFloat("back_stage3_alpha", &back_stage3_alpha);
-            ImGui::InputFloat("back_stage4_alpha", &back_stage4_alpha);
-            ImGui::InputFloat("alpha_ress", &alpha_ress);
-            ImGui::InputFloat("again", &again);
-            ImGui::InputFloat("decimals", &again);*/
+            
             ImGui::InputFloat("icon_eas", &icon_eas);
             ImGui::InputFloat("icon_pos", &icon_pos);
             ImGui::InputFloat("time", &time);
@@ -389,7 +379,7 @@ void Scene_Title_Game::render(float elapsed_time)
     // オプション画面を開いたとき
     else
     {
-        parent->option_manager()->render();
+        parent->option_manager()->game_render();
     }
 
    

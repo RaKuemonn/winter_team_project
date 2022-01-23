@@ -21,24 +21,11 @@ bool Framework::initialize()
 	//シーンマネージャー生成
 	scene_manager = std::make_unique<Scene_Manager>();
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
-<<<<<<< HEAD
 
 	//scene_manager->change_scene(new Scene_Game);
 	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
 	//scene_manager->change_scene(new Scene_Select);
 	scene_manager->change_scene(new Scene_Title_Game);
-=======
-	
-	//scene_manager->change_scene(new Scene_Game);
-	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
-	//scene_manager->change_scene(new Scene_Select);
-	//scene_manager->change_scene(new Scene_Title_Game);
-	//scene_manager->change_scene(new Scene_Title_Game);
-	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
-	scene_manager->change_scene(new Scene_Game);
-	//scene_manager->change_scene(new Scene_Loading(new Scene_Title));
->>>>>>> 4f1dde40d92ca8b323bee719ab41216667481a56
-	//scene_manager->change_scene(new Scene_Game);
 	
 
 

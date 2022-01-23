@@ -51,6 +51,7 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     icon = make_unique<Sprite>(device, "Data/team1_flower_90Å~90.png");
     arrow = make_unique<Sprite>(device, "Data/ÉoÅ[ñÓàÛ(38,164).png");
     enter = make_unique<Sprite>(device, "Data/push the Enter.png");
+    title = make_unique<Sprite>(device, "Data/title_returnâº.png");
     option_bakc = make_unique<Sprite>(device, "Data/option_4âº.png");
 }
 
@@ -208,8 +209,8 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
     
 
 
-
-void Option_Manager::render()
+// É^ÉCÉgÉãÇ≈ï\é¶Ç∑ÇÈÉIÉvÉVÉáÉìâÊñ 
+void Option_Manager::title_render()
 {
     // îwåi
     // îwåi
@@ -392,4 +393,190 @@ void Option_Manager::render()
         0); // angle
 
     //DrawDebugGUI();
+}
+
+
+// ÉQÅ[ÉÄì‡Ç≈ï\é¶Ç∑ÇÈÉIÉvÉVÉáÉìâÊñ 
+void Option_Manager::game_render()
+{
+    // îwåi
+    option_bakc->render(
+        immediate_context,
+        0, 0,  //position
+        1, 1,     // scal
+        1920, 1080,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        1920, 1080,   // size
+        0, 0,         // pibot
+        1, 1, 1, 0.5,   // rgba
+        0); // angle
+    back->render(
+        immediate_context,
+        300, 180,  //position
+        1, 1,     // scal
+        1280, 720,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        1280, 720,   // size
+        0, 0,         // pibot
+        1, 1, 1, 0.5,   // rgba
+        0); // angle
+
+    //ÉIÉvÉVÉáÉì
+    option->render(
+        immediate_context,
+        650, 200,  //position
+        1, 1,     // scal
+        516, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        516, 128,   // size
+        0, 0,         // pibot
+        1, 1, 1, 1.0,   // rgba
+        0); // angle
+
+    // ÉAÉCÉRÉì
+    icon->render(immediate_context,
+        330, 340 + icon_eas + icon_pos,
+        1.0f, 1.0f,
+        128, 128,
+        128, 128,
+        0, 0,
+        1, 1, 1, 1,
+        0);
+
+
+
+    // BGMê›íË
+    {
+        bgm->render(
+            immediate_context,
+            500, 340,  //position
+            1, 1,     // scal
+            256, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            256, 128,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1.0,   // rgba
+            0); // angle
+
+        bar_back->render(
+            immediate_context,
+            800, 340,  //position
+            1, 1,     // scal
+            516, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            516, 128,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1.0,   // rgba
+            0); // angle
+
+        bar->render(
+            immediate_context,
+            806, 346,  //position
+            1, 1,     // scal
+            504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            504 * bgm_move, 116,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1.0,   // rgba
+            0); // angle
+    }
+
+    // SEê›íË
+    {
+        se->render(
+            immediate_context,
+            500, 520,  //position
+            1, 1,     // scal
+            256, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            256, 128,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1.0,   // rgba
+            0); // angle
+
+        bar_back->render(
+            immediate_context,
+            800, 520,  //position
+            1, 1,     // scal
+            516, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            516, 128,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1.0,   // rgba
+            0); // angle
+        bar->render(
+            immediate_context,
+            806, 526,  //position
+            1, 1,     // scal
+            504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            504 * se_move, 116,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1.0,   // rgba
+            0); // angle
+    }
+
+    // ÉJÉÅÉâä¥ìxê›íË
+    {
+        camera->render(
+            immediate_context,
+            500, 700,  //position
+            1, 1,     // scal
+            256, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            256, 128,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1.0,   // rgba
+            0); // angle
+
+
+        bar_back->render(
+            immediate_context,
+            800, 700,  //position
+            1, 1,     // scal
+            516, 128,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            516, 128,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1.0,   // rgba
+            0); // angle
+        bar->render(
+            immediate_context,
+            806, 706,  //position
+            1, 1,     // scal
+            504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+            504 * camera_move, 116,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1.0,   // rgba
+            0); // angle
+    }
+
+
+    // ñÓàÛ
+    switch (icon_select)
+    {
+    case BGM:
+        arrow_x = 790;
+        arrow_y = 298;
+        arrow_move = arrow_bgm;
+        break;
+    case SE:
+        arrow_x = 790;
+        arrow_y = 478;
+        arrow_move = arrow_se;
+        break;
+    case CAMERA:
+        arrow_x = 790;
+        arrow_y = 658;
+        arrow_move = arrow_camera;
+        break;
+    }
+    arrow->render(immediate_context,
+        arrow_x + arrow_move, arrow_y,
+        1.0f, 1.0f,
+        38, 164,
+        38, 164,
+        0, 0,
+        1, 1, 1, 1,
+        0);
+
+    title->render(immediate_context,
+        710, 840,  //position
+        1.0f, 1.0f,     // scal
+        384, 64,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        384, 64,   // size
+        0, 0,         // pibot
+        1, 1, 1, 1,   // rgba
+        0); // angle
+
+    
 }
