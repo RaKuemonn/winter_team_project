@@ -88,6 +88,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                 position -= 500.0f;
                 eas = 0.0f;
 
+                //現在選んでいるステージ
                 select_to_stage++;
             }
         }
@@ -116,6 +117,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                 position += 500.0f;
                 eas = 0.0f;
 
+                //現在選んでいるステージ
                 select_to_stage--;
             }
         }
@@ -126,17 +128,60 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
         {
             if (input_manager->TRG(0) & PAD_START)
             {
-                parent->change_scene(new Scene_Title_Game);
+                //選んでいるステージに応じた処理
+                Option_Manager* opm = parent->option_manager();
 
                 switch (select_to_stage)
                 {
                 case CAST_I(Stage_Select::STAGE_1):
                 {
-                    parent->option_manager()->set_next_stage(Stage_Select::STAGE_1);
+                    opm->set_next_stage(Stage_Select::STAGE_1);
+                    break;
+                }
+
+                case CAST_I(Stage_Select::STAGE_2):
+                {
+                    //前のステージをクリアしているかどうか
+                    if (opm->get_binary().clear_flag[select_to_stage - 1])
+                    {
+                        opm->set_next_stage(Stage_Select::STAGE_2);
+                    }
+                    break;
+                }
+
+                case CAST_I(Stage_Select::STAGE_3):
+                {
+                    //前のステージをクリアしているかどうか
+                    if (opm->get_binary().clear_flag[select_to_stage - 1])
+                    {
+                        opm->set_next_stage(Stage_Select::STAGE_3);
+                    }
+                    break;
+                }
+
+                case CAST_I(Stage_Select::STAGE_4):
+                {
+                    //前のステージをクリアしているかどうか
+                    if (opm->get_binary().clear_flag[select_to_stage - 1])
+                    {
+                        opm->set_next_stage(Stage_Select::STAGE_4);
+                    }
+                    break;
+                }
+
+                case CAST_I(Stage_Select::STAGE_BOSS):
+                {
+                    //前のステージをクリアしているかどうか
+                    if (opm->get_binary().clear_flag[select_to_stage - 1])
+                    {
+                        opm->set_next_stage(Stage_Select::STAGE_BOSS);
+                    }
                     break;
                 }
 
                 }
+
+                parent->change_scene(new Scene_Title_Game);
             }
         }
     
