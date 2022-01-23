@@ -32,5 +32,9 @@ namespace Model_Paths
         inline constexpr char* const stage_2            = "./Data/stage2/stage2.fbx";
         inline constexpr char* const stage_2_propeller  = "./Data/stage2/stage2_propeller.fbx";
 
+        inline constexpr char* const stage_3            = "./Data/stage1/stage1.fbx";
+        inline constexpr char* const stage_4            = "./Data/stage1/stage1.fbx";
+        inline constexpr char* const stage_boss         = "./Data/boss_stage/boss_stage.fbx";
+
     };
 };

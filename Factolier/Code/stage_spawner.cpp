@@ -6,6 +6,7 @@
 
 #include "stage_2.h"
 #include "stage_2_movement.h"
+#include "stage_boss.h"
 
 
 void Stage_Spawner::set_stage_1()
@@ -32,5 +33,5 @@ void Stage_Spawner::set_stage_4()
 
 void Stage_Spawner::set_stage_boss()
 {
-
+    set_stage<Stage_Boss>();
 }

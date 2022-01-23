@@ -222,7 +222,8 @@ void Scene_Game::init_stage()
     stage_spawner = std::make_unique<Stage_Spawner>(parent);    
 
     //switch (CAST_I(parent->option_manager()->get_now_stage()))
-    switch (Stage_Select::STAGE_2)
+    // TODO: debug
+    switch (Stage_Select::STAGE_BOSS)
     {
 
     case Stage_Select::STAGE_1:
