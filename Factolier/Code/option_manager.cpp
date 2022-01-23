@@ -28,7 +28,7 @@ void Option_Manager::DrawDebugGUI()
             ImGui::Checkbox("down_flag", &down_flag);
             ImGui::InputFloat("bgm_vo", &bgm_vo);
             ImGui::InputFloat("bgm_move", &bgm_move);
-            ImGui::InputFloat("bgm_move", &bgm_move);
+            ImGui::InputFloat("arrow_move", &arrow_move);
         }
     }
     ImGui::End();
@@ -197,6 +197,10 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
     // カメラのバーを動かす処理
     // BGMと同じ
     camera_move = camera_bar / BAR_MAX;
+    // 矢印
+    arrow_bgm = bgm_move * 504;
+    arrow_se = se_move * 504;
+    arrow_camera = camera_move * 504;
   
 }
     
@@ -205,6 +209,7 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 
 void Option_Manager::render()
 {
+    // 背景
     back->render(
         immediate_context,
         300, 180,  //position
@@ -215,6 +220,7 @@ void Option_Manager::render()
         1, 1, 1, 0.5,   // rgba
         0); // angle
 
+    //オプション
     option->render(
         immediate_context,
         650, 200,  //position
@@ -340,20 +346,23 @@ void Option_Manager::render()
     switch (icon_select)
     {
     case BGM:
-        arrow_x = 806;
+        arrow_x = 790;
         arrow_y = 298;
+        arrow_move = arrow_bgm;
         break;
     case SE:
-        arrow_x = 806;
+        arrow_x = 790;
         arrow_y = 478;
+        arrow_move = arrow_se;
         break;
     case CAMERA:
-        arrow_x = 806;
+        arrow_x = 790;
         arrow_y = 658;
+        arrow_move = arrow_camera;
         break;
     }
     arrow->render(immediate_context,
-        arrow_x, arrow_y,
+        arrow_x + arrow_move, arrow_y,
         1.0f, 1.0f,
         38, 164,
         38, 164,

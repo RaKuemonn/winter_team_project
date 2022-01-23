@@ -51,8 +51,12 @@ public:
 
     float time = 0; // 経過時間
 
-    float arrow_x = 0;
-    float arrow_y = 0;
+    float arrow_x = 0; // 矢印のxの位置
+    float arrow_y = 0; // 矢印のyの位置
+    float arrow_move = 0; // 矢印のトータルの移動量
+    float arrow_bgm = 0; //矢印の移動量 BGM
+    float arrow_se = 0; //矢印の移動量 SE
+    float arrow_camera = 0; //矢印の移動量 カメラ
 
     bool up_flag = false;
     bool down_flag = false;
