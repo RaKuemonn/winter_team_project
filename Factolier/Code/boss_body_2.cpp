@@ -15,5 +15,9 @@ Boss_Body_2::Boss_Body_2(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLO
 
 void Boss_Body_2::update(const float elapsed_time_)
 {
+    DirectX::XMFLOAT4 quaternion;
+    DirectX::XMStoreFloat4(&quaternion, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f), -DirectX::XMConvertToRadians(90.0f) * elapsed_time_));
+    add_quaternion(quaternion);
+
     get_transform()->Update();
 }

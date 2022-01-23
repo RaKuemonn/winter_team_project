@@ -182,6 +182,7 @@
     <ClCompile Include="Factolier\Code\boss_body_3.cpp" />
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
+    <ClCompile Include="Factolier\Code\clear_judge.cpp" />
     <ClCompile Include="Factolier\Code\collision_manager.cpp" />
     <ClCompile Include="Factolier\Code\decotator_supporter.cpp" />
     <ClCompile Include="Factolier\Code\easing.cpp" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Factolier\Code\enemy_spawner.cpp" />
     <ClCompile Include="Factolier\Code\entity.cpp" />
     <ClCompile Include="Factolier\Code\entity_manager.cpp" />
+    <ClCompile Include="Factolier\Code\goal_judge.cpp" />
     <ClCompile Include="Factolier\Code\input_manager.cpp" />
     <ClCompile Include="Factolier\Code\light_manager.cpp" />
     <ClCompile Include="Factolier\Code\ocean_shader.cpp" />
@@ -256,10 +258,12 @@
     <ClInclude Include="Factolier\Code\boss_body_3.h" />
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
+    <ClInclude Include="Factolier\Code\clear_judge.h" />
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
     <ClInclude Include="Factolier\Code\decotator_supporter.h" />
     <ClInclude Include="Factolier\Code\enemy_move_closer_.h" />
+    <ClInclude Include="Factolier\Code\goal_judge.h" />
     <ClInclude Include="Factolier\Code\idle.h" />
     <ClInclude Include="Factolier\Code\model_filepaths.h" />
     <ClInclude Include="Factolier\Code\digits.h" />

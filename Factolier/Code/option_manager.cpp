@@ -1,5 +1,6 @@
 #include <imgui.h>
 #include "option_manager.h"
+#include "imgui.h"
 #include "easing.h"
 
 #define BGM 0
@@ -38,6 +39,9 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
 {
     immediate_context = context;
     back = make_unique<Sprite>(device, "Data/back.png");
+
+    File_IO::open("save.dat", binary_data);
+
     bgm = make_unique<Sprite>(device, "Data/âπó _bgmâº.png");
     se = make_unique<Sprite>(device, "Data/âπó _seâº.png");
     camera = make_unique<Sprite>(device, "Data/ÉJÉÅÉâ_âº.png");

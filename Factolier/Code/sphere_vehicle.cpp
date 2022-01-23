@@ -9,7 +9,7 @@
 #include "Timer.h"
 
 // 定数
-constexpr float scale = 2.0f;
+constexpr float scale = 0.7f;
 
 // 一定間隔でスケールを削っていく関数
 // TODO : 速度が0.0fに近づくにつれてスケールも0.0fに近づけたい

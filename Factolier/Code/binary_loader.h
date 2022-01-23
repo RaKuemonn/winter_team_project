@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 
 struct Binary_Data;
 
@@ -17,16 +15,5 @@ public:
 
 struct Binary_Data
 {
-    std::vector<int> data_array = {};
-
-    void set_data(const int data_)
-    {
-        data_array.emplace_back(data_);
-    }
-
-    size_t size()
-    {
-        return data_array.size();
-    }
-
+    bool clear_flag[4]{ false, false, false, false };
 };

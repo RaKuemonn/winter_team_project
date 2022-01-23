@@ -7,6 +7,7 @@
 #include "collision_manager.h"
 #include "sky_box.h"
 #include "decotator_supporter.h"
+#include "clear_judge.h"
 
 
 class Scene_Game : public Scene
@@ -26,6 +27,7 @@ private:
 	std::unique_ptr<Stage_Spawner>		stage_spawner = nullptr;
 	std::unique_ptr<Collision_Manager>	collision_manager = nullptr;
 
+	std::unique_ptr<Clear_Judge> clear_judge		= nullptr;			// ステージのゴール判定とボスを倒したかを判定している
 
 
 	std::unique_ptr<Decotator_Supporter> debug_decorator_supporter = nullptr;

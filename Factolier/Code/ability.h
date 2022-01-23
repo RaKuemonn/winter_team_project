@@ -11,7 +11,8 @@ public:
     ~Ability() = default;
 
     // Getterä÷êî
-    _NODISCARD const short get_hp() { return m_hp; }
+    _NODISCARD const short& get_hp() { return m_hp; }
+    _NODISCARD short* get_ptr_hp() { return &m_hp; }
 
     // Setterä÷êî
     void set_init(const short& hp_)

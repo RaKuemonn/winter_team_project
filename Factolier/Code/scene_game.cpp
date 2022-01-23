@@ -1,6 +1,7 @@
 
 #include "scene_game.h"
 
+#include "ability.h"
 #include "boss.h"
 #include "scene_manager.h"
 #include "shader_manager.h"
@@ -16,11 +17,14 @@
 #include "camera_controller.h"
 #include "imgui.h"
 #include "utility.h"
+#include "ability.h"
 
-inline void imgui()
+inline void imgui(bool goal)
 {
 #ifdef _DEBUG
     ImGui::Begin("Entity");
+
+    ImGui::Text("goal %d", goal);
 
     std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Player);
     if (vec.size())
@@ -78,25 +82,62 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
 
     std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
-    player->set_position({ 0.0f, -2.0f, -125.0f });
+    player->set_position({ 0.0f, -8.0f, -127.0f });
 
 
 
     Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
-    //enemy_spawner->
-    //    set_enemy<Boss>(player->get_position());
+    short* ptr_boss_hp = nullptr;
+    ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
     //     set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,0.0f }, player->get_position());
 
+    clear_judge = std::make_unique<Clear_Judge>(parent->option_manager()->get_now_stage(), player->get_position(), ptr_boss_hp);
 
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
     collision_manager = std::unique_ptr<Collision_Manager>();
 
     stage_spawner = std::make_unique<Stage_Spawner>(parent);
+
+    switch (CAST_I(parent->option_manager()->get_now_stage()))
+    {
+
+    case CAST_I(Stage_Select::STAGE_1):
+    {
+        stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_2):
+    {
+        //stage_spawner->set_stage<Stage_2>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_3):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_4):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_BOSS):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    }
+
     //stage_spawner->set_stage<Stage_1>();
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
 
@@ -125,7 +166,9 @@ void Scene_Game::update(float elapsed_time)
 
     collision_manager->judge(elapsed_time);
 
-    imgui();
+    //clear_judge->judge();
+
+    imgui(clear_judge->judge());
 
     debug_decorator_supporter->imgui_control();
 }
@@ -147,7 +190,7 @@ void Scene_Game::render(float elapsed_time)
 
     Shader* shader = nullptr;
     ID3D11DeviceContext* ptr_device_context = parent->device_context();
-    //ƒVƒƒƒhƒEƒ}ƒbƒv¶¬
+    //ï¿½Vï¿½ï¿½ï¿½hï¿½Eï¿½}ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½
     {
         shader = parent->shader_manager()->get_shader(Shaders::SHADOW);
 
@@ -159,7 +202,7 @@ void Scene_Game::render(float elapsed_time)
         shader->end(ptr_device_context);
     }
 
-    //ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Æ[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚ðŒ³‚É–ß‚·
+    //ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½[ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½rï¿½ï¿½ï¿½[ï¿½Æ[ï¿½xï¿½Xï¿½eï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½É–ß‚ï¿½
     {
         ID3D11RenderTargetView* rtv = parent->render_target_view();
         ID3D11DepthStencilView* dsv = parent->depth_stencil_view();
@@ -174,7 +217,7 @@ void Scene_Game::render(float elapsed_time)
 
     parent->state_manager()->setDS(DS::OFF_OFF);
 
-    //ƒXƒJƒCƒ{ƒbƒNƒX•`‰æ
+    //ï¿½Xï¿½Jï¿½Cï¿½{ï¿½bï¿½Nï¿½Xï¿½`ï¿½ï¿½
     {
         shader = parent->shader_manager()->get_shader(Shaders::SKY);
 
