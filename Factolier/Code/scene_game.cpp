@@ -97,7 +97,43 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     collision_manager = std::unique_ptr<Collision_Manager>();
 
     stage_spawner = std::make_unique<Stage_Spawner>(parent);
-    stage_spawner->set_stage<Stage_1>();
+
+    switch (CAST_I(parent->option_manager()->get_now_stage()))
+    {
+
+    case CAST_I(Stage_Select::STAGE_1):
+    {
+        stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_2):
+    {
+        //stage_spawner->set_stage<Stage_2>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_3):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_4):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_BOSS):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    }
+
+    //stage_spawner->set_stage<Stage_1>();
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
 
 
@@ -147,7 +183,7 @@ void Scene_Game::render(float elapsed_time)
 
     Shader* shader = nullptr;
     ID3D11DeviceContext* ptr_device_context = parent->device_context();
-    //ƒVƒƒƒhƒEƒ}ƒbƒv¶¬
+    //ï¿½Vï¿½ï¿½ï¿½hï¿½Eï¿½}ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½
     {
         shader = parent->shader_manager()->get_shader(Shaders::SHADOW);
 
@@ -159,7 +195,7 @@ void Scene_Game::render(float elapsed_time)
         shader->end(ptr_device_context);
     }
 
-    //ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Æ[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚ğŒ³‚É–ß‚·
+    //ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½[ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½rï¿½ï¿½ï¿½[ï¿½Æ[ï¿½xï¿½Xï¿½eï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½É–ß‚ï¿½
     {
         ID3D11RenderTargetView* rtv = parent->render_target_view();
         ID3D11DepthStencilView* dsv = parent->depth_stencil_view();
@@ -174,7 +210,7 @@ void Scene_Game::render(float elapsed_time)
 
     parent->state_manager()->setDS(DS::OFF_OFF);
 
-    //ƒXƒJƒCƒ{ƒbƒNƒX•`‰æ
+    //ï¿½Xï¿½Jï¿½Cï¿½{ï¿½bï¿½Nï¿½Xï¿½`ï¿½ï¿½
     {
         shader = parent->shader_manager()->get_shader(Shaders::SKY);
 

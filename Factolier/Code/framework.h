@@ -62,7 +62,7 @@ public:
 
 
 	Framework(HWND hwnd) : hwnd(hwnd) {}
-	~Framework() {}
+	~Framework() = default;
 
 	Framework(const Framework&) = delete;
 	Framework& operator=(const Framework&) = delete;

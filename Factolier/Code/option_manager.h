@@ -3,15 +3,26 @@
 #include <d3d11.h>
 #include "memory"
 #include "sprite.h"
+#include "binary_loader.h"
 #include "input_manager.h"
 
+
+
+enum class Stage_Select
+{
+    STAGE_1 = 0,
+    STAGE_2,
+    STAGE_3,
+    STAGE_4,
+    STAGE_BOSS
+};
 
 
 class Option_Manager
 {
 public:
     Option_Manager(ID3D11Device* device, ID3D11DeviceContext* context);
-    ~Option_Manager() = default;
+    ~Option_Manager() { File_IO::write("save.dat", binary_data); }
 
     void update(float elapsedTime, Input_Manager* input_manager);
     void setvolume(float elapsedTime, Input_Manager* input_manager);
@@ -19,6 +30,9 @@ public:
     void DrawDebugGUI();
     void render();
 
+    void set_next_stage(Stage_Select next_stage) { now_stage = next_stage; }
+    Stage_Select get_now_stage() { return now_stage; }
+    Binary_Data& get_binary() { return binary_data; }
 
 public:
     float bgm_vo = 0;         // BGMÇÃÉ{ÉäÉÖÅ[ÉÄ 1~0ÇÃä‘Ç≈ë÷Ç¶Ç¶Ç¡ÇƒÇ≠ÇÈ
@@ -37,15 +51,25 @@ public:
 
     float time = 0; // åoâﬂéûä‘
 
+    float arrow_x = 0;
+    float arrow_y = 0;
+
     bool up_flag = false;
     bool down_flag = false;
 
-    
+    int icon_select = 0;
+
+
 
 private:
     ID3D11DeviceContext* immediate_context;
 
     std::unique_ptr<Sprite> back = nullptr;
+    //std::unique_ptr<Sprite> option_1 = nullptr;
+
+    Stage_Select now_stage = Stage_Select::STAGE_1;
+    Binary_Data binary_data {};
+
     std::unique_ptr<Sprite> bar_back = nullptr;
     std::unique_ptr<Sprite> bgm = nullptr;
     std::unique_ptr<Sprite> se = nullptr;
@@ -53,4 +77,5 @@ private:
     std::unique_ptr<Sprite> option = nullptr;
     std::unique_ptr<Sprite> bar = nullptr;
     std::unique_ptr<Sprite> icon = nullptr;
+    std::unique_ptr<Sprite> arrow = nullptr;
 };
