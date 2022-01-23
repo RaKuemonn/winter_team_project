@@ -104,40 +104,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
     stage_spawner = std::make_unique<Stage_Spawner>(parent);
 
-    switch (CAST_I(parent->option_manager()->get_now_stage()))
-    {
-
-    case CAST_I(Stage_Select::STAGE_1):
-    {
-        stage_spawner->set_stage<Stage_1>();
-        break;
-    }
-
-    case CAST_I(Stage_Select::STAGE_2):
-    {
-        //stage_spawner->set_stage<Stage_2>();
-        break;
-    }
-
-    case CAST_I(Stage_Select::STAGE_3):
-    {
-        //stage_spawner->set_stage<Stage_1>();
-        break;
-    }
-
-    case CAST_I(Stage_Select::STAGE_4):
-    {
-        //stage_spawner->set_stage<Stage_1>();
-        break;
-    }
-
-    case CAST_I(Stage_Select::STAGE_BOSS):
-    {
-        //stage_spawner->set_stage<Stage_1>();
-        break;
-    }
-
-    }
+    init_stage();
 
     //stage_spawner->set_stage<Stage_1>();
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
@@ -243,6 +210,46 @@ void Scene_Game::render(float elapsed_time)
 }
 
 
+void Scene_Game::init_stage()
+{
+    switch (CAST_I(parent->option_manager()->get_now_stage()))
+    {
+
+    case CAST_I(Stage_Select::STAGE_1):
+    {
+        stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_2):
+    {
+        //stage_spawner->set_stage<Stage_2>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_3):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_4):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_BOSS):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    }
+}
+
+
+
 bool Scene_Game::judge_clear()
 {
     // クリア判定が出ていないか調べる
@@ -267,7 +274,7 @@ bool Scene_Game::judge_clear()
     camera_controller->set_clear();
     {
         // プレイヤーが乗っている乗り物を探して
-        std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Vehicle);
+        const std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Vehicle);
         if (int size = CAST_I(vec.size()))
         {
             for(int i = 0; i < size;++i)

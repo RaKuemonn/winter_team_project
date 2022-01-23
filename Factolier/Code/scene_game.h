@@ -21,6 +21,7 @@ public:
 	void render(float elapsed_time) override;
 
 private:
+	void init_stage();
 	bool judge_clear();
 
 private:
