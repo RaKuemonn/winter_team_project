@@ -22,9 +22,9 @@ bool Framework::initialize()
 	scene_manager = std::make_unique<Scene_Manager>();
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
 
-	//scene_manager->change_scene(new Scene_Game);
+	scene_manager->change_scene(new Scene_Game);
 	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
-	scene_manager->change_scene(new Scene_Title_Game);
+	//scene_manager->change_scene(new Scene_Title_Game);
 
 	
 
