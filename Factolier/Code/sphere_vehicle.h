@@ -24,6 +24,7 @@ public:
     void move_direction(const DirectX::XMFLOAT3& direction_);
     void set_is_free() { m_is_free = true; }
     void set_on_ground() { m_on_ground = true; }        // collision_managerで生成後一度しか呼ばれないように処理を書いている
+    void set_no_jump() { m_on_ground = false; }                 // Scene_Gameでクリア後ジャンプできなくするため
 
 private:
     void update_velocity(const float elapsed_time_);

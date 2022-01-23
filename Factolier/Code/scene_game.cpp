@@ -245,8 +245,14 @@ void Scene_Game::render(float elapsed_time)
 
 bool Scene_Game::judge_clear()
 {
+    // クリア判定が出ていないか調べる
     if (clear_judge->judge() == false) return false;
 
+
+    //　↓　クリア判定！　↓
+
+
+    // カメラのゴール演出が終わったフレームか、Entityの更新が止まっていたら....            if文を通って早期returnさせる
     if(camera_controller->get_is_performance_end() || Entity_Manager::instance().get_is_update_stop())
     {
         // ここの処理を通った以降は、シーンが切り替えられない限り      （Scene_GameのInitialize()で動くようにsetterで設定している）
@@ -255,11 +261,14 @@ bool Scene_Game::judge_clear()
         return false;
     }
 
-    // クリア用の処理
+
+    // 上以外の
+    // クリア用処理
     camera_controller->set_clear();
     {
+        // プレイヤーが乗っている乗り物を探して
         std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Vehicle);
-        if (int size = vec.size())
+        if (int size = CAST_I(vec.size()))
         {
             for(int i = 0; i < size;++i)
             {
@@ -270,6 +279,10 @@ bool Scene_Game::judge_clear()
                 // プレイヤーが乗っている乗り物の速度を0.0にする
                 player_vehicle->set_velocity_x(0.0f);
                 player_vehicle->set_velocity_z(0.0f);
+                // ジャンプ操作ができないようにする
+                static_cast<Sphere_Vehicle*>(player_vehicle.get())->set_no_jump();
+
+                // おわり！
                 break;
             }
             
