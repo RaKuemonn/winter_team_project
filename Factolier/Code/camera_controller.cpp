@@ -18,7 +18,7 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
         ShowCursor(true);
     }
 
-
+#if 0
     if (input_manager->STATE(0) & PAD_SELECT || input_manager->TRG_RELEASE(0) & PAD_SELECT)
     {
     }
@@ -148,6 +148,7 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
 
         SetCursorPos(static_cast<int>(viewport.Width / 2), static_cast<int>(viewport.Height / 2));
     }
+#endif
 
 
 

@@ -17,7 +17,7 @@ public:
 
 protected:
     void update_velocity(const float elapsed_time_);
-    void check_im_die();                            // ザコ敵の死んだか判定用 (ほんとはダメージ処理用)　   ※※※※※ 注意: ザコ敵のupdate処理に書き込んであげないと動作しない　※※※※※
+    bool check_im_die();                            // ザコ敵の死んだか判定用 (ほんとはダメージ処理用)　   ※※※※※ 注意: ザコ敵のupdate処理の一番前に書き込んであげないと動作しない　※※※※※
 
 private:
     const DirectX::XMFLOAT3& target_position;       // このゲームの敵は９割方プレイヤーの位置を使うので、変数をここに入れている。　（使わないもの : チュートリアル用の的）

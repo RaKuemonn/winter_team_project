@@ -38,10 +38,15 @@ void Enemy::update_velocity(const float elapsed_time_)
     m_velocity->update(elapsed_time_);
 }
 
-void Enemy::check_im_die()
+bool Enemy::check_im_die()
 {
+    
     // expiredがfalseのとき参照されている
-    if(wkp_collide_detection.expired() == false) return;            // 参照が切れる処理collide_detectionが消されるのは、collision_managerで削除処理が入った後　
+    if (wkp_collide_detection.expired() == false) // 参照が切れる処理collide_detectionが消されるのは、collision_managerで削除処理が入った後　
+    {
+        wkp_collide_detection.lock()->set_position(get_position());
+        return false;
+    }
     //TODO: てすと ->　右の処理でやろうとすると、削除される前でここを通るのでこのザコ敵が消えない..... entity_managerの削除処理を””前に一つ追加””する
 
     
@@ -56,5 +61,5 @@ void Enemy::check_im_die()
 
     Entity_Manager::instance().remove_register(this);
 
-
+    return true;
 }

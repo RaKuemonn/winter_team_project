@@ -43,7 +43,7 @@ namespace ray_functions
         const DirectX::XMFLOAT3 velocity = entity.lock()->get_velocity() * elapsed_time;
 
         // そもそも移動していなければ　早期returnさせる
-        //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
+        //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
         // 速度が下向き以外は早期return
         if (velocity.y >= 0.0f) return false;
@@ -54,7 +54,8 @@ namespace ray_functions
 
         const DirectX::XMFLOAT3 position = entity.lock()->get_position();
         const float scale_y = entity.lock()->get_scale().y;
-        const DirectX::XMFLOAT3 start = { position.x, position.y - velocity.y + scale_y * 0.5f, position.z };
+        const float offset_y = (scale_y * 0.5f < 0.5f) ? 0.5f : scale_y * 0.5f;
+        const DirectX::XMFLOAT3 start = { position.x, position.y - velocity.y + offset_y, position.z };
         const DirectX::XMFLOAT3 end = position/*{ position.x - velocity.x, position.y, position.z - velocity.z }*/;
 
 
@@ -68,7 +69,7 @@ namespace ray_functions
 
         // 移動床の関係でこの処理はコメントアウト
         // // そもそも移動していなければ　早期returnさせる
-        // if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
+        // if (DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
         // 速度が下向き以外は早期return
         if (velocity.y >= 0.0f) return false;
@@ -96,7 +97,7 @@ namespace ray_functions
         const DirectX::XMFLOAT3 velocity    = entity.lock()->get_velocity() * elapsed_time;
 
         // そもそも移動していなければ　早期returnさせる
-        //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
+        //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
         const DirectX::XMFLOAT3 position    = entity.lock()->get_position();
         const DirectX::XMFLOAT3 scale       = entity.lock()->get_scale();
@@ -129,42 +130,49 @@ namespace ray_functions
         const DirectX::XMFLOAT3 velocity = entity.lock()->get_velocity() * elapsed_time;
 
         // そもそも移動していなければ　早期returnさせる
-        //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
+        if (DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
+
 
         const DirectX::XMFLOAT3 position = entity.lock()->get_position();
         const float position_latest_y    = entity.lock()->get_latest_position().y;
         const DirectX::XMFLOAT3 detect = { position.x - velocity.x,        position_latest_y, position.z - velocity.z };
-        
+
+        const float sign_velo_x = sign(velocity.x);
+        const float sign_velo_z = sign(velocity.z);
 
         // 一回目 x
         DirectX::XMVECTOR xmvec_x;
-        const float offset_x = scale.x * sign(velocity.x);
-        const float pudding_x = -1.0f * offset_x * 0.5f;
+        const float offset_x = scale.x * sign_velo_x;
+        const float pudding_x = -1.0f * sign_velo_x/* * 0.5f*/;
+        const float pudding_z = -1.0f * sign_velo_z/* * 0.5f*/;
         {
-            const DirectX::XMFLOAT3 start   = { detect.x + offset_x + pudding_x,    detect.y,              detect.z };
+            const DirectX::XMFLOAT3 start   = { detect.x + offset_x + pudding_x,    detect.y,              detect.z + pudding_z };
             const DirectX::XMFLOAT3 end     = { position.x + offset_x,              position_latest_y,     position.z };
 
             // レイキャスト
             s_manager.ray_cast(start, end, &hit_result_);
 
             
-            const DirectX::XMFLOAT3 origin_start = { start.x - pudding_x, start.y, start.z };
+            const DirectX::XMFLOAT3 origin_start = { start.x - pudding_x, start.y, start.z - pudding_z };
             xmvec_x = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&origin_start));
         }
 
         Hit_Result result = {}; // 比較用
         // 二回目 z
-        const float offset_z = scale.z * sign(velocity.z);
-        const float pudding_z   = -1.0f * offset_z * 0.5f;
+        const float offset_z = scale.z * sign_velo_z;
         DirectX::XMVECTOR xmvec_z;
         {
-            const DirectX::XMFLOAT3 start   = { detect.x,   detect.y,           detect.z + offset_z + pudding_z };
+            const DirectX::XMFLOAT3 start   = { detect.x + pudding_x,   detect.y,           detect.z + offset_z + pudding_z };
             const DirectX::XMFLOAT3 end     = { position.x, position_latest_y,  position.z + offset_z };
 
             // レイキャスト
-            s_manager.ray_cast(start, end, &result);
+            if(s_manager.ray_cast(start, end, &result))
+            {
+                int a = 0;
+                a = 1;
+            }
 
-            const DirectX::XMFLOAT3 origin_start = { start.x, start.y, start.z - pudding_z };
+            const DirectX::XMFLOAT3 origin_start = { start.x - pudding_x, start.y, start.z - pudding_z };
             xmvec_z = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&origin_start));
         }
 
@@ -397,7 +405,7 @@ namespace local_functions
         {
             free_vehicle = static_cast<Sphere_Vehicle*>(entity_b_.lock().get())->get_is_free();
         }
-
+        
 
         return free_vehicle;
     }
@@ -444,6 +452,22 @@ namespace local_functions
         for (int i = 0; i < array_size; ++i)
         {
             if (tags[i] != Tag::Collide)continue;
+
+
+            // もう片方がTag::Enemy　TODO: ( Collideは敵しかもっていないため、敵とCollideで判定は取らない ）
+            for(int j = 0; j < array_size; ++j)
+            {
+                if(i == j) continue;
+                if (tags[j] != Tag::Enemy) continue;
+
+                // なにもしない関数を返す
+                return [](std::weak_ptr<Entity> a, std::weak_ptr<Entity> b, const float)
+                {
+                    /* nothing */;
+                };
+            }
+
+            // もう片方がTag::Enemyでなければ
             // 早期return
             return [](std::weak_ptr<Entity> a, std::weak_ptr<Entity> b, const float)
             {
@@ -516,7 +540,8 @@ inline void ray_to_floor(
         result = {};
         if (ray_cast_floor(elapsed_time, enemy, s_manager, result))
         {
-            enemy->set_position(result.position);
+            DirectX::XMFLOAT3 position = enemy->get_position();
+            enemy->set_position({ position.x,result.position.y,position.z });
             enemy->set_velocity_y(0.0f);
             enemy->set_friction(friction_ratio);
         }
@@ -594,7 +619,8 @@ inline void ray_to_wall(
         {
             const DirectX::XMFLOAT3 velocity = enemy->get_velocity() * elapsed_time;
             const DirectX::XMFLOAT3 position = enemy->get_position();
-            enemy->set_position({ position.x - velocity.x, position.y, position.z - velocity.z });
+            const float position_latest_y = enemy->get_latest_position().y;
+            enemy->set_position({ position.x - velocity.x, position_latest_y, position.z - velocity.z });
             enemy->add_position({ wall_vec.x,0.0f,wall_vec.z });
             enemy->set_velocity({});
         }
@@ -611,18 +637,15 @@ inline void ray_to_wall(
         //if (ray_cast_wall(elapsed_time, vehicle, s_manager, result, wall_vec))
         if (ray_cast_wall(elapsed_time, vehicle, scale, s_manager, result, wall_vec))
         {
-         /// TODO: hit result 使う   
             const DirectX::XMFLOAT3 velocity = vehicle->get_velocity() * elapsed_time;
             const DirectX::XMFLOAT3 position = vehicle->get_position();
             const float position_latest_y = vehicle->get_latest_position().y;
             vehicle->set_position({ position.x - velocity.x, position_latest_y, position.z - velocity.z });
             vehicle->add_position({ wall_vec.x,0.0f,wall_vec.z });
 
-            //vehicle->set_position(result.position);
-
             if (velocity.y < 0.0f)
             {
-                //vehicle->set_friction(0.8f);
+                vehicle->set_friction(0.8f);
             }
         }
 
@@ -737,12 +760,12 @@ void Collision_Manager::judge(const float elapsed_time)
     );
 
 
-    //// entity同士で当たり判定 (球)
-    //entity_collide(
-    //    elapsed_time,
-    //    e_manager,
-    //    vectors_
-    //);
+    // entity同士で当たり判定 (球)
+    entity_collide(
+        elapsed_time,
+        e_manager,
+        vectors_
+    );
 
     // ステージ外にでているか
     out_range(

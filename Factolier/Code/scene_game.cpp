@@ -37,8 +37,30 @@ inline void imgui(bool goal)
         ImGui::Spacing();
     }
 
+    vec = Entity_Manager::instance().get_entities(Tag::Vehicle);
+    int size = static_cast<int>(vec.size());
+
+    ImGui::Text("control Vehicle");
+    for (int i = 0; i < size; ++i)
+    {
+        std::shared_ptr<Entity> entity = Entity_Manager::instance().get_entity(vec.at(i));
+
+        if (entity)
+        {
+            if(static_cast<Sphere_Vehicle*>(entity.get())->get_is_free() == true)continue;
+
+            DirectX::XMFLOAT3 pos = entity->get_position();
+            ImGui::InputFloat3("position", &pos.x);
+            DirectX::XMFLOAT3 velo = entity->get_velocity();
+            ImGui::InputFloat3("velocity", &velo.x);
+            float velo_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&velo)));
+            ImGui::InputFloat("velocity_length", &velo_length);
+
+        }
+    }
+
     vec = Entity_Manager::instance().get_entities(Tag::Enemy);
-    const int size = static_cast<int>(vec.size());
+    size = static_cast<int>(vec.size());
 
     ImGui::Text("Enemy");
     for(int i = 0; i < size; ++i)
@@ -90,12 +112,12 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
     short* ptr_boss_hp = nullptr;
-    ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
+    //ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
     //     set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {})
-    //    .set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,0.0f }, player->get_position());
+    enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, player->get_position());
 
     clear_judge = std::make_unique<Clear_Judge>(parent->option_manager()->get_now_stage(), player->get_position(), ptr_boss_hp);
 

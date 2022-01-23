@@ -50,10 +50,6 @@ Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const 
 {
     m_timer.Initialize(nullptr, COUNT::UP, 0.0f);
 
-    m_area_origin_position = {};
-    m_area_size = { 14.0f,0.0f,26.0f };
-
-
     // 別名エイリアス
     using _this_type_ = Enemy_Move_Closer_;
 
@@ -82,6 +78,12 @@ Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const 
 
 void Enemy_Move_Closer_::update(const float elapsed_time_)
 {
+    // 死んでいるかどうか
+    if (check_im_die()) return;
+
+    // テリトリーの初期設定 (初期位置から固定サイズの大きさで設定される)
+    init_define_area_parameters();
+
     // 行動遷移用の時間更新
     m_timer.Update(elapsed_time_);
 
@@ -100,8 +102,24 @@ void Enemy_Move_Closer_::update(const float elapsed_time_)
     // 姿勢の更新
     get_transform()->Update();
 
+    // 死んだかどうか
+
     // モデルの更新
     get_model()->play_animation(elapsed_time_, 0);
+}
+
+
+void Enemy_Move_Closer_::init_define_area_parameters()
+{
+    if (m_area_origin_position.x != undefine_area.x &&
+        m_area_origin_position.y != undefine_area.y &&
+        m_area_origin_position.z != undefine_area.z) return;
+
+    // 全て undefine_area と同じなら
+
+    m_area_origin_position = get_latest_position();
+    m_area_size = { 14.0f,0.0f,26.0f };
+
 }
 
 
