@@ -18,6 +18,7 @@
 #include "imgui.h"
 #include "utility.h"
 #include "ability.h"
+#include "sphere_vehicle.h"
 
 inline void imgui(bool goal)
 {
@@ -85,7 +86,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     player->set_position({ 0.0f, -8.0f, -127.0f });
 
 
-
+    Entity_Manager::instance().set_update_move();
     Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
     short* ptr_boss_hp = nullptr;
@@ -103,40 +104,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
     stage_spawner = std::make_unique<Stage_Spawner>(parent);
 
-    switch (CAST_I(parent->option_manager()->get_now_stage()))
-    {
-
-    case CAST_I(Stage_Select::STAGE_1):
-    {
-        stage_spawner->set_stage<Stage_1>();
-        break;
-    }
-
-    case CAST_I(Stage_Select::STAGE_2):
-    {
-        //stage_spawner->set_stage<Stage_2>();
-        break;
-    }
-
-    case CAST_I(Stage_Select::STAGE_3):
-    {
-        //stage_spawner->set_stage<Stage_1>();
-        break;
-    }
-
-    case CAST_I(Stage_Select::STAGE_4):
-    {
-        //stage_spawner->set_stage<Stage_1>();
-        break;
-    }
-
-    case CAST_I(Stage_Select::STAGE_BOSS):
-    {
-        //stage_spawner->set_stage<Stage_1>();
-        break;
-    }
-
-    }
+    init_stage();
 
     //stage_spawner->set_stage<Stage_1>();
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
@@ -166,9 +134,9 @@ void Scene_Game::update(float elapsed_time)
 
     collision_manager->judge(elapsed_time);
 
-    //clear_judge->judge();
+    bool clear = judge_clear();
 
-    imgui(clear_judge->judge());
+    imgui(clear);
 
     debug_decorator_supporter->imgui_control();
 }
@@ -239,4 +207,94 @@ void Scene_Game::render(float elapsed_time)
     debug_decorator_supporter->render(ptr_device_context);
 
     shader->end(ptr_device_context);
+}
+
+
+void Scene_Game::init_stage()
+{
+    switch (CAST_I(parent->option_manager()->get_now_stage()))
+    {
+
+    case CAST_I(Stage_Select::STAGE_1):
+    {
+        stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_2):
+    {
+        //stage_spawner->set_stage<Stage_2>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_3):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_4):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_BOSS):
+    {
+        //stage_spawner->set_stage<Stage_1>();
+        break;
+    }
+
+    }
+}
+
+
+
+bool Scene_Game::judge_clear()
+{
+    // クリア判定が出ていないか調べる
+    if (clear_judge->judge() == false) return false;
+
+
+    //　↓　クリア判定！　↓
+
+
+    // カメラのゴール演出が終わったフレームか、Entityの更新が止まっていたら....            if文を通って早期returnさせる
+    if(camera_controller->get_is_performance_end() || Entity_Manager::instance().get_is_update_stop())
+    {
+        // ここの処理を通った以降は、シーンが切り替えられない限り      （Scene_GameのInitialize()で動くようにsetterで設定している）
+        // Entityは更新されない
+        Entity_Manager::instance().set_update_stop();
+        return false;
+    }
+
+
+    // 上以外の
+    // クリア用処理
+    camera_controller->set_clear();
+    {
+        // プレイヤーが乗っている乗り物を探して
+        const std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Vehicle);
+        if (int size = CAST_I(vec.size()))
+        {
+            for(int i = 0; i < size;++i)
+            {
+                std::shared_ptr<Entity> player_vehicle = Entity_Manager::instance().get_entity(vec.at(0));
+
+                if(static_cast<Sphere_Vehicle*>(player_vehicle.get())->get_is_free() == true) continue;
+
+                // プレイヤーが乗っている乗り物の速度を0.0にする
+                player_vehicle->set_velocity_x(0.0f);
+                player_vehicle->set_velocity_z(0.0f);
+                // ジャンプ操作ができないようにする
+                static_cast<Sphere_Vehicle*>(player_vehicle.get())->set_no_jump();
+
+                // おわり！
+                break;
+            }
+            
+        }
+    }
+
+    return true;
 }

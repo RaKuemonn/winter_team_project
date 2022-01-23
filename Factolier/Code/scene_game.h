@@ -21,6 +21,10 @@ public:
 	void render(float elapsed_time) override;
 
 private:
+	void init_stage();
+	bool judge_clear();
+
+private:
 	std::unique_ptr<Sky_Box> sky_box = nullptr;
 
 	std::unique_ptr<Enemy_Spawner>		enemy_spawner = nullptr;

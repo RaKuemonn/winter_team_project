@@ -214,7 +214,9 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
         //clear_flag = true;
     }
 
-
+    /////////////////// 演出終了フレーム以外毎フレームfalse
+    is_performance_end = false;
+    ///////////////////
 
     constexpr float range = 15.0f;
 
@@ -258,6 +260,7 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
             {
                 clear_timer = 0.0f;
                 clear_flag = false;
+                is_performance_end = true;
             }
         }
 

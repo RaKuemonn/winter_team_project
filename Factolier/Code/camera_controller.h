@@ -17,6 +17,12 @@ public:
 	//ターゲット位置設定
 	void set_target(const DirectX::XMFLOAT3& target)	{ this->target = target; }
 
+	// ステージクリアしていたらこの関数を呼ぶ
+	void set_clear() { clear_flag = true; }
+
+	// ゴール演出が終わったフレームかどうか
+	bool get_is_performance_end() { return is_performance_end; }
+
 private:
 	DirectX::XMFLOAT3	target = { 0, 0, 0 };
 	const DirectX::XMFLOAT3*	ptr_target = nullptr;
@@ -25,6 +31,7 @@ private:
 	float sens = 1.0f;
 
 	bool clear_flag = false;
+	bool is_performance_end = false;	// 演出が終わったフレーム間のみtrue
 	float clear_timer = 0.0f;
 
 };

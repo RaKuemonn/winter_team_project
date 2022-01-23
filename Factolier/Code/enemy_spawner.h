@@ -20,7 +20,7 @@ public:
 
 
     template<typename T>
-    std::shared_ptr<Entity>& set_enemy(const DirectX::XMFLOAT3& position_, const DirectX::XMFLOAT3& target)
+    std::shared_ptr<Entity> set_enemy(const DirectX::XMFLOAT3& position_, const DirectX::XMFLOAT3& target)
     {
 
         std::shared_ptr<Entity> enemy;
@@ -30,6 +30,11 @@ public:
             if constexpr (std::is_base_of<Enemy, T>{})
             {
                 enemy = std::make_unique<T>(ptr_scene_manager, target);
+            }
+            else
+            {
+                // 和訳 : この型はサポートされてないよ！！　Enemyを継承している型を使用してね！
+                static_assert(enemy_spawner_template::false_v<T>, "This type is not supported.  Must be a type that inherits from Entity.");
             }
         }
 
@@ -50,7 +55,7 @@ public:
     }
 
     template<typename T>
-    std::shared_ptr<Entity>& set_enemy(const DirectX::XMFLOAT3& target)
+    std::shared_ptr<Entity> set_enemy(const DirectX::XMFLOAT3& target)
     {
 
         std::shared_ptr<Entity> enemy;
@@ -60,6 +65,11 @@ public:
             if constexpr (std::is_base_of<Enemy, T>{})
             {
                 enemy = std::make_unique<T>(ptr_scene_manager, target);
+            }
+            else
+            {
+                // 和訳 : この型はサポートされてないよ！！　Enemyを継承している型を使用してね！
+                static_assert(enemy_spawner_template::false_v<T>, "This type is not supported.  Must be a type that inherits from Entity.");
             }
         }
 
