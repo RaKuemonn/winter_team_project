@@ -45,7 +45,7 @@ void Scene_Title_Game::DrawDebugGUI()
 void Scene_Title_Game::initialize(Scene_Manager* parent_)
 {
     parent = parent_;
-    title = make_unique<Sprite>(parent->device(), "Data/title_仮.png");
+    title = make_unique<Sprite>(parent->device(), "Data/title.png");
 
     back_stage1 = make_unique<Sprite>(parent->device(), "Data/select1.png");
     back_stage2 = make_unique<Sprite>(parent->device(), "Data/select2.png");
@@ -214,27 +214,7 @@ void Scene_Title_Game::slideshow(float elapsedTime)
 
 void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
 {
-    /*if (option_vo < 312)
-    {
-        if (input_manager->STATE(0) & PAD_RIGHT)
-        {
-            option_vo += 1;
-            gauge += 1.25f;
-        }
-        
-    }
-    else
-    {
-        gauge = 306;
-    }
-    if (option_vo > 0)
-    {
-        if (input_manager->STATE(0) & PAD_LEFT)
-        {
-            option_vo -= 1;
-            gauge -= 1.2f;
-        }
-    }*/
+    
     //sound->pause();
     parent->option_manager()->update(elapsedTime, input_manager);
     sound->set_volume(parent->option_manager()->bgm_vo);
@@ -243,14 +223,12 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
     if (parent->option_manager()->down_flag ||
         parent->option_manager()->up_flag)
     {
-        //se->stop();
         se->play(false);
     }
 
     if (input_manager->TRG(0) & PAD_START)
     {
         option_flag = false;
-        //sound->resume();
     }
    
     
@@ -337,7 +315,7 @@ void Scene_Title_Game::render(float elapsed_time)
     }
 
     // タイトル
-    /*{
+    {
         title->render(device_context_,
             100, 150,
             1.0f, 1.0f,
@@ -345,8 +323,8 @@ void Scene_Title_Game::render(float elapsed_time)
             900, 384,
             0, 0,
             1, 1, 1, 1.0f,
-            -15);
-    }*/
+            0);
+    }
 
     // 点滅用
     timer++;
@@ -412,58 +390,6 @@ void Scene_Title_Game::render(float elapsed_time)
     else
     {
         parent->option_manager()->render();
-        
-        /*
-        option_back->render(device_context_,
-            320, 180,
-            1.0f, 1.0f,
-            1280, 720,
-            1280, 720,
-            0, 0,
-            1, 1, 1, 0.6f,
-            0);
-
-
-        option_1->render(device_context_,
-            400, 300,
-            1.0f, 1.0f,
-            516, 256,
-            516, 256,
-            0, 0,
-            1, 1, 1, 1.0f,
-            0);
-        option_2->render(device_context_,
-            400, 300,
-            0.8f, 0.8f,
-            516, 256,
-            140 + gauge, 256,
-            0, 0,
-            1, 1, 1, 1.0f,
-            0);
-        option_3->render(device_context_,
-            400 + option_vo, 300,
-            0.8f, 0.8f,
-            516, 256,
-            516, 256,
-            0, 0,
-            1, 1, 1, 1.0f,
-            0);
-        return_title->render(device_context_,
-            500, 470,
-            1.0f, 1.0f,
-            900, 384,
-            900, 384,
-            0, 0,
-            1, 1, 1, 1.0f,
-            0);
-        audio_set->render(device_context_,
-            500, 170,
-            1.0f, 1.0f,
-            258, 128,
-            258, 128,
-            0, 0,
-            1, 1, 1, 1.0f,
-            0);*/
     }
 
    

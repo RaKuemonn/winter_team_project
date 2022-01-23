@@ -50,6 +50,8 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     option = make_unique<Sprite>(device, "Data/option_3âº.png");
     icon = make_unique<Sprite>(device, "Data/team1_flower_90Å~90.png");
     arrow = make_unique<Sprite>(device, "Data/ÉoÅ[ñÓàÛ(38,164).png");
+    enter = make_unique<Sprite>(device, "Data/push the Enter.png");
+    option_bakc = make_unique<Sprite>(device, "Data/option_4âº.png");
 }
 
 
@@ -210,6 +212,16 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 void Option_Manager::render()
 {
     // îwåi
+    // îwåi
+    option_bakc->render(
+        immediate_context,
+        0, 0,  //position
+        1, 1,     // scal
+        1920, 1080,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        1920, 1080,   // size
+        0, 0,         // pibot
+        1, 1, 1, 0.5,   // rgba
+        0); // angle
     back->render(
         immediate_context,
         300, 180,  //position
@@ -370,5 +382,14 @@ void Option_Manager::render()
         1, 1, 1, 1,
         0);
 
-    DrawDebugGUI();
+    enter->render(immediate_context,
+        710, 840,  //position
+        1.0f, 1.0f,     // scal
+        384, 64,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        384, 64,   // size
+        0, 0,         // pibot
+        1, 1, 1, 1,   // rgba
+        0); // angle
+
+    //DrawDebugGUI();
 }

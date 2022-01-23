@@ -43,9 +43,9 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     stage3 = make_unique<Sprite>(parent->device(), "Data/select3.png");
     stage4 = make_unique<Sprite>(parent->device(), "Data/select4.png");
     stage5 = make_unique<Sprite>(parent->device(), "Data/select5.png");
-    choice = make_unique<Sprite>(parent->device(), "Data/waku.png");
+    choice = make_unique<Sprite>(parent->device(), "Data/frame.png");
 
-    enter = make_unique<Sprite>(parent->device(), "Data/enter_op仮.png");
+    enter = make_unique<Sprite>(parent->device(), "Data/push the Enter.png");
 
    
 }
@@ -149,15 +149,6 @@ void Scene_Select::render(float elapsed_time)
 {
     ID3D11DeviceContext* device_context_ = parent->device_context();
 
- /*   parent->state_manager()->setSS(SS::POINT);
-    parent->state_manager()->setSS(SS::LINEAR);
-    parent->state_manager()->setSS(SS::ANISOTROPIC);
-
-    parent->state_manager()->setDS(DS::OFF_OFF);
-
-    parent->state_manager()->setBS(BS::ALPHA);
-
-    parent->state_manager()->setRS(RS::SOLID_NONE);*/
     //レンダーターゲットビューと深度ステンシルビューを元に戻す
     {
         ID3D11RenderTargetView* rtv = parent->render_target_view();
@@ -240,7 +231,7 @@ void Scene_Select::render(float elapsed_time)
     if (eas == 0)
     {
         enter->render(device_context_,
-            800, 740,  //position
+            770, 740,  //position
             1.0f, 1.0f,     // scal
             384, 64,    // どれくらい描画するか
             384, 64,   // size

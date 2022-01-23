@@ -69,7 +69,7 @@ private:
     ID3D11DeviceContext* immediate_context;
 
     std::unique_ptr<Sprite> back = nullptr;
-    //std::unique_ptr<Sprite> option_1 = nullptr;
+    std::unique_ptr<Sprite> option_bakc = nullptr;
 
     Stage_Select now_stage = Stage_Select::STAGE_1;
     Binary_Data binary_data {};
@@ -82,4 +82,6 @@ private:
     std::unique_ptr<Sprite> bar = nullptr;
     std::unique_ptr<Sprite> icon = nullptr;
     std::unique_ptr<Sprite> arrow = nullptr;
+    std::unique_ptr<Sprite> enter = nullptr;
+
 };
