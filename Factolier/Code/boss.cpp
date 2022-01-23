@@ -16,7 +16,7 @@ using _this_type_ = Boss;
 
 #include "idle.h"
 
-Boss::Boss(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_boss_head, target_position_)
+Boss::Boss(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_boss_head, target_position_, false)
 {
     m_timer.Initialize(nullptr, COUNT::UP, 0.0f);
 

@@ -7,7 +7,7 @@
 
 
 
-Enemy_None::Enemy_None(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_none, {})
+Enemy_None::Enemy_None(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_none, {}, true)
 {
     load_model(get_scene_manager()->model_manager()->load_model("./Data/nico.fbx"));
 

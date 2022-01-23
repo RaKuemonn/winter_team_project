@@ -7,6 +7,7 @@
 #include "sphere_vehicle.h"
 #include "stage_manager.h"
 #include "stage.h"
+#include "collide_detection_entity.h"
 
 
 // ローカル関数
@@ -79,7 +80,7 @@ namespace ray_functions
         const float offset_y = scale.y * 0.5f;
         const float scale_epsilon = static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() ? SPHERE_SCALE_DECREASE * elapsed_time : 0.0f;
 
-        const DirectX::XMFLOAT3 position = entity.lock()->get_latest_position();    //TODO: latest_position
+        const DirectX::XMFLOAT3 position = entity.lock()->get_position();
         const DirectX::XMFLOAT3 tread = { position.x,position.y - scale.y + scale_epsilon, position.z };                                        // tread : 足下   (現在位置)
 
         const DirectX::XMFLOAT3 start   = { tread.x/* - velocity.x*/, tread.y - velocity.y + offset_y, tread.z/* - velocity.z*/ };   //                (前回位置)
@@ -130,8 +131,9 @@ namespace ray_functions
         // そもそも移動していなければ　早期returnさせる
         //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthSq(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
-        const DirectX::XMFLOAT3 position = entity.lock()->get_position(); //TODO: latest_position
-        const DirectX::XMFLOAT3 detect = { position.x - velocity.x,        position.y, position.z - velocity.z };
+        const DirectX::XMFLOAT3 position = entity.lock()->get_position();
+        const float position_latest_y    = entity.lock()->get_latest_position().y;
+        const DirectX::XMFLOAT3 detect = { position.x - velocity.x,        position_latest_y, position.z - velocity.z };
         
 
         // 一回目 x
@@ -139,8 +141,8 @@ namespace ray_functions
         const float offset_x = scale.x * sign(velocity.x);
         const float pudding_x = -1.0f * offset_x * 0.5f;
         {
-            const DirectX::XMFLOAT3 start   = { detect.x + offset_x + pudding_x,    detect.y,       detect.z };
-            const DirectX::XMFLOAT3 end     = { position.x + offset_x,              position.y,     position.z };
+            const DirectX::XMFLOAT3 start   = { detect.x + offset_x + pudding_x,    detect.y,              detect.z };
+            const DirectX::XMFLOAT3 end     = { position.x + offset_x,              position_latest_y,     position.z };
 
             // レイキャスト
             s_manager.ray_cast(start, end, &hit_result_);
@@ -156,8 +158,8 @@ namespace ray_functions
         const float pudding_z   = -1.0f * offset_z * 0.5f;
         DirectX::XMVECTOR xmvec_z;
         {
-            const DirectX::XMFLOAT3 start   = { detect.x,   detect.y,   detect.z + offset_z + pudding_z };
-            const DirectX::XMFLOAT3 end     = { position.x, position.y, position.z + offset_z };
+            const DirectX::XMFLOAT3 start   = { detect.x,   detect.y,           detect.z + offset_z + pudding_z };
+            const DirectX::XMFLOAT3 end     = { position.x, position_latest_y,  position.z + offset_z };
 
             // レイキャスト
             s_manager.ray_cast(start, end, &result);
@@ -221,7 +223,7 @@ namespace ray_functions
                     //const DirectX::XMFLOAT3 start = { detect.x + offset_x + pudding_x,    detect.y,       detect.z };
                     //const DirectX::XMFLOAT3 end = { position.x + offset_x,              position.y,     position.z };
                     const DirectX::XMFLOAT3 start = { detect.x,   detect.y,   detect.z + offset_z + pudding_z };
-                    const DirectX::XMFLOAT3 end = { position.x, position.y, position.z + offset_z };
+                    const DirectX::XMFLOAT3 end = { position.x, position_latest_y, position.z + offset_z };
 
                     //
                     std::wstring out1 = std::to_wstring(start.x) + L" , ";
@@ -269,8 +271,11 @@ namespace detect_functions
 
     inline bool sphere_vs_sphere(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
     {
-        const float radius_a = (entity_a_.lock()->get_tag() == Tag::Vehicle) ? entity_a_.lock()->get_scale().x : 0.5f;
-        const float radius_b = (entity_b_.lock()->get_tag() == Tag::Vehicle) ? entity_b_.lock()->get_scale().x : 0.5f;
+        const Tag a_tag = entity_a_.lock()->get_tag();
+        const Tag b_tag = entity_b_.lock()->get_tag();
+
+        const float radius_a = (a_tag == Tag::Vehicle) ? entity_a_.lock()->get_scale().x : (a_tag == Tag::Collide) ? static_cast<Collide_Detection*>(entity_a_.lock().get())->get_radius() : 0.5f;
+        const float radius_b = (b_tag == Tag::Vehicle) ? entity_b_.lock()->get_scale().x : (b_tag == Tag::Collide) ? static_cast<Collide_Detection*>(entity_b_.lock().get())->get_radius() : 0.5f;
 
         return sphere_vs_sphere(entity_a_.lock()->get_position(), entity_b_.lock()->get_position(), radius_a, radius_b);
     }
@@ -365,10 +370,107 @@ namespace detect_functions
 }
 
 
+// 別名エイリアス
+using callback_func = std::function<void(std::weak_ptr<Entity>, std::weak_ptr<Entity>, const float)>;
+
+
+// スコープ的にここじゃないとだめなローカル関数
+namespace local_functions
+{
+    inline bool do_collide_attack_tag(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
+    {
+        // 乗ってる最中の乗り物で攻撃判定を取りたくないので、
+        // 乗ってる乗り物と判定を取ろうとしたときfalseを返すようにしたい
+
+        Tag tag_a = entity_a_.lock()->get_tag();
+        Tag tag_b = entity_b_.lock()->get_tag();
+
+
+        bool free_vehicle = true;
+
+        if(tag_a == Tag::Vehicle)
+        {
+            free_vehicle = static_cast<Sphere_Vehicle*>(entity_a_.lock().get())->get_is_free();
+        }
+
+        if (tag_b == Tag::Vehicle && free_vehicle == true)
+        {
+            free_vehicle = static_cast<Sphere_Vehicle*>(entity_b_.lock().get())->get_is_free();
+        }
+
+
+        return free_vehicle;
+    }
+
+    inline void remove_tag_is_collide(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
+    {
+        const Tag a_tag = entity_a_.lock()->get_tag();
+        const Tag b_tag = entity_b_.lock()->get_tag();
+
+        if(a_tag == Tag::Collide)
+        {
+            Entity_Manager::instance().remove_register(entity_a_.lock().get());
+        }
+
+        if(b_tag == Tag::Collide)
+        {
+            Entity_Manager::instance().remove_register(entity_b_.lock().get());
+        }
+    }
+
+    // 2つのEnityでの当たり判定の組み合わせの分岐処理
+    inline callback_func judge_tag_collision(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
+    {
+        constexpr int array_size = 2;
+        Tag tags[array_size] =
+        {
+            entity_a_.lock()->get_tag(),
+            entity_b_.lock()->get_tag()
+        };
+
+
+        // 2つともTag::Collide
+        if(tags[0] == Tag::Collide && tags[1] == Tag::Collide)
+        {
+            // なにもしない関数を返す
+            return[](std::weak_ptr<Entity> a, std::weak_ptr<Entity> b, const float)
+            {
+                /* nothing */
+            };
+        }
+
+
+        // 片方がTag::Collide
+        for (int i = 0; i < array_size; ++i)
+        {
+            if (tags[i] != Tag::Collide)continue;
+            // 早期return
+            return [](std::weak_ptr<Entity> a, std::weak_ptr<Entity> b, const float)
+            {
+                if (local_functions::do_collide_attack_tag(a, b) == false)return;
+
+                (detect_functions::sphere_vs_sphere(a, b))
+                    ? local_functions::remove_tag_is_collide(a, b)
+                    : /* nothing */0;
+            };
+        }
+
+        // Tag::Collide以外
+        return [](
+            std::weak_ptr<Entity> a, std::weak_ptr<Entity> b, const float elapsed_time_)
+        {
+            (detect_functions::sphere_vs_sphere(a, b))
+            ? detect_functions::sphere_vs_sphere_extrusion(a,b,elapsed_time_)
+            : /* nothing */0;
+        };
+
+    }
+};
+
 
 // 別名エイリアス
 using vec_type_short    = std::vector<short>;
-using vectors           = std::tuple<vec_type_short, vec_type_short, vec_type_short>;
+using vectors           = std::tuple<vec_type_short, vec_type_short, vec_type_short, vec_type_short>;
 
 // ローカルの名前空間名省略
 using namespace ray_functions;
@@ -435,10 +537,9 @@ inline void ray_to_floor(
             //        resultの値をそのまま使うと球がめり込んだ状態でset_positionされてしまうから
 
 
-
-#if 1   // ここを0と１で切り替えると結果処理が変わるよ
             result.position.y += scale.y;
-#endif
+            DirectX::XMFLOAT3 position = vehicle->get_position();
+            
             if (result.rotation.y > 0.0f)
             {
                 DirectX::XMFLOAT4 quaternion;
@@ -446,7 +547,7 @@ inline void ray_to_floor(
                 vehicle->add_quaternion(quaternion);
             }
 
-            vehicle->set_position(result.position);
+            vehicle->set_position({ position.x,result.position.y,position.z });
             vehicle->set_velocity_y(0.0f);
             vehicle->set_friction(friction_ratio);
 
@@ -510,10 +611,11 @@ inline void ray_to_wall(
         //if (ray_cast_wall(elapsed_time, vehicle, s_manager, result, wall_vec))
         if (ray_cast_wall(elapsed_time, vehicle, scale, s_manager, result, wall_vec))
         {
-            
+         /// TODO: hit result 使う   
             const DirectX::XMFLOAT3 velocity = vehicle->get_velocity() * elapsed_time;
-            const DirectX::XMFLOAT3 position = vehicle->get_position();  //TODO: latest_position
-            vehicle->set_position({ position.x - velocity.x, position.y, position.z - velocity.z });
+            const DirectX::XMFLOAT3 position = vehicle->get_position();
+            const float position_latest_y = vehicle->get_latest_position().y;
+            vehicle->set_position({ position.x - velocity.x, position_latest_y, position.z - velocity.z });
             vehicle->add_position({ wall_vec.x,0.0f,wall_vec.z });
 
             //vehicle->set_position(result.position);
@@ -555,7 +657,7 @@ inline void out_range(
     }
 }
 
-
+// entity同士の当たり判定[ entity_managerに登録している "" 敵、乗り物、当たり判定 "" が処理されている ]
 inline void entity_collide(
     const float elapsed_time_,
     Entity_Manager& e_manager,
@@ -572,6 +674,10 @@ inline void entity_collide(
     {
         entities.emplace_back(index);
     }
+    for (auto index : std::get<3>(vectors_))    // 当たり判定
+    {
+        entities.emplace_back(index);
+    }
 
     // 総当たり
     const int size = static_cast<int>(entities.size());
@@ -582,10 +688,15 @@ inline void entity_collide(
             std::shared_ptr<Entity> entity_a = e_manager.get_entity(entities.at(i));
             std::shared_ptr<Entity> entity_b = e_manager.get_entity(entities.at(j));
 
-            if (sphere_vs_sphere(entity_a,entity_b))
+            // judge_tag_collisionでコールバックされる関数を呼び出している
+            // judge_tag_collidion() + () <- コールバック関数の引数
+
+            judge_tag_collision(entity_a, entity_b)(entity_a, entity_b, elapsed_time_);
+
+            /*if (sphere_vs_sphere(entity_a,entity_b))
             {
                 sphere_vs_sphere_extrusion(entity_a, entity_b, elapsed_time_);
-            }
+            }*/
 
         }
     }
@@ -602,22 +713,24 @@ void Collision_Manager::judge(const float elapsed_time)
     const vec_type_short& vec_player_indices   = e_manager.get_entities(Tag::Player);
     const vec_type_short& vec_enemy_indices    = e_manager.get_entities(Tag::Enemy);
     const vec_type_short& vec_vehicle_indices  = e_manager.get_entities(Tag::Vehicle);
+    const vec_type_short& vec_collide_indices  = e_manager.get_entities(Tag::Collide);
 
     const vectors vectors_ = {
         vec_player_indices,
         vec_enemy_indices,
-        vec_vehicle_indices
+        vec_vehicle_indices,
+        vec_collide_indices
     };
 
-    // 壁へのレイキャスト
-    ray_to_wall(
+    // 床へのレイキャスト
+    ray_to_floor(
         elapsed_time,
         e_manager, s_manager,
         vectors_
     );
 
-    // 床へのレイキャスト
-    ray_to_floor(
+    // 壁へのレイキャスト
+    ray_to_wall(
         elapsed_time,
         e_manager, s_manager,
         vectors_
@@ -636,4 +749,5 @@ void Collision_Manager::judge(const float elapsed_time)
         e_manager,
         vectors_
     );
+
 }

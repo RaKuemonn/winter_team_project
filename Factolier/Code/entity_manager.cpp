@@ -8,6 +8,10 @@ void Entity_Manager::update(const float elapsed_time)
 
     if (m_is_update_stop)return;
 
+    // TODO: ‚Ä‚·‚Æ
+    update_removes();
+
+
     for(auto& entity : vec_registers)
     {
         vec_entities.emplace_back(entity);
@@ -20,19 +24,7 @@ void Entity_Manager::update(const float elapsed_time)
         entity->update(elapsed_time);
     }
 
-    for (auto& entity : vec_removes)
-    {
-        auto it = std::find(vec_entities.begin(), vec_entities.end(), entity);
-
-        if (it != vec_entities.end())
-        {
-            vec_entities.erase(it);
-        }
-
-        if (entity.get() == nullptr) continue;
-        entity.reset();
-    }
-    vec_removes.clear();
+    update_removes();
 
 }
 
@@ -110,4 +102,21 @@ void Entity_Manager::all_clear()
     vec_removes.clear();
     vec_registers.clear();
     vec_entities.clear();
+}
+
+void Entity_Manager::update_removes()
+{
+    for (auto& entity : vec_removes)
+    {
+        auto it = std::find(vec_entities.begin(), vec_entities.end(), entity);
+
+        if (it != vec_entities.end())
+        {
+            vec_entities.erase(it);
+        }
+
+        if (entity.get() == nullptr) continue;
+        entity.reset();
+    }
+    vec_removes.clear();
 }

@@ -183,6 +183,7 @@
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
     <ClCompile Include="Factolier\Code\clear_judge.cpp" />
+    <ClCompile Include="Factolier\Code\collide_detection_entity.cpp" />
     <ClCompile Include="Factolier\Code\collision_manager.cpp" />
     <ClCompile Include="Factolier\Code\decotator_supporter.cpp" />
     <ClCompile Include="Factolier\Code\easing.cpp" />
@@ -259,6 +260,7 @@
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
     <ClInclude Include="Factolier\Code\clear_judge.h" />
+    <ClInclude Include="Factolier\Code\collide_detection_entity.h" />
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
     <ClInclude Include="Factolier\Code\decotator_supporter.h" />

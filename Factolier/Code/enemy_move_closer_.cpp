@@ -46,7 +46,7 @@ inline void look_target(Enemy_Move_Closer_& me, const DirectX::XMFLOAT3& target_
 
 
 
-Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_move_closer, target_position_)
+Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_move_closer, target_position_, true)
 {
     m_timer.Initialize(nullptr, COUNT::UP, 0.0f);
 

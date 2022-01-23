@@ -36,6 +36,9 @@ public:
     void set_update_move() { m_is_update_stop = false; };
 
 private:
+    void update_removes();
+
+
     bool m_is_update_stop = false;
     std::vector<std::shared_ptr<Entity>> vec_entities   = {};
     std::vector<std::shared_ptr<Entity>> vec_registers  = {};

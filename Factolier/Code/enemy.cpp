@@ -2,9 +2,11 @@
 #include "enemy.h"
 #include "transform.h"
 #include "scene_manager.h"
+#include "collide_detection_entity.h"
+#include "entity_manager.h"
 
 
-Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const char* filename_, const DirectX::XMFLOAT3& target_position_) : target_position(target_position_)
+Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const char* filename_, const DirectX::XMFLOAT3& target_position_, bool default_collde_is_) : target_position(target_position_)
 {
 
     set_ptr_scene_manager(ptr_scene_manager_);
@@ -13,6 +15,17 @@ Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const char* filename_, const Dir
 
     m_velocity->set_mass(1.0f);
     m_velocity->set_friction(0.7f);
+
+    // ザコ敵用の当たり判定
+    if(default_collde_is_)
+    {
+        constexpr float radius = 0.8f;
+        std::shared_ptr<Collide_Detection> collide_detection    = std::make_shared<Collide_Detection>(ptr_scene_manager_, radius);
+        wkp_collide_detection                                   = collide_detection;
+
+        std::shared_ptr<Entity> e_collide_detection             = collide_detection;
+        Entity_Manager::instance().spawn_register(e_collide_detection);
+    }
 
 }
 
@@ -23,4 +36,25 @@ void Enemy::update_velocity(const float elapsed_time_)
 
     // 速度の更新
     m_velocity->update(elapsed_time_);
+}
+
+void Enemy::check_im_die()
+{
+    // expiredがfalseのとき参照されている
+    if(wkp_collide_detection.expired() == false) return;            // 参照が切れる処理collide_detectionが消されるのは、collision_managerで削除処理が入った後　
+    //TODO: てすと ->　右の処理でやろうとすると、削除される前でここを通るのでこのザコ敵が消えない..... entity_managerの削除処理を””前に一つ追加””する
+
+    
+
+
+    // 以下は参照が切れているときの処理
+
+
+    // entityのupdate後にremove_entityの処理が通るので、entityフレーム間に削除登録すれば
+    // そのentityは消えるので,このまま削除登録する
+
+
+    Entity_Manager::instance().remove_register(this);
+
+
 }
