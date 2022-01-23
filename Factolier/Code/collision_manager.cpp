@@ -166,11 +166,7 @@ namespace ray_functions
             const DirectX::XMFLOAT3 end     = { position.x, position_latest_y,  position.z + offset_z };
 
             // レイキャスト
-            if(s_manager.ray_cast(start, end, &result))
-            {
-                int a = 0;
-                a = 1;
-            }
+            s_manager.ray_cast(start, end, &result);
 
             const DirectX::XMFLOAT3 origin_start = { start.x - pudding_x, start.y, start.z - pudding_z };
             xmvec_z = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&end), DirectX::XMLoadFloat3(&origin_start));
@@ -572,7 +568,8 @@ inline void ray_to_floor(
                 vehicle->add_quaternion(quaternion);
             }
 
-            vehicle->set_position({ position.x,result.position.y,position.z });
+            vehicle->set_position(result.position);
+            //vehicle->set_position({ position.x,result.position.y,position.z });
             vehicle->set_velocity_y(0.0f);
             vehicle->set_friction(friction_ratio);
 

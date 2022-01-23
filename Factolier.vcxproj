@@ -237,6 +237,7 @@
     <ClCompile Include="Factolier\Code\sv_ball.cpp" />
     <ClCompile Include="Factolier\Code\texture.cpp" />
     <ClCompile Include="Factolier\Code\timer.cpp" />
+    <ClCompile Include="Factolier\Code\stage_2_movement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -331,6 +332,7 @@
     <ClInclude Include="Factolier\Code\transform.h" />
     <ClInclude Include="Factolier\Code\utility.h" />
     <ClInclude Include="Factolier\Code\velocity.h" />
+    <ClInclude Include="Factolier\Code\stage_2_movement.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Factolier\Shader\blur_ps.hlsl">

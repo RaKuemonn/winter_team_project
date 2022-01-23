@@ -17,6 +17,11 @@ public:
     ~Enemy_Spawner() = default;
 
     void set_enemies(class Scene_Manager* ptr_scene_manager);
+    void set_enemy_1();
+    void set_enemy_2();
+    void set_enemy_3();
+    void set_enemy_4();
+    void set_enemy_boss();
 
 
     template<typename T>

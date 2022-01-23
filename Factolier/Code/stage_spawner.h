@@ -17,10 +17,15 @@ public:
     Stage_Spawner(class Scene_Manager* ptr_scene_manager_) : ptr_scene_manager(ptr_scene_manager_) {};
     ~Stage_Spawner() = default;
 
-    void set_stages(class Scene_Manager* ptr_scene_manager);
+    void set_stage_1();
+    void set_stage_2();
+    void set_stage_3();
+    void set_stage_4();
+    void set_stage_boss();
 
 
 
+private:
     template<typename T>
     Stage_Spawner& set_stage(const DirectX::XMFLOAT3 & position_ = {})
     {

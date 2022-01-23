@@ -5,6 +5,11 @@
 #include "model.h"
 class Transform;
 
+namespace  stage
+{
+    constexpr DirectX::XMFLOAT3 scale = {0.2f,0.2f,0.2f };
+};
+
 class Stage
 {
 public:

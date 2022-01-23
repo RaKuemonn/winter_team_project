@@ -7,8 +7,6 @@
 #include "shader_manager.h"
 #include "camera.h"
 #include "entity_manager.h"
-#include "stage_1.h"
-#include "stage_1_movement.h"
 #include "stage_manager.h"
 #include "player.h"
 #include "enemy_none.h"
@@ -102,35 +100,25 @@ void Scene_Game::initialize(Scene_Manager* parent_)
         1000.0f);
 
 
-
+    Entity_Manager::instance().set_update_move();
 
     std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
     player->set_position({ 0.0f, -8.0f, -127.0f });
-
-
-    Entity_Manager::instance().set_update_move();
     Entity_Manager::instance().spawn_register(player);
-    enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
-    short* ptr_boss_hp = nullptr;
-    //ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
-    //     set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
-    //    .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
-    //    .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
-    //    .set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {})
-    enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, player->get_position());
 
-    clear_judge = std::make_unique<Clear_Judge>(parent->option_manager()->get_now_stage(), player->get_position(), ptr_boss_hp);
 
-    camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
-    collision_manager = std::unique_ptr<Collision_Manager>();
+    // 敵の設定
+    short* ptr_boss_hp = 
+        init_enemy(player->get_position());
 
-    stage_spawner = std::make_unique<Stage_Spawner>(parent);
-
+    // ステージの設定
     init_stage();
 
-    //stage_spawner->set_stage<Stage_1>();
-    //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
 
+
+    clear_judge = std::make_unique<Clear_Judge>(parent->option_manager()->get_now_stage(), player->get_position(), ptr_boss_hp);
+    camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
+    collision_manager = std::unique_ptr<Collision_Manager>();
 
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
 
@@ -234,41 +222,99 @@ void Scene_Game::render(float elapsed_time)
 
 void Scene_Game::init_stage()
 {
-    switch (CAST_I(parent->option_manager()->get_now_stage()))
+    std::unique_ptr<Stage_Spawner>		stage_spawner = nullptr;
+    stage_spawner = std::make_unique<Stage_Spawner>(parent);    
+
+    //switch (CAST_I(parent->option_manager()->get_now_stage()))
+    switch (Stage_Select::STAGE_2)
     {
 
-    case CAST_I(Stage_Select::STAGE_1):
+    case Stage_Select::STAGE_1:
     {
-        stage_spawner->set_stage<Stage_1>();
+        stage_spawner->set_stage_1();
         break;
     }
 
-    case CAST_I(Stage_Select::STAGE_2):
+    case Stage_Select::STAGE_2:
     {
-        //stage_spawner->set_stage<Stage_2>();
+        stage_spawner->set_stage_2();
         break;
     }
 
-    case CAST_I(Stage_Select::STAGE_3):
+    case Stage_Select::STAGE_3:
     {
-        //stage_spawner->set_stage<Stage_1>();
+        stage_spawner->set_stage_3();
         break;
     }
 
-    case CAST_I(Stage_Select::STAGE_4):
+    case Stage_Select::STAGE_4:
     {
-        //stage_spawner->set_stage<Stage_1>();
+        stage_spawner->set_stage_4();
         break;
     }
 
-    case CAST_I(Stage_Select::STAGE_BOSS):
+    case Stage_Select::STAGE_BOSS:
     {
-        //stage_spawner->set_stage<Stage_1>();
+        stage_spawner->set_stage_boss();
         break;
     }
 
     }
 }
+
+short* Scene_Game::init_enemy(const DirectX::XMFLOAT3& target_position)
+{
+    std::unique_ptr<Enemy_Spawner>		enemy_spawner = nullptr;
+    enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
+
+
+    short* ptr_boss_hp = nullptr;
+
+    //ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
+
+    enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, target_position);
+
+
+    switch (parent->option_manager()->get_now_stage())
+    {
+
+    case Stage_Select::STAGE_1:
+    {
+        enemy_spawner->set_enemy_1();
+        break;
+    }
+
+    case Stage_Select::STAGE_2:
+    {
+        enemy_spawner->set_enemy_2();
+        break;
+    }
+
+    case Stage_Select::STAGE_3:
+    {
+        enemy_spawner->set_enemy_3();
+        break;
+    }
+
+    case Stage_Select::STAGE_4:
+    {
+        enemy_spawner->set_enemy_4();
+        break;
+    }
+
+    case Stage_Select::STAGE_BOSS:
+    {
+        enemy_spawner->set_enemy_boss();
+        break;
+    }
+
+    }
+
+
+
+    return ptr_boss_hp;
+}
+
 
 
 

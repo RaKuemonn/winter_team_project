@@ -324,6 +324,9 @@
     <ClCompile Include="Factolier\Code\collide_detection_entity.cpp">
       <Filter>Factolier\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_2_movement.cpp">
+      <Filter>Factolier\Stage\stage_2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene_loading.h">
@@ -601,6 +604,9 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\collide_detection_entity.h">
       <Filter>Factolier\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_2_movement.h">
+      <Filter>Factolier\Stage\stage_2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

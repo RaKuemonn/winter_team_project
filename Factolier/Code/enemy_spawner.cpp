@@ -14,6 +14,34 @@ void Enemy_Spawner::set_enemies(Scene_Manager* ptr_scene_manager)
 }
 
 
+void Enemy_Spawner::set_enemy_1()
+{
+    
+}
+
+void Enemy_Spawner::set_enemy_2()
+{
+    
+}
+
+void Enemy_Spawner::set_enemy_3()
+{
+    
+}
+
+void Enemy_Spawner::set_enemy_4()
+{
+    
+}
+
+void Enemy_Spawner::set_enemy_boss()
+{
+    
+}
+
+
+
+
 void Enemy_Spawner::all_clear()
 {
     Entity_Manager& manager = Entity_Manager::instance();

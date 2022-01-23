@@ -22,13 +22,12 @@ public:
 
 private:
 	void init_stage();
+    short* init_enemy(const DirectX::XMFLOAT3& target_position);
 	bool judge_clear();
 
 private:
 	std::unique_ptr<Sky_Box> sky_box = nullptr;
 
-	std::unique_ptr<Enemy_Spawner>		enemy_spawner = nullptr;
-	std::unique_ptr<Stage_Spawner>		stage_spawner = nullptr;
 	std::unique_ptr<Collision_Manager>	collision_manager = nullptr;
 
 	std::unique_ptr<Clear_Judge> clear_judge		= nullptr;			// ステージのゴール判定とボスを倒したかを判定している
