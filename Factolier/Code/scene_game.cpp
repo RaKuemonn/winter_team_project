@@ -259,6 +259,38 @@ bool Scene_Game::judge_clear()
     //　↓　クリア判定！　↓
 
 
+    //現在のステージをクリア状態にする
+    Option_Manager* opm = parent->option_manager();
+
+    switch (CAST_I(opm->get_now_stage()))
+    {
+    case CAST_I(Stage_Select::STAGE_1):
+    {
+        opm->get_binary().clear_flag[CAST_I(opm->get_now_stage())] = true;
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_2):
+    {
+        opm->get_binary().clear_flag[CAST_I(opm->get_now_stage())] = true;
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_3):
+    {
+        opm->get_binary().clear_flag[CAST_I(opm->get_now_stage())] = true;
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_4):
+    {
+        opm->get_binary().clear_flag[CAST_I(opm->get_now_stage())] = true;
+        break;
+    }
+
+    }
+
+
     // カメラのゴール演出が終わったフレームか、Entityの更新が止まっていたら....            if文を通って早期returnさせる
     if(camera_controller->get_is_performance_end() || Entity_Manager::instance().get_is_update_stop())
     {
