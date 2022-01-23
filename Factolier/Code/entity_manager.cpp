@@ -5,6 +5,9 @@
 
 void Entity_Manager::update(const float elapsed_time)
 {
+
+    if (m_is_update_stop)return;
+
     for(auto& entity : vec_registers)
     {
         vec_entities.emplace_back(entity);

@@ -18,6 +18,7 @@
 #include "imgui.h"
 #include "utility.h"
 #include "ability.h"
+#include "sphere_vehicle.h"
 
 inline void imgui(bool goal)
 {
@@ -85,7 +86,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     player->set_position({ 0.0f, -8.0f, -127.0f });
 
 
-
+    Entity_Manager::instance().set_update_move();
     Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
     short* ptr_boss_hp = nullptr;
@@ -166,9 +167,9 @@ void Scene_Game::update(float elapsed_time)
 
     collision_manager->judge(elapsed_time);
 
-    //clear_judge->judge();
+    bool clear = judge_clear();
 
-    imgui(clear_judge->judge());
+    imgui(clear);
 
     debug_decorator_supporter->imgui_control();
 }
@@ -239,4 +240,41 @@ void Scene_Game::render(float elapsed_time)
     debug_decorator_supporter->render(ptr_device_context);
 
     shader->end(ptr_device_context);
+}
+
+
+bool Scene_Game::judge_clear()
+{
+    if (clear_judge->judge() == false) return false;
+
+    if(camera_controller->get_is_performance_end() || Entity_Manager::instance().get_is_update_stop())
+    {
+        // ここの処理を通った以降は、シーンが切り替えられない限り      （Scene_GameのInitialize()で動くようにsetterで設定している）
+        // Entityは更新されない
+        Entity_Manager::instance().set_update_stop();
+        return false;
+    }
+
+    // クリア用の処理
+    camera_controller->set_clear();
+    {
+        std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Vehicle);
+        if (int size = vec.size())
+        {
+            for(int i = 0; i < size;++i)
+            {
+                std::shared_ptr<Entity> player_vehicle = Entity_Manager::instance().get_entity(vec.at(0));
+
+                if(static_cast<Sphere_Vehicle*>(player_vehicle.get())->get_is_free() == true) continue;
+
+                // プレイヤーが乗っている乗り物の速度を0.0にする
+                player_vehicle->set_velocity_x(0.0f);
+                player_vehicle->set_velocity_z(0.0f);
+                break;
+            }
+            
+        }
+    }
+
+    return true;
 }
