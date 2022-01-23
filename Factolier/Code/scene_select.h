@@ -39,7 +39,7 @@ private:
 	float eas = 0.0;
 
 	int select_to_stage = 0;
-
+	int stage  = 0;
 
 	std::unique_ptr<Sprite> back = nullptr;
 	std::unique_ptr<Sprite> stage1 = nullptr;

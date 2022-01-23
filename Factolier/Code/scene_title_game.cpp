@@ -42,12 +42,11 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     back_stage3 = make_unique<Sprite>(parent->device(), "Data/select3.png");
     back_stage4 = make_unique<Sprite>(parent->device(), "Data/select4.png");
     back_stage0 = make_unique<Sprite>(parent->device(), "Data/select1.png");
-    start = make_unique<Sprite>(parent->device(), "Data/waku.png");
+   
     icon = make_unique<Sprite>(parent->device(), "Data/team1_flower_90×90.png");
 
-    option_start = make_unique<Sprite>(parent->device(), "Data/waku.png");
-
-    
+    start = make_unique<Sprite>(parent->device(), "Data/ステージセレクト.png");
+    option_start = make_unique<Sprite>(parent->device(), "Data/オプション文字.png");
 
     sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/タイトル.wav"));
     sound->play(true);
@@ -320,8 +319,8 @@ void Scene_Title_Game::render(float elapsed_time)
     timer++;
     float t_sta = 0;
     float t_op = 0;
-    t_sta = CAST_F(timer / 180 % 2);
-    t_op = CAST_F(timer / 180 % 2);
+    t_sta = CAST_F(timer / 40 % 2);
+    t_op = CAST_F(timer / 40 % 2);
    
     if (!option_flag)
     {
@@ -379,7 +378,7 @@ void Scene_Title_Game::render(float elapsed_time)
     // オプション画面を開いたとき
     else
     {
-        parent->option_manager()->game_render();
+        parent->option_manager()->title_render();
     }
 
    

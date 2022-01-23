@@ -122,8 +122,6 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
     }
   
    
-    if (position == 0)
-    {
         if (eas == 0)
         {
             if (input_manager->TRG(0) & PAD_START)
@@ -141,8 +139,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                 }
             }
         }
-        
-    }
+    
 }
 
 void Scene_Select::render(float elapsed_time)
@@ -180,6 +177,8 @@ void Scene_Select::render(float elapsed_time)
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
+
+
     choice->render(device_context_,
             806, 386,  //position
             1.0f, 1.0f,     // scal
@@ -239,6 +238,7 @@ void Scene_Select::render(float elapsed_time)
             1, 1, 1, 1,   // rgba
             0); // angle
     }
+  
 
 
     DrawDebugGUI();

@@ -79,11 +79,8 @@ private:
     std::unique_ptr<Sprite> bgm = nullptr;
     std::unique_ptr<Sprite> se = nullptr;
     std::unique_ptr<Sprite> camera = nullptr;
-    std::unique_ptr<Sprite> option = nullptr;
     std::unique_ptr<Sprite> bar = nullptr;
     std::unique_ptr<Sprite> icon = nullptr;
     std::unique_ptr<Sprite> arrow = nullptr;
-    std::unique_ptr<Sprite> enter = nullptr;
-    std::unique_ptr<Sprite> title = nullptr;
 
 };
