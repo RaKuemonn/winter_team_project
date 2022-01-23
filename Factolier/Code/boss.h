@@ -22,6 +22,9 @@ private:
     void init_move_3();
     void init_move_4();
 
+    void look_at_target(const float elapsed_time_);
+
+
 private:
     static constexpr int move_phase_size    = 4;
     static constexpr int body_size          = 3;

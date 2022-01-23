@@ -112,6 +112,9 @@
     <Filter Include="Factolier\Entity\Enemy\Eneies\Boss">
       <UniqueIdentifier>{70bee231-49cb-4723-81cb-5c8e1ef4da70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\GameSystem">
+      <UniqueIdentifier>{369035e9-3a32-42cc-b4f1-825bda2b3719}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_loading.cpp">

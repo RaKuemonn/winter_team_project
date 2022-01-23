@@ -126,7 +126,7 @@ inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
 Player::Player(Scene_Manager* ptr_scene_manager_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
-    load_model(get_scene_manager()->model_manager()->load_model(Model_Paths::Entity::player));
+    load_model(get_scene_manager()->model_manager()->load_model(Model_Paths::Entity::player, true));
 
     set_tag(Tag::Player);
 
@@ -199,7 +199,7 @@ void Player::reference_vehicle_position()
 {
     // 1 frame ’x‚ê‚Ä‚¢‚é
 
-    DirectX::XMFLOAT3 vehicle_position = m_wkp_vehicle.lock()->get_position();
+    DirectX::XMFLOAT3 vehicle_position = m_wkp_vehicle.lock()->get_latest_position();
     vehicle_position.y                += m_wkp_vehicle.lock()->get_scale().y;
 
     set_position(vehicle_position);
@@ -223,7 +223,7 @@ void Player::create_vehicle(const float elapsed_time_)
     std::shared_ptr<Entity> vehicle = std::make_shared<SV_Ball>(get_scene_manager());
 
     // ˆÊ’u‚ÌÝ’è
-    DirectX::XMFLOAT3 position = get_position() - velocity;
+    DirectX::XMFLOAT3 position = get_latest_position() - velocity;
     position.y += vehicle->get_scale().y + 0.5f;
     vehicle->set_position(position);
 

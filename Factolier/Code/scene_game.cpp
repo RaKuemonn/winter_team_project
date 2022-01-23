@@ -78,14 +78,14 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
 
     std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
-    player->set_position({ 0.0f, -2.0f, -125.0f });
+    player->set_position({ 0.0f, -8.0f, -127.0f });
 
 
 
     Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
-    //enemy_spawner->
-    //    set_enemy<Boss>(player->get_position());
+    enemy_spawner->
+        set_enemy<Boss>(player->get_position());
     //     set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
@@ -97,7 +97,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     collision_manager = std::unique_ptr<Collision_Manager>();
 
     stage_spawner = std::make_unique<Stage_Spawner>(parent);
-    //stage_spawner->set_stage<Stage_1>();
+    stage_spawner->set_stage<Stage_1>();
     //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
 
 
