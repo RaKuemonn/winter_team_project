@@ -1,6 +1,7 @@
 
 #include "scene_game.h"
 
+#include "ability.h"
 #include "boss.h"
 #include "scene_manager.h"
 #include "shader_manager.h"
@@ -16,11 +17,14 @@
 #include "camera_controller.h"
 #include "imgui.h"
 #include "utility.h"
+#include "ability.h"
 
-inline void imgui()
+inline void imgui(bool goal)
 {
 #ifdef _DEBUG
     ImGui::Begin("Entity");
+
+    ImGui::Text("goal %d", goal);
 
     std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Player);
     if (vec.size())
@@ -84,14 +88,15 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
     Entity_Manager::instance().spawn_register(player);
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
-    enemy_spawner->
-        set_enemy<Boss>(player->get_position());
+    short* ptr_boss_hp = nullptr;
+    ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
     //     set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {})
     //    .set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,0.0f }, player->get_position());
 
+    clear_judge = std::make_unique<Clear_Judge>(parent->option_manager()->get_now_stage(), player->get_position(), ptr_boss_hp);
 
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
     collision_manager = std::unique_ptr<Collision_Manager>();
@@ -161,7 +166,9 @@ void Scene_Game::update(float elapsed_time)
 
     collision_manager->judge(elapsed_time);
 
-    imgui();
+    //clear_judge->judge();
+
+    imgui(clear_judge->judge());
 
     debug_decorator_supporter->imgui_control();
 }

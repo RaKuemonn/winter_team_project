@@ -315,6 +315,12 @@
     <ClCompile Include="Factolier\Code\boss_body.cpp">
       <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\goal_judge.cpp">
+      <Filter>Factolier\GameSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\clear_judge.cpp">
+      <Filter>Factolier\GameSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene_loading.h">
@@ -583,6 +589,12 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\boss_body.h">
       <Filter>Factolier\Entity\Enemy\Eneies\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\goal_judge.h">
+      <Filter>Factolier\GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\clear_judge.h">
+      <Filter>Factolier\GameSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

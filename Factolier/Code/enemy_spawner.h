@@ -20,10 +20,10 @@ public:
 
 
     template<typename T>
-    Enemy_Spawner& set_enemy(const DirectX::XMFLOAT3& position_, const DirectX::XMFLOAT3& target)
+    std::shared_ptr<Entity>& set_enemy(const DirectX::XMFLOAT3& position_, const DirectX::XMFLOAT3& target)
     {
 
-        std::unique_ptr<Entity> enemy;
+        std::shared_ptr<Entity> enemy;
 
         if constexpr (std::is_base_of<Entity, T>{})
         {
@@ -46,14 +46,14 @@ public:
 
         Entity_Manager::instance().spawn_register(enemy);
 
-        return *this;
+        return enemy;
     }
 
     template<typename T>
-    Enemy_Spawner& set_enemy(const DirectX::XMFLOAT3& target)
+    std::shared_ptr<Entity>& set_enemy(const DirectX::XMFLOAT3& target)
     {
 
-        std::unique_ptr<Entity> enemy;
+        std::shared_ptr<Entity> enemy;
 
         if constexpr (std::is_base_of<Entity, T>{})
         {
@@ -74,7 +74,7 @@ public:
         
         Entity_Manager::instance().spawn_register(enemy);
 
-        return *this;
+        return enemy;
     }
 
     void all_clear();   // ‘S“G‚ğíœ
