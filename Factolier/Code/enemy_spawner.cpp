@@ -1,6 +1,9 @@
 
 #include "enemy_spawner.h"
 
+#include "ability.h"
+#include "boss.h"
+
 void Enemy_Spawner::set_enemies(Scene_Manager* ptr_scene_manager)
 {
     Entity_Manager& manager = Entity_Manager::instance();
@@ -14,29 +17,33 @@ void Enemy_Spawner::set_enemies(Scene_Manager* ptr_scene_manager)
 }
 
 
-void Enemy_Spawner::set_enemy_1()
+void Enemy_Spawner::set_enemy_1(const DirectX::XMFLOAT3& target)
 {
     
 }
 
-void Enemy_Spawner::set_enemy_2()
+void Enemy_Spawner::set_enemy_2(const DirectX::XMFLOAT3& target)
 {
     
 }
 
-void Enemy_Spawner::set_enemy_3()
+void Enemy_Spawner::set_enemy_3(const DirectX::XMFLOAT3& target)
 {
     
 }
 
-void Enemy_Spawner::set_enemy_4()
+void Enemy_Spawner::set_enemy_4(const DirectX::XMFLOAT3& target)
 {
     
 }
 
-void Enemy_Spawner::set_enemy_boss()
+short* Enemy_Spawner::set_enemy_boss(const DirectX::XMFLOAT3& target)
 {
-    
+    short* ptr_boss_hp = nullptr;
+
+    ptr_boss_hp = set_enemy<Boss>(target)->get_ability().get_ptr_hp();
+
+    return ptr_boss_hp;
 }
 
 

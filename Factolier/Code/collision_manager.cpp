@@ -175,10 +175,7 @@ namespace ray_functions
         // 当たり判定の結果判断
         if (result.material_index + hit_result_.material_index > -2)
         {
-
-#ifdef _DEBUG
-            std::wstring axis;
-#endif
+            
 
             /*if(result.material_index >= 0 && hit_result_.material_index >= 0)
             {
@@ -195,11 +192,9 @@ namespace ray_functions
             }
 
             else */
+
             if (result.distance < hit_result_.distance)
             {
-#ifdef _DEBUG 
-                axis = L"z\n";
-#endif
                 hit_result_ = result;
                 DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
                 DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_z, DirectX::XMVectorScale(Normal,DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_z, Normal)))));
@@ -207,50 +202,12 @@ namespace ray_functions
             }
             else
             {
-#ifdef _DEBUG
-                axis = L"x\n";
-#endif
+
                 DirectX::XMVECTOR Normal = DirectX::XMLoadFloat3(&hit_result_.normal);
                 DirectX::XMStoreFloat3(&wall_vec, DirectX::XMVectorSubtract(xmvec_x, DirectX::XMVectorScale(Normal,DirectX::XMVectorGetX(DirectX::XMVector3Dot(xmvec_x, Normal)))));
 
             }
-
-            // レイの結果を出力ウィンドウに出力
-#if _DEBUG
-            if (entity.lock().get()->get_tag() == Tag::Vehicle)
-            {
-                if (static_cast<Sphere_Vehicle*>(entity.lock().get())->get_is_free() == false)
-                {
-                    using namespace std;
-
-
-                    //const DirectX::XMFLOAT3 start = { detect.x + offset_x + pudding_x,    detect.y,       detect.z };
-                    //const DirectX::XMFLOAT3 end = { position.x + offset_x,              position.y,     position.z };
-                    const DirectX::XMFLOAT3 start = { detect.x,   detect.y,   detect.z + offset_z + pudding_z };
-                    const DirectX::XMFLOAT3 end = { position.x, position_latest_y, position.z + offset_z };
-
-                    //
-                    std::wstring out1 = std::to_wstring(start.x) + L" , ";
-                    std::wstring out2 = std::to_wstring(start.y) + L" , ";
-                    std::wstring out3 = std::to_wstring(start.z) + L"\n";
-                    //
-                    std::wstring out4 = std::to_wstring(end.x) + L" , ";
-                    std::wstring out5 = std::to_wstring(end.y) + L" , ";
-                    std::wstring out6 = std::to_wstring(end.z) + L"\n";
-
-                    std::wstring out7 = std::to_wstring(position.x - velocity.x + wall_vec.x) + L" , ";
-                    std::wstring out8 = std::to_wstring(position.y) + L" , ";
-                    std::wstring out9 = std::to_wstring(position.z - velocity.z + wall_vec.z) + L"\n";;
-
-                    std::wstring out10 = std::to_wstring(hit_result_.position.x) + L" , ";
-                    std::wstring out11 = std::to_wstring(hit_result_.position.y) + L" , ";
-                    std::wstring out12 = std::to_wstring(hit_result_.position.z) + L"\n";
-
-                    std::wstring outputMe = axis + L"start " + out1 + out2 + out3 + L"end   " + out4 + out5 + out6 + L"result" + out7 + out8 + out9 + L"hit   " + out10 + out11 + out12 + L"\n\n";
-                    OutputDebugString(outputMe.c_str());
-                }
-            }
-#endif
+            
 
             return true;
         }
@@ -369,6 +326,11 @@ namespace detect_functions
     inline bool box_vs_box(std::weak_ptr<Entity> entity, std::weak_ptr<Entity> entity_out)
     {
         // TODO: 未定義
+    }
+
+    inline bool entity_in_water(const float entity_position_y, const float water_y)
+    {
+        return (entity_position_y < water_y);
     }
 
 }
@@ -724,6 +686,41 @@ inline void entity_collide(
 
 }
 
+// 乗り物のみの水中動作
+inline void entity_water(
+    Entity_Manager& e_manager,
+    const vectors& vectors_
+)
+{
+    // 水の高さ
+    constexpr float water_y = -10.0f;
+
+    // 乗り物
+    for (auto index : std::get<2>(vectors_))
+    {
+        std::shared_ptr<Entity> vehicle = e_manager.get_entity(index);
+        const DirectX::XMFLOAT3 position = vehicle->get_position();
+        
+        if(entity_in_water(position.y, water_y) == false) continue;
+
+        // 水中の場合
+
+        const DirectX::XMFLOAT3 water_surface       = { position.x, water_y, position.z };
+        DirectX::XMVECTOR water_pressure_vec        = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&water_surface), DirectX::XMLoadFloat3(&position));
+        DirectX::XMVECTOR water_pressure_direction  = DirectX::XMVector3Normalize(water_pressure_vec);
+        const float water_surface_length            = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(water_pressure_vec));
+
+        // 閾値以下の場合continue
+        if (water_surface_length < FLT_EPSILON) continue;
+
+        // 
+        DirectX::XMFLOAT3 add_velocity;
+        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 13.0f));
+
+        vehicle->add_velocity(add_velocity);
+    }
+}
+
 
 void Collision_Manager::judge(const float elapsed_time)
 {
@@ -770,4 +767,31 @@ void Collision_Manager::judge(const float elapsed_time)
         vectors_
     );
 
+    // stage2なら水の処理
+    water_movement_function(
+        vectors_
+    );
+
+}
+
+
+Collision_Manager::Collision_Manager(Stage_Select stage_)
+{
+    if(stage_ == Stage_Select::STAGE_2)
+    {
+        // 水中時、乗り物だけ上昇するようにする
+        water_movement_function = [](const vectors& vectors_)
+        {
+            Entity_Manager& instance = Entity_Manager::instance();
+            entity_water(instance, vectors_);
+        };
+    }
+    else
+    {
+        // なにもしない
+        water_movement_function = [&](const vectors&)
+        {
+            /* nothing */
+        };
+    }
 }

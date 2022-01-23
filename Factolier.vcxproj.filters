@@ -115,6 +115,15 @@
     <Filter Include="Factolier\GameSystem">
       <UniqueIdentifier>{369035e9-3a32-42cc-b4f1-825bda2b3719}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factolier\Stage\stage_3">
+      <UniqueIdentifier>{a78005ad-fb85-4ee6-a7ba-8ff1ebfacb0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Stage\stage_4">
+      <UniqueIdentifier>{eb5d2b97-8298-49d8-bd8d-9e385f9fd687}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factolier\Stage\stage_boss">
+      <UniqueIdentifier>{4bd64e5c-c65f-4a0c-8e21-f98e1fc4241b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Factolier\Code\scene_loading.cpp">
@@ -326,6 +335,15 @@
     </ClCompile>
     <ClCompile Include="Factolier\Code\stage_2_movement.cpp">
       <Filter>Factolier\Stage\stage_2</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_4.cpp">
+      <Filter>Factolier\Stage\stage_4</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_3.cpp">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_boss.cpp">
+      <Filter>Factolier\Stage\stage_boss</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -607,6 +625,15 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\stage_2_movement.h">
       <Filter>Factolier\Stage\stage_2</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_4.h">
+      <Filter>Factolier\Stage\stage_4</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_3.h">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_boss.h">
+      <Filter>Factolier\Stage\stage_boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

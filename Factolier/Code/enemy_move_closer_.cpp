@@ -29,7 +29,7 @@ inline void look_target(Enemy_Move_Closer_& me, const DirectX::XMFLOAT3& target_
     const float sign = (dot_right_or_left > 0.0f) ? +1.0f : -1.0f;
     const float dot = DirectX::XMVectorGetX(DirectX::XMVector3Dot(to_target_direction, front_direction));           // 正規化されたベクトルによる内積
 
-    if (dot >= 1.0f - FLT_EPSILON) return;
+    if (std::abs(dot) >= 1.0f - FLT_EPSILON) return;
 
 
     const DirectX::XMVECTOR cross = DirectX::XMVector3Normalize(DirectX::XMVector3Cross(front_direction, to_target_direction));   // 正規化されたベクトルによる外積
@@ -118,6 +118,8 @@ void Enemy_Move_Closer_::init_define_area_parameters()
     // 全て undefine_area と同じなら
 
     m_area_origin_position = get_latest_position();
+
+    // TODO: 敵の行動範囲が固定　-> 設定できるように
     m_area_size = { 14.0f,0.0f,26.0f };
 
 }

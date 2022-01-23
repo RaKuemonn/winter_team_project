@@ -1,21 +1,17 @@
 
 #include "scene_game.h"
 
-#include "ability.h"
-#include "boss.h"
 #include "scene_manager.h"
 #include "shader_manager.h"
 #include "camera.h"
 #include "entity_manager.h"
 #include "stage_manager.h"
 #include "player.h"
-#include "enemy_none.h"
 #include "enemy_move_closer.h"
 #include "enemy_move_closer_.h"
 #include "camera_controller.h"
 #include "imgui.h"
 #include "utility.h"
-#include "ability.h"
 #include "sphere_vehicle.h"
 
 inline void imgui(bool goal)
@@ -115,10 +111,10 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     init_stage();
 
 
-
+    // TODO : debug 
+    collision_manager = std::make_unique<Collision_Manager>(/*parent->option_manager()->get_now_stage()*/Stage_Select::STAGE_2);
     clear_judge = std::make_unique<Clear_Judge>(parent->option_manager()->get_now_stage(), player->get_position(), ptr_boss_hp);
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
-    collision_manager = std::unique_ptr<Collision_Manager>();
 
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
 
@@ -270,8 +266,8 @@ short* Scene_Game::init_enemy(const DirectX::XMFLOAT3& target_position)
 
     short* ptr_boss_hp = nullptr;
 
+    // TODO: debug 敵の動作確認
     //ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
-
     enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, target_position);
 
 
@@ -280,31 +276,31 @@ short* Scene_Game::init_enemy(const DirectX::XMFLOAT3& target_position)
 
     case Stage_Select::STAGE_1:
     {
-        enemy_spawner->set_enemy_1();
+        enemy_spawner->set_enemy_1(target_position);
         break;
     }
 
     case Stage_Select::STAGE_2:
     {
-        enemy_spawner->set_enemy_2();
+        enemy_spawner->set_enemy_2(target_position);
         break;
     }
 
     case Stage_Select::STAGE_3:
     {
-        enemy_spawner->set_enemy_3();
+        enemy_spawner->set_enemy_3(target_position);
         break;
     }
 
     case Stage_Select::STAGE_4:
     {
-        enemy_spawner->set_enemy_4();
+        enemy_spawner->set_enemy_4(target_position);
         break;
     }
 
     case Stage_Select::STAGE_BOSS:
     {
-        enemy_spawner->set_enemy_boss();
+        ptr_boss_hp = enemy_spawner->set_enemy_boss(target_position);
         break;
     }
 

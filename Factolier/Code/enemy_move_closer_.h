@@ -39,8 +39,8 @@ private:
 
     Timer m_timer;
     DirectX::XMFLOAT3 m_area_target_position    = {};
-    DirectX::XMFLOAT3 m_area_origin_position    = undefine_area;
-    DirectX::XMFLOAT3 m_area_size               = undefine_area;
+    DirectX::XMFLOAT3 m_area_origin_position    = undefine_area;        // 行動範囲の中心      (行動範囲はbox)
+    DirectX::XMFLOAT3 m_area_size               = undefine_area;        // 行動範囲の大きさ    (大きさはboxの頂点から頂点までの辺の長さ)
 
     std::unique_ptr<Move_Phase<Enemy_Move_Closer_>> m_move_phase = nullptr;
 
