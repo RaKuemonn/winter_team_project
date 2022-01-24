@@ -9,6 +9,7 @@
 #include "player.h"
 #include "enemy_move_closer.h"
 #include "enemy_move_closer_.h"
+#include "enemy_spring.h"
 #include "camera_controller.h"
 #include "imgui.h"
 #include "utility.h"
@@ -109,7 +110,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     const Stage_Select stage_num = parent->option_manager()->get_now_stage();
 #else
     // TODO: debug ステージが固定されている
-    const Stage_Select stage_num = Stage_Select::STAGE_2;
+    const Stage_Select stage_num = Stage_Select::STAGE_1;
 #endif
 
     // プレイヤーの位置
@@ -322,7 +323,8 @@ short* Scene_Game::init_enemy(const Stage_Select stage_, const DirectX::XMFLOAT3
 
     // TODO: debug 敵の動作確認
     //ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
-    enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, target_position);
+    //enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, target_position);
+    //enemy_spawner->set_enemy<Enemy_Spring>({ 0.0f,5.0f,-120.0f }, target_position);
 
 
     switch (stage_)

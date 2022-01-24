@@ -190,10 +190,14 @@
     <ClCompile Include="Factolier\Code\effect.cpp" />
     <ClCompile Include="Factolier\Code\effect_manager.cpp" />
     <ClCompile Include="Factolier\Code\enemy.cpp" />
+    <ClCompile Include="Factolier\Code\enemy_fall.cpp" />
     <ClCompile Include="Factolier\Code\enemy_move_closer.cpp" />
     <ClCompile Include="Factolier\Code\enemy_move_closer_.cpp" />
     <ClCompile Include="Factolier\Code\enemy_none.cpp" />
     <ClCompile Include="Factolier\Code\enemy_spawner.cpp" />
+    <ClCompile Include="Factolier\Code\enemy_spring.cpp" />
+    <ClCompile Include="Factolier\Code\enemy_summer.cpp" />
+    <ClCompile Include="Factolier\Code\enemy_winter.cpp" />
     <ClCompile Include="Factolier\Code\entity.cpp" />
     <ClCompile Include="Factolier\Code\entity_manager.cpp" />
     <ClCompile Include="Factolier\Code\goal_judge.cpp" />
@@ -275,7 +279,11 @@
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
     <ClInclude Include="Factolier\Code\decotator_supporter.h" />
+    <ClInclude Include="Factolier\Code\enemy_fall.h" />
     <ClInclude Include="Factolier\Code\enemy_move_closer_.h" />
+    <ClInclude Include="Factolier\Code\enemy_spring.h" />
+    <ClInclude Include="Factolier\Code\enemy_summer.h" />
+    <ClInclude Include="Factolier\Code\enemy_winter.h" />
     <ClInclude Include="Factolier\Code\goal_judge.h" />
     <ClInclude Include="Factolier\Code\idle.h" />
     <ClInclude Include="Factolier\Code\model_filepaths.h" />

@@ -103,7 +103,7 @@ void Sphere_Vehicle::update_velocity(const float elapsed_time_)
     m_velocity->update(elapsed_time_);
 
 
-    m_velocity->set_y(m_velocity->get().y + static_cast<float>(m_is_jump) * 20.0f);
+    m_velocity->set_y(m_velocity->get().y + static_cast<float>(m_is_jump) * 15.0f);
 
     m_is_jump = false;
 }
