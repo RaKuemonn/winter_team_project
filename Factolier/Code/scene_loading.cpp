@@ -45,6 +45,8 @@ void Scene_Loading::render(float elapsed_time)
     parent->device_context()->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
     parent->device_context()->OMSetRenderTargets(1, &rtv, dsv);
 
+    parent->state_manager()->setBS(BS::ALPHA);
+
     icon->render(device_context_,
         960, 540,  //position
         1.0f, 1.0f,     // scal
