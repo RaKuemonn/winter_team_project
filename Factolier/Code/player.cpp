@@ -109,7 +109,10 @@ inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_, P_
     if (input_.TRG(0) & KEY_SPACE)
     {
         input_direction_.y += 1.0f;
-        anim = P_Anim::jump;
+        if (anim != P_Anim::joy)
+        {
+            anim = P_Anim::jump;
+        }
     }
 
 
@@ -118,14 +121,21 @@ inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_, P_
     {
         if (anim != P_Anim::jump || animetion_playing_ == false) // animがJumpでアニメーション中なら切り替えない
         {
-            anim = P_Anim::move;
+            if (anim != P_Anim::joy)
+            {
+                anim = P_Anim::move;
+            }
+
         }
     }
     else
     {
         if (anim != P_Anim::jump || animetion_playing_ == false) // animがJumpでアニメーション中なら切り替えない
         {
-            anim = P_Anim::stand;
+            if (anim != P_Anim::joy)
+            {
+                anim = P_Anim::stand;
+            }
         }
     }
 
@@ -192,15 +202,18 @@ void Player::update_vehicle(const float elapsed_time_, P_Anim& anim_num_)
 
         if (static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->get_on_ground())
         {
-            if (get_scene_manager()->input_manager()->TRG(0) & PAD_START)
+            if (anim_num_ != P_Anim::joy)
             {
-                // 地面にいて、Enterキーが押されたとき
-                // 発射する
-                static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
+                if (get_scene_manager()->input_manager()->TRG(0) & PAD_START)
+                {
+                    // 地面にいて、Enterキーが押されたとき
+                    // 発射する
+                    static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
 
-                anim_num_ = P_Anim::attack;
+                    anim_num_ = P_Anim::attack;
 
-                return;
+                    return;
+                }
             }
         }
         
@@ -303,3 +316,7 @@ void Player::create_vehicle(const float elapsed_time_)
     Entity_Manager::instance().spawn_register(vehicle);
 }
 
+void Player::set_clear()
+{
+    anim_num = P_Anim::joy;
+}
