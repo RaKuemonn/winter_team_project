@@ -74,7 +74,6 @@ void Sphere_Vehicle::update(const float elapsed_time_)
 
 void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
 {
-
     constexpr float speed = 30.0f;
 
     // ˆø”‚Ì•ûŒü‚É‰Á‘¬
@@ -103,7 +102,7 @@ void Sphere_Vehicle::update_velocity(const float elapsed_time_)
     m_velocity->update(elapsed_time_);
 
 
-    m_velocity->set_y(m_velocity->get().y + static_cast<float>(m_is_jump) * 15.0f);
+    m_velocity->set_y(m_velocity->get().y + static_cast<float>(m_is_jump) * 18.0f);
 
     m_is_jump = false;
 }
