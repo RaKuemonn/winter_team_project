@@ -3,6 +3,10 @@
 
 #include "ability.h"
 #include "boss.h"
+#include "enemy_spring.h"
+#include "enemy_summer.h"
+#include "enemy_winter.h"
+#include "enemy_fall.h"
 
 void Enemy_Spawner::set_enemies(Scene_Manager* ptr_scene_manager)
 {
@@ -19,22 +23,30 @@ void Enemy_Spawner::set_enemies(Scene_Manager* ptr_scene_manager)
 
 void Enemy_Spawner::set_enemy_1(const DirectX::XMFLOAT3& target)
 {
-    
+    set_enemy<Enemy_Spring>({ 0.0f,5.0f,-120.0f }, target)->set_area_size({ 14.0f,0.0f,26.0f });
+    set_enemy<Enemy_Spring>({ 0.0f,5.0f,-120.0f }, target)->set_area_size({ 14.0f,0.0f,26.0f });
+    set_enemy<Enemy_Spring>({ 0.0f,5.0f,-120.0f }, target)->set_area_size({ 14.0f,0.0f,26.0f });
 }
 
 void Enemy_Spawner::set_enemy_2(const DirectX::XMFLOAT3& target)
 {
-    
+    set_enemy<Enemy_Summer>({ 0.0f,5.0f,-120.0f }, target)->set_area_size({ 14.0f,0.0f,26.0f });
+    set_enemy<Enemy_Summer>({ 0.0f,5.0f,-120.0f }, target)->set_area_size({ 14.0f,0.0f,26.0f });
+    set_enemy<Enemy_Summer>({ 0.0f,5.0f,-120.0f }, target)->set_area_size({ 14.0f,0.0f,26.0f });
 }
 
 void Enemy_Spawner::set_enemy_3(const DirectX::XMFLOAT3& target)
 {
-    
+    set_enemy<Enemy_Fall>({ 0.0f,5.0f,-120.0f }, target)->set_area_size({ 14.0f,0.0f,26.0f });
+    set_enemy<Enemy_Fall>({ 0.0f,5.0f,-120.0f }, target)->set_area_size({ 14.0f,0.0f,26.0f });
+    set_enemy<Enemy_Fall>({ 0.0f,5.0f,-120.0f }, target)->set_area_size({ 14.0f,0.0f,26.0f });
 }
 
 void Enemy_Spawner::set_enemy_4(const DirectX::XMFLOAT3& target)
 {
-    
+    set_enemy<Enemy_Winter>({ 0.0f,0.7f,-95.0f }, target)->set_area_size({ 10.0f,0.5f,10.0f });
+    set_enemy<Enemy_Winter>({ 0.0f,8.0f,-46.0f }, target)->set_area_size({ 10.0f,0.5f,8.0f });
+    set_enemy<Enemy_Winter>({ 0.0f,6.4f,67.0f },  target)->set_area_size({ 16.0f,0.5f,10.0f });
 }
 
 short* Enemy_Spawner::set_enemy_boss(const DirectX::XMFLOAT3& target)
