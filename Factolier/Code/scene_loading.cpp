@@ -8,7 +8,7 @@ void Scene_Loading::initialize(Scene_Manager* parent_)
 {
     parent = parent_;
 
-    icon = make_unique<Sprite>(parent->device(), "Data/ロードアイコン.png");
+    icon = make_unique<Sprite>(parent->device(), "./Data/Sprite/ロードアイコン.png");
     //スレッド開始
     std::thread thread(loading_thread, this);
 
