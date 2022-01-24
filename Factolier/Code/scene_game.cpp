@@ -332,21 +332,21 @@ void Scene_Game::init_stage(const Stage_Select stage_)
     case Stage_Select::STAGE_1:
     {
         stage_spawner->set_stage_1();
-        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_1.dds");
         break;
     }
 
     case Stage_Select::STAGE_2:
     {
         stage_spawner->set_stage_2();
-        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_2.dds");
         break;
     }
 
     case Stage_Select::STAGE_3:
     {
         stage_spawner->set_stage_3();
-        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_3.dds");
         break;
     }
 
@@ -503,6 +503,15 @@ bool Scene_Game::judge_clear()
             }
             
         }
+
+        std::shared_ptr<Entity> player = Entity_Manager::instance().get_entity(Entity_Manager::instance().get_entities(Tag::Player).front());
+
+        if(player->get_tag() == Tag::Player)
+        {
+            static_cast<Player*>(player.get())->set_clear();
+        }
+
+
     }
 
     return true;

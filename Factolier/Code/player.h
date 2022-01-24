@@ -59,6 +59,8 @@ public:
     void init()                             override;
     void update(const float elapsed_time_)  override;
 
+    void set_clear();
+
 private:
     void update_vehicle(const float elapsed_time_, P_Anim& anim_num_);
     _NODISCARD bool check_has_vehicle() const;
