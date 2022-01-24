@@ -701,6 +701,18 @@
     <ClInclude Include="Factolier\Code\enemy_winter.h">
       <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
     </ClInclude>
+    <ClInclude Include="Factolier\Code\decorator.h">
+      <Filter>Factolier\Stage\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\deco_egg.h">
+      <Filter>Factolier\Stage\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\deco_leaf.h">
+      <Filter>Factolier\Stage\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\deco_furniture.h">
+      <Filter>Factolier\Stage\Decorator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Factolier\Shader\skinned_mesh_ps.hlsl">

@@ -38,13 +38,13 @@ void Stage_3_Move::update(const float elapsed_time)
     if (move_ratio < 0.0f && start_to_pos_dot < 0.0f)
     {
         move_ratio = 1.0f;
-        get_transform()->set_position(start);
+        Pos = Start;
     }
 
     if (start_to_pos_length > length)
     {
         move_ratio = -1.0f;
-        get_transform()->set_position(end);
+        Pos = End;
     }
 
     constexpr float speed = 0.9f;
@@ -61,9 +61,9 @@ void Stage_3_Move::update(const float elapsed_time)
         move_speed = -move_speed;
     }*/
 
-    DirectX::XMFLOAT3 position;
+    /*DirectX::XMFLOAT3 position;
     DirectX::XMStoreFloat3(&position, DirectX::XMVectorLerp(Start, End, move_rate_));
-    get_transform()->set_position(position);
+    get_transform()->set_position(position)*/;
 
     get_transform()->Update();
 }

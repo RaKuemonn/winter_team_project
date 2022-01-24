@@ -18,5 +18,6 @@ private:
     std::unique_ptr<Transform>  m_transform;
     std::unique_ptr<Model>      m_model;
     DirectX::XMFLOAT2           m_range = {};
+    class Scene_Manager* ptr_scene_manager = nullptr;
 };
 

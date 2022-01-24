@@ -278,7 +278,11 @@
     <ClInclude Include="Factolier\Code\collide_detection_entity.h" />
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
+    <ClInclude Include="Factolier\Code\decorator.h" />
     <ClInclude Include="Factolier\Code\decotator_supporter.h" />
+    <ClInclude Include="Factolier\Code\deco_egg.h" />
+    <ClInclude Include="Factolier\Code\deco_furniture.h" />
+    <ClInclude Include="Factolier\Code\deco_leaf.h" />
     <ClInclude Include="Factolier\Code\enemy_fall.h" />
     <ClInclude Include="Factolier\Code\enemy_move_closer_.h" />
     <ClInclude Include="Factolier\Code\enemy_spring.h" />

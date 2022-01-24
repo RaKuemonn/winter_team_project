@@ -19,6 +19,7 @@ public:
         static Stage_Manager instance_;
         return instance_;
     }
+    
 
     void update(const float elapsed_time);
     void render(ID3D11DeviceContext* ptr_device_context);
