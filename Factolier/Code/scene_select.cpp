@@ -36,16 +36,17 @@ void Scene_Select::DrawDebugGUI()
 void Scene_Select::initialize(Scene_Manager* parent_)
 {
     parent = parent_;
+    ID3D11Device* dev = parent->device();
 
-    back = make_unique<Sprite>(parent->device(), "Data/back.png");
-    stage1 = make_unique<Sprite>(parent->device(), "Data/select1.png");
-    stage2 = make_unique<Sprite>(parent->device(), "Data/select2.png");
-    stage3 = make_unique<Sprite>(parent->device(), "Data/select3.png");
-    stage4 = make_unique<Sprite>(parent->device(), "Data/select4.png");
-    stage5 = make_unique<Sprite>(parent->device(), "Data/select5.png");
-    choice = make_unique<Sprite>(parent->device(), "Data/frame.png");
+    back = make_unique<Sprite>(dev, "Data/back.png");
+    stage1 = make_unique<Sprite>(dev, "Data/select1.png");
+    stage2 = make_unique<Sprite>(dev, "Data/select2.png");
+    stage3 = make_unique<Sprite>(dev, "Data/select3.png");
+    stage4 = make_unique<Sprite>(dev, "Data/select4.png");
+    stage5 = make_unique<Sprite>(dev, "Data/select5.png");
+    choice = make_unique<Sprite>(dev, "Data/frame.png");
 
-    enter = make_unique<Sprite>(parent->device(), "Data/push the Enter.png");
+    enter = make_unique<Sprite>(dev, "Data/push the Enter.png");
 
    
 }
@@ -197,9 +198,9 @@ void Scene_Select::render(float elapsed_time)
         ID3D11DepthStencilView* dsv = parent->depth_stencil_view();
         FLOAT color[]{ 1.0f, 1.0f, 1.0f, 1.0f };
 
-        parent->device_context()->ClearRenderTargetView(rtv, color);
-        parent->device_context()->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-        parent->device_context()->OMSetRenderTargets(1, &rtv, dsv);
+        device_context_->ClearRenderTargetView(rtv, color);
+        device_context_->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+        device_context_->OMSetRenderTargets(1, &rtv, dsv);
     }
     parent->state_manager()->setSS(SS::POINT);
     parent->state_manager()->setSS(SS::LINEAR);

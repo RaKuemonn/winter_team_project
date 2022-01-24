@@ -127,7 +127,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     clear_judge = std::make_unique<Clear_Judge>(stage_num, player->get_position(), ptr_boss_hp);
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
 
-    sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
+    sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/cubemap_batch.dds");
 
     debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_);
 }
@@ -161,11 +161,6 @@ void Scene_Game::update(float elapsed_time)
 
 void Scene_Game::render(float elapsed_time) 
 {
-
-    parent->state_manager()->setSS(SS::POINT);
-    parent->state_manager()->setSS(SS::LINEAR);
-    parent->state_manager()->setSS(SS::ANISOTROPIC);
-
     parent->state_manager()->setDS(DS::ON_ON);
 
     parent->state_manager()->setBS(BS::ALPHA);

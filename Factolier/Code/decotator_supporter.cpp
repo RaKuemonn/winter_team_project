@@ -5,7 +5,7 @@
 
 Decotator_Supporter::Decotator_Supporter(Scene_Manager* ptr_scene_manager_)
 {
-    m_model = std::make_unique<Model>(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Entity::ball));
+    m_model = std::make_unique<Model>(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Entity::ball, true));
 
     m_transform = std::make_unique<Transform>();
     constexpr float scale = 0.5f;

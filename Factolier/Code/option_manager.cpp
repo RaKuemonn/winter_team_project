@@ -38,14 +38,14 @@ void Option_Manager::DrawDebugGUI()
 Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* context)
 {
     immediate_context = context;
-    back = make_unique<Sprite>(device, "Data/オプション.png");
+    back = make_unique<Sprite>(device, "./Data/Sprite/オプション.png");
 
     File_IO::open("save.dat", binary_data);
 
-    bar = make_unique<Sprite>(device, "Data/オプションバー.png");
-    icon = make_unique<Sprite>(device, "Data/team1_flower_90×90.png");
-    arrow = make_unique<Sprite>(device, "Data/バー矢印(38,164).png");
-    option_bakc = make_unique<Sprite>(device, "Data/option_4仮.png");
+    bar = make_unique<Sprite>(device, "./Data/Sprite/オプションバー.png");
+    icon = make_unique<Sprite>(device, "./Data/Sprite/team1_flower_90×90.png");
+    arrow = make_unique<Sprite>(device, "./Data/Sprite/バー矢印(38,164).png");
+    option_bakc = make_unique<Sprite>(device, "./Data/Sprite/option_4仮.png");
 }
 
 
