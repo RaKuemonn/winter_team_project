@@ -33,6 +33,7 @@ public:
     // デバッグ用GUI描画
     void DrawDebugGUI();
     void title_render();
+    void slideshow(float elapsedTime);
     void game_render();
 
     void set_next_stage(Stage_Select next_stage) { now_stage = next_stage; }
@@ -52,7 +53,10 @@ public:
     float camera_move = 0;    // カメラ感度バーの中身の描画が全体の何パーセントか
 
     float icon_eas = 0;     // アイコンの移動距離
+    float icon_eas_x = 0;     // アイコンの移動距離 x
     float icon_pos = 0;     //　アイコンの位置修正
+    float icon_pos_x = 0;     // アイコンの移動距離 x
+    float icon_count = 0;
 
     float time = 0; // 経過時間
 
@@ -67,13 +71,24 @@ public:
     bool down_flag = false;
 
     int icon_select = 0;
+    float icon_size = 1.0f;
 
+    float spring_alpha = 1;
+    float summer_alpha = 1;
+    float autam_alpha = 1; 
+    float winter_alpha = 0;
+
+    float slidetimer = 0.0f; // スライドショー用のタイマー
+    int slide = 0; //スライドショーの切り替わるタイミングの合計
+    float integer = 0;  // slidetimerの整数部分
+    float decimals = 0;// slidetimerの小数部分
 
 
 private:
     ID3D11DeviceContext* immediate_context;
 
-    std::unique_ptr<Sprite> back = nullptr;
+    std::unique_ptr<Sprite> title_back = nullptr;
+    std::unique_ptr<Sprite> game_back = nullptr;
     std::unique_ptr<Sprite> option_bakc = nullptr;
 
     Stage_Select now_stage = Stage_Select::STAGE_1;
@@ -84,7 +99,12 @@ private:
     std::unique_ptr<Sprite> se = nullptr;
     std::unique_ptr<Sprite> camera = nullptr;
     std::unique_ptr<Sprite> bar = nullptr;
-    std::unique_ptr<Sprite> icon = nullptr;
+
+    std::unique_ptr<Sprite> icon_spring = nullptr;
+    std::unique_ptr<Sprite> icon_summer = nullptr;
+    std::unique_ptr<Sprite> icon_autam = nullptr;
+    std::unique_ptr<Sprite> icon_winter = nullptr;
+
     std::unique_ptr<Sprite> arrow = nullptr;
 
 };
