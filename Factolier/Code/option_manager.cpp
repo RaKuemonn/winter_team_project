@@ -47,6 +47,20 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     icon = make_unique<Sprite>(device, "./Data/Sprite/team1_flower_90×90.png");
     arrow = make_unique<Sprite>(device, "./Data/Sprite/バー矢印(38,164).png");
     option_bakc = make_unique<Sprite>(device, "./Data/Sprite/option_4仮.png");
+
+
+    // 何割あるかパーセントで出す
+    // 描画範囲　％
+    bgm_move = binary_data.bgm_bar / BAR_MAX;
+    // BGM ボリューム　%
+    bgm_vo = 1 * bgm_move;
+    // SE
+    // やってることはBGMと同じ
+    se_move = binary_data.se_bar / BAR_MAX;
+    se_vo = 1 * se_move;
+    // カメラのバーを動かす処理
+    // BGMと同じ
+    camera_move = binary_data.camera_bar / BAR_MAX;
 }
 
 
@@ -118,71 +132,71 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
         switch (icon_select)
         {
         case BGM:
-            if (bgm_bar >= BAR_MIN && bgm_bar <= BAR_MAX)
+            if (binary_data.bgm_bar >= BAR_MIN && binary_data.bgm_bar <= BAR_MAX)
             {
                 if (input_manager->STATE(0) & PAD_RIGHT)
                 {
-                    bgm_bar += 4;
+                    binary_data.bgm_bar += 4;
                 }
 
                 if (input_manager->STATE(0) & PAD_LEFT)
                 {
-                    bgm_bar -= 4;
+                    binary_data.bgm_bar -= 4;
                 }
             }
-            if (bgm_bar <= BAR_MIN)
+            if (binary_data.bgm_bar <= BAR_MIN)
             {
-                bgm_bar = BAR_MIN;
+                binary_data.bgm_bar = BAR_MIN;
             }
-            if (bgm_bar >= BAR_MAX)
+            if (binary_data.bgm_bar >= BAR_MAX)
             {
-                bgm_bar = BAR_MAX;
+                binary_data.bgm_bar = BAR_MAX;
             }
             break;
 
         case SE:
-            if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
+            if (binary_data.se_bar >= BAR_MIN && binary_data.se_bar <= BAR_MAX)
             {
                 if (input_manager->STATE(0) & PAD_RIGHT)
                 {
-                    se_bar += 4;
+                    binary_data.se_bar += 4;
                 }
 
                 if (input_manager->STATE(0) & PAD_LEFT)
                 {
-                    se_bar -= 4;
+                    binary_data.se_bar -= 4;
                 }
             }
-            if (se_bar <= BAR_MIN)
+            if (binary_data.se_bar <= BAR_MIN)
             {
-                se_bar = BAR_MIN;
+                binary_data.se_bar = BAR_MIN;
             }
-            if (se_bar >= BAR_MAX)
+            if (binary_data.se_bar >= BAR_MAX)
             {
-                se_bar = BAR_MAX;
+                binary_data.se_bar = BAR_MAX;
             }
             break;
 
         case CAMERA:
-            if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
+            if (binary_data.camera_bar >= BAR_MIN && binary_data.camera_bar <= BAR_MAX)
             {
                 if (input_manager->STATE(0) & PAD_RIGHT)
                 {
-                    camera_bar += 4;
+                    binary_data.camera_bar += 4;
                 }
 
                 if (input_manager->STATE(0) & PAD_LEFT)
                 {
-                    camera_bar -= 4;
+                    binary_data.camera_bar -= 4;
                 }
             }
-            if (camera_bar <= BAR_MIN)
+            if (binary_data.camera_bar <= BAR_MIN)
             {
-                camera_bar = BAR_MIN;
+                binary_data.camera_bar = BAR_MIN;
             }
-            if (camera_bar >= BAR_MAX)
+            if (binary_data.camera_bar >= BAR_MAX)
             {
-                camera_bar = BAR_MAX;
+                binary_data.camera_bar = BAR_MAX;
             }
             break;
         }
@@ -191,16 +205,16 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
     
     // 何割あるかパーセントで出す
     // 描画範囲　％
-    bgm_move = bgm_bar / BAR_MAX;
+    bgm_move = binary_data.bgm_bar / BAR_MAX;
     // BGM ボリューム　%
     bgm_vo = 1 * bgm_move;
     // SE
     // やってることはBGMと同じ
-    se_move = se_bar / BAR_MAX;
+    se_move = binary_data.se_bar / BAR_MAX;
     se_vo = 1 * se_move;
     // カメラのバーを動かす処理
     // BGMと同じ
-    camera_move = camera_bar / BAR_MAX;
+    camera_move = binary_data.camera_bar / BAR_MAX;
     // 矢印
     arrow_bgm = bgm_move * 504;
     arrow_se = se_move * 504;
