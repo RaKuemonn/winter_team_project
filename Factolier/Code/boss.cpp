@@ -11,6 +11,8 @@
 #include "boss_body_3.h"
 using namespace body;
 
+constexpr short boss_hp = 3;
+
 // 別名エイリアス
 using _this_type_ = Boss;
 
@@ -59,6 +61,9 @@ void Boss::update(const float elapsed_time_)
 {
     // 行動遷移用の時間更新
     m_timer.Update(elapsed_time_);
+
+    // 体力の確認
+    check_wkp_body();
     
     // 親の行動遷移
     m_move_phases->update(elapsed_time_, *this);
@@ -100,9 +105,9 @@ void Boss::init_move()
 
     // 親の初期行動
     m_move_phases->set(m_move_phase[0])
-        .add_transition(m_move_phase[0], m_move_phase[1], [&](float) {return (get_ability().get_hp() <= 3); })
-        .add_transition(m_move_phase[1], m_move_phase[2], [&](float) {return (get_ability().get_hp() <= 2); })
-        .add_transition(m_move_phase[2], m_move_phase[3], [&](float) {return (get_ability().get_hp() <= 1); });
+        .add_transition(m_move_phase[0], m_move_phase[1], [&](float) {return (get_ability().get_hp() <= boss_hp); })
+        .add_transition(m_move_phase[1], m_move_phase[2], [&](float) {return (get_ability().get_hp() <= boss_hp - 1); })
+        .add_transition(m_move_phase[2], m_move_phase[3], [&](float) {return (get_ability().get_hp() <= boss_hp - 2); });
     
 }
 
@@ -175,3 +180,19 @@ void Boss::look_at_target(const float elapsed_time_)
     // 回転させる
     add_quaternion(xmf4_quaternion);
 }
+
+void Boss::check_wkp_body()
+{
+    short hp = boss_hp;
+    for(int i = 0; i < body_size; ++i)
+    {
+        if(wkp_bodies[i].expired() == false) continue;
+
+        // 参照がない時
+        --hp;
+    }
+
+    get_ability().set_init(hp);
+
+}
+

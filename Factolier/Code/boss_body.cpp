@@ -68,7 +68,7 @@ void Boss_Body::update_collision_detection()
 
 }
 
-bool Boss_Body::check_im_died()
+bool Boss_Body::check_im_hp()
 {
     // すでに死んでいたらチェックしない
     if (get_was_died())return true;
