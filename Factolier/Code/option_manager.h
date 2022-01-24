@@ -8,6 +8,10 @@
 
 
 
+#define CAMERA_MAX 2.0f
+
+
+
 enum class Stage_Select
 {
     STAGE_1 = 0,
