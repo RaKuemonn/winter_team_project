@@ -198,7 +198,7 @@ void Scene_Game::render(float elapsed_time)
 
     parent->state_manager()->setDS(DS::OFF_OFF);
 
-    //�X�J�C�{�b�N�X�`��
+    //
     {
         shader = parent->shader_manager()->get_shader(Shaders::SKY);
 
