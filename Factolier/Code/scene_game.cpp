@@ -105,6 +105,9 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     Entity_Manager::instance().spawn_register(player);
 
 
+    //２D読み込み
+    clear_back = std::make_unique<Sprite>(parent->device(), "./Data/Sprite/clear.png");
+
 
 
     // 選ばれているステージ
@@ -156,7 +159,9 @@ void Scene_Game::uninitialize()
 void Scene_Game::update(float elapsed_time)
 {
     bgm_stage1->set_volume(parent->option_manager()->bgm_vo);
-    if (parent->input_manager()->TRG(0) & KEY_ESC)
+
+
+    if (parent->input_manager()->TRG(0) & KEY_ESC && !clear_judge->judge())
     {
         if (!is_option)
         {
@@ -182,6 +187,15 @@ void Scene_Game::update(float elapsed_time)
         }
 
         return;
+    }
+
+    if (clear_end)
+    {
+        if (parent->input_manager()->TRG(0) & PAD_START)
+        {
+            parent->change_scene(new Scene_Loading(new Scene_Select));
+            return;
+        }
     }
 
 
@@ -266,7 +280,7 @@ void Scene_Game::render(float elapsed_time)
 
     shader->end(ptr_device_context);
 
-    //オプション描画
+    //2D描画
     {
         parent->state_manager()->setDS(DS::OFF_OFF);
 
@@ -277,6 +291,20 @@ void Scene_Game::render(float elapsed_time)
         if (is_option)
         {
             parent->option_manager()->game_render();
+        }
+
+
+        //クリア画面
+        if (clear_end)
+        {
+            clear_back->render(parent->device_context(),
+                0, 0,  //position
+                1.0f, 1.0f,     // scal
+                0, 0,    // どれくらい描画するか
+                1920, 1080,   // size
+                0.0, 0.0,         // pibot
+                1, 1, 1, 1,   // rgba
+                0.0f);
         }
     }
 }
@@ -474,6 +502,7 @@ bool Scene_Game::judge_clear()
         // ここの処理を通った以降は、シーンが切り替えられない限り      （Scene_GameのInitialize()で動くようにsetterで設定している）
         // Entityは更新されない
         Entity_Manager::instance().set_update_stop();
+        clear_end = true;
         return false;
     }
 
