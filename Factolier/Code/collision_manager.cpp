@@ -511,6 +511,7 @@ inline void ray_to_floor(
         std::shared_ptr<Entity>     vehicle = e_manager.get_entity(index);
         const DirectX::XMFLOAT3&    scale   = vehicle->get_scale();
         vehicle->set_friction(0.0f);
+        static_cast<Sphere_Vehicle*>(vehicle.get())->set_out_ground();
         result = {};
         if (ray_cast_floor(elapsed_time, vehicle, scale, s_manager, result))
         {
@@ -535,11 +536,12 @@ inline void ray_to_floor(
             vehicle->set_velocity_y(0.0f);
             vehicle->set_friction(friction_ratio);
 
-            if (static_cast<Sphere_Vehicle*>(vehicle.get())->get_on_ground() == false)
-            {
-                // 生成後一度しか呼ばれない ( 以後trueのまま )
-                static_cast<Sphere_Vehicle*>(vehicle.get())->set_on_ground();
-            }
+            static_cast<Sphere_Vehicle*>(vehicle.get())->set_on_ground();
+            //if (static_cast<Sphere_Vehicle*>(vehicle.get())->get_on_ground() == false)
+            //{
+            //    // 生成後一度しか呼ばれない ( 以後trueのまま )
+            //    static_cast<Sphere_Vehicle*>(vehicle.get())->set_on_ground();
+            //}
         }
 
     }
@@ -646,8 +648,8 @@ inline void entity_collide(
     const vectors& vectors_
 )
 {
-
     std::vector<short> entities = {};
+
     for (auto index : std::get<1>(vectors_))    // 敵
     {
         entities.emplace_back(index);
@@ -715,11 +717,92 @@ inline void entity_water(
 
         // 
         DirectX::XMFLOAT3 add_velocity;
-        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 13.0f));
+        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 100.0f));
 
         vehicle->add_velocity(add_velocity);
     }
 }
+
+// ボスステージの外壁
+inline void boss_out_wall(
+    Entity_Manager& e_manager,
+    const vectors& vectors_
+)
+{
+    constexpr float boss_stage_radius       = 101.0f;
+    constexpr float boss_stage_radius_width = 10.0f;
+
+
+    for (auto index : std::get<1>(vectors_))    // 敵
+    {
+        std::shared_ptr<Entity> enemy = e_manager.get_entity(index);
+
+        const DirectX::XMFLOAT3& position   = enemy->get_position();
+        const DirectX::XMFLOAT3 center      = { 0.0f,position.y,0.0f };
+        DirectX::XMVECTOR center_to_pos_vec = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&position), DirectX::XMLoadFloat3(&center));
+        const float length                  = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(center_to_pos_vec));
+
+        if(length < boss_stage_radius) continue;
+
+        const float difference                  = boss_stage_radius - length;
+        DirectX::XMVECTOR to_center_extrusion_vec   = DirectX::XMVectorScale(DirectX::XMVector3Normalize(center_to_pos_vec), difference);
+        DirectX::XMFLOAT3 add_vector;
+        DirectX::XMStoreFloat3(&add_vector, to_center_extrusion_vec);
+
+        enemy->add_position(add_vector);
+
+    }
+
+
+    for (auto index : std::get<2>(vectors_))    // 乗り物
+    {
+        std::shared_ptr<Entity> vehicle = e_manager.get_entity(index);
+
+        const DirectX::XMFLOAT3& position = vehicle->get_position();
+        const DirectX::XMFLOAT3 center = { 0.0f,position.y,0.0f };
+
+        DirectX::XMVECTOR center_to_pos_vec = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&position), DirectX::XMLoadFloat3(&center));
+        const float length = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(center_to_pos_vec));
+        const float calc_boss_in_radius         = boss_stage_radius - vehicle->get_scale().x;
+        const float calc_boss_out_radius        = boss_stage_radius + boss_stage_radius_width - vehicle->get_scale().x;
+
+        // 完全にステージ外
+        if(length > calc_boss_out_radius)
+        {
+            
+        }
+
+        // 壁上か外壁よりなか
+        else if(length > calc_boss_in_radius && length < calc_boss_out_radius)
+        {
+            // 壁上
+            if (position.y >= 10.2f)
+            {
+                
+            }
+            // 壁中
+            else
+            {
+                const float difference = calc_boss_in_radius - length;
+                DirectX::XMVECTOR to_center_extrusion_vec = DirectX::XMVectorScale(DirectX::XMVector3Normalize(center_to_pos_vec), difference);
+                DirectX::XMFLOAT3 add_vector;
+                DirectX::XMStoreFloat3(&add_vector, to_center_extrusion_vec);
+
+                vehicle->add_position(add_vector);
+
+                if (vehicle->get_velocity().y < 0.0f)
+                {
+                    vehicle->set_friction(0.8f);
+                }
+            }
+        }
+
+        
+        
+    }
+    
+}
+
 
 
 void Collision_Manager::judge(const float elapsed_time)
@@ -775,6 +858,12 @@ Collision_Manager::Collision_Manager(Stage_Select stage_)
             //    e_manager, s_manager,
             //    vectors_
             //);
+
+            // ボスステージの外壁
+            boss_out_wall(
+                e_manager,
+                vectors_
+            );
 
 
             // entity同士で当たり判定 (球)

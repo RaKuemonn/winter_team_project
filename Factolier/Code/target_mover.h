@@ -32,7 +32,7 @@ private:
         const DirectX::XMVECTOR front_direction = DirectX::XMLoadFloat3(&axis_z);
 
         const DirectX::XMFLOAT3 target_position = { target_.x,0.0f,target_.z };
-        const DirectX::XMFLOAT3 position = { me.get_position().x,0.0f,me.get_position().z };
+        const DirectX::XMFLOAT3 position = { me.get_latest_position().x,0.0f,me.get_latest_position().z };
 
         const DirectX::XMVECTOR to_target_direction = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&target_position), DirectX::XMLoadFloat3(&position)));
 

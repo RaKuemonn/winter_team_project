@@ -22,6 +22,7 @@ bool Framework::initialize()
 	scene_manager = std::make_unique<Scene_Manager>();
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
 
+<<<<<<< HEAD
 	
 	scene_manager->state_manager()->setSS(SS::POINT);
 	scene_manager->state_manager()->setSS(SS::LINEAR);
@@ -29,7 +30,11 @@ bool Framework::initialize()
 
 
 	scene_manager->change_scene(new Scene_Game);
+=======
+	//scene_manager->change_scene(new Scene_Game);
+>>>>>>> 74c02b276974ab22862e2ba5e2918d4d9439ed3e
 	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
+	scene_manager->change_scene(new Scene_Loading(new Scene_Title_Game));
 	//scene_manager->change_scene(new Scene_Title_Game);
 
 	

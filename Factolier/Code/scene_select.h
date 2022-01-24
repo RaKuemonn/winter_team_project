@@ -51,6 +51,12 @@ private:
 
 	std::unique_ptr<Sprite> enter = nullptr;
 
+
+	std::unique_ptr<Sprite> key_stage2 = nullptr;
+	std::unique_ptr<Sprite> key_stage3 = nullptr;
+	std::unique_ptr<Sprite> key_stage4 = nullptr;
+	std::unique_ptr<Sprite> key_boss = nullptr;
+
 	
 
 };

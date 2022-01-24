@@ -8,6 +8,7 @@ void Scene_Loading::initialize(Scene_Manager* parent_)
 {
     parent = parent_;
 
+    icon = make_unique<Sprite>(parent->device(), "Data/ロードアイコン.png");
     //スレッド開始
     std::thread thread(loading_thread, this);
 
@@ -24,6 +25,7 @@ void Scene_Loading::uninitialize()
 
 void Scene_Loading::update(float elapsed_time)
 {
+    angle += elapsed_time * 20;
     //次のシーンの準備が完了したらシーンを切り替える
     if (next_scene->is_ready())
     {
@@ -34,13 +36,25 @@ void Scene_Loading::update(float elapsed_time)
 
 void Scene_Loading::render(float elapsed_time)
 {
+    ID3D11DeviceContext* device_context_ = parent->device_context();
     ID3D11RenderTargetView* rtv = parent->render_target_view();
     ID3D11DepthStencilView* dsv = parent->depth_stencil_view();
-    FLOAT color[]{ 1.0f, 0.0f, 0.0f, 1.0f };
+    FLOAT color[]{ 0.0f, 0.0f, 0.0f, 1.0f };
 
     parent->device_context()->ClearRenderTargetView(rtv, color);
     parent->device_context()->ClearDepthStencilView(dsv, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
     parent->device_context()->OMSetRenderTargets(1, &rtv, dsv);
+
+    icon->render(device_context_,
+        960, 540,  //position
+        1.0f, 1.0f,     // scal
+        200, 200,    // どれくらい描画するか
+        200, 200,   // size
+        0.5, 0.5,         // pibot
+        1, 1, 1, 1,   // rgba
+        angle);
+ 
+
 }
 
 
