@@ -127,6 +127,7 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
     load_model(get_scene_manager()->model_manager()->load_model(Model_Paths::Entity::player, true));
+    //load_model(get_scene_manager()->model_manager()->load_model("./Data/Model/character1.fbx"));
 
     set_tag(Tag::Player);
 
@@ -153,7 +154,7 @@ void Player::update(const float elapsed_time_)
     get_transform()->Update();
 
     // ƒ‚ƒfƒ‹‚ÌXV
-    get_model()->play_animation(elapsed_time_, 0);
+    //get_model()->play_animation(elapsed_time_, 0);
 }
 
 
