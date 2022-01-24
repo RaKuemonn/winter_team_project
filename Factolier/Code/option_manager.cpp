@@ -6,6 +6,7 @@
 #define BGM 0
 #define SE 180
 #define CAMERA 360
+#define RETURN 480
 #define BAR_MAX 504
 #define BAR_MIN 0
 
@@ -196,6 +197,8 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
             {
                 binary_data.bgm_bar = BAR_MAX;
             }
+
+            return_flag = false;
             break;
 
         case SE:
@@ -219,6 +222,8 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
             {
                 binary_data.se_bar = BAR_MAX;
             }
+
+            return_flag = false;
             break;
 
         case CAMERA:
@@ -242,7 +247,14 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
             {
                 binary_data.camera_bar = BAR_MAX;
             }
+
+            return_flag = false;
             break;
+
+        case RETURN:
+            return_flag = true;
+            break;
+
         }
     }
 
@@ -265,6 +277,7 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
     arrow_camera = camera_move * 504;
   
 }
+
     
 void Option_Manager::slideshow(float elapsedTime)
 {

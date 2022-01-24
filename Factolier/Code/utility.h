@@ -9,7 +9,7 @@ CONST LONG SCREEN_HEIGHT{ 1080 };
 CONST BOOL FULLSCREEN{ !TRUE };
 CONST LPWSTR APPLICATION_NAME{ L"Theme_Sphere" };
 
-static constexpr int sync_interval = 0;
+static constexpr int sync_interval = 1;
 static bool quit = false;
 
 
