@@ -1,7 +1,7 @@
 #include <imgui.h>
 #include "scene_manager.h"
 #include "scene_title_game.h"
-#include "scene_title.h"
+#include "scene_loading.h"
 #include "easing.h"
 #include "scene_select.h"
 #include "easing.h"
@@ -143,7 +143,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             }
             if (move_flag)
             {
-                parent->change_scene(new Scene_Select);
+                parent->change_scene(new Scene_Loading(new Scene_Select));
          
             }
         }
