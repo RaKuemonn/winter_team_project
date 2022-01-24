@@ -101,13 +101,6 @@ void Framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 	};
 
 
-	ImGui::Begin("framework");
-
-	ImGui::InputFloat("fps", &fps);
-
-	ImGui::End();
-
-
 	scene_manager->render(elapsed_time);
 
 
