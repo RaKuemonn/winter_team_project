@@ -52,7 +52,7 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     icon_autam = make_unique<Sprite>(device, "./Data/Sprite/秋カーソル.png");
     icon_winter = make_unique<Sprite>(device, "./Data/Sprite/冬カーソル.png");
     arrow = make_unique<Sprite>(device, "./Data/Sprite/バー矢印(38,164).png");
-    option_bakc = make_unique<Sprite>(device, "./Data/Sprite/option_4仮.png");
+    //option_bakc = make_unique<Sprite>(device, "./Data/Sprite/option_4仮.png");
 
 
     // 何割あるかパーセントで出す

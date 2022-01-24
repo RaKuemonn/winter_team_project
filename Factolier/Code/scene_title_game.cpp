@@ -8,6 +8,7 @@
 #include "scene_loading.h"
 #include "utility.h"
 #include "option_manager.h"
+#include "scene_game.h"
 
 #define SELECT 0
 #define OPTION 200
@@ -42,11 +43,11 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     parent = parent_;
     title = make_unique<Sprite>(parent->device(), "Data/Sprite/title.png");
 
-    back_stage1 = make_unique<Sprite>(parent->device(), "Data/Sprite/select1.png");
-    back_stage2 = make_unique<Sprite>(parent->device(), "Data/Sprite/select2.png");
-    back_stage3 = make_unique<Sprite>(parent->device(), "Data/Sprite/select3.png");
-    back_stage4 = make_unique<Sprite>(parent->device(), "Data/Sprite/select4.png");
-    back_stage0 = make_unique<Sprite>(parent->device(), "Data/Sprite/select1.png");
+    back_stage1 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_spring.png");
+    back_stage2 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_summer.png");
+    back_stage3 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_autumn.png");
+    back_stage4 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_winter.png");
+    back_stage0 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_spring.png");
    
     icon_spring = make_unique<Sprite>(parent->device(), "Data/Sprite/春カーソル.png");
     icon_summer = make_unique<Sprite>(parent->device(), "Data/Sprite/夏カーソル.png");
@@ -157,6 +158,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             if (move_flag)
             {
                 parent->change_scene(new Scene_Loading(new Scene_Select));
+                //parent->change_scene(new Scene_Loading(new Scene_Game));
          
             }
         }
@@ -365,7 +367,7 @@ void Scene_Title_Game::render(float elapsed_time)
     // タイトル
     {
         title->render(device_context_,
-            100, 150,
+            100, 80,
             1.0f, 1.0f,
             900, 384,
             900, 384,
@@ -458,6 +460,6 @@ void Scene_Title_Game::render(float elapsed_time)
 
    
 
-    DrawDebugGUI();
+    //DrawDebugGUI();
 
 }
