@@ -77,8 +77,12 @@ void Scene_Select::uninitialize()
 
 void Scene_Select::update(float elapsed_time)
 {
-    
-   move(elapsed_time, parent->input_manager());
+    move(elapsed_time, parent->input_manager());
+
+    if (parent->input_manager()->TRG(0) & KEY_ESC)
+    {
+        parent->change_scene(new Scene_Loading(new Scene_Title_Game));
+    }
 }
 
 void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
@@ -201,7 +205,11 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
 
                 }
 
+<<<<<<< HEAD
                 parent->change_scene(new Scene_Game);
+=======
+                //parent->change_scene(new Scene_Game);
+>>>>>>> 419cb80d1c64d3420831ae2eed9430139cd2f09a
             }
         }
     
