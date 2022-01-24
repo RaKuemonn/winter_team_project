@@ -149,6 +149,16 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 {
 	using namespace DirectX;
 
+
+	//座標変換
+	DirectX::XMFLOAT4X4 coordinate_system_transforms = { -1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 };	// 0:RHS Y-UP
+	DirectX::XMMATRIX CW = XMLoadFloat4x4(&coordinate_system_transforms);
+	DirectX::XMMATRIX W = DirectX::XMLoadFloat4x4(&world);
+
+	DirectX::XMFLOAT4X4 c_world;
+	DirectX::XMStoreFloat4x4(&c_world, CW * W);
+
+
 	const DirectX::XMVECTOR WorldStart = DirectX::XMLoadFloat3(&start);
 	const DirectX::XMVECTOR WorldEnd = DirectX::XMLoadFloat3(&end);
 	const DirectX::XMVECTOR WorldRayVec = DirectX::XMVectorSubtract(WorldEnd, WorldStart);
@@ -172,7 +182,7 @@ bool Model::raycast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end
 		}
 
 		//レイをワールド空間からローカル空間へ変換
-		DirectX::XMMATRIX WorldTransform = DirectX::XMLoadFloat4x4(&node.global_transform) * DirectX::XMLoadFloat4x4(&world);
+		DirectX::XMMATRIX WorldTransform = DirectX::XMLoadFloat4x4(&node.global_transform) * DirectX::XMLoadFloat4x4(&c_world);
 		DirectX::XMMATRIX InverseWorldTransform = DirectX::XMMatrixInverse(nullptr, WorldTransform);
 
 		const DirectX::XMVECTOR Start = DirectX::XMVector3TransformCoord(WorldStart, InverseWorldTransform);
