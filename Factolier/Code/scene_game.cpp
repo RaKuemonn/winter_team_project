@@ -14,6 +14,8 @@
 #include "imgui.h"
 #include "utility.h"
 #include "sphere_vehicle.h"
+#include "scene_loading.h"
+#include "scene_select.h"
 
 inline void imgui(bool goal)
 {
@@ -125,12 +127,10 @@ void Scene_Game::initialize(Scene_Manager* parent_)
         init_enemy(stage_num, player->get_position());
 
 
-    collision_manager = std::make_unique<Collision_Manager>(/*parent->option_manager()->get_now_stage()*/stage_num);
-    clear_judge = std::make_unique<Clear_Judge>(stage_num, player->get_position(), ptr_boss_hp);
-    camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
-
-    // TODO: debug
-    //sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
+    collision_manager   = std::make_unique<Collision_Manager>   (stage_num);
+    clear_judge         = std::make_unique<Clear_Judge>         (stage_num, player->get_position(), ptr_boss_hp);
+    camera_controller   = std::make_unique<Camera_Controller>(&player->get_position());
+    
 
     debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_);
 
@@ -155,7 +155,39 @@ void Scene_Game::uninitialize()
 
 void Scene_Game::update(float elapsed_time)
 {
+<<<<<<< HEAD
     bgm_stage1->set_volume(parent->option_manager()->bgm_vo);
+=======
+    if (parent->input_manager()->TRG(0) & KEY_ESC)
+    {
+        if (!is_option)
+        {
+            is_option = true;
+        }
+
+        else
+        {
+            is_option = false;
+        }
+    }
+
+    if (is_option)
+    {
+        parent->option_manager()->update(elapsed_time, parent->input_manager());
+
+        if (parent->input_manager()->TRG(0) & PAD_START)
+        {
+            if (parent->option_manager()->return_flag)
+            {
+                parent->change_scene(new Scene_Loading(new Scene_Select));
+            }
+        }
+
+        return;
+    }
+
+
+>>>>>>> 67c3e5eae65a599792958515080a43f1235723b9
     Stage_Manager::instance().update(elapsed_time);
 
     Entity_Manager::instance().update(elapsed_time);
@@ -170,6 +202,7 @@ void Scene_Game::update(float elapsed_time)
     imgui(clear);
 
     debug_decorator_supporter->imgui_control();
+
 }
 
 
@@ -234,6 +267,20 @@ void Scene_Game::render(float elapsed_time)
     debug_decorator_supporter->render(ptr_device_context);
 
     shader->end(ptr_device_context);
+
+    //オプション描画
+    {
+        parent->state_manager()->setDS(DS::OFF_OFF);
+
+        //parent->state_manager()->setBS(BS::ALPHA);
+
+        parent->state_manager()->setRS(RS::SOLID_NONE);
+
+        if (is_option)
+        {
+            parent->option_manager()->game_render();
+        }
+    }
 }
 
 
@@ -398,7 +445,7 @@ bool Scene_Game::judge_clear()
     {
     case CAST_I(Stage_Select::STAGE_1):
     {
-        opm->get_binary().clear_flag[CAST_I(opm->get_now_stage())] = true;
+        opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_1)] = true;
         break;
     }
 

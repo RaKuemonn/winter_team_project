@@ -26,7 +26,7 @@ class Option_Manager
 {
 public:
     Option_Manager(ID3D11Device* device, ID3D11DeviceContext* context);
-    ~Option_Manager() { File_IO::write("./Data/Binary/save.dat", binary_data); }
+    ~Option_Manager() { File_IO::write("save.dat", binary_data); }
 
     void update(float elapsedTime, Input_Manager* input_manager);
     void title_update(float elapsedTime, Input_Manager* input_manager);
@@ -84,7 +84,7 @@ public:
     float integer = 0;  // slidetimerの整数部分
     float decimals = 0;// slidetimerの小数部分
 
-    bool return_flag = false; //セレクトの戻る
+    bool return_flag = false; //セレクトに戻る
 
 
 private:

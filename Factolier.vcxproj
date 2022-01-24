@@ -239,10 +239,10 @@
     <ClCompile Include="Factolier\Code\stage_3.cpp" />
     <ClCompile Include="Factolier\Code\stage_3_move.cpp" />
     <ClCompile Include="Factolier\Code\stage_3_movement.cpp" />
-    <ClCompile Include="Factolier\Code\stage_3_obj.cpp" />
+    <ClCompile Include="Factolier\Code\stage_3_goal.cpp" />
     <ClCompile Include="Factolier\Code\stage_4.cpp" />
     <ClCompile Include="Factolier\Code\stage_4_movement.cpp" />
-    <ClCompile Include="Factolier\Code\stage_4_obj.cpp" />
+    <ClCompile Include="Factolier\Code\stage_4_goal.cpp" />
     <ClCompile Include="Factolier\Code\stage_boss.cpp" />
     <ClCompile Include="Factolier\Code\stage_manager.cpp" />
     <ClCompile Include="Factolier\Code\stage_spawner.cpp" />
@@ -278,7 +278,11 @@
     <ClInclude Include="Factolier\Code\collide_detection_entity.h" />
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
+    <ClInclude Include="Factolier\Code\decorator.h" />
     <ClInclude Include="Factolier\Code\decotator_supporter.h" />
+    <ClInclude Include="Factolier\Code\deco_egg.h" />
+    <ClInclude Include="Factolier\Code\deco_furniture.h" />
+    <ClInclude Include="Factolier\Code\deco_leaf.h" />
     <ClInclude Include="Factolier\Code\enemy_fall.h" />
     <ClInclude Include="Factolier\Code\enemy_move_closer_.h" />
     <ClInclude Include="Factolier\Code\enemy_spring.h" />
@@ -344,10 +348,10 @@
     <ClInclude Include="Factolier\Code\stage_3.h" />
     <ClInclude Include="Factolier\Code\stage_3_move.h" />
     <ClInclude Include="Factolier\Code\stage_3_movement.h" />
-    <ClInclude Include="Factolier\Code\stage_3_obj.h" />
+    <ClInclude Include="Factolier\Code\stage_3_goal.h" />
     <ClInclude Include="Factolier\Code\stage_4.h" />
     <ClInclude Include="Factolier\Code\stage_4_movement.h" />
-    <ClInclude Include="Factolier\Code\stage_4_obj.h" />
+    <ClInclude Include="Factolier\Code\stage_4_goal.h" />
     <ClInclude Include="Factolier\Code\stage_boss.h" />
     <ClInclude Include="Factolier\Code\stage_manager.h" />
     <ClInclude Include="Factolier\Code\stage_spawner.h" />

@@ -45,7 +45,7 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     title_back = make_unique<Sprite>(device, "./Data/Sprite/オプション.png");
     game_back = make_unique<Sprite>(device, "./Data/Sprite/ゲーム中オプション.png");
 
-    File_IO::open("./Data/Binary/save.dat", binary_data);
+    File_IO::open("save.dat", binary_data);
 
     bar = make_unique<Sprite>(device, "./Data/Sprite/オプションバー.png");
     icon_spring = make_unique<Sprite>(device, "./Data/Sprite/春カーソル.png");

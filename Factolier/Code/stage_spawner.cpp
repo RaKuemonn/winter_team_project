@@ -12,11 +12,11 @@
 #include "stage_3.h"
 #include "stage_3_movement.h"
 #include "stage_3_move.h"
-#include "stage_3_obj.h"
+#include "stage_3_goal.h"
 
 #include "stage_4.h"
 #include "stage_4_movement.h"
-#include "stage_4_obj.h"
+#include "stage_4_goal.h"
 
 #include "stage_boss.h"
 
@@ -38,16 +38,18 @@ void Stage_Spawner::set_stage_2()
 void Stage_Spawner::set_stage_3()
 {
     set_stage<Stage_3>({ 0.0f,-10.0f,0.0f });
-    set_stage<Stage_3_Movement>({ 0.0f,-10.0f,0.0f });
-    set_stage<Stage_3_Move>({ 0.0f,10.0f,90.0f });
-    set_stage<Stage_3_Obj>({ 0.0f,-10.0f,0.0f });
+    set_stage<Stage_3_Movement>({ 0.0f, -8.0f, -7.0f });
+    set_stage<Stage_3_Move>({ 0.0f, -8.0f,-76.0f });
+    set_stage<Stage_3_Move>({ 0.0f, -4.0f, 75.0f });
+    set_stage<Stage_3_Move>({ 0.0f, -2.0f, 109.0f })->set_start({-15.0f,-2.0f,109.0f}).set_end({ 15.0f,-2.0f,109.0f });
+    set_stage<Stage_3_Goal>({ -29.0f, 0.0f, 154.0f });
 }
 
 void Stage_Spawner::set_stage_4()
 {
     set_stage<Stage_4>({ 0.0f,-10.0f,0.0f });
     set_stage<Stage_4_Movement>({ 0.0f,10.0f,90.0f });
-    set_stage<Stage_4_Obj>({ 0.0f,-10.0f,0.0f });
+    set_stage<Stage_4_Goal>({ 0.0f,-10.0f,0.0f });
 }
 
 void Stage_Spawner::set_stage_boss()

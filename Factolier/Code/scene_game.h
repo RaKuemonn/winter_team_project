@@ -38,9 +38,13 @@ private:
 	std::unique_ptr<Decotator_Supporter> debug_decorator_supporter = nullptr;
 	std::unique_ptr<class Camera_Controller> camera_controller = nullptr;
 
+<<<<<<< HEAD
 	std::unique_ptr<Sound> bgm_stage1 = nullptr;
 	std::unique_ptr<Sound> bgm_stage2 = nullptr;
 	std::unique_ptr<Sound> bgm_stage3 = nullptr;
 	std::unique_ptr<Sound> bgm_stage4 = nullptr;
 	std::unique_ptr<Sound> bgm_boss = nullptr;
+=======
+	bool is_option = false;
+>>>>>>> 67c3e5eae65a599792958515080a43f1235723b9
 };
