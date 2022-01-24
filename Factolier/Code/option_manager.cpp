@@ -167,6 +167,14 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
 
 void Option_Manager::title_update(float elapsedTime, Input_Manager* input_manager)
 {
+    if (icon_pos > 480)
+    {
+        icon_pos = 360;
+    }
+    if (icon_pos < 0)
+    {
+        icon_pos = 0;
+    }
     slideshow(elapsedTime);
     if (icon_pos > 0 && down_flag == false)
     {
@@ -227,6 +235,23 @@ void Option_Manager::title_update(float elapsedTime, Input_Manager* input_manage
 
 void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 {
+
+    // 何割あるかパーセントで出す
+    // 描画範囲　％
+    bgm_move = binary_data.bgm_bar / BAR_MAX;
+    // BGM ボリューム　%
+    bgm_vo = 1 * bgm_move;
+    // SE
+    // やってることはBGMと同じ
+    se_move = binary_data.se_bar / BAR_MAX;
+    se_vo = 1 * se_move;
+    // カメラのバーを動かす処理
+    // BGMと同じ
+    camera_move = binary_data.camera_bar / BAR_MAX;
+    // 矢印
+    arrow_bgm = bgm_move * 504;
+    arrow_se = se_move * 504;
+    arrow_camera = camera_move * 504;
     icon_select = static_cast<int>(icon_pos);
     //xtitle_icon_select = icon_select;
     // アイコンがBGMのところにいたら
@@ -633,5 +658,5 @@ void Option_Manager::title_render()
         1, 1, 1, 1,
         0);
     
-    DrawDebugGUI();
+    //DrawDebugGUI();
 }
