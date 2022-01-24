@@ -174,6 +174,7 @@ void Scene_Game::update(float elapsed_time)
 
 
     Stage_Manager::instance().update(elapsed_time);
+    Stage_Manager::instance().imgui();
 
     Entity_Manager::instance().update(elapsed_time);
 

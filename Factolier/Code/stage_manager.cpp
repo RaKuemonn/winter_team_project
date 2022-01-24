@@ -3,6 +3,7 @@
 #include "scene_manager.h"
 #include "stage.h"
 #include "collision.h"
+#include "imgui.h"
 
 void Stage_Manager::update(const float elapsed_time)
 {
@@ -92,4 +93,25 @@ void Stage_Manager::spawn_register(std::shared_ptr<Stage>& stage)
 void Stage_Manager::remove_register(Stage* stage)
 {
     vec_removes.emplace_back(stage);
+}
+
+void Stage_Manager::imgui()
+{
+#ifdef _DEBUG
+    ImGui::Begin("stage_manager");
+
+    DirectX::XMFLOAT3 postion = {};
+    int i = 0;
+    for(auto& stage : vec_stages)
+    {
+        postion = stage->get_position();
+        ImGui::Text("number %d", i);
+        ImGui::InputFloat3("position", &postion.x);
+        i++;
+    }
+
+
+    ImGui::End();
+#endif
+
 }

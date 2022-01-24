@@ -3,6 +3,7 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include "model.h"
+#include "transform.h"
 class Transform;
 
 namespace  stage
@@ -22,6 +23,7 @@ public:
 
 
     _NODISCARD Model* get_model()         const;
+    _NODISCARD const DirectX::XMFLOAT3& get_position() const { return m_transform->get_position(); }
 
     _NODISCARD bool get_is_raycast() const { return is_raycast; }
 
