@@ -109,7 +109,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     const Stage_Select stage_num = parent->option_manager()->get_now_stage();
 #else
     // TODO: debug ステージが固定されている
-    const Stage_Select stage_num = Stage_Select::STAGE_BOSS;
+    const Stage_Select stage_num = Stage_Select::STAGE_2;
 #endif
 
     // プレイヤーの位置
@@ -237,19 +237,19 @@ void Scene_Game::init_player_position(const Stage_Select stage_, std::weak_ptr<E
 
     case Stage_Select::STAGE_2:
     {
-        player_.lock()->set_position({});
+        player_.lock()->set_position({ -4.5f, 9.0f, -83.0f });
         break;
     }
 
     case Stage_Select::STAGE_3:
     {
-        player_.lock()->set_position({});
+        player_.lock()->set_position({ 0.0f, -8.5f, -144.0f });
         break;
     }
 
     case Stage_Select::STAGE_4:
     {
-        player_.lock()->set_position({});
+        player_.lock()->set_position({ 0.0f, -8.2f, -128.0f });
         break;
     }
 

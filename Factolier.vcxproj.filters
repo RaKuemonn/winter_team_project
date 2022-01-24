@@ -360,6 +360,12 @@
     <ClCompile Include="Factolier\Code\stage_4_movement.cpp">
       <Filter>Factolier\Stage\stage_4</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_4_obj.cpp">
+      <Filter>Factolier\Stage\stage_4</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_3_obj.cpp">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene_loading.h">
@@ -663,6 +669,12 @@
       <Filter>Factolier\Stage\stage_3</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\stage_4_movement.h">
+      <Filter>Factolier\Stage\stage_4</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_3_obj.h">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_4_obj.h">
       <Filter>Factolier\Stage\stage_4</Filter>
     </ClInclude>
   </ItemGroup>

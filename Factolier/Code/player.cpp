@@ -130,7 +130,7 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
 
     set_tag(Tag::Player);
 
-    constexpr float scale = 0.005f;
+    constexpr float scale = 0.1f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
 }
@@ -179,6 +179,7 @@ void Player::update_vehicle(const float elapsed_time_)
             
         control_vehicle();
         reference_vehicle_position();
+        reference_vehicle_vector(elapsed_time_);
         return;
     }
 
@@ -209,6 +210,37 @@ void Player::reference_vehicle_position()
     vehicle_position.y                += m_wkp_vehicle.lock()->get_scale().y;
 
     set_position(vehicle_position);
+
+}
+
+void Player::reference_vehicle_vector(const float elapsed_time_)
+{
+    // 1 frame ’x‚ê‚Ä‚¢‚é
+    DirectX::XMFLOAT3 velocity = m_wkp_vehicle.lock()->get_velocity();
+    velocity.y = 0.0f;
+
+    const DirectX::XMVECTOR vehicle_move_vec = DirectX::XMLoadFloat3(&velocity);
+
+    const float move_length = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(vehicle_move_vec));
+
+    if (move_length <= FLT_EPSILON)return;
+
+    const DirectX::XMVECTOR vehicle_move_dir    = DirectX::XMVector3Normalize(vehicle_move_vec);
+
+    const DirectX::XMVECTOR axis_z              = DirectX::XMLoadFloat3(&get_axis_z());
+
+    const DirectX::XMVECTOR cross   = DirectX::XMVector3Cross(axis_z, vehicle_move_dir);
+    const float dot                 = DirectX::XMVectorGetX(DirectX::XMVector3Dot(axis_z, vehicle_move_dir));
+
+    if(std::abs(dot) >= 1.0f - FLT_EPSILON)return;
+
+    const float radian = acosf(dot)/*‰ñ“]—Ê*/ /*‰ñ“]•ûŒü*/ * 3.0f * elapsed_time_/*ƒtƒŒ[ƒ€ƒŒ[ƒg*/;
+
+    //const DirectX::XMVECTOR axis_y = DirectX::XMLoadFloat3(&get_axis_y());
+    DirectX::XMFLOAT4 add_quaternion_;
+    DirectX::XMStoreFloat4(&add_quaternion_, DirectX::XMQuaternionRotationAxis(cross, radian));
+
+    add_quaternion(add_quaternion_);
 
 }
 

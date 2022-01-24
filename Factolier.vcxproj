@@ -235,8 +235,10 @@
     <ClCompile Include="Factolier\Code\stage_3.cpp" />
     <ClCompile Include="Factolier\Code\stage_3_move.cpp" />
     <ClCompile Include="Factolier\Code\stage_3_movement.cpp" />
+    <ClCompile Include="Factolier\Code\stage_3_obj.cpp" />
     <ClCompile Include="Factolier\Code\stage_4.cpp" />
     <ClCompile Include="Factolier\Code\stage_4_movement.cpp" />
+    <ClCompile Include="Factolier\Code\stage_4_obj.cpp" />
     <ClCompile Include="Factolier\Code\stage_boss.cpp" />
     <ClCompile Include="Factolier\Code\stage_manager.cpp" />
     <ClCompile Include="Factolier\Code\stage_spawner.cpp" />
@@ -334,8 +336,10 @@
     <ClInclude Include="Factolier\Code\stage_3.h" />
     <ClInclude Include="Factolier\Code\stage_3_move.h" />
     <ClInclude Include="Factolier\Code\stage_3_movement.h" />
+    <ClInclude Include="Factolier\Code\stage_3_obj.h" />
     <ClInclude Include="Factolier\Code\stage_4.h" />
     <ClInclude Include="Factolier\Code\stage_4_movement.h" />
+    <ClInclude Include="Factolier\Code\stage_4_obj.h" />
     <ClInclude Include="Factolier\Code\stage_boss.h" />
     <ClInclude Include="Factolier\Code\stage_manager.h" />
     <ClInclude Include="Factolier\Code\stage_spawner.h" />
