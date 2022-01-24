@@ -30,8 +30,8 @@ bool Framework::initialize()
 
 	//scene_manager->change_scene(new Scene_Game);
 
-	scene_manager->change_scene(new Scene_Loading(new Scene_Game));
-	//scene_manager->change_scene(new Scene_Loading(new Scene_Title_Game));
+	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
+	scene_manager->change_scene(new Scene_Loading(new Scene_Title_Game));
 	//scene_manager->change_scene(new Scene_Title_Game);
 
 	
