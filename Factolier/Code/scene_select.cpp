@@ -39,11 +39,11 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     ID3D11Device* dev = parent->device();
 
     back = make_unique<Sprite>(dev, "Data/Sprite/select_boss.png");
-    stage1 = make_unique<Sprite>(dev, "Data/Sprite/select1.png");
-    stage2 = make_unique<Sprite>(dev, "Data/Sprite/select2.png");
-    stage3 = make_unique<Sprite>(dev, "Data/Sprite/select3.png");
-    stage4 = make_unique<Sprite>(dev, "Data/Sprite/select4.png");
-    stage5 = make_unique<Sprite>(dev, "Data/Sprite/select5.png");
+    stage1 = make_unique<Sprite>(dev, "Data/Sprite/select_icon_spring.png");
+    stage2 = make_unique<Sprite>(dev, "Data/Sprite/select_icon_summer.png");
+    stage3 = make_unique<Sprite>(dev, "Data/Sprite/selectstage_stage3.png");
+    stage4 = make_unique<Sprite>(dev, "Data/Sprite/select_icon_winter.png");
+    stage5 = make_unique<Sprite>(dev, "Data/Sprite/select_icon_boss.png");
     choice = make_unique<Sprite>(dev, "Data/Sprite/frame.png");
 
     enter = make_unique<Sprite>(dev, "Data/Sprite/push the Enter.png");
