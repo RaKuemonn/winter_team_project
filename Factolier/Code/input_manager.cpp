@@ -21,8 +21,10 @@ PadAssign keyAssign00[] = {
 
     { KEY_SPACE        , Keyboard::Space },     // VK_SPACE
     { KEY_ESC          , Keyboard::Escape },    // VK_SPACE
+    { KEY_ESC         , Keyboard::Back },      // VK_SPACE
     
     { MOUSE_LEFT    , VK_LBUTTON },              // マウス左ボタン
+    { PAD_START     , VK_LBUTTON },        // VK_RETURN
 
 
     { 0x00, 0x00 }                              // 終了コード
