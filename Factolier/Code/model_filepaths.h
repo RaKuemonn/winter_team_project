@@ -13,6 +13,7 @@ namespace Model_Paths
 
         inline constexpr char* const player             = /*"./Data/Player/player_animation.fbx"*/test;
         inline constexpr char* const ball               = "./Data/ball_demo.fbx";
+        //inline constexpr char* const ball               = "./Data/ball.fbx";
         inline constexpr char* const enemy_none         = test;
         inline constexpr char* const enemy_move_closer  = test;
         inline constexpr char* const enemy_boss_head    = "./Data/Boss/head/boss_head.fbx";
@@ -24,8 +25,16 @@ namespace Model_Paths
 
     namespace Stage
     {
-        inline constexpr char* const stage_1    = "./Data/stage1_test.fbx";
-        inline constexpr char* const propeller  = "./Data/propeller.fbx";
+        //inline constexpr char* const stage_1    = "./Data/stage1_test.fbx";
+        inline constexpr char* const stage_1            = "./Data/stage1/stage1.fbx";
+        inline constexpr char* const stage_1_propeller  = "./Data/stage1/stage1_propeller.fbx";
+
+        inline constexpr char* const stage_2            = "./Data/stage2/stage2.fbx";
+        inline constexpr char* const stage_2_propeller  = "./Data/stage2/stage2_propeller.fbx";
+
+        inline constexpr char* const stage_3            = "./Data/stage1/stage1.fbx";
+        inline constexpr char* const stage_4            = "./Data/stage1/stage1.fbx";
+        inline constexpr char* const stage_boss         = "./Data/boss_stage/boss_stage.fbx";
 
     };
 };

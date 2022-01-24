@@ -20,7 +20,24 @@ Entity::~Entity()
 
 void Entity::render(ID3D11DeviceContext* device_context)
 {
-    get_model()->render(device_context, get_transform()->get_matrix(), { 1.0f, 1.0f, 1.0f, 1.0f });
+    if (get_model() == nullptr) return;
+
+    // 最新の位置に換装している
+    // やばい。これにしないとレイキャストの結果が1フレーム遅れて表示されていたので、めり込んで見えた(実際はめり込んでいなかった)
+    //
+    // *** 最悪のコード *** //
+    DirectX::XMFLOAT4X4 matrix = get_transform()->get_matrix();
+
+    const DirectX::XMFLOAT3& position = get_transform()->get_latest_position();
+    matrix._41 = position.x;
+    matrix._42 = position.y;
+    matrix._43 = position.z;
+
+    get_model()->render(device_context, matrix, { 1.0f, 1.0f, 1.0f, 1.0f });
+
+
+    // １フレーム遅れる関係でこのままget_transform()->get_matrix()使うとダメ
+    //get_model()->render(device_context, get_transform()->get_matrix(), { 1.0f, 1.0f, 1.0f, 1.0f });
 }
 
 

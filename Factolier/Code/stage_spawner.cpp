@@ -1,14 +1,46 @@
 #include "stage_spawner.h"
 #include "stage.h"
 
-void Stage_Spawner::set_stages(Scene_Manager* ptr_scene_manager)
-{
-    Stage_Manager& manager = Stage_Manager::instance();
+#include "stage_1.h"
+#include "stage_1_movement.h"
 
-    //manager.spawn_register(std::make_unique<Enemy>(ptr_scene_manager));
-    //manager.spawn_register(std::make_unique<Enemy>(ptr_scene_manager));
-    //manager.spawn_register(std::make_unique<Enemy>(ptr_scene_manager));
-    //manager.spawn_register(std::make_unique<Enemy>(ptr_scene_manager));
-    //manager.spawn_register(std::make_unique<Enemy>(ptr_scene_manager));
-    //manager.spawn_register(std::make_unique<Enemy>(ptr_scene_manager));
+#include "stage_2.h"
+#include "stage_2_movement.h"
+
+#include "stage_3.h"
+//#include "stage_3_movement.h"
+
+#include "stage_4.h"
+//#include "stage_4_movement.h"
+
+#include "stage_boss.h"
+
+
+void Stage_Spawner::set_stage_1()
+{
+    set_stage<Stage_1>();
+    set_stage<Stage_1_Movement>();
+}
+
+void Stage_Spawner::set_stage_2()
+{
+    set_stage<Stage_2>();
+    set_stage<Stage_2_Movement>();
+}
+
+void Stage_Spawner::set_stage_3()
+{
+    set_stage<Stage_3>();
+    //set_stage<Stage_3_Movement>();
+}
+
+void Stage_Spawner::set_stage_4()
+{
+    set_stage<Stage_3>();
+    //set_stage<Stage_3_Movement>();
+}
+
+void Stage_Spawner::set_stage_boss()
+{
+    set_stage<Stage_Boss>();
 }

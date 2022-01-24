@@ -14,6 +14,7 @@ enum class Tag
     Player,
     Vehicle,
     Enemy,
+    Collide,
 };
 
 // エンティティクラス (抽象クラス)

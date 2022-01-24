@@ -17,6 +17,11 @@ public:
     ~Enemy_Spawner() = default;
 
     void set_enemies(class Scene_Manager* ptr_scene_manager);
+    void set_enemy_1(const DirectX::XMFLOAT3& target);
+    void set_enemy_2(const DirectX::XMFLOAT3& target);
+    void set_enemy_3(const DirectX::XMFLOAT3& target);
+    void set_enemy_4(const DirectX::XMFLOAT3& target);
+    short* set_enemy_boss(const DirectX::XMFLOAT3& target);
 
 
     template<typename T>

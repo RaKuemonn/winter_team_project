@@ -1,23 +1,17 @@
 
 #include "scene_game.h"
 
-#include "ability.h"
-#include "boss.h"
 #include "scene_manager.h"
 #include "shader_manager.h"
 #include "camera.h"
 #include "entity_manager.h"
-#include "stage_1.h"
-#include "stage_1_movement.h"
 #include "stage_manager.h"
 #include "player.h"
-#include "enemy_none.h"
 #include "enemy_move_closer.h"
 #include "enemy_move_closer_.h"
 #include "camera_controller.h"
 #include "imgui.h"
 #include "utility.h"
-#include "ability.h"
 #include "sphere_vehicle.h"
 
 inline void imgui(bool goal)
@@ -37,8 +31,30 @@ inline void imgui(bool goal)
         ImGui::Spacing();
     }
 
+    vec = Entity_Manager::instance().get_entities(Tag::Vehicle);
+    int size = static_cast<int>(vec.size());
+
+    ImGui::Text("control Vehicle");
+    for (int i = 0; i < size; ++i)
+    {
+        std::shared_ptr<Entity> entity = Entity_Manager::instance().get_entity(vec.at(i));
+
+        if (entity)
+        {
+            if(static_cast<Sphere_Vehicle*>(entity.get())->get_is_free() == true)continue;
+
+            DirectX::XMFLOAT3 pos = entity->get_position();
+            ImGui::InputFloat3("position", &pos.x);
+            DirectX::XMFLOAT3 velo = entity->get_velocity();
+            ImGui::InputFloat3("velocity", &velo.x);
+            float velo_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&velo)));
+            ImGui::InputFloat("velocity_length", &velo_length);
+
+        }
+    }
+
     vec = Entity_Manager::instance().get_entities(Tag::Enemy);
-    const int size = static_cast<int>(vec.size());
+    size = static_cast<int>(vec.size());
 
     ImGui::Text("Enemy");
     for(int i = 0; i < size; ++i)
@@ -80,35 +96,36 @@ void Scene_Game::initialize(Scene_Manager* parent_)
         1000.0f);
 
 
-
+    Entity_Manager::instance().set_update_move();
 
     std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
-    player->set_position({ 0.0f, -8.0f, -127.0f });
-
-
-    Entity_Manager::instance().set_update_move();
     Entity_Manager::instance().spawn_register(player);
-    enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
-    short* ptr_boss_hp = nullptr;
-    ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
-    //     set_enemy<Enemy_None>({ 4.0f,5.0f,1.0f }, {})
-    //    .set_enemy<Enemy_None>({ 8.0f,5.0f,1.0f }, {})
-    //    .set_enemy<Enemy_None>({ -4.0f,5.0f,1.0f }, {})
-    //    .set_enemy<Enemy_None>({ -8.0f,5.0f,1.0f }, {})
-    //    .set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,0.0f }, player->get_position());
 
-    clear_judge = std::make_unique<Clear_Judge>(parent->option_manager()->get_now_stage(), player->get_position(), ptr_boss_hp);
 
+
+
+    // 選ばれているステージ
+#ifdef NDEBUG
+    const Stage_Select stage_num = parent->option_manager()->get_now_stage();
+#else
+    // TODO: debug ステージが固定されている
+    const Stage_Select stage_num = Stage_Select::STAGE_1;
+#endif
+
+    // プレイヤーの位置
+    init_player_position(stage_num, player);
+
+    // ステージの設定
+    init_stage(stage_num);
+
+    // 敵の設定
+    short* ptr_boss_hp =
+        init_enemy(stage_num, player->get_position());
+
+
+    collision_manager = std::make_unique<Collision_Manager>(/*parent->option_manager()->get_now_stage()*/stage_num);
+    clear_judge = std::make_unique<Clear_Judge>(stage_num, player->get_position(), ptr_boss_hp);
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
-    collision_manager = std::unique_ptr<Collision_Manager>();
-
-    stage_spawner = std::make_unique<Stage_Spawner>(parent);
-
-    init_stage();
-
-    //stage_spawner->set_stage<Stage_1>();
-    //Stage_Manager::instance().spawn_register(std::make_unique<Stage_1_Movement>(parent));
-
 
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
 
@@ -210,43 +227,142 @@ void Scene_Game::render(float elapsed_time)
 }
 
 
-void Scene_Game::init_stage()
+void Scene_Game::init_player_position(const Stage_Select stage_, std::weak_ptr<Entity> player_)
 {
-    switch (CAST_I(parent->option_manager()->get_now_stage()))
+    switch (stage_)
     {
 
-    case CAST_I(Stage_Select::STAGE_1):
+    case Stage_Select::STAGE_1:
     {
-        stage_spawner->set_stage<Stage_1>();
+        player_.lock()->set_position({0.0f, -8.0f, -127.0f });
         break;
     }
 
-    case CAST_I(Stage_Select::STAGE_2):
+    case Stage_Select::STAGE_2:
     {
-        //stage_spawner->set_stage<Stage_2>();
+        player_.lock()->set_position({-4.5f, 9.0f,-82.0f});
         break;
     }
 
-    case CAST_I(Stage_Select::STAGE_3):
+    case Stage_Select::STAGE_3:
     {
-        //stage_spawner->set_stage<Stage_1>();
+        player_.lock()->set_position({});
         break;
     }
 
-    case CAST_I(Stage_Select::STAGE_4):
+    case Stage_Select::STAGE_4:
     {
-        //stage_spawner->set_stage<Stage_1>();
+        player_.lock()->set_position({});
         break;
     }
 
-    case CAST_I(Stage_Select::STAGE_BOSS):
+    case Stage_Select::STAGE_BOSS:
     {
-        //stage_spawner->set_stage<Stage_1>();
+        player_.lock()->set_position({0.0f,10.0f,-30.0f});
         break;
     }
 
     }
 }
+
+void Scene_Game::init_stage(const Stage_Select stage_)
+{
+    std::unique_ptr<Stage_Spawner>		stage_spawner = nullptr;
+    stage_spawner = std::make_unique<Stage_Spawner>(parent);    
+
+    // TODO: debug
+    switch (stage_)
+    {
+
+    case Stage_Select::STAGE_1:
+    {
+        stage_spawner->set_stage_1();
+        break;
+    }
+
+    case Stage_Select::STAGE_2:
+    {
+        stage_spawner->set_stage_2();
+        break;
+    }
+
+    case Stage_Select::STAGE_3:
+    {
+        stage_spawner->set_stage_3();
+        break;
+    }
+
+    case Stage_Select::STAGE_4:
+    {
+        stage_spawner->set_stage_4();
+        break;
+    }
+
+    case Stage_Select::STAGE_BOSS:
+    {
+        stage_spawner->set_stage_boss();
+        break;
+    }
+
+    }
+
+    // 登録したステージをupdateに移動させる
+    Stage_Manager::instance().update(0.0f);
+}
+
+short* Scene_Game::init_enemy(const Stage_Select stage_, const DirectX::XMFLOAT3& target_position)
+{
+    std::unique_ptr<Enemy_Spawner>		enemy_spawner = nullptr;
+    enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
+
+
+    short* ptr_boss_hp = nullptr;
+
+    // TODO: debug 敵の動作確認
+    //ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
+    enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, target_position);
+
+
+    switch (stage_)
+    {
+
+    case Stage_Select::STAGE_1:
+    {
+        enemy_spawner->set_enemy_1(target_position);
+        break;
+    }
+
+    case Stage_Select::STAGE_2:
+    {
+        enemy_spawner->set_enemy_2(target_position);
+        break;
+    }
+
+    case Stage_Select::STAGE_3:
+    {
+        enemy_spawner->set_enemy_3(target_position);
+        break;
+    }
+
+    case Stage_Select::STAGE_4:
+    {
+        enemy_spawner->set_enemy_4(target_position);
+        break;
+    }
+
+    case Stage_Select::STAGE_BOSS:
+    {
+        ptr_boss_hp = enemy_spawner->set_enemy_boss(target_position);
+        break;
+    }
+
+    }
+
+
+
+    return ptr_boss_hp;
+}
+
 
 
 

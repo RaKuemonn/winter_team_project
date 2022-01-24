@@ -164,12 +164,18 @@ void Player::update_vehicle(const float elapsed_time_)
     {
         // あるので更新する
 
-        if(get_scene_manager()->input_manager()->TRG(0) & PAD_START)
+        if (static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->get_on_ground())
         {
-            static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
+            if (get_scene_manager()->input_manager()->TRG(0) & PAD_START)
+            {
+                // 地面にいて、Enterキーが押されたとき
+                // 発射する
+                static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
 
-            return;
+                return;
+            }
         }
+        
             
         control_vehicle();
         reference_vehicle_position();

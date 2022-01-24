@@ -183,6 +183,7 @@
     <ClCompile Include="Factolier\Code\camera.cpp" />
     <ClCompile Include="Factolier\Code\camera_controller.cpp" />
     <ClCompile Include="Factolier\Code\clear_judge.cpp" />
+    <ClCompile Include="Factolier\Code\collide_detection_entity.cpp" />
     <ClCompile Include="Factolier\Code\collision_manager.cpp" />
     <ClCompile Include="Factolier\Code\decotator_supporter.cpp" />
     <ClCompile Include="Factolier\Code\easing.cpp" />
@@ -229,6 +230,9 @@
     <ClCompile Include="Factolier\Code\stage_1.cpp" />
     <ClCompile Include="Factolier\Code\stage_1_movement.cpp" />
     <ClCompile Include="Factolier\Code\stage_2.cpp" />
+    <ClCompile Include="Factolier\Code\stage_3.cpp" />
+    <ClCompile Include="Factolier\Code\stage_4.cpp" />
+    <ClCompile Include="Factolier\Code\stage_boss.cpp" />
     <ClCompile Include="Factolier\Code\stage_manager.cpp" />
     <ClCompile Include="Factolier\Code\stage_spawner.cpp" />
     <ClCompile Include="Factolier\Code\state_manager.cpp" />
@@ -236,6 +240,7 @@
     <ClCompile Include="Factolier\Code\sv_ball.cpp" />
     <ClCompile Include="Factolier\Code\texture.cpp" />
     <ClCompile Include="Factolier\Code\timer.cpp" />
+    <ClCompile Include="Factolier\Code\stage_2_movement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="External\imgui\imconfig.h" />
@@ -259,6 +264,7 @@
     <ClInclude Include="Factolier\Code\camera.h" />
     <ClInclude Include="Factolier\Code\camera_controller.h" />
     <ClInclude Include="Factolier\Code\clear_judge.h" />
+    <ClInclude Include="Factolier\Code\collide_detection_entity.h" />
     <ClInclude Include="Factolier\Code\collision.h" />
     <ClInclude Include="Factolier\Code\collision_manager.h" />
     <ClInclude Include="Factolier\Code\decotator_supporter.h" />
@@ -318,6 +324,9 @@
     <ClInclude Include="Factolier\Code\stage_1.h" />
     <ClInclude Include="Factolier\Code\stage_1_movement.h" />
     <ClInclude Include="Factolier\Code\stage_2.h" />
+    <ClInclude Include="Factolier\Code\stage_3.h" />
+    <ClInclude Include="Factolier\Code\stage_4.h" />
+    <ClInclude Include="Factolier\Code\stage_boss.h" />
     <ClInclude Include="Factolier\Code\stage_manager.h" />
     <ClInclude Include="Factolier\Code\stage_spawner.h" />
     <ClInclude Include="Factolier\Code\state_manager.h" />
@@ -329,6 +338,7 @@
     <ClInclude Include="Factolier\Code\transform.h" />
     <ClInclude Include="Factolier\Code\utility.h" />
     <ClInclude Include="Factolier\Code\velocity.h" />
+    <ClInclude Include="Factolier\Code\stage_2_movement.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Factolier\Shader\blur_ps.hlsl">

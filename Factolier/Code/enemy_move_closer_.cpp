@@ -29,7 +29,7 @@ inline void look_target(Enemy_Move_Closer_& me, const DirectX::XMFLOAT3& target_
     const float sign = (dot_right_or_left > 0.0f) ? +1.0f : -1.0f;
     const float dot = DirectX::XMVectorGetX(DirectX::XMVector3Dot(to_target_direction, front_direction));           // 正規化されたベクトルによる内積
 
-    if (dot >= 1.0f - FLT_EPSILON) return;
+    if (std::abs(dot) >= 1.0f - FLT_EPSILON) return;
 
 
     const DirectX::XMVECTOR cross = DirectX::XMVector3Normalize(DirectX::XMVector3Cross(front_direction, to_target_direction));   // 正規化されたベクトルによる外積
@@ -46,13 +46,9 @@ inline void look_target(Enemy_Move_Closer_& me, const DirectX::XMFLOAT3& target_
 
 
 
-Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_move_closer, target_position_)
+Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_move_closer, target_position_, true)
 {
     m_timer.Initialize(nullptr, COUNT::UP, 0.0f);
-
-    m_area_origin_position = {};
-    m_area_size = { 14.0f,0.0f,26.0f };
-
 
     // 別名エイリアス
     using _this_type_ = Enemy_Move_Closer_;
@@ -82,6 +78,12 @@ Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const 
 
 void Enemy_Move_Closer_::update(const float elapsed_time_)
 {
+    // 死んでいるかどうか
+    if (check_im_die()) return;
+
+    // テリトリーの初期設定 (初期位置から固定サイズの大きさで設定される)
+    init_define_area_parameters();
+
     // 行動遷移用の時間更新
     m_timer.Update(elapsed_time_);
 
@@ -100,8 +102,26 @@ void Enemy_Move_Closer_::update(const float elapsed_time_)
     // 姿勢の更新
     get_transform()->Update();
 
+    // 死んだかどうか
+
     // モデルの更新
     get_model()->play_animation(elapsed_time_, 0);
+}
+
+
+void Enemy_Move_Closer_::init_define_area_parameters()
+{
+    if (m_area_origin_position.x != undefine_area.x &&
+        m_area_origin_position.y != undefine_area.y &&
+        m_area_origin_position.z != undefine_area.z) return;
+
+    // 全て undefine_area と同じなら
+
+    m_area_origin_position = get_latest_position();
+
+    // TODO: 敵の行動範囲が固定　-> 設定できるように
+    m_area_size = { 14.0f,0.0f,26.0f };
+
 }
 
 

@@ -1,12 +1,12 @@
 
-#include "stage_1.h"
+#include "stage_4.h"
 #include "scene_manager.h"
 #include "transform.h"
 #include "model_filepaths.h"
 
-Stage_1::Stage_1(Scene_Manager* ptr_scene_manager_)
+Stage_4::Stage_4(Scene_Manager* ptr_scene_manager_)
 {
-    load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::stage_1, true));
+    load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::stage_4, true));
 
     get_transform()->set_position({ 0.0f,-10.0f,0.0f });
     get_transform()->set_scale(stage::scale);
@@ -14,7 +14,7 @@ Stage_1::Stage_1(Scene_Manager* ptr_scene_manager_)
     get_transform()->Update();
 }
 
-void Stage_1::update(const float elapsed_time)
+void Stage_4::update(const float elapsed_time)
 {
-    
+
 }
