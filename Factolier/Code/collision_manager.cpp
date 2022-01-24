@@ -729,8 +729,8 @@ inline void boss_out_wall(
     const vectors& vectors_
 )
 {
-    constexpr float boss_stage_radius       = 101.0f;
-    constexpr float boss_stage_radius_width = 10.0f;
+    constexpr float boss_stage_radius       = 101.5f;
+    
 
 
     for (auto index : std::get<1>(vectors_))    // 敵
@@ -763,6 +763,9 @@ inline void boss_out_wall(
 
         DirectX::XMVECTOR center_to_pos_vec = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&position), DirectX::XMLoadFloat3(&center));
         const float length = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(center_to_pos_vec));
+
+        constexpr float boss_stage_radius_width = 9.5f;
+
         const float calc_boss_in_radius         = boss_stage_radius - vehicle->get_scale().x;
         const float calc_boss_out_radius        = boss_stage_radius + boss_stage_radius_width - vehicle->get_scale().x;
 

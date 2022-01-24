@@ -21,7 +21,6 @@ bool Framework::initialize()
 	//シーンマネージャー生成
 	scene_manager = std::make_unique<Scene_Manager>();
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
-
 	
 	scene_manager->state_manager()->setSS(SS::POINT);
 	scene_manager->state_manager()->setSS(SS::LINEAR);
