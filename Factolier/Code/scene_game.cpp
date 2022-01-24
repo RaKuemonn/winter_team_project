@@ -127,8 +127,6 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     clear_judge = std::make_unique<Clear_Judge>(stage_num, player->get_position(), ptr_boss_hp);
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
 
-    sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
-
     debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_);
 }
 
@@ -147,7 +145,7 @@ void Scene_Game::update(float elapsed_time)
     Entity_Manager::instance().update(elapsed_time);
 
 
-    camera_controller->update(parent->device_context(),parent->input_manager(),elapsed_time);
+    camera_controller->update(parent->device_context(), parent->input_manager(), parent->option_manager(), elapsed_time);
 
     collision_manager->judge(elapsed_time);
 
@@ -272,30 +270,35 @@ void Scene_Game::init_stage(const Stage_Select stage_)
     case Stage_Select::STAGE_1:
     {
         stage_spawner->set_stage_1();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_2:
     {
         stage_spawner->set_stage_2();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_3:
     {
         stage_spawner->set_stage_3();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_4:
     {
         stage_spawner->set_stage_4();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_BOSS:
     {
         stage_spawner->set_stage_boss();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 

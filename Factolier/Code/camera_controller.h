@@ -3,6 +3,7 @@
 #include <d3d11.h>
 #include <DirectXMath.h>
 #include "input_manager.h"
+#include "option_manager.h"
 
 //カメラコントローラー
 class Camera_Controller
@@ -12,7 +13,7 @@ public:
 	~Camera_Controller() {}
 
 	//更新処理
-	void update(ID3D11DeviceContext* dc, Input_Manager* input_manager, float elapsed_time);
+	void update(ID3D11DeviceContext* dc, Input_Manager* input_manager, Option_Manager* option_manager, float elapsed_time);
 
 	//ターゲット位置設定
 	void set_target(const DirectX::XMFLOAT3& target)	{ this->target = target; }

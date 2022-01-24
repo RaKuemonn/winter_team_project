@@ -29,6 +29,7 @@ void Option_Manager::DrawDebugGUI()
             ImGui::InputFloat("bgm_vo", &bgm_vo);
             ImGui::InputFloat("bgm_move", &bgm_move);
             ImGui::InputFloat("arrow_move", &arrow_move);
+            ImGui::InputFloat("camera_move", &camera_move);
         }
     }
     ImGui::End();
@@ -110,77 +111,84 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
     icon_select = static_cast<int>(icon_pos);
     // アイコンがBGMのところにいたら
 
-    switch (icon_select)
+    //アイコンが移動中でない時
+    if (!up_flag && !down_flag)
     {
-    case BGM:
-        if (bgm_bar >= BAR_MIN && bgm_bar <= BAR_MAX)
+        //ゲージ処理
+        switch (icon_select)
         {
-            if (input_manager->STATE(0) & PAD_RIGHT)
+        case BGM:
+            if (bgm_bar >= BAR_MIN && bgm_bar <= BAR_MAX)
             {
-                bgm_bar += 4;
-            }
+                if (input_manager->STATE(0) & PAD_RIGHT)
+                {
+                    bgm_bar += 4;
+                }
 
-            if (input_manager->STATE(0) & PAD_LEFT)
-            {
-                bgm_bar -= 4;
+                if (input_manager->STATE(0) & PAD_LEFT)
+                {
+                    bgm_bar -= 4;
+                }
             }
-        }
-        if (bgm_bar <= BAR_MIN)
-        {
-            bgm_bar = BAR_MIN;
-        }
-        if (bgm_bar >= BAR_MAX)
-        {
-            bgm_bar = BAR_MAX;
-        }
-        break;
+            if (bgm_bar <= BAR_MIN)
+            {
+                bgm_bar = BAR_MIN;
+            }
+            if (bgm_bar >= BAR_MAX)
+            {
+                bgm_bar = BAR_MAX;
+            }
+            break;
 
-    case SE:
-        if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
-        {
-            if (input_manager->STATE(0) & PAD_RIGHT)
+        case SE:
+            if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
             {
-                se_bar += 4;
-            }
+                if (input_manager->STATE(0) & PAD_RIGHT)
+                {
+                    se_bar += 4;
+                }
 
-            if (input_manager->STATE(0) & PAD_LEFT)
-            {
-                se_bar -= 4;
+                if (input_manager->STATE(0) & PAD_LEFT)
+                {
+                    se_bar -= 4;
+                }
             }
-        }
-        if (se_bar <= BAR_MIN)
-        {
-            se_bar = BAR_MIN;
-        }
-        if (se_bar >= BAR_MAX)
-        {
-            se_bar = BAR_MAX;
-        }
-        break;
+            if (se_bar <= BAR_MIN)
+            {
+                se_bar = BAR_MIN;
+            }
+            if (se_bar >= BAR_MAX)
+            {
+                se_bar = BAR_MAX;
+            }
+            break;
 
-    case CAMERA:
-        if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
-        {
-            if (input_manager->STATE(0) & PAD_RIGHT)
+        case CAMERA:
+            if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
             {
-                camera_bar += 4;
-            }
+                if (input_manager->STATE(0) & PAD_RIGHT)
+                {
+                    camera_bar += 4;
+                }
 
-            if (input_manager->STATE(0) & PAD_LEFT)
-            {
-                camera_bar -= 4;
+                if (input_manager->STATE(0) & PAD_LEFT)
+                {
+                    camera_bar -= 4;
+                }
             }
+            if (camera_bar <= BAR_MIN)
+            {
+                camera_bar = BAR_MIN;
+            }
+            if (camera_bar >= BAR_MAX)
+            {
+                camera_bar = BAR_MAX;
+            }
+            break;
         }
-        if (camera_bar <= BAR_MIN)
-        {
-            camera_bar = BAR_MIN;
-        }
-        if (camera_bar >= BAR_MAX)
-        {
-            camera_bar = BAR_MAX;
-        }
-        break;
     }
+
+    
     // 何割あるかパーセントで出す
     // 描画範囲　％
     bgm_move = bgm_bar / BAR_MAX;
