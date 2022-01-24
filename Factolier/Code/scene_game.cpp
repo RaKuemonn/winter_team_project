@@ -143,12 +143,9 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     bgm_stage1 = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/select_BGM.wav"));
 
 
-    //switch (parent->option_manager()->get_now_stage())
-    //{
-    //case Stage_Select::STAGE_1:
-    //    bgm_stage1->play(true);
-    //        break;
-    //}
+    
+    bgm_stage1->play(true);
+
 }
 
 
