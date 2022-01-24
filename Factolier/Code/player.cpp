@@ -177,12 +177,6 @@ void Player::update(const float elapsed_time_)
     // 姿勢の更新
     get_transform()->Update();
 
-    switch (anim_num)
-    {
-    case P_Anim::move:
-        walk->play(true);
-        break;
-    }
 
     // モデルの更新
     get_model()->play_animation(elapsed_time_, CAST_I(anim_num));
