@@ -59,7 +59,9 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     winter = make_unique<Sprite>(dev, "Data/Sprite/select_winter.png");
     //winter = make_unique<Sprite>(dev, "Data/Sprite/select_winter.png");
 
-   
+    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/select_BGM.wav"));
+    sound->play(true);
+    crick = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/crick.wav"));
 }
 
 void Scene_Select::uninitialize()
@@ -140,6 +142,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
         {
             if (input_manager->TRG(0) & PAD_START)
             {
+                crick->play(false);
                 //選んでいるステージに応じた処理
                 Option_Manager* opm = parent->option_manager();
 
