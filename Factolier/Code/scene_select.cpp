@@ -279,7 +279,7 @@ void Scene_Select::render(float elapsed_time)
         0); // angle
 
     key_stage2->render(device_context_,
-            1364 + position + eas, 444,  //position
+            1360 + position + eas, 444,  //position
             1.0f, 1.0f,     // scal
             200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
             200, 200,   // size
@@ -287,7 +287,7 @@ void Scene_Select::render(float elapsed_time)
             1, 1, 1, 1,   // rgba
             0); // angle
     key_stage3->render(device_context_,
-            1864 + position + eas, 444,  //position
+            1860 + position + eas, 444,  //position
             1.0f, 1.0f,     // scal
             200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
             200, 200,   // size
@@ -295,7 +295,7 @@ void Scene_Select::render(float elapsed_time)
             1, 1, 1, 1,   // rgba
             0); // angle
     key_stage4->render(device_context_,
-        2364 + position + eas, 444,  //position
+        2360 + position + eas, 444,  //position
         1.0f, 1.0f,     // scal
         200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
         200, 200,   // size
@@ -303,7 +303,7 @@ void Scene_Select::render(float elapsed_time)
         1, 1, 1, 1,   // rgba
         0); // angle
     key_boss->render(device_context_,
-        2864 + position + eas, 444,  //position
+        2860 + position + eas, 444,  //position
         1.0f, 1.0f,     // scal
         200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
         200, 200,   // size
