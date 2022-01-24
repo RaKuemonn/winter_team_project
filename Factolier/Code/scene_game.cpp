@@ -103,17 +103,27 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     Entity_Manager::instance().spawn_register(player);
 
 
+
+
+    // 選ばれているステージ
+#ifdef NDEBUG
+    const Stage_Select stage_num = parent->option_manager()->get_now_stage();
+#else
+    // TODO: debug ステージが固定されている
+    const Stage_Select stage_num = Stage_Select::STAGE_2;
+#endif
+
+
     // 敵の設定
     short* ptr_boss_hp = 
-        init_enemy(player->get_position());
+        init_enemy(stage_num ,player->get_position());
 
     // ステージの設定
-    init_stage();
+    init_stage(stage_num);
 
 
-    // TODO : debug 
-    collision_manager = std::make_unique<Collision_Manager>(/*parent->option_manager()->get_now_stage()*/Stage_Select::STAGE_2);
-    clear_judge = std::make_unique<Clear_Judge>(parent->option_manager()->get_now_stage(), player->get_position(), ptr_boss_hp);
+    collision_manager = std::make_unique<Collision_Manager>(/*parent->option_manager()->get_now_stage()*/stage_num);
+    clear_judge = std::make_unique<Clear_Judge>(stage_num, player->get_position(), ptr_boss_hp);
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
 
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
@@ -216,14 +226,13 @@ void Scene_Game::render(float elapsed_time)
 }
 
 
-void Scene_Game::init_stage()
+void Scene_Game::init_stage(const Stage_Select stage_)
 {
     std::unique_ptr<Stage_Spawner>		stage_spawner = nullptr;
     stage_spawner = std::make_unique<Stage_Spawner>(parent);    
 
-    //switch (CAST_I(parent->option_manager()->get_now_stage()))
     // TODO: debug
-    switch (Stage_Select::STAGE_BOSS)
+    switch (stage_)
     {
 
     case Stage_Select::STAGE_1:
@@ -259,7 +268,7 @@ void Scene_Game::init_stage()
     }
 }
 
-short* Scene_Game::init_enemy(const DirectX::XMFLOAT3& target_position)
+short* Scene_Game::init_enemy(const Stage_Select stage_, const DirectX::XMFLOAT3& target_position)
 {
     std::unique_ptr<Enemy_Spawner>		enemy_spawner = nullptr;
     enemy_spawner = std::make_unique<Enemy_Spawner>(parent);
@@ -272,7 +281,7 @@ short* Scene_Game::init_enemy(const DirectX::XMFLOAT3& target_position)
     enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, target_position);
 
 
-    switch (parent->option_manager()->get_now_stage())
+    switch (stage_)
     {
 
     case Stage_Select::STAGE_1:

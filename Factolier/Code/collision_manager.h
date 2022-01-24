@@ -16,4 +16,5 @@ public:
 
 private:
     std::function<void(const std::tuple<std::vector<short>, std::vector<short>, std::vector<short>, std::vector<short>>&)> water_movement_function;
+    std::function<void(const float ,const std::tuple<std::vector<short>, std::vector<short>, std::vector<short>, std::vector<short>>&)> judges_function;
 };

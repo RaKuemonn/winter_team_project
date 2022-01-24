@@ -739,31 +739,9 @@ void Collision_Manager::judge(const float elapsed_time)
         vec_collide_indices
     };
 
-    // 床へのレイキャスト
-    ray_to_floor(
+    // ステージにあった当たり判定たち
+    judges_function(
         elapsed_time,
-        e_manager, s_manager,
-        vectors_
-    );
-
-    // 壁へのレイキャスト
-    ray_to_wall(
-        elapsed_time,
-        e_manager, s_manager,
-        vectors_
-    );
-
-
-    // entity同士で当たり判定 (球)
-    entity_collide(
-        elapsed_time,
-        e_manager,
-        vectors_
-    );
-
-    // ステージ外にでているか
-    out_range(
-        e_manager,
         vectors_
     );
 
@@ -777,21 +755,104 @@ void Collision_Manager::judge(const float elapsed_time)
 
 Collision_Manager::Collision_Manager(Stage_Select stage_)
 {
-    if(stage_ == Stage_Select::STAGE_2)
+    if(stage_ == Stage_Select::STAGE_BOSS)
     {
-        // 水中時、乗り物だけ上昇するようにする
-        water_movement_function = [](const vectors& vectors_)
+        // 壁と範囲外かを調べないようにしている
+        judges_function = [](const float elapsed_time, const vectors& vectors_)
         {
-            Entity_Manager& instance = Entity_Manager::instance();
-            entity_water(instance, vectors_);
+            Entity_Manager& e_manager = Entity_Manager::instance();
+            Stage_Manager& s_manager = Stage_Manager::instance();
+
+            // 床へのレイキャスト
+            ray_to_floor(
+                elapsed_time,
+                e_manager, s_manager,
+                vectors_
+            );
+
+            // 壁へのレイキャスト
+            //ray_to_wall(
+            //    elapsed_time,
+            //    e_manager, s_manager,
+            //    vectors_
+            //);
+
+
+            // entity同士で当たり判定 (球)
+            entity_collide(
+                elapsed_time,
+                e_manager,
+                vectors_
+            );
+
+            //// ステージ外にでているか
+            //out_range(
+            //    e_manager,
+            //    vectors_
+            //);
+
         };
-    }
-    else
-    {
+
         // なにもしない
         water_movement_function = [&](const vectors&)
         {
             /* nothing */
         };
+    }
+    else
+    {
+        // 全て
+        judges_function = [](const float elapsed_time, const vectors& vectors_)
+        {
+            Entity_Manager& e_manager = Entity_Manager::instance();
+            Stage_Manager& s_manager = Stage_Manager::instance();
+
+            // 床へのレイキャスト
+            ray_to_floor(
+                elapsed_time,
+                e_manager, s_manager,
+                vectors_
+            );
+
+            // 壁へのレイキャスト
+            ray_to_wall(
+                elapsed_time,
+                e_manager, s_manager,
+                vectors_
+            );
+
+
+            // entity同士で当たり判定 (球)
+            entity_collide(
+                elapsed_time,
+                e_manager,
+                vectors_
+            );
+
+            // ステージ外にでているか
+            out_range(
+                e_manager,
+                vectors_
+            );
+
+        };
+
+        if(stage_ == Stage_Select::STAGE_2)
+        {
+            // 水中時、乗り物だけ上昇するようにする
+            water_movement_function = [](const vectors& vectors_)
+            {
+                Entity_Manager& instance = Entity_Manager::instance();
+                entity_water(instance, vectors_);
+            };
+        }
+        else
+        {
+            // なにもしない
+            water_movement_function = [&](const vectors&)
+            {
+                /* nothing */
+            };
+        }
     }
 }
