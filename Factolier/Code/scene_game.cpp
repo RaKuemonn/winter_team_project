@@ -53,7 +53,7 @@ inline void imgui(bool goal)
         }
     }
 
-    vec = Entity_Manager::instance().get_entities(Tag::Enemy);
+    vec = Entity_Manager::instance().get_entities(Tag::Collide);
     size = static_cast<int>(vec.size());
 
     ImGui::Text("Enemy");
@@ -67,10 +67,10 @@ inline void imgui(bool goal)
         {
             DirectX::XMFLOAT3 pos = entity->get_position();
             ImGui::InputFloat3("position", &pos.x);
-            DirectX::XMFLOAT3 velo = entity->get_velocity();
-            ImGui::InputFloat3("velocity", &velo.x);
-            float velo_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&velo)));
-            ImGui::InputFloat("velocity_length", &velo_length);
+            //DirectX::XMFLOAT3 velo = entity->get_velocity();
+            //ImGui::InputFloat3("velocity", &velo.x);
+            //float velo_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&velo)));
+            //ImGui::InputFloat("velocity_length", &velo_length);
 
         }
     }

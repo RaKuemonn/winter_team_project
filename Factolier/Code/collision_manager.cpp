@@ -43,7 +43,7 @@ namespace ray_functions
         const DirectX::XMFLOAT3 velocity = entity.lock()->get_velocity() * elapsed_time;
 
         // そもそも移動していなければ　早期returnさせる
-        //if (DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
+        if (DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(DirectX::XMLoadFloat3(&velocity))) <= FLT_EPSILON) return false;
 
         // 速度が下向き以外は早期return
         if (velocity.y >= 0.0f) return false;
