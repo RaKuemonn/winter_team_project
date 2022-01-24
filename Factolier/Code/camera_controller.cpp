@@ -5,8 +5,10 @@
 #include "easing.h"
 
 //�X�V����
-void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_manager, float elapsed_time)
+void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_manager, Option_Manager* option_manager, float elapsed_time)
 {
+    sens = option_manager->camera_move * 2.0f;
+
     if (input_manager->TRG_RELEASE(0) & PAD_SELECT)
     {
         bool i = SetCursorPos(static_cast<int>(SCREEN_WIDTH / 2), static_cast<int>(SCREEN_HEIGHT / 2));

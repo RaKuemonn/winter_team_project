@@ -75,7 +75,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
     if (position > -2000 && right_flag == false)
     {
         
-        if (input_manager->TRG(0) & PAD_LEFT)
+        if (input_manager->TRG(0) & PAD_RIGHT)
         {
             left_flag = true;
         }
@@ -103,7 +103,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
     if (position != 0 && left_flag == false)
     {
        
-        if (input_manager->TRG(0) & PAD_RIGHT)
+        if (input_manager->TRG(0) & PAD_LEFT)
         {
             right_flag = true;
             
