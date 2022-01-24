@@ -168,7 +168,7 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
 void Option_Manager::title_update(float elapsedTime, Input_Manager* input_manager)
 {
     slideshow(elapsedTime);
-    if (title_icon_pos > 0 && down_flag == false)
+    if (icon_pos > 0 && down_flag == false)
     {
         if (input_manager->TRG(0) & PAD_UP)
         {
@@ -179,22 +179,22 @@ void Option_Manager::title_update(float elapsedTime, Input_Manager* input_manage
             if (time <= 0.5f)
             {
                 time += elapsedTime;
-                title_icon_eas = -easing::out_quint(time, 0.5f, 180, 0.0f);
-         
+                icon_eas = -easing::out_quint(time, 0.5f, 180, 0.0f);
+              
             }
             else
             {
                 up_flag = false;
 
                 time = 0.0f;
-                title_icon_pos -= 180;
-                title_icon_eas = 0.0f;
+                icon_pos -= 180;
+                icon_eas = 0.0f;
             }
         }
     }
 
     // 高さ　select 23
-    if (title_icon_pos < 360 && up_flag == false)
+    if (icon_pos < 360 && up_flag == false)
     {
         if (input_manager->TRG(0) & PAD_DOWN)
         {
@@ -205,45 +205,30 @@ void Option_Manager::title_update(float elapsedTime, Input_Manager* input_manage
             if (time <= 0.5f)
             {
                 time += elapsedTime;
-                title_icon_eas = +easing::out_quint(time, 0.5f, 180, 0.0f);
-
+                icon_eas = +easing::out_quint(time, 0.5f, 180, 0.0f);
+               
             }
             else
             {
                 down_flag = false;
 
                 time = 0.0f;
-                title_icon_pos += 180;
-
-                title_icon_eas = 0.0f;
+                {
+                    icon_pos += 180;
+                }
+                
+                icon_eas = 0.0f;
             }
         }
-    };
-   /* if (icon_eas_x < 0)
-    {
-        icon_eas_x += 240;
-    }*/
-    setvolume(elapsedTime, input_manager);
-    // 何割あるかパーセントで出す
-        // 描画範囲　％
-        bgm_move = binary_data.bgm_bar / BAR_MAX;
-    // BGM ボリューム　%
-    bgm_vo = 1 * bgm_move;
-    // SE
-    // やってることはBGMと同じ
-    se_move = binary_data.se_bar / BAR_MAX;
-    se_vo = 1 * se_move;
-    // カメラのバーを動かす処理
-    // BGMと同じ
-    camera_move = binary_data.camera_bar / BAR_MAX;
-    arrow_bgm = bgm_move;
+    }
+    setvolume(elapsedTime,input_manager);
 
 }
 
 void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 {
     icon_select = static_cast<int>(icon_pos);
-    title_icon_select = static_cast<int>(title_icon_pos);
+    //xtitle_icon_select = icon_select;
     // アイコンがBGMのところにいたら
 
     //アイコンが移動中でない時
@@ -535,7 +520,7 @@ void Option_Manager::title_render()
     // アイコン
     {
         icon_spring->render(immediate_context,
-            446, 358 + title_icon_eas + title_icon_pos,
+            446, 358 + icon_eas + icon_pos,
             1.0f, 1.0f,
             64, 64,
             64, 64,
@@ -543,7 +528,7 @@ void Option_Manager::title_render()
             1, 1, 1, 1,
             0);
         icon_winter->render(immediate_context,
-            446, 358 + title_icon_eas + title_icon_pos,
+            446, 358 +icon_eas + icon_pos,
             1.0f, 1.0f,
             64, 64,
             64, 64,
@@ -551,7 +536,7 @@ void Option_Manager::title_render()
             1, 1, 1, winter_alpha,
             0);
         icon_autam->render(immediate_context,
-            446, 358 + title_icon_eas + title_icon_pos,
+            446, 358 + icon_eas + icon_pos,
             1.0f, 1.0f,
             64, 64,
             64, 64,
@@ -559,7 +544,7 @@ void Option_Manager::title_render()
             1, 1, 1, autam_alpha,
             0);
         icon_summer->render(immediate_context,
-            446, 358 + title_icon_eas + title_icon_pos,
+            446, 358 + icon_eas + icon_pos,
             1.0f, 1.0f,
             64, 64,
             64, 64,
@@ -568,7 +553,7 @@ void Option_Manager::title_render()
             0);
 
         icon_spring->render(immediate_context,
-            446, 358 + title_icon_eas + title_icon_pos,
+            446, 358 + icon_eas + icon_pos,
             1.0f, 1.0f,
             64, 64,
             64, 64,
@@ -621,7 +606,7 @@ void Option_Manager::title_render()
 
 
     // 矢印
-    switch (title_icon_select)
+    switch (icon_select)
     {
     case BGM:
         arrow_x = 844;

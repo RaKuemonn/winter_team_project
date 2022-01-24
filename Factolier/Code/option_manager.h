@@ -58,8 +58,8 @@ public:
     float icon_pos = 0;     //　アイコンの位置修正
     float icon_pos_x = 0;     // アイコンの移動距離 x
 
-    float title_icon_pos = 0;     //　アイコンの位置修正
-    float title_icon_eas = 0;     // アイコンの移動距離
+    //float title_icon_pos = 0;     //　アイコンの位置修正
+    //float title_icon_eas = 0;     // アイコンの移動距離
 
     float time = 0; // 経過時間
 
@@ -74,7 +74,7 @@ public:
     bool down_flag = false;
 
     int icon_select = 0;
-    int title_icon_select = 0;
+    //int title_icon_select = 0;
     float icon_size = 1.0f;
 
     float spring_alpha = 1;
