@@ -49,9 +49,9 @@ void Stage_Spawner::set_stage_3()
 void Stage_Spawner::set_stage_4()
 {
     set_stage<Stage_4>({ 0.0f,0.0f,0.0f });
-    set_stage<Stage_4_Move>({ 0.0f,1.0f,-50.0f })->set_start({ 0.0f,4.0f,-50.0f }).set_end({ 0.0f,-2.0f,-50.0f }).set_scale(0.1f);
-    set_stage<Stage_4_Movement>({ 0.0f,5.0f,10.0f });
-    set_stage<Stage_4_Movement>({ 0.0f,5.0f,-20.0f });
+    set_stage<Stage_4_Move>({ 0.0f,1.0f,-67.0f })->set_start({ 0.0f,7.0f,-67.0f }).set_end({ 0.0f,0.0f,-67.0f }).set_scale(0.1f);
+    set_stage<Stage_4_Movement>({ 0.0f,5.0f,-15.0f });
+    set_stage<Stage_4_Movement>({ 0.0f,2.0f,14.0f });
     set_stage<Stage_4_Goal>({ 0.0f,0.0f,0.0f });
 }
 

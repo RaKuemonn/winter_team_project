@@ -112,8 +112,8 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     const Stage_Select stage_num = parent->option_manager()->get_now_stage();
 #else
     // TODO: debug ステージが固定されている
-    const Stage_Select stage_num = parent->option_manager()->get_now_stage();
-    //const Stage_Select stage_num = Stage_Select::STAGE_3;
+    //const Stage_Select stage_num = parent->option_manager()->get_now_stage();
+    const Stage_Select stage_num = Stage_Select::STAGE_4;
 #endif
 
     // プレイヤーの位置
@@ -503,6 +503,15 @@ bool Scene_Game::judge_clear()
             }
             
         }
+
+        std::shared_ptr<Entity> player = Entity_Manager::instance().get_entity(Entity_Manager::instance().get_entities(Tag::Player).front());
+
+        if(player->get_tag() == Tag::Player)
+        {
+            static_cast<Player*>(player.get())->set_clear();
+        }
+
+
     }
 
     return true;

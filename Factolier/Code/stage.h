@@ -24,8 +24,11 @@ public:
 
     _NODISCARD Model* get_model()         const;
     _NODISCARD const DirectX::XMFLOAT3& get_position() const { return m_transform->get_position(); }
-
     _NODISCARD bool get_is_raycast() const { return is_raycast; }
+    void set_scale(float scale)
+    {
+        get_transform()->set_scale({ scale,scale,scale });
+    }
 
 protected:
     void load_model(std::shared_ptr<Model_Resource> model_);

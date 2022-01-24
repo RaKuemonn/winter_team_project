@@ -37,5 +37,5 @@ public:
     };
     virtual ~Decorator()override = default;
 
-    void update(const float elapsed_time) override{};
+    void update(const float elapsed_time) override { get_transform()->Update(); };
 };
