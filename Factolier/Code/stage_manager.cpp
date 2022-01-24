@@ -105,7 +105,7 @@ void Stage_Manager::imgui()
     for(auto& stage : vec_stages)
     {
         postion = stage->get_position();
-        ImGui::Text("number &d", i);
+        ImGui::Text("number %d", i);
         ImGui::InputFloat3("position", &postion.x);
         i++;
     }
