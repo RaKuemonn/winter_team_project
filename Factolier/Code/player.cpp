@@ -81,7 +81,7 @@ void Player::render()
 #include "model_filepaths.h"
 
 
-inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
+inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_, P_Anim& anim, bool animetion_playing_)
 {
     input_direction_ = {};
 
@@ -109,7 +109,28 @@ inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
     if (input_.TRG(0) & KEY_SPACE)
     {
         input_direction_.y += 1.0f;
+        anim = P_Anim::jump;
     }
+
+
+
+    if(input_direction_.x || input_direction_.z )
+    {
+        if (anim != P_Anim::jump || animetion_playing_ == false) // animがJumpでアニメーション中なら切り替えない
+        {
+            anim = P_Anim::move;
+        }
+    }
+    else
+    {
+        if (anim != P_Anim::jump || animetion_playing_ == false) // animがJumpでアニメーション中なら切り替えない
+        {
+            anim = P_Anim::stand;
+        }
+    }
+
+
+    
 
     DirectX::XMFLOAT2 direction = {};
     DirectX::XMStoreFloat2(&direction, DirectX::XMVector2Normalize(DirectX::XMVectorSet(input_direction_.x, input_direction_.z, 0.0f, 0.0f)));
@@ -127,7 +148,6 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
 {
     set_ptr_scene_manager(ptr_scene_manager_);
     load_model(get_scene_manager()->model_manager()->load_model(Model_Paths::Entity::player, true));
-    //load_model(get_scene_manager()->model_manager()->load_model("./Data/Model/character1.fbx"));
 
     set_tag(Tag::Player);
 
@@ -144,21 +164,21 @@ void Player::init()
 void Player::update(const float elapsed_time_)
 {
     // 入力値の受け取り
-    input(input_direction, *get_scene_manager()->input_manager());
+    input(input_direction, *get_scene_manager()->input_manager(), anim_num/* ジャンプ, 歩き, 待機 */, get_model()->get_anime_play_flag());
 
     // 乗り物の更新 ・ 位置の更新
-    update_vehicle(elapsed_time_);
-    
+    update_vehicle(elapsed_time_, anim_num);
 
+    
     // 姿勢の更新
     get_transform()->Update();
 
     // モデルの更新
-    //get_model()->play_animation(elapsed_time_, 0);
+    get_model()->play_animation(elapsed_time_, CAST_I(anim_num));
 }
 
 
-void Player::update_vehicle(const float elapsed_time_)
+void Player::update_vehicle(const float elapsed_time_, P_Anim& anim_num_)
 {
     //  乗ってる乗り物があるか
     if(check_has_vehicle())
@@ -172,6 +192,8 @@ void Player::update_vehicle(const float elapsed_time_)
                 // 地面にいて、Enterキーが押されたとき
                 // 発射する
                 static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
+
+                anim_num_ = P_Anim::attack;
 
                 return;
             }
@@ -209,6 +231,7 @@ void Player::reference_vehicle_position()
 
     DirectX::XMFLOAT3 vehicle_position = m_wkp_vehicle.lock()->get_latest_position();
     vehicle_position.y                += m_wkp_vehicle.lock()->get_scale().y;
+
 
     set_position(vehicle_position);
 

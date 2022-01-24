@@ -52,6 +52,8 @@ private:
 	float gauge = 0;
 	float gauge_pos = 0;
 
+	int next_move = 0;  //　次の行動をどうするか
+
 	float back_stage1_alpha = 1; // stage1の背景のアルファ値
 	float back_stage2_alpha = 1; // stage2の背景のアルファ値
 	float back_stage3_alpha = 1; // stage3の背景のアルファ値
@@ -68,8 +70,13 @@ private:
 
 
 	std::unique_ptr<Sprite> start = nullptr;
-	std::unique_ptr<Sprite> icon = nullptr;
 	std::unique_ptr<Sprite> option_start = nullptr;
+	std::unique_ptr<Sprite> exit = nullptr;
+
+	std::unique_ptr<Sprite> icon_spring = nullptr;
+	std::unique_ptr<Sprite> icon_summer = nullptr;
+	std::unique_ptr<Sprite> icon_autam = nullptr;
+	std::unique_ptr<Sprite> icon_winter = nullptr;
 
 
 	std::unique_ptr<Sound> sound = nullptr;

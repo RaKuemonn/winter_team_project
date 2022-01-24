@@ -13,7 +13,7 @@ namespace  stage
 class Stage
 {
 public:
-    Stage();
+    Stage(const DirectX::XMFLOAT3& position = {});
     virtual ~Stage();
 
     void         render(ID3D11DeviceContext* device_context);

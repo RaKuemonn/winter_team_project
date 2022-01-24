@@ -11,11 +11,20 @@ namespace Model_Paths
 //#endif
 
 
+        //inline constexpr char* const player             = "./Data/Model/Player/character.fbx";
+        //inline constexpr char* const player_animation   = "./Data/Model/Player/player_animation.fbx";
         inline constexpr char* const player             = "./Data/Model/Player/player_animation.fbx";
         //inline constexpr char* const player             = test;
         inline constexpr char* const ball               = "./Data/Model/ball.fbx";
         inline constexpr char* const enemy_none         = test;
         inline constexpr char* const enemy_move_closer  = test;
+
+        inline constexpr char* const enemy_move_spring  = "./Data/Model/Enemy/enemy1_spring_animation.fbx";
+        inline constexpr char* const enemy_move_summer  = "./Data/Model/Enemy/enemy1_summer_animation.fbx";
+        inline constexpr char* const enemy_move_fall    = "./Data/Model/Enemy/enemy1_fall_animation.fbx";
+        inline constexpr char* const enemy_move_winter  = "./Data/Model/Enemy/enemy1_winter_animation.fbx";
+        inline constexpr char* const enemy_rock         = "./Data/Model/Enemy/enemy2_animation.fbx";
+
         inline constexpr char* const enemy_boss_head    = "./Data/Model/Boss/head/boss_head.fbx";
         inline constexpr char* const enemy_boss_body3   = "./Data/Model/Boss/body3/boss_body3.fbx";
         inline constexpr char* const enemy_boss_body2   = "./Data/Model/Boss/body2/boss_body2.fbx";

@@ -8,13 +8,12 @@
 #include "model_filepaths.h"
 
 
-Stage_1_Movement::Stage_1_Movement(Scene_Manager* ptr_scene_manager_)
+Stage_1_Movement::Stage_1_Movement(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position) : Stage(position)
 {
     load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::stage_1_propeller, true));
     
     get_transform()->set_scale(stage::scale);
     get_transform()->set_euler(m_euler);
-    get_transform()->set_position({ 0.0f,-3.0f,50.0f });
     get_transform()->Update();
 }
 
