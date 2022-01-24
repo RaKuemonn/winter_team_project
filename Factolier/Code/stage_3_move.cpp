@@ -71,22 +71,22 @@ void Stage_3_Move::update(const float elapsed_time)
 bool Stage_3_Move::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, Hit_Result* hit_result_)
 {
 
-    // ‘O‰ñ‚Ìƒ[ƒ‹ƒhs—ñ‚Å‹ts—ñ‚ðŽZo
+    // ï¿½Oï¿½ï¿½Ìƒï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½sï¿½ï¿½Å‹tï¿½sï¿½ï¿½ï¿½ï¿½Zï¿½o
     DirectX::XMMATRIX WorldOldTransform = DirectX::XMLoadFloat4x4(&old_transform);
     DirectX::XMMATRIX InverseWorldOldTransform = DirectX::XMMatrixInverse(nullptr, WorldOldTransform);
 
     DirectX::XMVECTOR WorldStart = DirectX::XMLoadFloat3(&start);
     DirectX::XMVECTOR WorldEnd = DirectX::XMLoadFloat3(&end);
 
-    // ƒ[ƒ‹ƒh‹óŠÔ‚ÌŽn“_‚ÆI“_‚ðƒ[ƒJƒ‹‹óŠÔã‚É•ÏŠ·
+    // ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½Ô‚ÌŽnï¿½_ï¿½ÆIï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½Ôï¿½É•ÏŠï¿½
     DirectX::XMVECTOR Start = DirectX::XMVector3TransformCoord(WorldStart, InverseWorldOldTransform);
     DirectX::XMVECTOR End = DirectX::XMVector3TransformCoord(WorldEnd, InverseWorldOldTransform);
-    // ƒ[ƒJƒ‹‹óŠÔ‚ÌƒŒƒC‚ÌŽn“_‚ÆI“_
+    // ï¿½ï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½Ô‚Ìƒï¿½ï¿½Cï¿½ÌŽnï¿½_ï¿½ÆIï¿½_
     DirectX::XMFLOAT3 localStart, localEnd;
     DirectX::XMStoreFloat3(&localStart, Start);
     DirectX::XMStoreFloat3(&localEnd, End);
 
-    // ’PˆÊs—ñ
+    // ï¿½Pï¿½Êsï¿½ï¿½
     constexpr DirectX::XMFLOAT4X4 unit_transform =
     {
         1.0f,0.0f,0.0f,0.0f,
@@ -100,7 +100,7 @@ bool Stage_3_Move::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLO
     if (get_model()->raycast(localStart, localEnd, unit_transform, &local_result))
     {
 
-        //@‘O‰ñ‚Ìƒ[ƒJƒ‹‹óŠÔ‚©‚ç@hŒ»Ý‚Ìhƒ[ƒ‹ƒh‹óŠÔ‚Ö•ÏŠ·
+        //ï¿½@ï¿½Oï¿½ï¿½Ìƒï¿½ï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½@ï¿½hï¿½ï¿½ï¿½Ý‚Ìhï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½Ô‚Ö•ÏŠï¿½
         DirectX::XMMATRIX WorldTransform = DirectX::XMLoadFloat4x4(&get_transform()->get_matrix());
         DirectX::XMVECTOR localHitPosition = DirectX::XMLoadFloat3(&local_result.position);
         DirectX::XMVECTOR localHitNormal = DirectX::XMLoadFloat3(&local_result.normal);
@@ -113,15 +113,15 @@ bool Stage_3_Move::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLO
         DirectX::XMStoreFloat(&distance, WorldCrossLength);
 
 
-        // •ÏŠ·Œ‹‰Ê
+        // ï¿½ÏŠï¿½ï¿½ï¿½ï¿½ï¿½
         DirectX::XMStoreFloat3(&hit_result_->position, WorldPosition);
         DirectX::XMStoreFloat3(&hit_result_->normal, DirectX::XMVector3Normalize(WorldNormal));
         hit_result_->distance = distance;
         hit_result_->material_index = local_result.material_index;
 
-        //const DirectX::XMFLOAT3 euler = get_transform()->get_euler(); // Œ‡Š× : Šp“x‚É‚æ‚Á‚ÄˆêˆÓ‚É’l‚ª‹‚Ü‚ç‚È‚¢ê‡‚ª‚ ‚Á‚½
+        //const DirectX::XMFLOAT3 euler = get_transform()->get_euler(); // ï¿½ï¿½ï¿½ï¿½ : ï¿½pï¿½xï¿½É‚ï¿½ï¿½ï¿½Äˆï¿½Ó‚É’lï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½È‚ï¿½ï¿½ê‡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-        // ªŒ‡Š×‚ª‚ ‚Á‚½‚Ì‚Å ŒÂ•Ê‚Éì‚Á‚½•Ï”m_euler‚Å‘Î‰ž‚µ‚½
+        // ï¿½ï¿½ï¿½ï¿½ï¿½×‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ ï¿½Â•Ê‚Éï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½m_eulerï¿½Å‘Î‰ï¿½ï¿½ï¿½ï¿½ï¿½
         hit_result_->rotation.x = m_euler.x - old_euler.x;
         hit_result_->rotation.y = m_euler.y - old_euler.y;
         hit_result_->rotation.z = m_euler.z - old_euler.z;

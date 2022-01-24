@@ -14,6 +14,8 @@
 #include "imgui.h"
 #include "utility.h"
 #include "sphere_vehicle.h"
+#include "scene_loading.h"
+#include "scene_select.h"
 
 inline void imgui(bool goal)
 {
@@ -142,6 +144,35 @@ void Scene_Game::uninitialize()
 
 void Scene_Game::update(float elapsed_time)
 {
+    if (parent->input_manager()->TRG(0) & KEY_ESC)
+    {
+        if (!is_option)
+        {
+            is_option = true;
+        }
+
+        else
+        {
+            is_option = false;
+        }
+    }
+
+    if (is_option)
+    {
+        parent->option_manager()->update(elapsed_time, parent->input_manager());
+
+        if (parent->input_manager()->TRG(0) & PAD_START)
+        {
+            if (parent->option_manager()->return_flag)
+            {
+                parent->change_scene(new Scene_Loading(new Scene_Select));
+            }
+        }
+
+        return;
+    }
+
+
     Stage_Manager::instance().update(elapsed_time);
 
     Entity_Manager::instance().update(elapsed_time);
@@ -156,6 +187,7 @@ void Scene_Game::update(float elapsed_time)
     imgui(clear);
 
     debug_decorator_supporter->imgui_control();
+
 }
 
 
@@ -220,6 +252,20 @@ void Scene_Game::render(float elapsed_time)
     debug_decorator_supporter->render(ptr_device_context);
 
     shader->end(ptr_device_context);
+
+    //オプション描画
+    {
+        parent->state_manager()->setDS(DS::OFF_OFF);
+
+        //parent->state_manager()->setBS(BS::ALPHA);
+
+        parent->state_manager()->setRS(RS::SOLID_NONE);
+
+        if (is_option)
+        {
+            parent->option_manager()->game_render();
+        }
+    }
 }
 
 
@@ -384,7 +430,7 @@ bool Scene_Game::judge_clear()
     {
     case CAST_I(Stage_Select::STAGE_1):
     {
-        opm->get_binary().clear_flag[CAST_I(opm->get_now_stage())] = true;
+        opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_1)] = true;
         break;
     }
 

@@ -84,7 +84,7 @@ public:
     float integer = 0;  // slidetimerの整数部分
     float decimals = 0;// slidetimerの小数部分
 
-    bool return_flag = false; //セレクトの戻る
+    bool return_flag = false; //セレクトに戻る
 
 
 private:

@@ -36,4 +36,6 @@ private:
 
 	std::unique_ptr<Decotator_Supporter> debug_decorator_supporter = nullptr;
 	std::unique_ptr<class Camera_Controller> camera_controller = nullptr;
+
+	bool is_option = false;
 };
