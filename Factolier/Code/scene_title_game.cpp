@@ -15,6 +15,8 @@
 #define END 400
 
 
+
+
 // デバッグ用GUI描画
 void Scene_Title_Game::DrawDebugGUI()
 {
@@ -190,10 +192,9 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             if (move_flag)
             {
                 // オプション画面に移行する
-                option_flag = true;
-                icon_flag = false;
-
+                quit = true;
             }
+            
         }
     }
     
@@ -246,12 +247,9 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
         se->play(false);
     }
 
-    if (input_manager->TRG(0) & PAD_START)
+    if (input_manager->TRG(0) & KEY_ESC)
     {
-        if (parent->option_manager()->return_flag)
-        {
-            option_flag = false;
-        }
+        option_flag = false;
     }
    
     

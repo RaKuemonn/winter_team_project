@@ -25,6 +25,7 @@ extern ImWchar glyphRangesJapanese[];
 #endif
 
 extern float fps;
+extern bool quit;
 
 class Framework
 {
@@ -92,7 +93,7 @@ public:
 		ImGui::StyleColorsDark();
 #endif
 
-		while (WM_QUIT != msg.message && !quit)
+		while (WM_QUIT != msg.message)
 		{
 			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 			{
@@ -164,11 +165,6 @@ public:
 			break;
 
 		case WM_KEYDOWN:
-			if (wparam == VK_ESCAPE)
-			{
-				PostMessage(hwnd, WM_CLOSE, 0, 0);
-				break;
-			}
 
 		case WM_SYSKEYDOWN:
 		case WM_KEYUP:

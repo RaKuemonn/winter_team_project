@@ -7,8 +7,10 @@
 #include "sky_box.h"
 #include "model.h"
 #include "camera_controller.h" 
+#include "framework.h"
 
 
+extern bool quit;
 
 
 class Scene_Title_Game : public Scene
