@@ -219,7 +219,7 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
 {
     
     //sound->pause();
-    parent->option_manager()->update(elapsedTime, input_manager);
+    parent->option_manager()->title_update(elapsedTime, input_manager);
     sound->set_volume(parent->option_manager()->bgm_vo);
     se->set_volume(parent->option_manager()->se_vo);
 
@@ -455,7 +455,7 @@ void Scene_Title_Game::render(float elapsed_time)
     // オプション画面を開いたとき
     else
     {
-        parent->option_manager()->game_render();
+        parent->option_manager()->title_render();
     }
 
    

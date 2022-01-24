@@ -164,6 +164,69 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
     
 }
 
+void Option_Manager::title_update(float elapsedTime, Input_Manager* input_manager)
+{
+    slideshow(elapsedTime);
+    if (icon_pos > 0 && down_flag == false)
+    {
+        if (input_manager->TRG(0) & PAD_UP)
+        {
+            up_flag = true;
+        }
+        if (up_flag)
+        {
+            if (time <= 0.5f)
+            {
+                time += elapsedTime;
+                icon_eas = -easing::out_quint(time, 0.5f, 180, 0.0f);
+         
+            }
+            else
+            {
+                up_flag = false;
+
+                time = 0.0f;
+                icon_pos -= 180;
+                icon_eas = 0.0f;
+            }
+        }
+    }
+
+    // 高さ　select 23
+    if (icon_pos < 360 && up_flag == false)
+    {
+        if (input_manager->TRG(0) & PAD_DOWN)
+        {
+            down_flag = true;
+        }
+        if (down_flag)
+        {
+            if (time <= 0.5f)
+            {
+                time += elapsedTime;
+                icon_eas = +easing::out_quint(time, 0.5f, 180, 0.0f);
+
+            }
+            else
+            {
+                down_flag = false;
+
+                time = 0.0f;
+                icon_pos += 180;
+
+                icon_eas = 0.0f;
+            }
+        }
+    };
+    if (icon_eas_x < 0)
+    {
+        icon_eas_x += 240;
+    }
+    setvolume(elapsedTime, input_manager);
+
+
+}
+
 void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 {
     icon_select = static_cast<int>(icon_pos);
@@ -444,14 +507,49 @@ void Option_Manager::title_render()
 
 
     // アイコン
-   /* icon_spring->render(immediate_context,
-        382, 340 + icon_eas + icon_pos,
-        1.0f, 1.0f,
-        64, 64,
-        64, 64,
-        0, 0,
-        1, 1, 1, 1,
-        0);*/
+    {
+        icon_spring->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, 1,
+            0);
+        icon_winter->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, winter_alpha,
+            0);
+        icon_autam->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, autam_alpha,
+            0);
+        icon_summer->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, summer_alpha,
+            0);
+
+        icon_spring->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, spring_alpha,
+            0);
+    }
 
 
 

@@ -29,6 +29,7 @@ public:
     ~Option_Manager() { File_IO::write("./Data/Binary/save.dat", binary_data); }
 
     void update(float elapsedTime, Input_Manager* input_manager);
+    void title_update(float elapsedTime, Input_Manager* input_manager);
     void setvolume(float elapsedTime, Input_Manager* input_manager);
     // デバッグ用GUI描画
     void DrawDebugGUI();

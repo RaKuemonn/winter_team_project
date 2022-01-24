@@ -38,7 +38,7 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     parent = parent_;
     ID3D11Device* dev = parent->device();
 
-    back = make_unique<Sprite>(dev, "Data/Sprite/back.png");
+    back = make_unique<Sprite>(dev, "Data/Sprite/select_boss.png");
     stage1 = make_unique<Sprite>(dev, "Data/Sprite/select1.png");
     stage2 = make_unique<Sprite>(dev, "Data/Sprite/select2.png");
     stage3 = make_unique<Sprite>(dev, "Data/Sprite/select3.png");
@@ -57,6 +57,7 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     summer = make_unique<Sprite>(dev, "Data/Sprite/select_summer.png");
     autum = make_unique<Sprite>(dev, "Data/Sprite/select_autumn.png");
     winter = make_unique<Sprite>(dev, "Data/Sprite/select_winter.png");
+    //winter = make_unique<Sprite>(dev, "Data/Sprite/select_winter.png");
 
    
 }
