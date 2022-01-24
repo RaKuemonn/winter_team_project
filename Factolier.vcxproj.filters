@@ -378,6 +378,9 @@
     <ClCompile Include="Factolier\Code\enemy_winter.cpp">
       <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_4_move.cpp">
+      <Filter>Factolier\Stage\stage_4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene_loading.h">
@@ -712,6 +715,9 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\deco_furniture.h">
       <Filter>Factolier\Stage\Decorator</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_4_move.h">
+      <Filter>Factolier\Stage\stage_4</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

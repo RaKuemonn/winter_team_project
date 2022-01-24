@@ -79,7 +79,7 @@ void Player::render()
 #include "sphere_vehicle.h"
 #include "sv_ball.h"
 #include "model_filepaths.h"
-
+#include <memory>
 
 inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_, P_Anim& anim, bool animetion_playing_)
 {
@@ -154,6 +154,9 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
     constexpr float scale = 0.1f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
+
+    walk = std::make_unique<Sound>(ptr_scene_manager_->sound_manager()->load_sound(L"./Data/Sound/crick.wav"));
+
 }
 
 void Player::init()
@@ -163,6 +166,7 @@ void Player::init()
 
 void Player::update(const float elapsed_time_)
 {
+
     // 入力値の受け取り
     input(input_direction, *get_scene_manager()->input_manager(), anim_num/* ジャンプ, 歩き, 待機 */, get_model()->get_anime_play_flag());
 
@@ -172,6 +176,7 @@ void Player::update(const float elapsed_time_)
     
     // 姿勢の更新
     get_transform()->Update();
+
 
     // モデルの更新
     get_model()->play_animation(elapsed_time_, CAST_I(anim_num));

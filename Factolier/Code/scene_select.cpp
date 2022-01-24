@@ -5,6 +5,7 @@
 #include "easing.h"
 #include "scene_loading.h"
 #include "scene_game.h"
+//#include "option_manager.h"
 
 // デバッグ用GUI描画
 void Scene_Select::DrawDebugGUI()
@@ -63,6 +64,9 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/select_BGM.wav"));
     sound->play(true);
     crick = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/crick.wav"));
+    sound->set_volume(parent->option_manager()->bgm_vo);
+    crick->set_volume(parent->option_manager()->se_vo);
+   
 }
 
 void Scene_Select::uninitialize()
@@ -72,7 +76,9 @@ void Scene_Select::uninitialize()
 
 
 void Scene_Select::update(float elapsed_time)
-{
+{    
+  // move(elapsed_time, parent->input_manager());
+
     if (parent->input_manager()->TRG(0) & KEY_ESC)
     {
         parent->change_scene(new Scene_Loading(new Scene_Title_Game));
@@ -206,6 +212,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                 }
 
                 }
+
             }
         }
     
@@ -426,6 +433,6 @@ void Scene_Select::render(float elapsed_time)
   
 
 
-    DrawDebugGUI();
+   // DrawDebugGUI();
 
 }

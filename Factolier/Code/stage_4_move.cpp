@@ -1,25 +1,20 @@
-
-#include "stage_3_move.h"
+﻿
+#include "stage_4_move.h"
 #include "scene_manager.h"
 #include "transform.h"
 #include "model_filepaths.h"
 #include "collision.h"
 
-Stage_3_Move::Stage_3_Move(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position_) : Stage(position_)
+Stage_4_Move::Stage_4_Move(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position_) : Stage(position_)
 {
-    load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::stage_3_move, true));
-    
+    load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::stage_4_propeller, true));
+
     get_transform()->set_scale(stage::scale);
     get_transform()->set_euler({ 0.0f, -3.14f, 0.0f });
     get_transform()->Update();
-    
-    start   = position_;
-    start.y     += 7.0f;
-    end     = position_;
-    end.y       += -7.0f;
 }
 
-void Stage_3_Move::update(const float elapsed_time)
+void Stage_4_Move::update(const float elapsed_time)
 {
     old_transform = get_transform()->get_matrix();
     old_euler = m_euler;
@@ -30,8 +25,8 @@ void Stage_3_Move::update(const float elapsed_time)
 
     DirectX::XMVECTOR Pos = DirectX::XMLoadFloat3(&get_transform()->get_position());
 
-    float start_to_pos_length   = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(Pos, Start)));
-    float start_to_pos_dot      = DirectX::XMVectorGetX(DirectX::XMVector3Dot(DirectX::XMVectorSubtract(Pos, Start), Vec));
+    float start_to_pos_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(Pos, Start)));
+    float start_to_pos_dot = DirectX::XMVectorGetX(DirectX::XMVector3Dot(DirectX::XMVectorSubtract(Pos, Start), Vec));
 
     const float length = DirectX::XMVectorGetX(DirectX::XMVector3Length(Vec));
 
@@ -50,7 +45,7 @@ void Stage_3_Move::update(const float elapsed_time)
     constexpr float speed = 7.0f;
     float now_speed = move_ratio * speed * elapsed_time;
     DirectX::XMFLOAT3 position;
-    DirectX::XMStoreFloat3(&position,DirectX::XMVectorMultiplyAdd(DirectX::XMVector3Normalize(Vec), DirectX::XMVectorReplicate(now_speed), Pos));
+    DirectX::XMStoreFloat3(&position, DirectX::XMVectorMultiplyAdd(DirectX::XMVector3Normalize(Vec), DirectX::XMVectorReplicate(now_speed), Pos));
     get_transform()->set_position(position);
     /*const float speed = move_speed * elapsed_time;
     float speedRate = speed / length;
@@ -68,7 +63,7 @@ void Stage_3_Move::update(const float elapsed_time)
     get_transform()->Update();
 }
 
-bool Stage_3_Move::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, Hit_Result* hit_result_)
+bool Stage_4_Move::ray_cast(const DirectX::XMFLOAT3& start, const DirectX::XMFLOAT3& end, Hit_Result* hit_result_)
 {
 
     // �O��̃��[���h�s��ŋt�s����Z�o
