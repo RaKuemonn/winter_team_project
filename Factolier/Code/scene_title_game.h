@@ -72,7 +72,11 @@ private:
 	std::unique_ptr<Sprite> start = nullptr;
 	std::unique_ptr<Sprite> option_start = nullptr;
 	std::unique_ptr<Sprite> exit = nullptr;
-	std::unique_ptr<Sprite> icon = nullptr;
+
+	std::unique_ptr<Sprite> icon_spring = nullptr;
+	std::unique_ptr<Sprite> icon_summer = nullptr;
+	std::unique_ptr<Sprite> icon_autam = nullptr;
+	std::unique_ptr<Sprite> icon_winter = nullptr;
 
 
 	std::unique_ptr<Sound> sound = nullptr;

@@ -13,7 +13,7 @@
 // デバッグ用GUI描画
 void Option_Manager::DrawDebugGUI()
 {
-    ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
+    ImGui::SetNextWindowPos(ImVec2(800, 100), ImGuiCond_FirstUseEver);
     ImGui::SetNextWindowSize(ImVec2(300, 300), ImGuiCond_FirstUseEver);
 
     if (ImGui::Begin("Option", nullptr, ImGuiWindowFlags_None))
@@ -30,6 +30,8 @@ void Option_Manager::DrawDebugGUI()
             ImGui::InputFloat("bgm_move", &bgm_move);
             ImGui::InputFloat("arrow_move", &arrow_move);
             ImGui::InputFloat("camera_move", &camera_move);
+            ImGui::InputFloat("icon_eas_x", &icon_eas_x);
+            ImGui::InputFloat("icon_pos_x", &icon_pos_x);
         }
     }
     ImGui::End();
@@ -45,7 +47,10 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     File_IO::open("./Data/Binary/save.dat", binary_data);
 
     bar = make_unique<Sprite>(device, "./Data/Sprite/オプションバー.png");
-    icon = make_unique<Sprite>(device, "./Data/Sprite/team1_flower_90×90.png");
+    icon_spring = make_unique<Sprite>(device, "./Data/Sprite/春カーソル.png");
+    icon_summer = make_unique<Sprite>(device, "./Data/Sprite/夏カーソル.png");
+    icon_autam = make_unique<Sprite>(device, "./Data/Sprite/秋カーソル.png");
+    icon_winter = make_unique<Sprite>(device, "./Data/Sprite/冬カーソル.png");
     arrow = make_unique<Sprite>(device, "./Data/Sprite/バー矢印(38,164).png");
     option_bakc = make_unique<Sprite>(device, "./Data/Sprite/option_4仮.png");
 
@@ -67,11 +72,11 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
 
 void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
 {
+    slideshow(elapsedTime);
     if (icon_pos > 0 && down_flag == false)
     {
         if (input_manager->TRG(0) & PAD_UP)
         {
-            icon_eas -= 180;
             up_flag = true;
         }
         if (up_flag)
@@ -79,21 +84,36 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
             if (time <= 0.5f)
             {
                 time += elapsedTime;
-                icon_eas = -easing::out_quint(time, 0.5f, 180, 0.0f);
+                if (icon_pos > 360)
+                {
+                    icon_eas = -easing::out_quint(time, 0.5f, 120, 0.0f);
+                    icon_eas_x = -easing::out_quint(time, 0.5f, 240, 0.0f);
+                }
+                else
+                {
+                    icon_eas = -easing::out_quint(time, 0.5f, 180, 0.0f);
+                }
             }
             else
             {
                 up_flag = false;
 
                 time = 0.0f;
-                icon_pos -= 180;
+                if (icon_pos > 360)
+                {
+                    icon_pos -= 120;
+                }
+                else
+                {
+                    icon_pos -= 180;
+                }
                 icon_eas = 0.0f;
             }
         }
     }
 
     // 高さ　select 23
-    if (icon_pos < 360 && up_flag == false)
+    if (icon_pos < 380 && up_flag == false)
     {
         if (input_manager->TRG(0) & PAD_DOWN)
         {
@@ -104,19 +124,41 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
             if (time <= 0.5f)
             {
                 time += elapsedTime;
-                icon_eas = +easing::out_quint(time, 0.5f, 180, 0.0f);
+                
+                if (icon_pos >= 360)
+                {
+                    icon_eas = +easing::out_quint(time, 0.5f, 120, 0.0f);
+                    icon_eas_x  = +easing::out_quint(time, 0.5f, 240, 0.0f);
+                    
+                }
+                else
+                {
+                    icon_eas = +easing::out_quint(time, 0.5f, 180, 0.0f);
+                }
             }
             else
             {
                 down_flag = false;
 
                 time = 0.0f;
-                icon_pos += 180;
+                if (icon_pos >= 360)
+                {
+                    icon_pos += 120;
+                   
+                }
+                else
+                {
+                    icon_pos += 180;
+                }
+                
                 icon_eas = 0.0f;
             }
         }
     }
-
+    if (icon_eas_x < 0)
+    {
+        icon_eas_x += 240;
+    }
     setvolume(elapsedTime, input_manager);
    
     
@@ -224,6 +266,36 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
   
 }
     
+void Option_Manager::slideshow(float elapsedTime)
+{
+    slidetimer += elapsedTime / 8;
+    slide = static_cast<int>(slidetimer) % 4;
+    decimals = modff(slidetimer, &integer);
+
+    if (slide == 0)
+    {
+        spring_alpha = 1;
+        summer_alpha = 1;
+        spring_alpha -= decimals;
+    }
+    else if (slide == 1)
+    {
+        summer_alpha = 1;
+        autam_alpha = 1;
+        summer_alpha -= decimals;
+    }
+    else if (slide == 2)
+    {
+        autam_alpha = 1;
+        winter_alpha = 1;
+        autam_alpha -= decimals;
+    }
+    else if (slide == 3)
+    {
+        winter_alpha = 1;
+        winter_alpha -= decimals;
+    }
+}
 
 // ゲーム内で表示するオプション画面
 void Option_Manager::game_render()
@@ -240,17 +312,49 @@ void Option_Manager::game_render()
 
 
     // アイコン
-    icon->render(immediate_context,
-        382, 340 + icon_eas + icon_pos,
-        1.0f, 1.0f,
-        128, 128,
-        128, 128,
-        0, 0,
-        1, 1, 1, 1,
-        0);
+    {
+        icon_spring->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, 1,
+            0);
+        icon_winter->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, winter_alpha,
+            0);
+        icon_autam->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, autam_alpha,
+            0);
+        icon_summer->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, summer_alpha,
+            0);
 
-
-
+        icon_spring->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, spring_alpha,
+            0);
+    }
 
     //BGM設定
     {
@@ -320,7 +424,7 @@ void Option_Manager::game_render()
         0, 0,
         1, 1, 1, 1,
         0);
-
+    DrawDebugGUI();
 }
 
 
@@ -328,15 +432,6 @@ void Option_Manager::game_render()
 void Option_Manager::title_render()
 {
     // 背景
-    //option_bakc->render(
-    //    immediate_context,
-    //    0, 0,  //position
-    //    1, 1,     // scal
-    //    1920, 1080,    // どれくらい描画するか
-    //    1920, 1080,   // size
-    //    0, 0,         // pibot
-    //    1, 1, 1, 0.5,   // rgba
-    //    0); // angle
     title_back->render(
         immediate_context,
         0, 0,  //position
@@ -349,14 +444,14 @@ void Option_Manager::title_render()
 
 
     // アイコン
-    icon->render(immediate_context,
+   /* icon_spring->render(immediate_context,
         382, 340 + icon_eas + icon_pos,
         1.0f, 1.0f,
-        128, 128,
-        128, 128,
+        64, 64,
+        64, 64,
         0, 0,
         1, 1, 1, 1,
-        0);
+        0);*/
 
 
 

@@ -48,7 +48,11 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     back_stage4 = make_unique<Sprite>(parent->device(), "Data/Sprite/select4.png");
     back_stage0 = make_unique<Sprite>(parent->device(), "Data/Sprite/select1.png");
    
-    icon = make_unique<Sprite>(parent->device(), "Data/Sprite/team1_flower_90×90.png");
+    icon_spring = make_unique<Sprite>(parent->device(), "Data/Sprite/春カーソル.png");
+    icon_summer = make_unique<Sprite>(parent->device(), "Data/Sprite/夏カーソル.png");
+    icon_autam  = make_unique<Sprite>(parent->device(), "Data/Sprite/秋カーソル.png");
+    icon_winter = make_unique<Sprite>(parent->device(), "Data/Sprite/冬カーソル.png");
+
 
     start = make_unique<Sprite>(parent->device(), "Data/Sprite/ステージセレクト.png");
     option_start = make_unique<Sprite>(parent->device(), "Data/Sprite/オプション文字.png");
@@ -311,6 +315,53 @@ void Scene_Title_Game::render(float elapsed_time)
             0);
     }
 
+    // アイコン
+    {
+        icon_spring->render(device_context_,
+            1300, 320 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, 1,
+            0);
+        icon_winter->render(device_context_,
+            1300, 320 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, back_stage4_alpha,
+            0);
+        icon_autam->render(device_context_,
+            1300, 320 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, back_stage3_alpha,
+            0);
+
+        icon_summer->render(device_context_,
+            1300, 320 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, back_stage2_alpha,
+            0);
+
+        icon_spring->render(device_context_,
+            1300, 320 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, back_stage1_alpha,
+            0);
+
+    }
+
     // タイトル
     {
         title->render(device_context_,
@@ -397,15 +448,6 @@ void Scene_Title_Game::render(float elapsed_time)
                 1, 1, 1, 1,
                 0); // angle
         }
-
-        icon->render(device_context_,
-            1200, 300 + icon_pos + icon_eas,
-            1.0f, 1.0f,
-            128, 128,
-            128, 128,
-            0, 0,
-            1, 1, 1, 1,
-            0);
 
     }
     // オプション画面を開いたとき
