@@ -127,7 +127,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     clear_judge = std::make_unique<Clear_Judge>(stage_num, player->get_position(), ptr_boss_hp);
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
 
-    sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/cubemap_batch.dds");
+    sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
 
     debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_);
 }
@@ -170,7 +170,7 @@ void Scene_Game::render(float elapsed_time)
 
     Shader* shader = nullptr;
     ID3D11DeviceContext* ptr_device_context = parent->device_context();
-    //�V���h�E�}�b�v����
+    
     {
         shader = parent->shader_manager()->get_shader(Shaders::SHADOW);
 
@@ -182,7 +182,7 @@ void Scene_Game::render(float elapsed_time)
         shader->end(ptr_device_context);
     }
 
-    //�����_�[�^�[�Q�b�g�r���[�Ɛ[�x�X�e���V���r���[�����ɖ߂�
+    
     {
         ID3D11RenderTargetView* rtv = parent->render_target_view();
         ID3D11DepthStencilView* dsv = parent->depth_stencil_view();
@@ -235,7 +235,7 @@ void Scene_Game::init_player_position(const Stage_Select stage_, std::weak_ptr<E
 
     case Stage_Select::STAGE_2:
     {
-        player_.lock()->set_position({-4.5f, 9.0f,-82.0f});
+        player_.lock()->set_position({});
         break;
     }
 

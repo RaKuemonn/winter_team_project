@@ -38,20 +38,20 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     parent = parent_;
     ID3D11Device* dev = parent->device();
 
-    back = make_unique<Sprite>(dev, "Data/back.png");
-    stage1 = make_unique<Sprite>(dev, "Data/select1.png");
-    stage2 = make_unique<Sprite>(dev, "Data/select2.png");
-    stage3 = make_unique<Sprite>(dev, "Data/select3.png");
-    stage4 = make_unique<Sprite>(dev, "Data/select4.png");
-    stage5 = make_unique<Sprite>(dev, "Data/select5.png");
-    choice = make_unique<Sprite>(dev, "Data/frame.png");
+    back = make_unique<Sprite>(dev, "Data/Sprite/back.png");
+    stage1 = make_unique<Sprite>(dev, "Data/Sprite/select1.png");
+    stage2 = make_unique<Sprite>(dev, "Data/Sprite/select2.png");
+    stage3 = make_unique<Sprite>(dev, "Data/Sprite/select3.png");
+    stage4 = make_unique<Sprite>(dev, "Data/Sprite/select4.png");
+    stage5 = make_unique<Sprite>(dev, "Data/Sprite/select5.png");
+    choice = make_unique<Sprite>(dev, "Data/Sprite/frame.png");
 
-    enter = make_unique<Sprite>(dev, "Data/push the Enter.png");
+    enter = make_unique<Sprite>(dev, "Data/Sprite/push the Enter.png");
 
-    key_stage2 = make_unique<Sprite>(parent->device(), "Data/“ì‹ù.png");
-    key_stage3 = make_unique<Sprite>(parent->device(), "Data/“ì‹ù.png");
-    key_stage4 = make_unique<Sprite>(parent->device(), "Data/“ì‹ù.png");
-    key_boss = make_unique<Sprite>(parent->device(), "Data/“ì‹ù.png");
+    key_stage2 = make_unique<Sprite>(parent->device(), "Data/Sprite/“ì‹ù.png");
+    key_stage3 = make_unique<Sprite>(parent->device(), "Data/Sprite/“ì‹ù.png");
+    key_stage4 = make_unique<Sprite>(parent->device(), "Data/Sprite/“ì‹ù.png");
+    key_boss = make_unique<Sprite>(parent->device(), "Data/Sprite/“ì‹ù.png");
 
    
 }

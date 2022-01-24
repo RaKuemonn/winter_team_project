@@ -27,7 +27,11 @@ bool Framework::initialize()
 	scene_manager->state_manager()->setSS(SS::ANISOTROPIC);
 
 
-	scene_manager->change_scene(new Scene_Game);
+	//scene_manager->change_scene(new Scene_Game);
+
+	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
+	scene_manager->change_scene(new Scene_Loading(new Scene_Title_Game));
+	//scene_manager->change_scene(new Scene_Title_Game);
 
 	
 

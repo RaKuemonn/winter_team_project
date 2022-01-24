@@ -35,23 +35,23 @@ void Scene_Title_Game::DrawDebugGUI()
 void Scene_Title_Game::initialize(Scene_Manager* parent_)
 {
     parent = parent_;
-    title = make_unique<Sprite>(parent->device(), "Data/title.png");
+    title = make_unique<Sprite>(parent->device(), "Data/Sprite/title.png");
 
-    back_stage1 = make_unique<Sprite>(parent->device(), "Data/select1.png");
-    back_stage2 = make_unique<Sprite>(parent->device(), "Data/select2.png");
-    back_stage3 = make_unique<Sprite>(parent->device(), "Data/select3.png");
-    back_stage4 = make_unique<Sprite>(parent->device(), "Data/select4.png");
-    back_stage0 = make_unique<Sprite>(parent->device(), "Data/select1.png");
+    back_stage1 = make_unique<Sprite>(parent->device(), "Data/Sprite/select1.png");
+    back_stage2 = make_unique<Sprite>(parent->device(), "Data/Sprite/select2.png");
+    back_stage3 = make_unique<Sprite>(parent->device(), "Data/Sprite/select3.png");
+    back_stage4 = make_unique<Sprite>(parent->device(), "Data/Sprite/select4.png");
+    back_stage0 = make_unique<Sprite>(parent->device(), "Data/Sprite/select1.png");
    
-    icon = make_unique<Sprite>(parent->device(), "Data/team1_flower_90×90.png");
+    icon = make_unique<Sprite>(parent->device(), "Data/Sprite/team1_flower_90×90.png");
 
-    start = make_unique<Sprite>(parent->device(), "Data/ステージセレクト.png");
-    option_start = make_unique<Sprite>(parent->device(), "Data/オプション文字.png");
+    start = make_unique<Sprite>(parent->device(), "Data/Sprite/ステージセレクト.png");
+    option_start = make_unique<Sprite>(parent->device(), "Data/Sprite/オプション文字.png");
 
-    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/タイトル.wav"));
+    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/タイトル.wav"));
     sound->play(true);
    
-    se = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/se_仮.wav"));
+    se = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/se_仮.wav"));
     
 
 

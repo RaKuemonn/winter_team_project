@@ -40,7 +40,7 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     immediate_context = context;
     back = make_unique<Sprite>(device, "./Data/Sprite/オプション.png");
 
-    File_IO::open("save.dat", binary_data);
+    File_IO::open("./Data/Binary/save.dat", binary_data);
 
     bar = make_unique<Sprite>(device, "./Data/Sprite/オプションバー.png");
     icon = make_unique<Sprite>(device, "./Data/Sprite/team1_flower_90×90.png");

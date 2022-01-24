@@ -24,7 +24,6 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam
 extern ImWchar glyphRangesJapanese[];
 #endif
 
-static constexpr int sync_interval = 1;
 extern float fps;
 
 class Framework
@@ -93,7 +92,7 @@ public:
 		ImGui::StyleColorsDark();
 #endif
 
-		while (WM_QUIT != msg.message)
+		while (WM_QUIT != msg.message && !quit)
 		{
 			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 			{
