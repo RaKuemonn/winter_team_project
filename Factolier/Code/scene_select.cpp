@@ -47,6 +47,11 @@ void Scene_Select::initialize(Scene_Manager* parent_)
 
     enter = make_unique<Sprite>(parent->device(), "Data/push the Enter.png");
 
+    key_stage2 = make_unique<Sprite>(parent->device(), "Data/“ì‹ù.png");
+    key_stage3 = make_unique<Sprite>(parent->device(), "Data/“ì‹ù.png");
+    key_stage4 = make_unique<Sprite>(parent->device(), "Data/“ì‹ù.png");
+    key_boss = make_unique<Sprite>(parent->device(), "Data/“ì‹ù.png");
+
    
 }
 
@@ -269,6 +274,39 @@ void Scene_Select::render(float elapsed_time)
         1.0f, 1.0f,     // scal
         192, 192,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
         192, 192,   // size
+        0, 0,         // pibot
+        1, 1, 1, 1,   // rgba
+        0); // angle
+
+    key_stage2->render(device_context_,
+            1360 + position + eas, 444,  //position
+            1.0f, 1.0f,     // scal
+            200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            200, 200,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+    key_stage3->render(device_context_,
+            1860 + position + eas, 444,  //position
+            1.0f, 1.0f,     // scal
+            200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            200, 200,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+    key_stage4->render(device_context_,
+        2360 + position + eas, 444,  //position
+        1.0f, 1.0f,     // scal
+        200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+        200, 200,   // size
+        0, 0,         // pibot
+        1, 1, 1, 1,   // rgba
+        0); // angle
+    key_boss->render(device_context_,
+        2860 + position + eas, 444,  //position
+        1.0f, 1.0f,     // scal
+        200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+        200, 200,   // size
         0, 0,         // pibot
         1, 1, 1, 1,   // rgba
         0); // angle
