@@ -112,7 +112,8 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     const Stage_Select stage_num = parent->option_manager()->get_now_stage();
 #else
     // TODO: debug ステージが固定されている
-    const Stage_Select stage_num = Stage_Select::STAGE_4;
+    const Stage_Select stage_num = parent->option_manager()->get_now_stage();
+    //const Stage_Select stage_num = Stage_Select::STAGE_3;
 #endif
 
     // プレイヤーの位置
@@ -132,6 +133,16 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     
 
     debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_);
+
+    bgm_stage1 = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/select_BGM.wav"));
+
+
+    //switch (parent->option_manager()->get_now_stage())
+    //{
+    //case Stage_Select::STAGE_1:
+    //    bgm_stage1->play(true);
+    //        break;
+    //}
 }
 
 
@@ -144,6 +155,7 @@ void Scene_Game::uninitialize()
 
 void Scene_Game::update(float elapsed_time)
 {
+    bgm_stage1->set_volume(parent->option_manager()->bgm_vo);
     if (parent->input_manager()->TRG(0) & KEY_ESC)
     {
         if (!is_option)

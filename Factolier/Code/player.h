@@ -35,6 +35,8 @@ private:
 
 
 #include "entity.h"
+#include "sound.h"
+
 
 enum class P_Anim
 {
@@ -70,4 +72,5 @@ private:
     std::weak_ptr<Entity> m_wkp_vehicle;
     DirectX::XMFLOAT3 input_direction = {};
 
+    std::unique_ptr<Sound> walk = nullptr;
 };
