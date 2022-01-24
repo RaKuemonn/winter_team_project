@@ -52,6 +52,7 @@ private:
     _NODISCARD bool check_has_vehicle() const;
     void control_vehicle();
     void reference_vehicle_position();
+    void reference_vehicle_vector(const float elapsed_time_);
     void create_vehicle(const float elapsed_time_);
 
 private:

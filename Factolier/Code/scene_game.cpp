@@ -109,7 +109,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     const Stage_Select stage_num = parent->option_manager()->get_now_stage();
 #else
     // TODO: debug ステージが固定されている
-    const Stage_Select stage_num = Stage_Select::STAGE_4;
+    const Stage_Select stage_num = Stage_Select::STAGE_2;
 #endif
 
     // プレイヤーの位置
@@ -237,7 +237,7 @@ void Scene_Game::init_player_position(const Stage_Select stage_, std::weak_ptr<E
 
     case Stage_Select::STAGE_2:
     {
-        player_.lock()->set_position({ -4.5f, 9.0f, 83.0f });
+        player_.lock()->set_position({ -4.5f, 9.0f, -83.0f });
         break;
     }
 
@@ -274,35 +274,35 @@ void Scene_Game::init_stage(const Stage_Select stage_)
     case Stage_Select::STAGE_1:
     {
         stage_spawner->set_stage_1();
-        //sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_2:
     {
         stage_spawner->set_stage_2();
-        //sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_3:
     {
         stage_spawner->set_stage_3();
-        //sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_4:
     {
         stage_spawner->set_stage_4();
-        //sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_BOSS:
     {
         stage_spawner->set_stage_boss();
-        //sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
