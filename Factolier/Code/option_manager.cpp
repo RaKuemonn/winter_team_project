@@ -224,13 +224,26 @@ void Option_Manager::title_update(float elapsedTime, Input_Manager* input_manage
         icon_eas_x += 240;
     }*/
     setvolume(elapsedTime, input_manager);
-
+    // 何割あるかパーセントで出す
+        // 描画範囲　％
+        bgm_move = binary_data.bgm_bar / BAR_MAX;
+    // BGM ボリューム　%
+    bgm_vo = 1 * bgm_move;
+    // SE
+    // やってることはBGMと同じ
+    se_move = binary_data.se_bar / BAR_MAX;
+    se_vo = 1 * se_move;
+    // カメラのバーを動かす処理
+    // BGMと同じ
+    camera_move = binary_data.camera_bar / BAR_MAX;
+    arrow_bgm = bgm_move;
 
 }
 
 void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 {
     icon_select = static_cast<int>(icon_pos);
+    title_icon_select = static_cast<int>(title_icon_pos);
     // アイコンがBGMのところにいたら
 
     //アイコンが移動中でない時
@@ -608,7 +621,7 @@ void Option_Manager::title_render()
 
 
     // 矢印
-    switch (icon_select)
+    switch (title_icon_select)
     {
     case BGM:
         arrow_x = 844;
