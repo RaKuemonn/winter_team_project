@@ -37,5 +37,11 @@ public:
     };
     virtual ~Decorator()override = default;
 
-    void update(const float elapsed_time) override{};
+    void update(const float elapsed_time) override { get_transform()->Update(); };
+
+    Decorator& set_scale(float scale)
+    {
+        get_transform()->set_scale({ scale,scale,scale });
+        return *this;
+    }
 };
