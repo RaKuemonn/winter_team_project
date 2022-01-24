@@ -725,7 +725,6 @@ inline void entity_water(
 void Collision_Manager::judge(const float elapsed_time)
 {
     Entity_Manager& e_manager = Entity_Manager::instance();
-    Stage_Manager& s_manager = Stage_Manager::instance();
 
     const vec_type_short& vec_player_indices   = e_manager.get_entities(Tag::Player);
     const vec_type_short& vec_enemy_indices    = e_manager.get_entities(Tag::Enemy);
@@ -794,7 +793,7 @@ Collision_Manager::Collision_Manager(Stage_Select stage_)
         };
 
         // なにもしない
-        water_movement_function = [&](const vectors&)
+        water_movement_function = [](const vectors&)
         {
             /* nothing */
         };
@@ -849,7 +848,7 @@ Collision_Manager::Collision_Manager(Stage_Select stage_)
         else
         {
             // なにもしない
-            water_movement_function = [&](const vectors&)
+            water_movement_function = [](const vectors&)
             {
                 /* nothing */
             };
