@@ -4,9 +4,9 @@
 #include "transform.h"
 #include "utility.h"
 
-Stage::Stage() : m_transform(new Transform())
+Stage::Stage(const DirectX::XMFLOAT3& position) : m_transform(new Transform())
 {
-    
+    m_transform->set_position(position);
 }
 
 Stage::~Stage()

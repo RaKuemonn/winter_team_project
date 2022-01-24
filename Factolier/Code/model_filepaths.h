@@ -11,6 +11,8 @@ namespace Model_Paths
 //#endif
 
 
+        //inline constexpr char* const player             = "./Data/Model/Player/character.fbx";
+        //inline constexpr char* const player_animation   = "./Data/Model/Player/player_animation.fbx";
         inline constexpr char* const player             = "./Data/Model/Player/player_animation.fbx";
         //inline constexpr char* const player             = test;
         inline constexpr char* const ball               = "./Data/Model/ball.fbx";

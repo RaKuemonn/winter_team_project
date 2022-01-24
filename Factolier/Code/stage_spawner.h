@@ -34,7 +34,7 @@ private:
 
         if constexpr (std::is_base_of<Stage, T>{})
         {
-            stage = std::make_unique<T>(ptr_scene_manager);
+            stage = std::make_unique<T>(ptr_scene_manager, position_);
         }
 
         else
@@ -45,8 +45,6 @@ private:
 
 
         assert(stage.get());
-
-        //stage->set_position(position_);
 
         Stage_Manager::instance().spawn_register(stage);
 
