@@ -14,7 +14,7 @@ Stage_2_Movement::Stage_2_Movement(Scene_Manager* ptr_scene_manager_)
 
     get_transform()->set_scale(stage::scale);
     get_transform()->set_euler(m_euler);
-    get_transform()->set_position({ 0.0f,-3.0f,50.0f });
+    get_transform()->set_position({ 0.0f,10.0f,90.0f });
     get_transform()->Update();
 }
 

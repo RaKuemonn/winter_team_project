@@ -511,6 +511,7 @@ inline void ray_to_floor(
         std::shared_ptr<Entity>     vehicle = e_manager.get_entity(index);
         const DirectX::XMFLOAT3&    scale   = vehicle->get_scale();
         vehicle->set_friction(0.0f);
+        static_cast<Sphere_Vehicle*>(vehicle.get())->set_out_ground();
         result = {};
         if (ray_cast_floor(elapsed_time, vehicle, scale, s_manager, result))
         {
@@ -535,11 +536,12 @@ inline void ray_to_floor(
             vehicle->set_velocity_y(0.0f);
             vehicle->set_friction(friction_ratio);
 
-            if (static_cast<Sphere_Vehicle*>(vehicle.get())->get_on_ground() == false)
-            {
-                // 生成後一度しか呼ばれない ( 以後trueのまま )
-                static_cast<Sphere_Vehicle*>(vehicle.get())->set_on_ground();
-            }
+            static_cast<Sphere_Vehicle*>(vehicle.get())->set_on_ground();
+            //if (static_cast<Sphere_Vehicle*>(vehicle.get())->get_on_ground() == false)
+            //{
+            //    // 生成後一度しか呼ばれない ( 以後trueのまま )
+            //    static_cast<Sphere_Vehicle*>(vehicle.get())->set_on_ground();
+            //}
         }
 
     }
@@ -715,7 +717,7 @@ inline void entity_water(
 
         // 
         DirectX::XMFLOAT3 add_velocity;
-        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 13.0f));
+        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 100.0f));
 
         vehicle->add_velocity(add_velocity);
     }
