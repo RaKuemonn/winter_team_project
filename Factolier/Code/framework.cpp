@@ -8,6 +8,7 @@
 #include "scene_title_game.h"
 
 float fps{ 0 };
+bool quit = false;
 
 bool Framework::initialize()
 {
@@ -66,6 +67,11 @@ void Framework::update(float elapsed_time/*Elapsed seconds from last frame*/)
 #endif
 
 	scene_manager->update(elapsed_time, hwnd);
+
+	if (quit)
+	{
+		DestroyWindow(hwnd);
+	}
 
 #ifdef USE_IMGUI
 	
