@@ -53,6 +53,11 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     key_stage4 = make_unique<Sprite>(parent->device(), "Data/Sprite/“ì‹ù.png");
     key_boss = make_unique<Sprite>(parent->device(), "Data/Sprite/“ì‹ù.png");
 
+    spring = make_unique<Sprite>(dev, "Data/Sprite/select_spring.png");
+    summer = make_unique<Sprite>(dev, "Data/Sprite/select_summer.png");
+    autum = make_unique<Sprite>(dev, "Data/Sprite/select_autumn.png");
+    winter = make_unique<Sprite>(dev, "Data/Sprite/select_winter.png");
+
    
 }
 
@@ -218,16 +223,79 @@ void Scene_Select::render(float elapsed_time)
     parent->state_manager()->setRS(RS::SOLID_NONE);
 
    
-
-    back->render(
+    switch (select_to_stage)
+    {
+    case CAST_I(Stage_Select::STAGE_1):
+    {
+        spring->render(
             device_context_,
             0, 0,  //position
             1, 1,     // scal
-        1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        1920, 1080,   // size
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_2):
+    {
+        summer->render(
+            device_context_,
+            0, 0,  //position
+            1, 1,     // scal
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_3):
+    {
+        autum->render(
+            device_context_,
+            0, 0,  //position
+            1, 1,     // scal
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_4):
+    {
+        winter->render(
+            device_context_,
+            0, 0,  //position
+            1, 1,     // scal
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_BOSS):
+    {
+        back->render(
+            device_context_,
+            0, 0,  //position
+            1, 1,     // scal
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+        break;
+    }
+
+    }
 
 
     choice->render(device_context_,
