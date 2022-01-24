@@ -4,7 +4,7 @@
 #include "transform.h"
 #include "model_filepaths.h"
 
-Stage_4::Stage_4(Scene_Manager* ptr_scene_manager_)
+Stage_4::Stage_4(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position) : Stage(position)
 {
     load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::stage_4, true));
 

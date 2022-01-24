@@ -46,8 +46,6 @@ private:
 
         assert(stage.get());
 
-        //stage->set_position(position_);
-
         Stage_Manager::instance().spawn_register(stage);
 
         return *this;

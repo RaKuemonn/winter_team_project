@@ -4,7 +4,7 @@
 class Stage_2_Movement :  public Stage
 {
 public:
-    Stage_2_Movement(class Scene_Manager* ptr_scene_manager_);
+    Stage_2_Movement(class Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position = {});
     ~Stage_2_Movement()override = default;
 
     void update(const float elapsed_time)                                                                   override;

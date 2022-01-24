@@ -8,7 +8,7 @@
 #include "model_filepaths.h"
 
 
-Stage_2_Movement::Stage_2_Movement(Scene_Manager* ptr_scene_manager_)
+Stage_2_Movement::Stage_2_Movement(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position) : Stage(position)
 {
     load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Stage::stage_2_propeller, true));
 

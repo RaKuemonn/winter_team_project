@@ -21,7 +21,7 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
     }
 
     // TODO: debug
-#ifdef _DEBUG
+#ifdef NDEBUG
     if (input_manager->STATE(0) & PAD_SELECT || input_manager->TRG_RELEASE(0) & PAD_SELECT)
     {
     }
