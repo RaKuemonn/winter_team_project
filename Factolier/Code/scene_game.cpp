@@ -53,7 +53,7 @@ inline void imgui(bool goal)
         }
     }
 
-    vec = Entity_Manager::instance().get_entities(Tag::Enemy);
+    vec = Entity_Manager::instance().get_entities(Tag::Collide);
     size = static_cast<int>(vec.size());
 
     ImGui::Text("Enemy");
@@ -67,10 +67,10 @@ inline void imgui(bool goal)
         {
             DirectX::XMFLOAT3 pos = entity->get_position();
             ImGui::InputFloat3("position", &pos.x);
-            DirectX::XMFLOAT3 velo = entity->get_velocity();
-            ImGui::InputFloat3("velocity", &velo.x);
-            float velo_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&velo)));
-            ImGui::InputFloat("velocity_length", &velo_length);
+            //DirectX::XMFLOAT3 velo = entity->get_velocity();
+            //ImGui::InputFloat3("velocity", &velo.x);
+            //float velo_length = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMLoadFloat3(&velo)));
+            //ImGui::InputFloat("velocity_length", &velo_length);
 
         }
     }
@@ -127,7 +127,8 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     clear_judge = std::make_unique<Clear_Judge>(stage_num, player->get_position(), ptr_boss_hp);
     camera_controller = std::make_unique<Camera_Controller>(&player->get_position());
 
-    sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/cubemap_batch.dds");
+    // TODO: debug
+    //sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
 
     debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_);
 }
@@ -147,7 +148,7 @@ void Scene_Game::update(float elapsed_time)
     Entity_Manager::instance().update(elapsed_time);
 
 
-    camera_controller->update(parent->device_context(),parent->input_manager(),elapsed_time);
+    camera_controller->update(parent->device_context(), parent->input_manager(), parent->option_manager(), elapsed_time);
 
     collision_manager->judge(elapsed_time);
 
@@ -203,7 +204,8 @@ void Scene_Game::render(float elapsed_time)
 
         shader->begin(parent->device_context());
 
-        sky_box->render(parent->device_context());
+        // TODO: debug
+        //sky_box->render(parent->device_context());
 
         shader->end(parent->device_context());
     }
@@ -272,30 +274,35 @@ void Scene_Game::init_stage(const Stage_Select stage_)
     case Stage_Select::STAGE_1:
     {
         stage_spawner->set_stage_1();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_2:
     {
         stage_spawner->set_stage_2();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_3:
     {
         stage_spawner->set_stage_3();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_4:
     {
         stage_spawner->set_stage_4();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 
     case Stage_Select::STAGE_BOSS:
     {
         stage_spawner->set_stage_boss();
+        sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/Sky_Box/stage_4.dds");
         break;
     }
 

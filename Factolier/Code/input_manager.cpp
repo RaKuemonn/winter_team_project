@@ -19,17 +19,11 @@ PadAssign keyAssign00[] = {
     { PAD_TRG1      , Keyboard::N },            // 'N'
     { PAD_TRG2      , Keyboard::M },            // 'M'
 
-    //{ PAD_TRG4      , 'V' },                    // 'V'
-
-    //{ PAD_L1        , Keyboard::Space },        // VK_SPACE
     { KEY_SPACE        , Keyboard::Space },     // VK_SPACE
-    //{ PAD_R1        , Keyboard::C },            // 
-    //{ PAD_R2        , Keyboard::S },            // 
-    //{ PAD_L3        , Keyboard::D },            // 
-
+    { KEY_ESC          , Keyboard::Escape },    // VK_SPACE
+    
     { MOUSE_LEFT    , VK_LBUTTON },              // マウス左ボタン
-    //{ PAD_TRG4     , VK_RBUTTON },              // マウス右ボタン
-    //{ PAD_R3       , VK_MBUTTON },              // マウス中ボタン
+
 
     { 0x00, 0x00 }                              // 終了コード
 };

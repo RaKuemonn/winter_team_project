@@ -16,4 +16,7 @@ public:
 struct Binary_Data
 {
     bool clear_flag[4]{ false, false, false, false };
+    float bgm_bar = 126.0f;
+    float se_bar = 126.0f;
+    float camera_bar = 252.0f;
 };

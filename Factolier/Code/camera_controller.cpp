@@ -5,8 +5,10 @@
 #include "easing.h"
 
 //�X�V����
-void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_manager, float elapsed_time)
+void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_manager, Option_Manager* option_manager, float elapsed_time)
 {
+    sens = option_manager->camera_move * CAMERA_MAX;
+
     if (input_manager->TRG_RELEASE(0) & PAD_SELECT)
     {
         bool i = SetCursorPos(static_cast<int>(SCREEN_WIDTH / 2), static_cast<int>(SCREEN_HEIGHT / 2));
@@ -155,22 +157,22 @@ void Camera_Controller::update(ID3D11DeviceContext* dc, Input_Manager* input_man
 
     if (GetAsyncKeyState('I'))//if (input_manager->STATE(0) & PAD_UP)
     {
-        angle.x += 1.0f * elapsed_time;
+        angle.x += 1.0f * elapsed_time * sens;
     }
 
     if (GetAsyncKeyState('K'))//if (input_manager->STATE(0) & PAD_DOWN)
     {
-        angle.x -= 1.0f * elapsed_time;
+        angle.x -= 1.0f * elapsed_time * sens;
     }
 
     if (GetAsyncKeyState('J'))//if (input_manager->STATE(0) & PAD_LEFT)
     {
-        angle.y += 1.0f * elapsed_time;
+        angle.y += 1.0f * elapsed_time * sens;
     }
 
     if (GetAsyncKeyState('L'))//if (input_manager->STATE(0) & PAD_RIGHT)
     {
-        angle.y -= 1.0f * elapsed_time;
+        angle.y -= 1.0f * elapsed_time * sens;
     }
 
 

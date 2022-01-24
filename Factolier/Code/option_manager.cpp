@@ -29,6 +29,7 @@ void Option_Manager::DrawDebugGUI()
             ImGui::InputFloat("bgm_vo", &bgm_vo);
             ImGui::InputFloat("bgm_move", &bgm_move);
             ImGui::InputFloat("arrow_move", &arrow_move);
+            ImGui::InputFloat("camera_move", &camera_move);
         }
     }
     ImGui::End();
@@ -47,6 +48,20 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     icon = make_unique<Sprite>(device, "./Data/Sprite/team1_flower_90×90.png");
     arrow = make_unique<Sprite>(device, "./Data/Sprite/バー矢印(38,164).png");
     option_bakc = make_unique<Sprite>(device, "./Data/Sprite/option_4仮.png");
+
+
+    // 何割あるかパーセントで出す
+    // 描画範囲　％
+    bgm_move = binary_data.bgm_bar / BAR_MAX;
+    // BGM ボリューム　%
+    bgm_vo = 1 * bgm_move;
+    // SE
+    // やってることはBGMと同じ
+    se_move = binary_data.se_bar / BAR_MAX;
+    se_vo = 1 * se_move;
+    // カメラのバーを動かす処理
+    // BGMと同じ
+    camera_move = binary_data.camera_bar / BAR_MAX;
 }
 
 
@@ -112,89 +127,96 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
     icon_select = static_cast<int>(icon_pos);
     // アイコンがBGMのところにいたら
 
-    switch (icon_select)
+    //アイコンが移動中でない時
+    if (!up_flag && !down_flag)
     {
-    case BGM:
-        if (bgm_bar >= BAR_MIN && bgm_bar <= BAR_MAX)
+        //ゲージ処理
+        switch (icon_select)
         {
-            if (input_manager->STATE(0) & PAD_RIGHT)
+        case BGM:
+            if (binary_data.bgm_bar >= BAR_MIN && binary_data.bgm_bar <= BAR_MAX)
             {
-                bgm_bar += 4;
-            }
+                if (input_manager->STATE(0) & PAD_RIGHT)
+                {
+                    binary_data.bgm_bar += 4;
+                }
 
-            if (input_manager->STATE(0) & PAD_LEFT)
-            {
-                bgm_bar -= 4;
+                if (input_manager->STATE(0) & PAD_LEFT)
+                {
+                    binary_data.bgm_bar -= 4;
+                }
             }
-        }
-        if (bgm_bar <= BAR_MIN)
-        {
-            bgm_bar = BAR_MIN;
-        }
-        if (bgm_bar >= BAR_MAX)
-        {
-            bgm_bar = BAR_MAX;
-        }
-        break;
+            if (binary_data.bgm_bar <= BAR_MIN)
+            {
+                binary_data.bgm_bar = BAR_MIN;
+            }
+            if (binary_data.bgm_bar >= BAR_MAX)
+            {
+                binary_data.bgm_bar = BAR_MAX;
+            }
+            break;
 
-    case SE:
-        if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
-        {
-            if (input_manager->STATE(0) & PAD_RIGHT)
+        case SE:
+            if (binary_data.se_bar >= BAR_MIN && binary_data.se_bar <= BAR_MAX)
             {
-                se_bar += 4;
-            }
+                if (input_manager->STATE(0) & PAD_RIGHT)
+                {
+                    binary_data.se_bar += 4;
+                }
 
-            if (input_manager->STATE(0) & PAD_LEFT)
-            {
-                se_bar -= 4;
+                if (input_manager->STATE(0) & PAD_LEFT)
+                {
+                    binary_data.se_bar -= 4;
+                }
             }
-        }
-        if (se_bar <= BAR_MIN)
-        {
-            se_bar = BAR_MIN;
-        }
-        if (se_bar >= BAR_MAX)
-        {
-            se_bar = BAR_MAX;
-        }
-        break;
+            if (binary_data.se_bar <= BAR_MIN)
+            {
+                binary_data.se_bar = BAR_MIN;
+            }
+            if (binary_data.se_bar >= BAR_MAX)
+            {
+                binary_data.se_bar = BAR_MAX;
+            }
+            break;
 
-    case CAMERA:
-        if (se_bar >= BAR_MIN && se_bar <= BAR_MAX)
-        {
-            if (input_manager->STATE(0) & PAD_RIGHT)
+        case CAMERA:
+            if (binary_data.camera_bar >= BAR_MIN && binary_data.camera_bar <= BAR_MAX)
             {
-                camera_bar += 4;
-            }
+                if (input_manager->STATE(0) & PAD_RIGHT)
+                {
+                    binary_data.camera_bar += 4;
+                }
 
-            if (input_manager->STATE(0) & PAD_LEFT)
-            {
-                camera_bar -= 4;
+                if (input_manager->STATE(0) & PAD_LEFT)
+                {
+                    binary_data.camera_bar -= 4;
+                }
             }
+            if (binary_data.camera_bar <= BAR_MIN)
+            {
+                binary_data.camera_bar = BAR_MIN;
+            }
+            if (binary_data.camera_bar >= BAR_MAX)
+            {
+                binary_data.camera_bar = BAR_MAX;
+            }
+            break;
         }
-        if (camera_bar <= BAR_MIN)
-        {
-            camera_bar = BAR_MIN;
-        }
-        if (camera_bar >= BAR_MAX)
-        {
-            camera_bar = BAR_MAX;
-        }
-        break;
     }
+
+    
     // 何割あるかパーセントで出す
     // 描画範囲　％
-    bgm_move = bgm_bar / BAR_MAX;
+    bgm_move = binary_data.bgm_bar / BAR_MAX;
     // BGM ボリューム　%
     bgm_vo = 1 * bgm_move;
     // SE
     // やってることはBGMと同じ
-    se_move = se_bar / BAR_MAX;
+    se_move = binary_data.se_bar / BAR_MAX;
     se_vo = 1 * se_move;
     // カメラのバーを動かす処理
     // BGMと同じ
-    camera_move = camera_bar / BAR_MAX;
+    camera_move = binary_data.camera_bar / BAR_MAX;
     // 矢印
     arrow_bgm = bgm_move * 504;
     arrow_se = se_move * 504;

@@ -15,11 +15,11 @@ public:
     _NODISCARD short* get_ptr_hp() { return &m_hp; }
 
     // Setterä÷êî
-    void set_init(const short& hp_)
+    void set_init(const short hp_)
     {
         m_hp = hp_;
     }
-    void add_hp(const short& hp_) { m_hp += hp_; }
+    void add_hp(const short hp_) { m_hp += hp_; }
 
 private:
     short m_hp = 0;

@@ -8,6 +8,10 @@
 
 
 
+#define CAMERA_MAX 2.0f
+
+
+
 enum class Stage_Select
 {
     STAGE_1 = 0,
@@ -37,14 +41,14 @@ public:
 
 public:
     float bgm_vo = 0;         // BGMのボリューム 1~0の間で替ええってくる
-    float bgm_bar = 126;      // BGMのボリュームバーの中身をどれくらい表示させるか
+    //float bgm_bar = 126;      // BGMのボリュームバーの中身をどれくらい表示させるか
     float bgm_move = 0;       // BGMのボリュームバーの中身の描画が全体の何パーセントか
     
     float se_vo = 0;          // SEのボリューム 1~0の間で替ええってくる
-    float se_bar = 126;       // SEのボリュームバーの中身をどれくらい表示させるか
+    //float se_bar = 126;       // SEのボリュームバーの中身をどれくらい表示させるか
     float se_move = 0;        // SEのボリュームバーの中身の描画が全体の何パーセントか
     
-    float camera_bar = 252;     // カメラ感度バーの中身をどれくらい表示させるか
+    //float camera_bar = 252;     // カメラ感度バーの中身をどれくらい表示させるか
     float camera_move = 0;    // カメラ感度バーの中身の描画が全体の何パーセントか
 
     float icon_eas = 0;     // アイコンの移動距離
