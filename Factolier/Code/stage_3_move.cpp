@@ -61,7 +61,7 @@ void Stage_3_Move::update(const float elapsed_time)
         move_speed = -move_speed;
     }*/
 
-    DirectX::XMFLOAT3 position;
+    //DirectX::XMFLOAT3 position;
     DirectX::XMStoreFloat3(&position, DirectX::XMVectorLerp(Start, End, move_rate_));
     get_transform()->set_position(position);
 

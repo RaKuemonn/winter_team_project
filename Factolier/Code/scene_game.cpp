@@ -384,7 +384,7 @@ bool Scene_Game::judge_clear()
     {
     case CAST_I(Stage_Select::STAGE_1):
     {
-        opm->get_binary().clear_flag[CAST_I(opm->get_now_stage())] = true;
+        opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_1)] = true;
         break;
     }
 

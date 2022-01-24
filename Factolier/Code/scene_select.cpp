@@ -354,7 +354,7 @@ void Scene_Select::render(float elapsed_time)
 
     //Œ®‚Ì•`‰æ
     Option_Manager* opm = parent->option_manager();
-    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_2)])
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_2) - 1])
     {
         key_stage2->render(device_context_,
             1360 + position + eas, 444,  //position
@@ -366,7 +366,7 @@ void Scene_Select::render(float elapsed_time)
             0); // angle
     }
 
-    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_3)])
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_3) - 1])
     {
         key_stage3->render(device_context_,
             1860 + position + eas, 444,  //position
@@ -378,7 +378,7 @@ void Scene_Select::render(float elapsed_time)
             0); // angle
     }
 
-    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_4)])
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_4) - 1])
     {
         key_stage4->render(device_context_,
             2360 + position + eas, 444,  //position
@@ -390,7 +390,7 @@ void Scene_Select::render(float elapsed_time)
             0); // angle
     }
 
-    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_BOSS)])
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_BOSS) - 1])
     {
         key_boss->render(device_context_,
             2860 + position + eas, 444,  //position
