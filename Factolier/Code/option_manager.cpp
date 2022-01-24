@@ -73,10 +73,8 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
 
 void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
 {
-    if (icon_pos_x >= 480)
-    {
-        icon_pos_x = 240;
-    }
+    
+    //if(icon_eas_x)
     slideshow(elapsedTime);
     if (icon_pos > 0 && down_flag == false)
     {
@@ -171,6 +169,7 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
 
 void Option_Manager::title_update(float elapsedTime, Input_Manager* input_manager)
 {
+    icon_eas_x = 0;
     if (icon_pos >= 480)
     {
         icon_pos = 360;
