@@ -500,7 +500,7 @@ void Option_Manager::game_render()
         0, 0,
         1, 1, 1, 1,
         0);
-    DrawDebugGUI();
+    //DrawDebugGUI();
 }
 
 
@@ -635,5 +635,5 @@ void Option_Manager::title_render()
         1, 1, 1, 1,
         0);
     
-    DrawDebugGUI();
+    //DrawDebugGUI();
 }

@@ -4,6 +4,8 @@
 #include "scene_title_game.h"
 #include "easing.h"
 #include "scene_loading.h"
+#include "scene_game.h"
+//#include "option_manager.h"
 
 // デバッグ用GUI描画
 void Scene_Select::DrawDebugGUI()
@@ -62,6 +64,9 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/select_BGM.wav"));
     sound->play(true);
     crick = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/crick.wav"));
+    sound->set_volume(parent->option_manager()->bgm_vo);
+    crick->set_volume(parent->option_manager()->se_vo);
+   
 }
 
 void Scene_Select::uninitialize()
@@ -196,7 +201,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
 
                 }
 
-                parent->change_scene(new Scene_Title_Game);
+                parent->change_scene(new Scene_Game);
             }
         }
     
@@ -397,6 +402,6 @@ void Scene_Select::render(float elapsed_time)
   
 
 
-    DrawDebugGUI();
+   // DrawDebugGUI();
 
 }

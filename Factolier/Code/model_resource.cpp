@@ -27,7 +27,7 @@ Model_Resource::Model_Resource(ID3D11Device* device, const char* fbx_filename, b
 
     else
     {
-        //マネージャー作成
+        //マネージャー作成aaa
         FbxManager* fbx_manager{ FbxManager::Create() };
         FbxScene* fbx_scene{ FbxScene::Create(fbx_manager, "") };
 
