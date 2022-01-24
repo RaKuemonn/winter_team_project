@@ -81,6 +81,7 @@ private:
 
 	std::unique_ptr<Sound> sound = nullptr;
 	std::unique_ptr<Sound> se = nullptr;
+	std::unique_ptr<Sound> cusor = nullptr;
 
 
 };

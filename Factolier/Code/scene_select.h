@@ -64,6 +64,8 @@ private:
 	std::unique_ptr<Sprite> autum = nullptr;
 	std::unique_ptr<Sprite> winter = nullptr;
 
-	
+	std::unique_ptr<Sound> sound = nullptr;
+	std::unique_ptr<Sound> crick = nullptr;
+
 
 };

@@ -59,10 +59,11 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     option_start = make_unique<Sprite>(parent->device(), "Data/Sprite/オプション文字.png");
     exit = make_unique<Sprite>(parent->device(), "Data/Sprite/おわる.png");
 
-    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/タイトル.wav"));
+    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/titlr_bgm.wav"));
     sound->play(true);
    
     se = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/se_仮.wav"));
+    cusor = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/cusor.wav"));
     
 
 
@@ -100,6 +101,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             if (input_manager->TRG(0) & PAD_UP)
             {
                 icon_up_flag = true;
+                cusor->play(false);
             }
             if (icon_up_flag)
             {
@@ -124,6 +126,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             if (input_manager->TRG(0) & PAD_DOWN)
             {
                 icon_down_flag = true;
+                cusor->play(false);
             }
             if (icon_down_flag)
             {
@@ -238,12 +241,12 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
     //sound->pause();
     parent->option_manager()->title_update(elapsedTime, input_manager);
     sound->set_volume(parent->option_manager()->bgm_vo);
-    se->set_volume(parent->option_manager()->se_vo);
+    cusor->set_volume(parent->option_manager()->se_vo);
 
     if (parent->option_manager()->down_flag ||
         parent->option_manager()->up_flag)
     {
-        se->play(false);
+        cusor->play(false);
     }
 
     if (input_manager->TRG(0) & PAD_START)
