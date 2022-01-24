@@ -5,10 +5,7 @@
 #include "easing.h"
 #include "scene_loading.h"
 #include "scene_game.h"
-<<<<<<< HEAD
 //#include "option_manager.h"
-=======
->>>>>>> c4b11284a633e6fd0e1333b1f1adaa1dd4cf57b2
 
 // デバッグ用GUI描画
 void Scene_Select::DrawDebugGUI()
@@ -79,11 +76,9 @@ void Scene_Select::uninitialize()
 
 
 void Scene_Select::update(float elapsed_time)
-{
-<<<<<<< HEAD
-    
-   move(elapsed_time, parent->input_manager());
-=======
+{    
+  // move(elapsed_time, parent->input_manager());
+
     if (parent->input_manager()->TRG(0) & KEY_ESC)
     {
         parent->change_scene(new Scene_Loading(new Scene_Title_Game));
@@ -91,7 +86,6 @@ void Scene_Select::update(float elapsed_time)
     }
 
     move(elapsed_time, parent->input_manager());
->>>>>>> c4b11284a633e6fd0e1333b1f1adaa1dd4cf57b2
 }
 
 void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
@@ -218,11 +212,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                 }
 
                 }
-<<<<<<< HEAD
 
-                parent->change_scene(new Scene_Game);
-=======
->>>>>>> c4b11284a633e6fd0e1333b1f1adaa1dd4cf57b2
             }
         }
     
