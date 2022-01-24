@@ -360,10 +360,10 @@
     <ClCompile Include="Factolier\Code\stage_4_movement.cpp">
       <Filter>Factolier\Stage\stage_4</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\stage_4_obj.cpp">
+    <ClCompile Include="Factolier\Code\stage_4_goal.cpp">
       <Filter>Factolier\Stage\stage_4</Filter>
     </ClCompile>
-    <ClCompile Include="Factolier\Code\stage_3_obj.cpp">
+    <ClCompile Include="Factolier\Code\stage_3_goal.cpp">
       <Filter>Factolier\Stage\stage_3</Filter>
     </ClCompile>
     <ClCompile Include="Factolier\Code\enemy_spring.cpp">
@@ -683,10 +683,10 @@
     <ClInclude Include="Factolier\Code\stage_4_movement.h">
       <Filter>Factolier\Stage\stage_4</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\stage_3_obj.h">
+    <ClInclude Include="Factolier\Code\stage_3_goal.h">
       <Filter>Factolier\Stage\stage_3</Filter>
     </ClInclude>
-    <ClInclude Include="Factolier\Code\stage_4_obj.h">
+    <ClInclude Include="Factolier\Code\stage_4_goal.h">
       <Filter>Factolier\Stage\stage_4</Filter>
     </ClInclude>
     <ClInclude Include="Factolier\Code\enemy_spring.h">

@@ -27,14 +27,14 @@ public:
 
 private:
     template<typename T>
-    Stage_Spawner& set_stage(const DirectX::XMFLOAT3 & position_ = {})
+    std::shared_ptr<T> set_stage(const DirectX::XMFLOAT3 & position_ = {})
     {
 
-        std::unique_ptr<Stage> stage;
+        std::shared_ptr<T> stage;
 
         if constexpr (std::is_base_of<Stage, T>{})
         {
-            stage = std::make_unique<T>(ptr_scene_manager, position_);
+            stage = std::make_shared<T>(ptr_scene_manager, position_);
         }
 
         else
@@ -46,9 +46,11 @@ private:
 
         assert(stage.get());
 
-        Stage_Manager::instance().spawn_register(stage);
+        std::shared_ptr<Stage> s_stage = stage;
 
-        return *this;
+        Stage_Manager::instance().spawn_register(s_stage);
+
+        return stage;
     }
 
 

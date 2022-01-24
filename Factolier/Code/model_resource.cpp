@@ -341,7 +341,6 @@ void Model_Resource::fetch_meshes(FbxScene* fbx_scene, const char* filename)
             }
         }
     }
-
 }
 
 
