@@ -30,8 +30,8 @@ bool Framework::initialize()
 
 	//scene_manager->change_scene(new Scene_Game);
 
-	//scene_manager->change_scene(new Scene_Loading(new Scene_Game));
-	scene_manager->change_scene(new Scene_Loading(new Scene_Title_Game));
+	scene_manager->change_scene(new Scene_Loading(new Scene_Game));
+	//scene_manager->change_scene(new Scene_Loading(new Scene_Title_Game));
 	//scene_manager->change_scene(new Scene_Title_Game);
 
 	
@@ -99,13 +99,6 @@ void Framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 		{ -1, 0, 0, 0, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1 },	// 2:RHS Z-UP
 		{ 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1 },		// 3:LHS Z-UP
 	};
-
-
-	ImGui::Begin("framework");
-
-	ImGui::InputFloat("fps", &fps);
-
-	ImGui::End();
 
 
 	scene_manager->render(elapsed_time);

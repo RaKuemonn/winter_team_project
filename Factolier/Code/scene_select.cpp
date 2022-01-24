@@ -4,6 +4,7 @@
 #include "scene_title_game.h"
 #include "easing.h"
 #include "scene_loading.h"
+#include "scene_game.h"
 
 // デバッグ用GUI描画
 void Scene_Select::DrawDebugGUI()
@@ -72,12 +73,13 @@ void Scene_Select::uninitialize()
 
 void Scene_Select::update(float elapsed_time)
 {
-    move(elapsed_time, parent->input_manager());
-
     if (parent->input_manager()->TRG(0) & KEY_ESC)
     {
         parent->change_scene(new Scene_Loading(new Scene_Title_Game));
+        return;
     }
+
+    move(elapsed_time, parent->input_manager());
 }
 
 void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
@@ -155,6 +157,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                 case CAST_I(Stage_Select::STAGE_1):
                 {
                     opm->set_next_stage(Stage_Select::STAGE_1);
+                    parent->change_scene(new Scene_Loading(new Scene_Game));
                     break;
                 }
 
@@ -164,6 +167,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                     if (opm->get_binary().clear_flag[select_to_stage - 1])
                     {
                         opm->set_next_stage(Stage_Select::STAGE_2);
+                        parent->change_scene(new Scene_Loading(new Scene_Game));
                     }
                     break;
                 }
@@ -174,6 +178,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                     if (opm->get_binary().clear_flag[select_to_stage - 1])
                     {
                         opm->set_next_stage(Stage_Select::STAGE_3);
+                        parent->change_scene(new Scene_Loading(new Scene_Game));
                     }
                     break;
                 }
@@ -184,6 +189,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                     if (opm->get_binary().clear_flag[select_to_stage - 1])
                     {
                         opm->set_next_stage(Stage_Select::STAGE_4);
+                        parent->change_scene(new Scene_Loading(new Scene_Game));
                     }
                     break;
                 }
@@ -194,13 +200,12 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
                     if (opm->get_binary().clear_flag[select_to_stage - 1])
                     {
                         opm->set_next_stage(Stage_Select::STAGE_BOSS);
+                        parent->change_scene(new Scene_Loading(new Scene_Game));
                     }
                     break;
                 }
 
                 }
-
-                //parent->change_scene(new Scene_Game);
             }
         }
     
