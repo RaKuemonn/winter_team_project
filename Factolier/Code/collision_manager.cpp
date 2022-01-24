@@ -389,18 +389,35 @@ namespace local_functions
         const Tag a_tag = entity_a_.lock()->get_tag();
         const Tag b_tag = entity_b_.lock()->get_tag();
 
-        constexpr DirectX::XMFLOAT3 decrease_scale = { 0.01f,0.01f,0.01f };
+        constexpr DirectX::XMFLOAT3 decrease_scale = { 0.0001f,0.0001f,0.0001f };
+
+        const DirectX::XMVECTOR vec = DirectX::XMVectorSubtract(DirectX::XMLoadFloat3(&entity_b_.lock()->get_position()), DirectX::XMLoadFloat3(&entity_a_.lock()->get_position()));
+        const DirectX::XMVECTOR dir = DirectX::XMVector3Normalize(DirectX::XMVectorAdd(vec,DirectX::XMVectorSet(0.0f,2.0f,0.0f,1.0f)));
+        const DirectX::XMVECTOR inv_dir = DirectX::XMVectorScale(DirectX::XMVector3Normalize(DirectX::XMVectorAdd(vec, DirectX::XMVectorSet(0.0f, 2.0f, 0.0f, 1.0f))), -1.0f);
+        DirectX::XMFLOAT3 vecto;
+        
+
+
 
         if (a_tag == Tag::Vehicle)
         {
             DirectX::XMFLOAT3 scale = entity_a_.lock()->get_scale();
             entity_a_.lock().get()->set_scale(scale - decrease_scale);
+
+            DirectX::XMStoreFloat3(&vecto, dir);
+
+            entity_a_.lock().get()->add_velocity(vecto);
         }
 
         if (b_tag == Tag::Vehicle)
         {
             DirectX::XMFLOAT3 scale = entity_b_.lock()->get_scale();
             entity_b_.lock().get()->set_scale(scale - decrease_scale);
+
+            DirectX::XMStoreFloat3(&vecto, inv_dir);
+
+            entity_b_.lock().get()->add_velocity(vecto);
+
         }
     }
 
@@ -456,6 +473,7 @@ namespace local_functions
                     : /* nothing */0;
             };
         }
+
 
         // Tag::Collide以外
         return [](
