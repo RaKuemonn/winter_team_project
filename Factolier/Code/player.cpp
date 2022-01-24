@@ -81,7 +81,7 @@ void Player::render()
 #include "model_filepaths.h"
 
 
-inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
+inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_, P_Anim& anim, bool animetion_playing_)
 {
     input_direction_ = {};
 
@@ -109,7 +109,28 @@ inline void input(DirectX::XMFLOAT3& input_direction_, Input_Manager& input_)
     if (input_.TRG(0) & KEY_SPACE)
     {
         input_direction_.y += 1.0f;
+        anim = P_Anim::jump;
     }
+
+
+
+    if(input_direction_.x || input_direction_.z )
+    {
+        if (anim != P_Anim::jump || animetion_playing_ == false) // animがJumpでアニメーション中なら切り替えない
+        {
+            anim = P_Anim::move;
+        }
+    }
+    else
+    {
+        if (anim != P_Anim::jump || animetion_playing_ == false) // animがJumpでアニメーション中なら切り替えない
+        {
+            anim = P_Anim::stand;
+        }
+    }
+
+
+    
 
     DirectX::XMFLOAT2 direction = {};
     DirectX::XMStoreFloat2(&direction, DirectX::XMVector2Normalize(DirectX::XMVectorSet(input_direction_.x, input_direction_.z, 0.0f, 0.0f)));
@@ -130,7 +151,7 @@ Player::Player(Scene_Manager* ptr_scene_manager_)
 
     set_tag(Tag::Player);
 
-    constexpr float scale = 0.005f;
+    constexpr float scale = 0.1f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
 }
@@ -143,21 +164,21 @@ void Player::init()
 void Player::update(const float elapsed_time_)
 {
     // 入力値の受け取り
-    input(input_direction, *get_scene_manager()->input_manager());
+    input(input_direction, *get_scene_manager()->input_manager(), anim_num/* ジャンプ, 歩き, 待機 */, get_model()->get_anime_play_flag());
 
     // 乗り物の更新 ・ 位置の更新
-    update_vehicle(elapsed_time_);
-    
+    update_vehicle(elapsed_time_, anim_num);
 
+    
     // 姿勢の更新
     get_transform()->Update();
 
     // モデルの更新
-    get_model()->play_animation(elapsed_time_, 0);
+    get_model()->play_animation(elapsed_time_, CAST_I(anim_num));
 }
 
 
-void Player::update_vehicle(const float elapsed_time_)
+void Player::update_vehicle(const float elapsed_time_, P_Anim& anim_num_)
 {
     //  乗ってる乗り物があるか
     if(check_has_vehicle())
@@ -172,6 +193,8 @@ void Player::update_vehicle(const float elapsed_time_)
                 // 発射する
                 static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
 
+                anim_num_ = P_Anim::attack;
+
                 return;
             }
         }
@@ -179,6 +202,7 @@ void Player::update_vehicle(const float elapsed_time_)
             
         control_vehicle();
         reference_vehicle_position();
+        reference_vehicle_vector(elapsed_time_);
         return;
     }
 
@@ -208,7 +232,39 @@ void Player::reference_vehicle_position()
     DirectX::XMFLOAT3 vehicle_position = m_wkp_vehicle.lock()->get_latest_position();
     vehicle_position.y                += m_wkp_vehicle.lock()->get_scale().y;
 
+
     set_position(vehicle_position);
+
+}
+
+void Player::reference_vehicle_vector(const float elapsed_time_)
+{
+    // 1 frame 遅れている
+    DirectX::XMFLOAT3 velocity = m_wkp_vehicle.lock()->get_velocity();
+    velocity.y = 0.0f;
+
+    const DirectX::XMVECTOR vehicle_move_vec = DirectX::XMLoadFloat3(&velocity);
+
+    const float move_length = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(vehicle_move_vec));
+
+    if (move_length <= FLT_EPSILON)return;
+
+    const DirectX::XMVECTOR vehicle_move_dir    = DirectX::XMVector3Normalize(vehicle_move_vec);
+
+    const DirectX::XMVECTOR axis_z              = DirectX::XMLoadFloat3(&get_axis_z());
+
+    const DirectX::XMVECTOR cross   = DirectX::XMVector3Cross(axis_z, vehicle_move_dir);
+    const float dot                 = DirectX::XMVectorGetX(DirectX::XMVector3Dot(axis_z, vehicle_move_dir));
+
+    if(std::abs(dot) >= 1.0f - FLT_EPSILON)return;
+
+    const float radian = acosf(dot)/*回転量*/ /*回転方向*/ * 3.0f * elapsed_time_/*フレームレート*/;
+
+    //const DirectX::XMVECTOR axis_y = DirectX::XMLoadFloat3(&get_axis_y());
+    DirectX::XMFLOAT4 add_quaternion_;
+    DirectX::XMStoreFloat4(&add_quaternion_, DirectX::XMQuaternionRotationAxis(cross, radian));
+
+    add_quaternion(add_quaternion_);
 
 }
 

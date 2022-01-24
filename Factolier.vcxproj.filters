@@ -345,6 +345,39 @@
     <ClCompile Include="Factolier\Code\stage_boss.cpp">
       <Filter>Factolier\Stage\stage_boss</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_1_obj.cpp">
+      <Filter>Factolier\Stage\stage_1</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_2_obj.cpp">
+      <Filter>Factolier\Stage\stage_2</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_3_move.cpp">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_3_movement.cpp">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_4_movement.cpp">
+      <Filter>Factolier\Stage\stage_4</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_4_obj.cpp">
+      <Filter>Factolier\Stage\stage_4</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\stage_3_obj.cpp">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\enemy_spring.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\enemy_summer.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\enemy_fall.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
+    </ClCompile>
+    <ClCompile Include="Factolier\Code\enemy_winter.cpp">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene_loading.h">
@@ -634,6 +667,39 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\stage_boss.h">
       <Filter>Factolier\Stage\stage_boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_1_obj.h">
+      <Filter>Factolier\Stage\stage_1</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_2_obj.h">
+      <Filter>Factolier\Stage\stage_2</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_3_move.h">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_3_movement.h">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_4_movement.h">
+      <Filter>Factolier\Stage\stage_4</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_3_obj.h">
+      <Filter>Factolier\Stage\stage_3</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\stage_4_obj.h">
+      <Filter>Factolier\Stage\stage_4</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy_spring.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy_summer.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy_fall.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\enemy_winter.h">
+      <Filter>Factolier\Entity\Enemy\Eneies\Weak</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

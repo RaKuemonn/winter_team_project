@@ -9,6 +9,7 @@
 #include "player.h"
 #include "enemy_move_closer.h"
 #include "enemy_move_closer_.h"
+#include "enemy_spring.h"
 #include "camera_controller.h"
 #include "imgui.h"
 #include "utility.h"
@@ -109,7 +110,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     const Stage_Select stage_num = parent->option_manager()->get_now_stage();
 #else
     // TODO: debug ステージが固定されている
-    const Stage_Select stage_num = Stage_Select::STAGE_BOSS;
+    const Stage_Select stage_num = Stage_Select::STAGE_1;
 #endif
 
     // プレイヤーの位置
@@ -198,14 +199,14 @@ void Scene_Game::render(float elapsed_time)
 
     parent->state_manager()->setDS(DS::OFF_OFF);
 
-    //�X�J�C�{�b�N�X�`��
+    //
     {
         shader = parent->shader_manager()->get_shader(Shaders::SKY);
 
         shader->begin(parent->device_context());
 
         // TODO: debug
-        //sky_box->render(parent->device_context());
+        sky_box->render(parent->device_context());
 
         shader->end(parent->device_context());
     }
@@ -237,19 +238,19 @@ void Scene_Game::init_player_position(const Stage_Select stage_, std::weak_ptr<E
 
     case Stage_Select::STAGE_2:
     {
-        player_.lock()->set_position({});
+        player_.lock()->set_position({ -4.5f, 9.0f, -83.0f });
         break;
     }
 
     case Stage_Select::STAGE_3:
     {
-        player_.lock()->set_position({});
+        player_.lock()->set_position({ 0.0f, -8.5f, -144.0f });
         break;
     }
 
     case Stage_Select::STAGE_4:
     {
-        player_.lock()->set_position({});
+        player_.lock()->set_position({ 0.0f, -8.2f, -128.0f });
         break;
     }
 
@@ -322,7 +323,8 @@ short* Scene_Game::init_enemy(const Stage_Select stage_, const DirectX::XMFLOAT3
 
     // TODO: debug 敵の動作確認
     //ptr_boss_hp = enemy_spawner->set_enemy<Boss>(player->get_position())->get_ability().get_ptr_hp();
-    enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, target_position);
+    //enemy_spawner->set_enemy<Enemy_Move_Closer_>({ 0.0f,5.0f,-120.0f }, target_position);
+    //enemy_spawner->set_enemy<Enemy_Spring>({ 0.0f,5.0f,-120.0f }, target_position);
 
 
     switch (stage_)

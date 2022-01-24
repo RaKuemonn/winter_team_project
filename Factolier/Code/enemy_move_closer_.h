@@ -6,13 +6,13 @@
 #include "base_move_phase.h"
 
 
-class Enemy_Move_Closer_ final : public Enemy
+class Enemy_Move_Closer_ : public Enemy
 {
 public:
-    Enemy_Move_Closer_(class Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_);
+    Enemy_Move_Closer_(class Scene_Manager* ptr_scene_manager_, const char* filename_, const DirectX::XMFLOAT3& target_position_);
     ~Enemy_Move_Closer_()override = default;
 
-    void init() override {};
+    virtual void init() override = 0;
     void update(const float elapsed_time_) override;
 
 private:

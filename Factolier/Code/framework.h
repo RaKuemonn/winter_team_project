@@ -104,12 +104,14 @@ public:
 				tictoc.tick();
 				calculate_frame_stats();
 
-				constexpr float fps_60 = static_cast<float>(sync_interval) / 60.0f;
+				//constexpr float fps_60 = static_cast<float>(sync_interval) / 60.0f;
+				//
+				//const float elapsed_time = sync_interval == 0
+				//	? tictoc.time_interval()
+				//	: fps_60
+				//	;
 
-				const float elapsed_time = sync_interval == 0
-					? tictoc.time_interval()
-					: fps_60
-					; 
+				const float elapsed_time = tictoc.time_interval();
 
 				update(elapsed_time);
 				render(elapsed_time);

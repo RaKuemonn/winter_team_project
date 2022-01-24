@@ -105,9 +105,9 @@ void Boss::init_move()
 
     // e‚Ì‰Šús“®
     m_move_phases->set(m_move_phase[0])
-        .add_transition(m_move_phase[0], m_move_phase[1], [&](float) {return (get_ability().get_hp() <= boss_hp); })
-        .add_transition(m_move_phase[1], m_move_phase[2], [&](float) {return (get_ability().get_hp() <= boss_hp - 1); })
-        .add_transition(m_move_phase[2], m_move_phase[3], [&](float) {return (get_ability().get_hp() <= boss_hp - 2); });
+        .add_transition(m_move_phase[0], m_move_phase[1], [&](float) {return (get_ability().get_hp() < boss_hp); })
+        .add_transition(m_move_phase[1], m_move_phase[2], [&](float) {return (get_ability().get_hp() < boss_hp - 1); })
+        .add_transition(m_move_phase[2], m_move_phase[3], [&](float) {return (get_ability().get_hp() < boss_hp - 2); });
     
 }
 

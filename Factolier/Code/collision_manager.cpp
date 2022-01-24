@@ -477,18 +477,18 @@ inline void ray_to_floor(
 
 
     // プレイヤー
-    for (auto index : std::get<0>(vectors_))
-    {
-        std::shared_ptr<Entity> player = e_manager.get_entity(index);
-        player->set_friction(0.0f);
-
-        if (ray_cast_floor(elapsed_time,player, s_manager, result))
-        {
-            player->set_position(result.position);
-            player->set_velocity_y(0.0f);
-            player->set_friction(friction_ratio);
-        }
-    }
+    //for (auto index : std::get<0>(vectors_))
+    //{
+    //    std::shared_ptr<Entity> player = e_manager.get_entity(index);
+    //    player->set_friction(0.2f);
+    //
+    //    if (ray_cast_floor(elapsed_time,player, s_manager, result))
+    //    {
+    //        player->set_position(result.position);
+    //        player->set_velocity_y(0.0f);
+    //        player->set_friction(friction_ratio);
+    //    }
+    //}
     
     // 敵
     for (auto index : std::get<1>(vectors_))
@@ -510,7 +510,7 @@ inline void ray_to_floor(
     {
         std::shared_ptr<Entity>     vehicle = e_manager.get_entity(index);
         const DirectX::XMFLOAT3&    scale   = vehicle->get_scale();
-        vehicle->set_friction(0.0f);
+        vehicle->set_friction(0.1f);
         static_cast<Sphere_Vehicle*>(vehicle.get())->set_out_ground();
         result = {};
         if (ray_cast_floor(elapsed_time, vehicle, scale, s_manager, result))
@@ -522,7 +522,6 @@ inline void ray_to_floor(
 
 
             result.position.y += scale.y;
-            DirectX::XMFLOAT3 position = vehicle->get_position();
             
             if (result.rotation.y > 0.0f)
             {
@@ -607,6 +606,10 @@ inline void ray_to_wall(
             if (velocity.y < 0.0f)
             {
                 vehicle->set_friction(0.8f);
+            }
+            else
+            {
+                vehicle->set_friction(0.4f);
             }
         }
 

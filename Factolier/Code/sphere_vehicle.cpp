@@ -82,7 +82,7 @@ void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
 
     // TODO: 一時的にコメントアウトしている
     // 一度でも着地していれば　操作を受け付けるようにしている
-    if (m_on_ground == false)return;
+    //if (m_on_ground == false)return;
 
     m_is_jump = static_cast<bool>(direction_.y);
 }
@@ -103,7 +103,7 @@ void Sphere_Vehicle::update_velocity(const float elapsed_time_)
     m_velocity->update(elapsed_time_);
 
 
-    m_velocity->set_y(m_velocity->get().y + static_cast<float>(m_is_jump) * 20.0f);
+    m_velocity->set_y(m_velocity->get().y + static_cast<float>(m_is_jump) * 15.0f);
 
     m_is_jump = false;
 }

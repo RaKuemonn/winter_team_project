@@ -161,6 +161,8 @@ public:
     }
 
     // Getterä÷êî //
+
+    _NODISCARD const auto  get_was_tansition()      const { return m_was_transition; }
     _NODISCARD const auto& get_latest_position()    const { return m_position.get(); }  // ç≈êVÇÃposition
     _NODISCARD const auto& get_position()           const { return m_offset; }
     _NODISCARD const auto& get_scale()              const { return m_latest_scale; }
