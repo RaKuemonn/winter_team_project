@@ -9,6 +9,7 @@
 #include "decotator_supporter.h"
 #include "clear_judge.h"
 #include "sound.h"
+#include "model.h"
 
 
 class Scene_Game : public Scene
@@ -39,6 +40,7 @@ private:
 	std::unique_ptr<class Camera_Controller> camera_controller = nullptr;
 
 	std::unique_ptr<Sprite> clear_back = nullptr;
+	std::unique_ptr<Model> water = nullptr;
 
 	std::unique_ptr<Sound> bgm_stage1 = nullptr;
 	std::unique_ptr<Sound> bgm_stage2 = nullptr;

@@ -109,6 +109,9 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     clear_back = std::make_unique<Sprite>(parent->device(), "./Data/Sprite/clear.png");
 
 
+    water = std::make_unique<Model>(parent->model_manager()->load_model("./Data/Model/water.fbx"));
+
+
 
     // 選ばれているステージ
 #ifdef NDEBUG
@@ -277,6 +280,34 @@ void Scene_Game::render(float elapsed_time)
     Stage_Manager::instance().render(ptr_device_context);
     Entity_Manager::instance().render(ptr_device_context);
     debug_decorator_supporter->render(ptr_device_context);
+
+    shader->end(ptr_device_context);
+
+
+    shader = parent->shader_manager()->get_shader(Shaders::OCEAN);
+
+    parent->state_manager()->setRS(RS::SOLID_NONE);
+
+    shader->begin(ptr_device_context, elapsed_time * 0.1f);
+
+    //行列を作成
+    DirectX::XMFLOAT4X4 world = {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    };
+
+    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(10.0f, 10.0f, 10.0f);
+    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f);
+    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 0.15f, 1.0f);
+    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(0), 0, DirectX::XMConvertToRadians(0));
+    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
+    DirectX::XMMATRIX W = S * R * T;
+
+    DirectX::XMStoreFloat4x4(&world, W);
+
+    water->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.5f });
 
     shader->end(ptr_device_context);
 
