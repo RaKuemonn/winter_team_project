@@ -3,7 +3,7 @@
 #include "model_filepaths.h"
 
 // TODO: ƒ‚ƒfƒ‹Žw’è
-Enemy_Winter::Enemy_Winter(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy_Move_Closer_(ptr_scene_manager_, nullptr, target_position_)
+Enemy_Winter::Enemy_Winter(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy_Move_Closer_(ptr_scene_manager_, Model_Paths::Entity::enemy_move_winter, target_position_)
 {
 
 }

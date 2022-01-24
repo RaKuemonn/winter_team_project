@@ -71,7 +71,7 @@ Enemy_Move_Closer_::Enemy_Move_Closer_(Scene_Manager* ptr_scene_manager_, const 
         .set_finalize(target_mover,     [&]() { m_timer.Reset();});
 
 
-    constexpr float scale = 0.01f;
+    constexpr float scale = 0.2f;
     get_transform()->set_scale({ scale,scale,scale });
     get_transform()->Update();
 }
@@ -119,7 +119,10 @@ void Enemy_Move_Closer_::init_define_area_parameters()
 
     m_area_origin_position = get_latest_position();
 
-    // TODO: 敵の行動範囲が固定　-> 設定できるように
+    if (m_area_size.x != 0.0f &&
+        m_area_size.y != 0.0f &&
+        m_area_size.z != 0.0f) return;
+    
     m_area_size = { 14.0f,0.0f,26.0f };
 
 }

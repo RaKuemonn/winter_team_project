@@ -25,10 +25,10 @@ public:
 
 
     template<typename T>
-    std::shared_ptr<Entity> set_enemy(const DirectX::XMFLOAT3& position_, const DirectX::XMFLOAT3& target)
+    std::shared_ptr<T> set_enemy(const DirectX::XMFLOAT3& position_, const DirectX::XMFLOAT3& target)
     {
 
-        std::shared_ptr<Entity> enemy;
+        std::shared_ptr<T> enemy;
 
         if constexpr (std::is_base_of<Entity, T>{})
         {
@@ -54,7 +54,9 @@ public:
 
         enemy->set_position(position_);
 
-        Entity_Manager::instance().spawn_register(enemy);
+        std::shared_ptr<Entity> e_enemy = enemy;
+
+        Entity_Manager::instance().spawn_register(e_enemy);
 
         return enemy;
     }

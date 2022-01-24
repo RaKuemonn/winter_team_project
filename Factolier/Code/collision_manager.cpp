@@ -384,6 +384,26 @@ namespace local_functions
         }
     }
 
+    inline void decrease_tag_is_vehicle(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
+    {
+        const Tag a_tag = entity_a_.lock()->get_tag();
+        const Tag b_tag = entity_b_.lock()->get_tag();
+
+        constexpr DirectX::XMFLOAT3 decrease_scale = { 0.01f,0.01f,0.01f };
+
+        if (a_tag == Tag::Vehicle)
+        {
+            DirectX::XMFLOAT3 scale = entity_a_.lock()->get_scale();
+            entity_a_.lock().get()->set_scale(scale - decrease_scale);
+        }
+
+        if (b_tag == Tag::Vehicle)
+        {
+            DirectX::XMFLOAT3 scale = entity_b_.lock()->get_scale();
+            entity_b_.lock().get()->set_scale(scale - decrease_scale);
+        }
+    }
+
     // 2つのEnityでの当たり判定の組み合わせの分岐処理
     inline callback_func judge_tag_collision(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
     {
@@ -441,6 +461,32 @@ namespace local_functions
         return [](
             std::weak_ptr<Entity> a, std::weak_ptr<Entity> b, const float elapsed_time_)
         {
+            Tag tags[2] =
+            {
+                a.lock()->get_tag(),
+                b.lock()->get_tag()
+            };
+            //Tag tag_a = a.lock()->get_tag();
+            //Tag tag_b = b.lock()->get_tag();
+
+            for(int i = 0; i < 2;++i)
+            {
+                if(tags[i] != Tag::Enemy) continue;
+
+                if(detect_functions::sphere_vs_sphere(a, b))
+                {
+
+                    local_functions::decrease_tag_is_vehicle(a, b);
+
+
+                    break;
+                }
+
+            }
+
+            // 敵同士では判定をとらない
+            if (tags[0] == Tag::Enemy && tags[1] == Tag::Enemy) return;
+
             (detect_functions::sphere_vs_sphere(a, b))
             ? detect_functions::sphere_vs_sphere_extrusion(a,b,elapsed_time_)
             : /* nothing */0;
