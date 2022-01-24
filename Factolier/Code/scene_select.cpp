@@ -351,7 +351,12 @@ void Scene_Select::render(float elapsed_time)
         1, 1, 1, 1,   // rgba
         0); // angle
 
-    key_stage2->render(device_context_,
+
+    //Œ®‚Ì•`‰æ
+    Option_Manager* opm = parent->option_manager();
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_2)])
+    {
+        key_stage2->render(device_context_,
             1360 + position + eas, 444,  //position
             1.0f, 1.0f,     // scal
             200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
@@ -359,7 +364,11 @@ void Scene_Select::render(float elapsed_time)
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
-    key_stage3->render(device_context_,
+    }
+
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_3)])
+    {
+        key_stage3->render(device_context_,
             1860 + position + eas, 444,  //position
             1.0f, 1.0f,     // scal
             200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
@@ -367,22 +376,33 @@ void Scene_Select::render(float elapsed_time)
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
-    key_stage4->render(device_context_,
-        2360 + position + eas, 444,  //position
-        1.0f, 1.0f,     // scal
-        200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        200, 200,   // size
-        0, 0,         // pibot
-        1, 1, 1, 1,   // rgba
-        0); // angle
-    key_boss->render(device_context_,
-        2860 + position + eas, 444,  //position
-        1.0f, 1.0f,     // scal
-        200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        200, 200,   // size
-        0, 0,         // pibot
-        1, 1, 1, 1,   // rgba
-        0); // angle
+    }
+
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_4)])
+    {
+        key_stage4->render(device_context_,
+            2360 + position + eas, 444,  //position
+            1.0f, 1.0f,     // scal
+            200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            200, 200,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+    }
+
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_BOSS)])
+    {
+        key_boss->render(device_context_,
+            2860 + position + eas, 444,  //position
+            1.0f, 1.0f,     // scal
+            200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            200, 200,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+    }
+
+    
     if (eas == 0)
     {
         enter->render(device_context_,
