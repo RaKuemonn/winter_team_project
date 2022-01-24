@@ -9,6 +9,11 @@
 #include "utility.h"
 #include "option_manager.h"
 
+#define SELECT 0
+#define OPTION 200
+#define END 400
+
+
 // デバッグ用GUI描画
 void Scene_Title_Game::DrawDebugGUI()
 {
@@ -47,6 +52,7 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
 
     start = make_unique<Sprite>(parent->device(), "Data/Sprite/ステージセレクト.png");
     option_start = make_unique<Sprite>(parent->device(), "Data/Sprite/オプション文字.png");
+    exit = make_unique<Sprite>(parent->device(), "Data/Sprite/おわる.png");
 
     sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/タイトル.wav"));
     sound->play(true);
@@ -79,6 +85,9 @@ void Scene_Title_Game::update(float elapsed_time)
 
 void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
 {
+    next_move = static_cast<int>(icon_pos);
+
+
     if (!icon_flag)
     {
         if (icon_pos != 0)
@@ -105,7 +114,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             }
         }
 
-        if (icon_pos < 200)
+        if (icon_pos < 400)
         {
             if (input_manager->TRG(0) & PAD_DOWN)
             {
@@ -147,7 +156,6 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
          
             }
         }
-
         if (icon_pos == 200)
         {
             
@@ -319,8 +327,10 @@ void Scene_Title_Game::render(float elapsed_time)
     timer++;
     float t_sta = 0;
     float t_op = 0;
+    float t_end = 0;
     t_sta = CAST_F(timer / 40 % 2);
     t_op = CAST_F(timer / 40 % 2);
+    t_end = CAST_F(timer / 40 % 2);
    
     if (!option_flag)
     {
@@ -329,23 +339,33 @@ void Scene_Title_Game::render(float elapsed_time)
             timer = 0;
             t_sta = 1;
             t_op = 1;
+            t_end = 1;
         }
         else
         {
-            if (icon_pos == 0)
+            switch (next_move)
             {
+            case SELECT:
                 t_op = 1;
+                t_end = 1;
+                break;
 
-            }
-            else if (icon_pos == 200)
-            {
+            case OPTION:
                 t_sta = 1;
+                t_end = 1;
+                break;
+
+            case END:
+                t_sta = 1;
+                t_op = 1;
+                break;
             }
         }
         if (t_sta)
         {
+            // セレクト
             start->render(device_context_,
-                1400, 400,
+                1400, 300,
                 1.0f, 1.0f,
                 384, 128,
                 384, 128,
@@ -355,8 +375,21 @@ void Scene_Title_Game::render(float elapsed_time)
         }
         if (t_op)
         {
+            // オプション
             option_start->render(device_context_,
-                1400, 600,
+                1400, 500,
+                1.0f, 1.0f,
+                384, 128,
+                384, 128,
+                0, 0,
+                1, 1, 1, 1,
+                0); // angle
+        }
+        if (t_end)
+        {
+            // ゲーム終了
+            exit->render(device_context_,
+                1400, 700,
                 1.0f, 1.0f,
                 384, 128,
                 384, 128,
@@ -366,7 +399,7 @@ void Scene_Title_Game::render(float elapsed_time)
         }
 
         icon->render(device_context_,
-            1200, 400 + icon_pos + icon_eas,
+            1200, 300 + icon_pos + icon_eas,
             1.0f, 1.0f,
             128, 128,
             128, 128,
@@ -378,11 +411,11 @@ void Scene_Title_Game::render(float elapsed_time)
     // オプション画面を開いたとき
     else
     {
-        parent->option_manager()->title_render();
+        parent->option_manager()->game_render();
     }
 
    
 
-    //DrawDebugGUI();
+    DrawDebugGUI();
 
 }

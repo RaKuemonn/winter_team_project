@@ -63,13 +63,14 @@ public:
     bool down_flag = false;
 
     int icon_select = 0;
-
+    float icon_size = 1.0f;
 
 
 private:
     ID3D11DeviceContext* immediate_context;
 
-    std::unique_ptr<Sprite> back = nullptr;
+    std::unique_ptr<Sprite> title_back = nullptr;
+    std::unique_ptr<Sprite> game_back = nullptr;
     std::unique_ptr<Sprite> option_bakc = nullptr;
 
     Stage_Select now_stage = Stage_Select::STAGE_1;

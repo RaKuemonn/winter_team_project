@@ -38,7 +38,8 @@ void Option_Manager::DrawDebugGUI()
 Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* context)
 {
     immediate_context = context;
-    back = make_unique<Sprite>(device, "./Data/Sprite/ÉIÉvÉVÉáÉì.png");
+    title_back = make_unique<Sprite>(device, "./Data/Sprite/ÉIÉvÉVÉáÉì.png");
+    game_back = make_unique<Sprite>(device, "./Data/Sprite/ÉQÅ[ÉÄíÜÉIÉvÉVÉáÉì.png");
 
     File_IO::open("./Data/Binary/save.dat", binary_data);
 
@@ -76,6 +77,7 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
         }
     }
 
+    // çÇÇ≥Å@select 23
     if (icon_pos < 360 && up_flag == false)
     {
         if (input_manager->TRG(0) & PAD_DOWN)
@@ -204,12 +206,12 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 // ÉQÅ[ÉÄì‡Ç≈ï\é¶Ç∑ÇÈÉIÉvÉVÉáÉìâÊñ 
 void Option_Manager::game_render()
 {
-    back->render(
+    game_back->render(
         immediate_context,
-        116, 16,  //position
+        0, 0,  //position
         1, 1,     // scal
-        1700, 1050,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
-        1700, 1050,   // size
+        1920, 1080,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        1920, 1080,   // size
         0, 0,         // pibot
         1, 1, 1, 1.0,   // rgba
         0); // angle
@@ -227,11 +229,12 @@ void Option_Manager::game_render()
 
 
 
+
     //BGMê›íË
     {
         bar->render(
             immediate_context,
-            862, 342,  //position
+            862, 339,  //position
             1, 1,     // scal
             504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
             504 * bgm_move, 116,   // size
@@ -244,7 +247,7 @@ void Option_Manager::game_render()
     {
         bar->render(
             immediate_context,
-            862, 520,  //position
+            862, 516,  //position
             1, 1,     // scal
             504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
             504 * se_move, 116,   // size
@@ -258,7 +261,7 @@ void Option_Manager::game_render()
 
         bar->render(
             immediate_context,
-            862, 696,  //position
+            862, 693,  //position
             1, 1,     // scal
             504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
             504 * camera_move, 116,   // size
@@ -273,17 +276,17 @@ void Option_Manager::game_render()
     {
     case BGM:
         arrow_x = 844;
-        arrow_y = 294;
+        arrow_y = 291;
         arrow_move = arrow_bgm;
         break;
     case SE:
         arrow_x = 844;
-        arrow_y = 472;
+        arrow_y = 468;
         arrow_move = arrow_se;
         break;
     case CAMERA:
         arrow_x = 844;
-        arrow_y = 648;
+        arrow_y = 645;
         arrow_move = arrow_camera;
         break;
     }
@@ -312,12 +315,12 @@ void Option_Manager::title_render()
     //    0, 0,         // pibot
     //    1, 1, 1, 0.5,   // rgba
     //    0); // angle
-    back->render(
+    title_back->render(
         immediate_context,
-        116, 16,  //position
+        0, 0,  //position
         1, 1,     // scal
-        1700, 1050,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
-        1700, 1050,   // size
+        1920, 1080,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
+        1920, 1080,   // size
         0, 0,         // pibot
         1, 1, 1, 1.0,   // rgba
         0); // angle
@@ -339,7 +342,7 @@ void Option_Manager::title_render()
     {
         bar->render(
             immediate_context,
-            862, 342,  //position
+            862, 339,  //position
             1, 1,     // scal
             504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
             504 * bgm_move, 116,   // size
@@ -352,7 +355,7 @@ void Option_Manager::title_render()
     {
         bar->render(
             immediate_context,
-            862, 520,  //position
+            862, 516,  //position
             1, 1,     // scal
             504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
             504 * se_move, 116,   // size
@@ -366,7 +369,7 @@ void Option_Manager::title_render()
 
         bar->render(
             immediate_context,
-            862, 696,  //position
+            862, 693,  //position
             1, 1,     // scal
             504, 116,    // Ç«ÇÍÇ≠ÇÁÇ¢ï`âÊÇ∑ÇÈÇ©
             504 * camera_move, 116,   // size
@@ -381,17 +384,17 @@ void Option_Manager::title_render()
     {
     case BGM:
         arrow_x = 844;
-        arrow_y = 294;
+        arrow_y = 291;
         arrow_move = arrow_bgm;
         break;
     case SE:
         arrow_x = 844;
-        arrow_y = 472;
+        arrow_y = 468;
         arrow_move = arrow_se;
         break;
     case CAMERA:
         arrow_x = 844;
-        arrow_y = 648;
+        arrow_y = 645;
         arrow_move = arrow_camera;
         break;
     }
