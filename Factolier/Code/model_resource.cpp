@@ -61,6 +61,12 @@ Model_Resource::Model_Resource(ID3D11Device* device, const char* fbx_filename, b
                 {
                     node.attribute.emplace_back(fbx_node->GetNodeAttributeByIndex(i)->GetAttributeType());
                 }
+
+                if (fbx_node->GetNodeAttributeCount() == 0)
+                {
+                    node.attribute.emplace_back(FbxNodeAttribute::EType::eUnknown);
+                }
+
                 node.name = fbx_node->GetName();
                 node.unique_id = fbx_node->GetUniqueID();
                 node.parent_index = indexof_node(fbx_node->GetParent() ?

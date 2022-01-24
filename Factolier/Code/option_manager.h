@@ -84,6 +84,8 @@ public:
     float integer = 0;  // slidetimer‚Ì®”•”•ª
     float decimals = 0;// slidetimer‚Ì¬”•”•ª
 
+    bool return_flag = false; //ƒZƒŒƒNƒg‚Ì–ß‚é
+
 
 private:
     ID3D11DeviceContext* immediate_context;

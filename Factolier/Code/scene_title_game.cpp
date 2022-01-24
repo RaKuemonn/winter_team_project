@@ -178,6 +178,23 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             
             }
         }
+
+        if (icon_pos == 400)
+        {
+
+            if (input_manager->TRG(0) & PAD_START)
+            {
+                move_flag = true;
+                icon_flag = true;
+            }
+            if (move_flag)
+            {
+                // オプション画面に移行する
+                option_flag = true;
+                icon_flag = false;
+
+            }
+        }
     }
     
 }
@@ -231,7 +248,10 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
 
     if (input_manager->TRG(0) & PAD_START)
     {
-        option_flag = false;
+        if (parent->option_manager()->return_flag)
+        {
+            option_flag = false;
+        }
     }
    
     
