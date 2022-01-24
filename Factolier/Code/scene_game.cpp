@@ -205,7 +205,7 @@ void Scene_Game::render(float elapsed_time)
         shader->begin(parent->device_context());
 
         // TODO: debug
-        //sky_box->render(parent->device_context());
+        sky_box->render(parent->device_context());
 
         shader->end(parent->device_context());
     }
