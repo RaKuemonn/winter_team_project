@@ -36,6 +36,16 @@ private:
 
 #include "entity.h"
 
+enum class P_Anim
+{
+    stand,
+    move,
+    jump,
+    attack,
+    down,
+    down_keep,
+    joy
+};
 
 
 class Player final : public Entity
@@ -48,7 +58,7 @@ public:
     void update(const float elapsed_time_)  override;
 
 private:
-    void update_vehicle(const float elapsed_time_);
+    void update_vehicle(const float elapsed_time_, P_Anim& anim_num_);
     _NODISCARD bool check_has_vehicle() const;
     void control_vehicle();
     void reference_vehicle_position();
@@ -56,6 +66,7 @@ private:
     void create_vehicle(const float elapsed_time_);
 
 private:
+    P_Anim anim_num = P_Anim::stand;
     std::weak_ptr<Entity> m_wkp_vehicle;
     DirectX::XMFLOAT3 input_direction = {};
 
