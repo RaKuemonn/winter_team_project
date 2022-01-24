@@ -34,7 +34,7 @@ private:
 
         if constexpr (std::is_base_of<Stage, T>{})
         {
-            stage = std::make_unique<T>(ptr_scene_manager);
+            stage = std::make_unique<T>(ptr_scene_manager, position_);
         }
 
         else
