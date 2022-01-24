@@ -74,6 +74,7 @@ public:
     bool down_flag = false;
 
     int icon_select = 0;
+    int title_icon_select = 0;
     float icon_size = 1.0f;
 
     float spring_alpha = 1;

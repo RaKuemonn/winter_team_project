@@ -62,7 +62,9 @@ void Decotator_Supporter::imgui_control()
     if (ImGui::Button(Model_Paths::Deco::ball))
     {
         DirectX::XMFLOAT3 pboll1 = { -20,0, -10 };
-        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Ball>(ptr_scene_manager, pboll1)->set_scale(5));
+        std::unique_ptr<Stage> s = std::make_unique<Deco_Ball>(ptr_scene_manager, pboll1);
+        s->set_scale(5);
+        Stage_Manager::instance().spawn_register(s);
     }
     if (ImGui::Button(Model_Paths::Deco::egg))
     {
