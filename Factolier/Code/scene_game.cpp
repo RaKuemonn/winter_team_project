@@ -155,9 +155,7 @@ void Scene_Game::uninitialize()
 
 void Scene_Game::update(float elapsed_time)
 {
-<<<<<<< HEAD
     bgm_stage1->set_volume(parent->option_manager()->bgm_vo);
-=======
     if (parent->input_manager()->TRG(0) & KEY_ESC)
     {
         if (!is_option)
@@ -187,7 +185,6 @@ void Scene_Game::update(float elapsed_time)
     }
 
 
->>>>>>> 67c3e5eae65a599792958515080a43f1235723b9
     Stage_Manager::instance().update(elapsed_time);
 
     Entity_Manager::instance().update(elapsed_time);

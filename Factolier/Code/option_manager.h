@@ -57,7 +57,9 @@ public:
     float icon_eas_x = 0;     // アイコンの移動距離 x
     float icon_pos = 0;     //　アイコンの位置修正
     float icon_pos_x = 0;     // アイコンの移動距離 x
-    float icon_count = 0;
+
+    float title_icon_pos = 0;     //　アイコンの位置修正
+    float title_icon_eas = 0;     // アイコンの移動距離
 
     float time = 0; // 経過時間
 
