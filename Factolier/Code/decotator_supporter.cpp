@@ -3,8 +3,18 @@
 #include "scene_manager.h"
 #include "imgui.h"
 
+
+
+#include "deco_egg.h"
+#include "deco_leaf.h"
+#include "deco_furniture.h"
+#include "stage_manager.h"
+
+
 Decotator_Supporter::Decotator_Supporter(Scene_Manager* ptr_scene_manager_)
 {
+    ptr_scene_manager = ptr_scene_manager_;
+
     m_model = std::make_unique<Model>(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Entity::ball, true));
 
     m_transform = std::make_unique<Transform>();
@@ -40,11 +50,60 @@ void Decotator_Supporter::imgui_control()
     //scale = m_transform->get_scale();
     ImGui::SliderFloat3("scale   ", &scale.x, 0.01f, 2.0f, "%.3f");
     m_transform->set_scale(scale);
-    
-
 
     // XV
     m_transform->Update();
+
+
+
+
+    position = m_transform->get_position();
+
+    if (ImGui::Button(Model_Paths::Deco::ball))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Ball>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::egg))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Egg>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::egg_2))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Egg2>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::aki_leaf))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Leaf_Fall>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::fuyu_leaf))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Leaf_Winter>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::kinoko))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Kinoko>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::pumpkin))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Pumpkin>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::tetrapod))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Tetrapos>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::snow_man))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Snow_Man>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::umbrella_and_bed))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Umbrella_and_Bed>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::kamakura))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Kamakura>(ptr_scene_manager, position));
+    }
+
     ImGui::End();
 }
 
