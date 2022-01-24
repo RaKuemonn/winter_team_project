@@ -307,7 +307,7 @@ void Scene_Game::init_player_position(const Stage_Select stage_, std::weak_ptr<E
 
     case Stage_Select::STAGE_4:
     {
-        player_.lock()->set_position({ 0.0f, -8.2f, -128.0f });
+        player_.lock()->set_position({ 0.0f, 2.2f, -128.0f });
         break;
     }
 

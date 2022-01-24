@@ -241,6 +241,7 @@
     <ClCompile Include="Factolier\Code\stage_3_movement.cpp" />
     <ClCompile Include="Factolier\Code\stage_3_goal.cpp" />
     <ClCompile Include="Factolier\Code\stage_4.cpp" />
+    <ClCompile Include="Factolier\Code\stage_4_move.cpp" />
     <ClCompile Include="Factolier\Code\stage_4_movement.cpp" />
     <ClCompile Include="Factolier\Code\stage_4_goal.cpp" />
     <ClCompile Include="Factolier\Code\stage_boss.cpp" />
@@ -350,6 +351,7 @@
     <ClInclude Include="Factolier\Code\stage_3_movement.h" />
     <ClInclude Include="Factolier\Code\stage_3_goal.h" />
     <ClInclude Include="Factolier\Code\stage_4.h" />
+    <ClInclude Include="Factolier\Code\stage_4_move.h" />
     <ClInclude Include="Factolier\Code\stage_4_movement.h" />
     <ClInclude Include="Factolier\Code\stage_4_goal.h" />
     <ClInclude Include="Factolier\Code\stage_boss.h" />
