@@ -99,7 +99,6 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     Entity_Manager::instance().set_update_move();
 
     std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
-    player->set_position({ 0.0f, -8.0f, -127.0f });
     Entity_Manager::instance().spawn_register(player);
 
 
@@ -110,16 +109,18 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     const Stage_Select stage_num = parent->option_manager()->get_now_stage();
 #else
     // TODO: debug ステージが固定されている
-    const Stage_Select stage_num = Stage_Select::STAGE_2;
+    const Stage_Select stage_num = Stage_Select::STAGE_BOSS;
 #endif
 
-
-    // 敵の設定
-    short* ptr_boss_hp = 
-        init_enemy(stage_num ,player->get_position());
+    // プレイヤーの位置
+    init_player_position(stage_num, player);
 
     // ステージの設定
     init_stage(stage_num);
+
+    // 敵の設定
+    short* ptr_boss_hp =
+        init_enemy(stage_num, player->get_position());
 
 
     collision_manager = std::make_unique<Collision_Manager>(/*parent->option_manager()->get_now_stage()*/stage_num);
@@ -226,6 +227,44 @@ void Scene_Game::render(float elapsed_time)
 }
 
 
+void Scene_Game::init_player_position(const Stage_Select stage_, std::weak_ptr<Entity> player_)
+{
+    switch (stage_)
+    {
+
+    case Stage_Select::STAGE_1:
+    {
+        player_.lock()->set_position({0.0f, -8.0f, -127.0f });
+        break;
+    }
+
+    case Stage_Select::STAGE_2:
+    {
+        player_.lock()->set_position({});
+        break;
+    }
+
+    case Stage_Select::STAGE_3:
+    {
+        player_.lock()->set_position({});
+        break;
+    }
+
+    case Stage_Select::STAGE_4:
+    {
+        player_.lock()->set_position({});
+        break;
+    }
+
+    case Stage_Select::STAGE_BOSS:
+    {
+        player_.lock()->set_position({0.0f,10.0f,-30.0f});
+        break;
+    }
+
+    }
+}
+
 void Scene_Game::init_stage(const Stage_Select stage_)
 {
     std::unique_ptr<Stage_Spawner>		stage_spawner = nullptr;
@@ -266,6 +305,9 @@ void Scene_Game::init_stage(const Stage_Select stage_)
     }
 
     }
+
+    // 登録したステージをupdateに移動させる
+    Stage_Manager::instance().update(0.0f);
 }
 
 short* Scene_Game::init_enemy(const Stage_Select stage_, const DirectX::XMFLOAT3& target_position)

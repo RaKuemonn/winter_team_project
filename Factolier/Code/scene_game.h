@@ -21,6 +21,7 @@ public:
 	void render(float elapsed_time) override;
 
 private:
+	void init_player_position(const Stage_Select stage_, std::weak_ptr<Entity> player_);
 	void init_stage(const Stage_Select stage_);
     short* init_enemy(const Stage_Select stage_,const DirectX::XMFLOAT3& target_position);
 	bool judge_clear();
