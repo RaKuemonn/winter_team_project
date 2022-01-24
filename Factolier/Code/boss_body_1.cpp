@@ -30,7 +30,7 @@ void Boss_Body_1::update(const float elapsed_time_)
     //DirectX::XMStoreFloat4(&quaternion, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f), DirectX::XMConvertToRadians(90.0f) * elapsed_time_));
     //add_quaternion(quaternion);
 
-    if(check_im_die() == false)
+    if(check_im_hp() == false)
     {
         constexpr float rotate_speed = DirectX::XMConvertToRadians(30.0f);
         //m_euler_y += rotate_speed * elapsed_time_;

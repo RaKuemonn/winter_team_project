@@ -18,7 +18,7 @@ Boss_Body_3::Boss_Body_3(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLO
 
 void Boss_Body_3::update(const float elapsed_time_)
 {
-    if (check_im_die() == false)
+    if (check_im_hp() == false)
     {
         constexpr float rotate_speed = DirectX::XMConvertToRadians(90.0f);
         //m_euler_y += rotate_speed * elapsed_time_;

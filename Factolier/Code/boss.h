@@ -24,6 +24,7 @@ private:
 
     void look_at_target(const float elapsed_time_);
 
+    void check_wkp_body();
 
 private:
     static constexpr int move_phase_size    = 4;

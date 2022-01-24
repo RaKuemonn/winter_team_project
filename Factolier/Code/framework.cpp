@@ -11,14 +11,14 @@ float fps{ 0 };
 
 bool Framework::initialize()
 {
-	HRESULT hr{ S_OK }; //‚±‚±‚É‰Šú’l‚Ì¬”Û(ŠÖ”‚Ì–ß‚è’l)‚ª“ü‚é
+	HRESULT hr{ S_OK }; //ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½lï¿½Ìï¿½ï¿½ï¿½(ï¿½Öï¿½ï¿½Ì–ß‚ï¿½l)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
-	//ƒtƒŒ[ƒ€ì¬
+	//ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ì¬
 	GenerateFrame(hr);
 
 
-	//ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[¶¬
+	//ï¿½Vï¿½[ï¿½ï¿½ï¿½}ï¿½lï¿½[ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½
 	scene_manager = std::make_unique<Scene_Manager>();
 	scene_manager->initialize(device.Get(), immediate_context.Get(), render_target_view.Get(), depth_stencil_view.Get(), hr);
 	
@@ -36,20 +36,20 @@ bool Framework::initialize()
 	
 
 
-	/*************ƒrƒ…[ƒ|[ƒg‚Ìİ’è**************/
+	/*************ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½Ìİ’ï¿½**************/
 
 	D3D11_VIEWPORT viewport{};
 
-	viewport.TopLeftX = 0;									//‰æ–Ê¶ã‚ÌxÀ•W
-	viewport.TopLeftY = 0;									//‰æ–Ê¶ã‚ÌyÀ•W
-	viewport.Width = static_cast<float>(SCREEN_WIDTH);		//‰æ–Ê‚Ì‰¡ƒTƒCƒY
-	viewport.Height = static_cast<float>(SCREEN_HEIGHT);	//‰æ–Ê‚ÌcƒTƒCƒY
-	viewport.MinDepth = 0.0f;								//[“x’l‚ÌÅ¬’l
-	viewport.MaxDepth = 1.0f;								//[“x’l‚ÌÅ‘å’l
+	viewport.TopLeftX = 0;									//ï¿½ï¿½Êï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½W
+	viewport.TopLeftY = 0;									//ï¿½ï¿½Êï¿½ï¿½ï¿½ï¿½yï¿½ï¿½ï¿½W
+	viewport.Width = static_cast<float>(SCREEN_WIDTH);		//ï¿½ï¿½Ê‚Ì‰ï¿½ï¿½Tï¿½Cï¿½Y
+	viewport.Height = static_cast<float>(SCREEN_HEIGHT);	//ï¿½ï¿½Ê‚Ìcï¿½Tï¿½Cï¿½Y
+	viewport.MinDepth = 0.0f;								//ï¿½[ï¿½xï¿½lï¿½ÌÅï¿½ï¿½l
+	viewport.MaxDepth = 1.0f;								//ï¿½[ï¿½xï¿½lï¿½ÌÅ‘ï¿½l
 
-	immediate_context->RSSetViewports(1, &viewport);		//ƒrƒ…[ƒ|[ƒg‚ğİ’è
+	immediate_context->RSSetViewports(1, &viewport);		//ï¿½rï¿½ï¿½ï¿½[ï¿½|ï¿½[ï¿½gï¿½ï¿½İ’ï¿½
 
-	/*************‚±‚±‚Ü‚Å**************/
+	/*************ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½**************/
 
 	ShowCursor(false);
 
@@ -111,12 +111,12 @@ void Framework::render(float elapsed_time/*Elapsed seconds from last frame*/)
 #endif
 
 
-	//UINT sync_interval{ 0 }; //1‚É‚·‚é‚Æ60FPS‚ÌŒÅ’èƒtƒŒ[ƒ€ƒŒ[ƒg‚Å“®ì‚·‚é
+	//UINT sync_interval{ 0 }; //1ï¿½É‚ï¿½ï¿½ï¿½ï¿½60FPSï¿½ÌŒÅ’ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½gï¿½Å“ï¿½ï¿½ì‚·ï¿½ï¿½
 
-	//ƒŒƒ“ƒ_ƒŠƒ“ƒO‚³‚ê‚½‰æ‘œ‚ğ•`‰æ‚·‚é
+	//ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ê‚½ï¿½æ‘œï¿½ï¿½`ï¿½æ‚·ï¿½ï¿½
 	swap_chain->Present(
-		sync_interval,		//ƒtƒŒ[ƒ€‚Ì•\¦‚ğ‚’¼ƒuƒ‰ƒ“ƒN‚Æ“¯Šú‚·‚é•û–@
-		0					//ƒXƒƒbƒvƒ`ƒF[ƒ“•\¦ƒIƒvƒVƒ‡ƒ“
+		sync_interval,		//ï¿½tï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ì•\ï¿½ï¿½ï¿½ğ‚’ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½Æ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½@
+		0					//ï¿½Xï¿½ï¿½ï¿½bï¿½vï¿½`ï¿½Fï¿½[ï¿½ï¿½ï¿½\ï¿½ï¿½ï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½
 	);
 }
 
@@ -131,135 +131,135 @@ bool Framework::uninitialize()
 
 void Framework::GenerateFrame(HRESULT hr)
 {
-	/*************ƒfƒoƒCƒXEƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒgEƒXƒƒbƒvƒ`ƒF[ƒ“‚Ìì¬**************/
+	/*************ï¿½fï¿½oï¿½Cï¿½Xï¿½Eï¿½fï¿½oï¿½Cï¿½Xï¿½Rï¿½ï¿½ï¿½eï¿½Lï¿½Xï¿½gï¿½Eï¿½Xï¿½ï¿½ï¿½bï¿½vï¿½`ï¿½Fï¿½[ï¿½ï¿½ï¿½Ìì¬**************/
 
-	UINT creat_device_flags{ 0 }; //ƒ‰ƒ“ƒ^ƒCƒ€ƒŒƒCƒ„‚Ìƒtƒ‰ƒO
+	UINT creat_device_flags{ 0 }; //ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Ìƒtï¿½ï¿½ï¿½O
 #ifdef _DEBUG
 	creat_device_flags |= D3D11_CREATE_DEVICE_DEBUG;
 #endif // _DEBUG
 
 
-	D3D_FEATURE_LEVEL feature_levels{ D3D_FEATURE_LEVEL_11_0 }; //ƒtƒ…[ƒ`ƒƒ[ƒŒƒxƒ‹
+	D3D_FEATURE_LEVEL feature_levels{ D3D_FEATURE_LEVEL_11_0 }; //ï¿½tï¿½ï¿½ï¿½[ï¿½`ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½xï¿½ï¿½
 
 
 
-	DXGI_SWAP_CHAIN_DESC swap_chain_desc{}; //ƒXƒƒbƒvƒ`ƒF[ƒ“‚ğì¬‚·‚é‚Ì‚É•K—v‚È\‘¢‘Ì
+	DXGI_SWAP_CHAIN_DESC swap_chain_desc{}; //ï¿½Xï¿½ï¿½ï¿½bï¿½vï¿½`ï¿½Fï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ï¿½Ì‚É•Kï¿½vï¿½È\ï¿½ï¿½ï¿½ï¿½
 
-	//ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ìƒoƒbƒtƒ@”
-	swap_chain_desc.BufferCount = 1;		//(ƒoƒbƒtƒ@”2)
+	//ï¿½Xï¿½ï¿½ï¿½bï¿½vï¿½`ï¿½Fï¿½[ï¿½ï¿½ï¿½Ìƒoï¿½bï¿½tï¿½@ï¿½ï¿½
+	swap_chain_desc.BufferCount = 1;		//(ï¿½oï¿½bï¿½tï¿½@ï¿½ï¿½2)
 
-	//ƒoƒbƒNƒoƒbƒtƒ@‚Ìİ’è(ƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY‚âƒtƒH[ƒ}ƒbƒg)
+	//ï¿½oï¿½bï¿½Nï¿½oï¿½bï¿½tï¿½@ï¿½Ìİ’ï¿½(ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ÌƒTï¿½Cï¿½Yï¿½ï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½g)
 	swap_chain_desc.BufferDesc.Width = SCREEN_WIDTH;
 	swap_chain_desc.BufferDesc.Height = SCREEN_HEIGHT;
 	swap_chain_desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	swap_chain_desc.BufferDesc.RefreshRate.Numerator = 60;
 	swap_chain_desc.BufferDesc.RefreshRate.Denominator = 1;
 
-	//ƒoƒbƒtƒ@‚Ìg—p•û–@‚Ìw’è
+	//ï¿½oï¿½bï¿½tï¿½@ï¿½Ìgï¿½pï¿½ï¿½ï¿½@ï¿½Ìwï¿½ï¿½
 	swap_chain_desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
-	//o—ÍæƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
+	//ï¿½oï¿½Íï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½nï¿½ï¿½ï¿½hï¿½ï¿½
 	swap_chain_desc.OutputWindow = hwnd;
 
-	//ƒ}ƒ‹ƒ`ƒTƒ“ƒvƒŠƒ“ƒO‚Ìİ’è(¡‰ñ‚Íg—p‚µ‚È‚¢İ’è)
+	//ï¿½}ï¿½ï¿½ï¿½`ï¿½Tï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½Ìİ’ï¿½(ï¿½ï¿½ï¿½ï¿½Ígï¿½pï¿½ï¿½ï¿½È‚ï¿½ï¿½İ’ï¿½)
 	swap_chain_desc.SampleDesc.Count = 1;
 	swap_chain_desc.SampleDesc.Quality = 0;
 
-	//ƒEƒBƒ“ƒhƒEƒ‚[ƒh or ƒtƒ‹ƒXƒNƒŠ[ƒ“ƒ‚[ƒh
+	//ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ï¿½ï¿½[ï¿½h or ï¿½tï¿½ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½h
 	swap_chain_desc.Windowed = !FULLSCREEN;
 
 
-	//ƒfƒoƒCƒXAƒfƒoƒCƒXƒRƒ“ƒeƒLƒXƒgAƒXƒƒbƒvƒ`ƒF[ƒ“‚ğì¬(¡‰ñ‚Í‘S‚Ä“¯‚Éì¬‚·‚éŠÖ”‚ğg—p)
+	//ï¿½fï¿½oï¿½Cï¿½Xï¿½Aï¿½fï¿½oï¿½Cï¿½Xï¿½Rï¿½ï¿½ï¿½eï¿½Lï¿½Xï¿½gï¿½Aï¿½Xï¿½ï¿½ï¿½bï¿½vï¿½`ï¿½Fï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ì¬(ï¿½ï¿½ï¿½ï¿½Í‘Sï¿½Ä“ï¿½ï¿½ï¿½ï¿½Éì¬ï¿½ï¿½ï¿½ï¿½Öï¿½ï¿½ï¿½ï¿½gï¿½p)
 	hr = D3D11CreateDeviceAndSwapChain(
-		NULL,										//g—p‚·‚éƒOƒ‰ƒ{ƒAƒ_ƒvƒ^‚Ìw’è(null‚Ìê‡‹K’è‚ÌƒAƒ_ƒvƒ^‚ğg—p)
-		D3D_DRIVER_TYPE_HARDWARE,					//•`‰æ‚ğs‚¤ƒhƒ‰ƒCƒo‚Ìw’è(Šî–{‚Íƒn[ƒhƒEƒFƒA‚ğw’è)
-		NULL,										//ƒhƒ‰ƒCƒo‚Ìw’è‚ğƒ\ƒtƒgƒEƒFƒA‚É‚µ‚½ê‡‚É‚Ì‚İw’è‚ª•K—v(‚»‚êˆÈŠO‚Ínull)
-		creat_device_flags,							//ƒ‰ƒ“ƒ^ƒCƒ€ƒŒƒCƒ„‚Ìƒtƒ‰ƒOw’è(ƒfƒoƒbƒOo—ÍAƒVƒ“ƒOƒ‹ƒXƒŒƒbƒh‚È‚Çw’è‚Å‚«‚é)
-		&feature_levels,							//FeatureLevel‚Ìw’è(”z—ñ‚Å‚µ‚½‚¢ƒo[ƒWƒ‡ƒ“‚ğ•¡”w’è‚Å‚«‚é)
-		1,											//D3D_FEATURE_LEVEL‚ğw’è‚µ‚½ê‡‚Ì”z—ñ‚Ì—v‘f”
-		D3D11_SDK_VERSION,							//DirectSDK‚Ìƒo[ƒWƒ‡ƒ“(11‚È‚çD3D11_SDK_VERSION‚ğw’è)
-		&swap_chain_desc,							//İ’è‚ğs‚Á‚½DXGI_SWAP_CHAIN_DESC‚ÌƒAƒhƒŒƒX
-		swap_chain.GetAddressOf(),					//‰Šú‰»‚ªŠ®—¹‚µ‚½IDXGISwapChain‚ğó‚¯æ‚é‚½‚ß‚ÌIDXGISwapChain‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
-		device.GetAddressOf(),						//‰Šú‰»‚ªŠ®—¹‚µ‚½ID3D11Device‚ğó‚¯æ‚é‚½‚ß‚ÌID3D11Device‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
-		NULL,										//ÅI“I‚ÉŒˆ’è‚µ‚½D3D_FEATURE_LEVEL‚ğæ“¾‚·‚é‚½‚ß‚ÌD3D_FEATURE_LEVEL‚ÌƒAƒhƒŒƒX
-		immediate_context.GetAddressOf()			//ì¬‚³‚ê‚½ID3D11DeviceContext‚ğó‚¯æ‚é‚½‚ß‚ÌID3D11DeviceContext‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+		NULL,										//ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½{ï¿½Aï¿½_ï¿½vï¿½^ï¿½Ìwï¿½ï¿½(nullï¿½Ìê‡ï¿½Kï¿½ï¿½ÌƒAï¿½_ï¿½vï¿½^ï¿½ï¿½ï¿½gï¿½p)
+		D3D_DRIVER_TYPE_HARDWARE,					//ï¿½`ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Cï¿½oï¿½Ìwï¿½ï¿½(ï¿½ï¿½{ï¿½Íƒnï¿½[ï¿½hï¿½Eï¿½Fï¿½Aï¿½ï¿½ï¿½wï¿½ï¿½)
+		NULL,										//ï¿½hï¿½ï¿½ï¿½Cï¿½oï¿½Ìwï¿½ï¿½ï¿½ï¿½\ï¿½tï¿½gï¿½Eï¿½Fï¿½Aï¿½É‚ï¿½ï¿½ï¿½ï¿½ê‡ï¿½É‚Ì‚İwï¿½è‚ªï¿½Kï¿½v(ï¿½ï¿½ï¿½ï¿½ÈŠOï¿½ï¿½null)
+		creat_device_flags,							//ï¿½ï¿½ï¿½ï¿½ï¿½^ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Ìƒtï¿½ï¿½ï¿½Oï¿½wï¿½ï¿½(ï¿½fï¿½oï¿½bï¿½Oï¿½oï¿½ÍAï¿½Vï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½Xï¿½ï¿½ï¿½bï¿½hï¿½È‚Çwï¿½ï¿½Å‚ï¿½ï¿½ï¿½)
+		&feature_levels,							//FeatureLevelï¿½Ìwï¿½ï¿½(ï¿½zï¿½ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ğ•¡ï¿½ï¿½wï¿½ï¿½Å‚ï¿½ï¿½ï¿½)
+		1,											//D3D_FEATURE_LEVELï¿½ï¿½ï¿½wï¿½è‚µï¿½ï¿½ï¿½ê‡ï¿½Ì”zï¿½ï¿½Ì—vï¿½fï¿½ï¿½
+		D3D11_SDK_VERSION,							//DirectSDKï¿½Ìƒoï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½(11ï¿½È‚ï¿½D3D11_SDK_VERSIONï¿½ï¿½ï¿½wï¿½ï¿½)
+		&swap_chain_desc,							//ï¿½İ’ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½DXGI_SWAP_CHAIN_DESCï¿½ÌƒAï¿½hï¿½ï¿½ï¿½X
+		swap_chain.GetAddressOf(),					//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½IDXGISwapChainï¿½ï¿½ï¿½ó‚¯ï¿½é‚½ï¿½ß‚ï¿½IDXGISwapChainï¿½Ìƒ|ï¿½Cï¿½ï¿½ï¿½^ï¿½ÌƒAï¿½hï¿½ï¿½ï¿½X
+		device.GetAddressOf(),						//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID3D11Deviceï¿½ï¿½ï¿½ó‚¯ï¿½é‚½ï¿½ß‚ï¿½ID3D11Deviceï¿½Ìƒ|ï¿½Cï¿½ï¿½ï¿½^ï¿½ÌƒAï¿½hï¿½ï¿½ï¿½X
+		NULL,										//ï¿½ÅIï¿½Iï¿½ÉŒï¿½ï¿½è‚µï¿½ï¿½D3D_FEATURE_LEVELï¿½ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½é‚½ï¿½ß‚ï¿½D3D_FEATURE_LEVELï¿½ÌƒAï¿½hï¿½ï¿½ï¿½X
+		immediate_context.GetAddressOf()			//ï¿½ì¬ï¿½ï¿½ï¿½ê‚½ID3D11DeviceContextï¿½ï¿½ï¿½ó‚¯ï¿½é‚½ï¿½ß‚ï¿½ID3D11DeviceContextï¿½Ìƒ|ï¿½Cï¿½ï¿½ï¿½^ï¿½ÌƒAï¿½hï¿½ï¿½ï¿½X
 	);
 
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
-	/*************‚±‚±‚Ü‚Å**************/
+	/*************ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½**************/
 
 
-	/*************ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìì¬**************/
+	/*************ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½[ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½rï¿½ï¿½ï¿½[ï¿½Ìì¬**************/
 
 	ID3D11Texture2D* back_buffer{};
-	//ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ìƒoƒbƒtƒ@‚Ìˆê‚Â‚ğæ“¾‚·‚é
+	//ï¿½Xï¿½ï¿½ï¿½bï¿½vï¿½`ï¿½Fï¿½[ï¿½ï¿½ï¿½Ìƒoï¿½bï¿½tï¿½@ï¿½Ìˆï¿½Â‚ï¿½ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½
 	hr = swap_chain->GetBuffer(
-		0,											//ƒoƒbƒtƒ@‚ÌƒCƒ“ƒfƒbƒNƒX(Šî–{‚Í0)
-		__uuidof(ID3D11Texture2D),					//æ“¾‚·‚éƒoƒbƒtƒ@‚ÌƒCƒ“ƒ^[ƒtƒF[ƒXID
-		reinterpret_cast<LPVOID*>(&back_buffer)		//ƒoƒbƒtƒ@‚Ìæ“¾æ(voidƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX‚Åæ“¾‚·‚é)
+		0,											//ï¿½oï¿½bï¿½tï¿½@ï¿½ÌƒCï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½X(ï¿½ï¿½{ï¿½ï¿½0)
+		__uuidof(ID3D11Texture2D),					//ï¿½æ“¾ï¿½ï¿½ï¿½ï¿½oï¿½bï¿½tï¿½@ï¿½ÌƒCï¿½ï¿½ï¿½^ï¿½[ï¿½tï¿½Fï¿½[ï¿½XID
+		reinterpret_cast<LPVOID*>(&back_buffer)		//ï¿½oï¿½bï¿½tï¿½@ï¿½Ìæ“¾ï¿½ï¿½(voidï¿½|ï¿½Cï¿½ï¿½ï¿½^ï¿½ÌƒAï¿½hï¿½ï¿½ï¿½Xï¿½Åæ“¾ï¿½ï¿½ï¿½ï¿½)
 	);
 
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚ğì¬
+	//ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½[ï¿½^ï¿½[ï¿½Qï¿½bï¿½gï¿½rï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ì¬
 	hr = device->CreateRenderTargetView(
-		back_buffer,							//ì¬‚·‚éƒoƒbƒtƒ@‚ÌƒŠƒ\[ƒX
-		NULL,									//ì¬‚·‚éView‚Ìİ’è“à—eƒf[ƒ^‚Ìw’è(null‚ÅƒfƒtƒHƒ‹ƒgİ’è‚É‚È‚é)
-		render_target_view.GetAddressOf()		//ì¬‚³‚ê‚½RenderTargetView‚ğŠi”[‚·‚é‚½‚ß‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+		back_buffer,							//ï¿½ì¬ï¿½ï¿½ï¿½ï¿½oï¿½bï¿½tï¿½@ï¿½Ìƒï¿½ï¿½\ï¿½[ï¿½X
+		NULL,									//ï¿½ì¬ï¿½ï¿½ï¿½ï¿½Viewï¿½Ìİ’ï¿½ï¿½ï¿½eï¿½fï¿½[ï¿½^ï¿½Ìwï¿½ï¿½(nullï¿½Åƒfï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½İ’ï¿½É‚È‚ï¿½)
+		render_target_view.GetAddressOf()		//ï¿½ì¬ï¿½ï¿½ï¿½ê‚½RenderTargetViewï¿½ï¿½ï¿½iï¿½[ï¿½ï¿½ï¿½é‚½ï¿½ß‚Ìƒ|ï¿½Cï¿½ï¿½ï¿½^ï¿½ÌƒAï¿½hï¿½ï¿½ï¿½X
 	);
 
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
-	back_buffer->Release(); //ƒoƒbƒtƒ@‚ğ‰ğ•ú
+	back_buffer->Release(); //ï¿½oï¿½bï¿½tï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	/*************‚±‚±‚Ü‚Å**************/
+	/*************ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½**************/
 
 
-	/*************[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚Ìì¬**************/
+	/*************ï¿½[ï¿½xï¿½Xï¿½eï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½Ìì¬**************/
 
-	ID3D11Texture2D* depth_stencil_buffer{}; //[“xƒXƒeƒ“ƒVƒ‹‚Ìƒoƒbƒtƒ@
-	D3D11_TEXTURE2D_DESC texture2d_desc{}; //ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+	ID3D11Texture2D* depth_stencil_buffer{}; //ï¿½[ï¿½xï¿½Xï¿½eï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½Ìƒoï¿½bï¿½tï¿½@
+	D3D11_TEXTURE2D_DESC texture2d_desc{}; //ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½Ìİ’ï¿½
 
-	texture2d_desc.Width = SCREEN_WIDTH;					//ƒoƒbƒtƒ@‚Ì‰¡•
-	texture2d_desc.Height = SCREEN_HEIGHT;					//ƒoƒbƒtƒ@‚Ìc•
-	texture2d_desc.MipLevels = 1;							//ƒ~ƒbƒvƒ}ƒbƒv‚ÌƒŒƒxƒ‹w’è
-	texture2d_desc.ArraySize = 1;							//ƒeƒNƒXƒ`ƒƒ”z—ñ‚ÌƒTƒCƒYw’è
-	texture2d_desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//ƒeƒNƒXƒ`ƒƒ‚ÌƒtƒH[ƒ}ƒbƒg(Depth24bitAStencil8bit)
-	texture2d_desc.SampleDesc.Count = 1;					//ƒ}ƒ‹ƒ`ƒTƒ“ƒvƒŠƒ“ƒOİ’è(g—p‚µ‚È‚¢)
-	texture2d_desc.SampleDesc.Quality = 0;					//ƒ}ƒ‹ƒ`ƒTƒ“ƒvƒŠƒ“ƒOİ’è(g—p‚µ‚È‚¢)
-	texture2d_desc.Usage = D3D11_USAGE_DEFAULT;				//ƒeƒNƒXƒ`ƒƒ‚Ìg—p•û–@
-	texture2d_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;	//Bindİ’è(D3D11_BIND_DEPTH_STENCIL‚ğw’è‚·‚é)
-	texture2d_desc.CPUAccessFlags = 0;						//ƒŠƒ\[ƒX‚Ö‚ÌCPU‚ÌƒAƒNƒZƒXŒ ŒÀİ’è(ƒfƒtƒHƒ‹ƒg‚Í0‚Å–â‘è‚È‚¢)
-	texture2d_desc.MiscFlags = 0;							//ƒŠƒ\[ƒXƒIƒvƒVƒ‡ƒ“‚Ìƒtƒ‰ƒO(¡‰ñ‚Ìƒoƒbƒtƒ@‚Å‚Í•K—v‚È‚¢‚Ì‚Å0‚Å–â‘è‚È‚¢)
+	texture2d_desc.Width = SCREEN_WIDTH;					//ï¿½oï¿½bï¿½tï¿½@ï¿½Ì‰ï¿½ï¿½ï¿½
+	texture2d_desc.Height = SCREEN_HEIGHT;					//ï¿½oï¿½bï¿½tï¿½@ï¿½Ìcï¿½ï¿½
+	texture2d_desc.MipLevels = 1;							//ï¿½~ï¿½bï¿½vï¿½}ï¿½bï¿½vï¿½Ìƒï¿½ï¿½xï¿½ï¿½ï¿½wï¿½ï¿½
+	texture2d_desc.ArraySize = 1;							//ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½zï¿½ï¿½ÌƒTï¿½Cï¿½Yï¿½wï¿½ï¿½
+	texture2d_desc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;	//ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½Ìƒtï¿½Hï¿½[ï¿½}ï¿½bï¿½g(Depth24bitï¿½AStencil8bit)
+	texture2d_desc.SampleDesc.Count = 1;					//ï¿½}ï¿½ï¿½ï¿½`ï¿½Tï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½İ’ï¿½(ï¿½gï¿½pï¿½ï¿½ï¿½È‚ï¿½)
+	texture2d_desc.SampleDesc.Quality = 0;					//ï¿½}ï¿½ï¿½ï¿½`ï¿½Tï¿½ï¿½ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½İ’ï¿½(ï¿½gï¿½pï¿½ï¿½ï¿½È‚ï¿½)
+	texture2d_desc.Usage = D3D11_USAGE_DEFAULT;				//ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½Ìgï¿½pï¿½ï¿½ï¿½@
+	texture2d_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;	//Bindï¿½İ’ï¿½(D3D11_BIND_DEPTH_STENCILï¿½ï¿½ï¿½wï¿½è‚·ï¿½ï¿½)
+	texture2d_desc.CPUAccessFlags = 0;						//ï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½Ö‚ï¿½CPUï¿½ÌƒAï¿½Nï¿½Zï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½(ï¿½fï¿½tï¿½Hï¿½ï¿½ï¿½gï¿½ï¿½0ï¿½Å–ï¿½ï¿½È‚ï¿½)
+	texture2d_desc.MiscFlags = 0;							//ï¿½ï¿½ï¿½\ï¿½[ï¿½Xï¿½Iï¿½vï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Ìƒtï¿½ï¿½ï¿½O(ï¿½ï¿½ï¿½ï¿½Ìƒoï¿½bï¿½tï¿½@ï¿½Å‚Í•Kï¿½vï¿½È‚ï¿½ï¿½Ì‚ï¿½0ï¿½Å–ï¿½ï¿½È‚ï¿½)
 
-	//w’è‚³‚ê‚½î•ñ‚ğŒ³‚É‚µ‚½ƒeƒNƒXƒ`ƒƒ‚ğì¬
+	//ï¿½wï¿½è‚³ï¿½ê‚½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ì¬
 	hr = device->CreateTexture2D(
-		&texture2d_desc,			//ì¬‚·‚éƒeƒNƒXƒ`ƒƒ‚ÌÚ×î•ñ
-		NULL,						//ƒeƒNƒXƒ`ƒƒ‚Ìî•ñ‚É•t—^‚·‚éƒf[ƒ^w’è‚·‚é(“Ç‚İ‚ñ‚¾‰æ‘œƒf[ƒ^‚ğİ’è‚µ‚½‚è‚·‚é)
-		&depth_stencil_buffer		//ì¬‚³‚ê‚½Texture‚ğŠi”[‚·‚é‚½‚ß‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+		&texture2d_desc,			//ï¿½ì¬ï¿½ï¿½ï¿½ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½ÌÚ×ï¿½ï¿½
+		NULL,						//ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½Ìï¿½ï¿½É•tï¿½^ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½wï¿½è‚·ï¿½ï¿½(ï¿½Ç‚İï¿½ï¿½ñ‚¾‰æ‘œï¿½fï¿½[ï¿½^ï¿½ï¿½İ’è‚µï¿½ï¿½ï¿½è‚·ï¿½ï¿½)
+		&depth_stencil_buffer		//ï¿½ì¬ï¿½ï¿½ï¿½ê‚½Textureï¿½ï¿½ï¿½iï¿½[ï¿½ï¿½ï¿½é‚½ï¿½ß‚Ìƒ|ï¿½Cï¿½ï¿½ï¿½^ï¿½ÌƒAï¿½hï¿½ï¿½ï¿½X
 	);
 
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
-	//[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚Ìİ’è
+	//ï¿½[ï¿½xï¿½Xï¿½eï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½Ìİ’ï¿½
 	D3D11_DEPTH_STENCIL_VIEW_DESC depth_stencil_view_desc{};
 
-	depth_stencil_view_desc.Format = texture2d_desc.Format;						//View‚ÌƒtƒH[ƒ}ƒbƒg
-	depth_stencil_view_desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;		//ƒeƒNƒXƒ`ƒƒ‚Ìí—Ş(‚±‚±‚Åİ’è‚µ‚½’l‚É‚æ‚Á‚ÄD3D11_TEX2D_DSV‚ªŒˆ‚Ü‚é)
-	depth_stencil_view_desc.Texture2D.MipSlice = 0;								//g—p‚·‚éTextureƒf[ƒ^î•ñ
+	depth_stencil_view_desc.Format = texture2d_desc.Format;						//Viewï¿½Ìƒtï¿½Hï¿½[ï¿½}ï¿½bï¿½g
+	depth_stencil_view_desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;		//ï¿½eï¿½Nï¿½Xï¿½`ï¿½ï¿½ï¿½Ìï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½Åİ’è‚µï¿½ï¿½ï¿½lï¿½É‚ï¿½ï¿½ï¿½ï¿½D3D11_TEX2D_DSVï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½)
+	depth_stencil_view_desc.Texture2D.MipSlice = 0;								//ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½Textureï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½
 
 
-	//[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[‚Ìì¬
+	//ï¿½[ï¿½xï¿½Xï¿½eï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½rï¿½ï¿½ï¿½[ï¿½Ìì¬
 	hr = device->CreateDepthStencilView(
-		depth_stencil_buffer,							//Viewì¬‚Ég—p‚·‚éƒŠƒ\[ƒX
-		&depth_stencil_view_desc,						//DSV‚ÉŠÖ‚·‚éİ’è‚ğs‚Á‚½ƒf[ƒ^
-		depth_stencil_view.GetAddressOf()				//ì¬‚³‚ê‚½DSV‚ğŠi”[‚·‚é‚½‚ß‚Ìƒ|ƒCƒ“ƒ^‚ÌƒAƒhƒŒƒX
+		depth_stencil_buffer,							//Viewï¿½ì¬ï¿½Égï¿½pï¿½ï¿½ï¿½éƒŠï¿½\ï¿½[ï¿½X
+		&depth_stencil_view_desc,						//DSVï¿½ÉŠÖ‚ï¿½ï¿½ï¿½İ’ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^
+		depth_stencil_view.GetAddressOf()				//ï¿½ì¬ï¿½ï¿½ï¿½ê‚½DSVï¿½ï¿½ï¿½iï¿½[ï¿½ï¿½ï¿½é‚½ï¿½ß‚Ìƒ|ï¿½Cï¿½ï¿½ï¿½^ï¿½ÌƒAï¿½hï¿½ï¿½ï¿½X
 	);
 
 	_ASSERT_EXPR(SUCCEEDED(hr), hr_trace(hr));
 
-	depth_stencil_buffer->Release(); //ƒoƒbƒtƒ@‚ğ‰ğ•ú
+	depth_stencil_buffer->Release(); //ï¿½oï¿½bï¿½tï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½
 
-	/*************‚±‚±‚Ü‚Å**************/
+	/*************ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½**************/
 }

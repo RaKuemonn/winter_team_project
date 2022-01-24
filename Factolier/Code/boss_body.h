@@ -23,13 +23,13 @@ public:
 
 protected:
     void update_collision_detection();
-    bool check_im_died();                         // ‘Ì—Í‚ª0‚É‚È‚Á‚½‚ç m_was_died‚ªtrue‚É‚È‚é
+    bool check_im_hp();                         // ‘Ì—Í‚ª0‚É‚È‚Á‚½‚ç m_was_died‚ªtrue‚É‚È‚é
 
-    float m_euler_y                           = 0.0f;
+    float m_euler_y                             = 0.0f;
 
 private:
-    bool m_was_died                          = false;
-    static constexpr int collide_array_size = 8;
+    bool m_was_died                             = false;
+    static constexpr int collide_array_size     = 8;
     std::weak_ptr<class Collide_Detection> wkp_collide_detection[collide_array_size];
 };
 
