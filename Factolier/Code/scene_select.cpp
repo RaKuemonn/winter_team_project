@@ -38,12 +38,12 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     parent = parent_;
     ID3D11Device* dev = parent->device();
 
-    back = make_unique<Sprite>(dev, "Data/Sprite/back.png");
-    stage1 = make_unique<Sprite>(dev, "Data/Sprite/select1.png");
-    stage2 = make_unique<Sprite>(dev, "Data/Sprite/select2.png");
-    stage3 = make_unique<Sprite>(dev, "Data/Sprite/select3.png");
-    stage4 = make_unique<Sprite>(dev, "Data/Sprite/select4.png");
-    stage5 = make_unique<Sprite>(dev, "Data/Sprite/select5.png");
+    back = make_unique<Sprite>(dev, "Data/Sprite/select_boss.png");
+    stage1 = make_unique<Sprite>(dev, "Data/Sprite/select_icon_spring.png");
+    stage2 = make_unique<Sprite>(dev, "Data/Sprite/select_icon_summer.png");
+    stage3 = make_unique<Sprite>(dev, "Data/Sprite/selectstage_stage3.png");
+    stage4 = make_unique<Sprite>(dev, "Data/Sprite/select_icon_winter.png");
+    stage5 = make_unique<Sprite>(dev, "Data/Sprite/select_icon_boss.png");
     choice = make_unique<Sprite>(dev, "Data/Sprite/frame.png");
 
     enter = make_unique<Sprite>(dev, "Data/Sprite/push the Enter.png");
@@ -53,7 +53,15 @@ void Scene_Select::initialize(Scene_Manager* parent_)
     key_stage4 = make_unique<Sprite>(parent->device(), "Data/Sprite/“ì‹ù.png");
     key_boss = make_unique<Sprite>(parent->device(), "Data/Sprite/“ì‹ù.png");
 
-   
+    spring = make_unique<Sprite>(dev, "Data/Sprite/select_spring.png");
+    summer = make_unique<Sprite>(dev, "Data/Sprite/select_summer.png");
+    autum = make_unique<Sprite>(dev, "Data/Sprite/select_autumn.png");
+    winter = make_unique<Sprite>(dev, "Data/Sprite/select_winter.png");
+    //winter = make_unique<Sprite>(dev, "Data/Sprite/select_winter.png");
+
+    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/select_BGM.wav"));
+    sound->play(true);
+    crick = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/crick.wav"));
 }
 
 void Scene_Select::uninitialize()
@@ -134,6 +142,7 @@ void Scene_Select::move(float elapsedTime, Input_Manager* input_manager)
         {
             if (input_manager->TRG(0) & PAD_START)
             {
+                crick->play(false);
                 //‘I‚ñ‚Å‚¢‚éƒXƒe[ƒW‚É‰‚¶‚½ˆ—
                 Option_Manager* opm = parent->option_manager();
 
@@ -218,16 +227,79 @@ void Scene_Select::render(float elapsed_time)
     parent->state_manager()->setRS(RS::SOLID_NONE);
 
    
-
-    back->render(
+    switch (select_to_stage)
+    {
+    case CAST_I(Stage_Select::STAGE_1):
+    {
+        spring->render(
             device_context_,
             0, 0,  //position
             1, 1,     // scal
-        1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        1920, 1080,   // size
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_2):
+    {
+        summer->render(
+            device_context_,
+            0, 0,  //position
+            1, 1,     // scal
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_3):
+    {
+        autum->render(
+            device_context_,
+            0, 0,  //position
+            1, 1,     // scal
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_4):
+    {
+        winter->render(
+            device_context_,
+            0, 0,  //position
+            1, 1,     // scal
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+        break;
+    }
+
+    case CAST_I(Stage_Select::STAGE_BOSS):
+    {
+        back->render(
+            device_context_,
+            0, 0,  //position
+            1, 1,     // scal
+            1920, 1080,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            1920, 1080,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+        break;
+    }
+
+    }
 
 
     choice->render(device_context_,
@@ -279,7 +351,12 @@ void Scene_Select::render(float elapsed_time)
         1, 1, 1, 1,   // rgba
         0); // angle
 
-    key_stage2->render(device_context_,
+
+    //Œ®‚Ì•`‰æ
+    Option_Manager* opm = parent->option_manager();
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_2)])
+    {
+        key_stage2->render(device_context_,
             1360 + position + eas, 444,  //position
             1.0f, 1.0f,     // scal
             200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
@@ -287,7 +364,11 @@ void Scene_Select::render(float elapsed_time)
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
-    key_stage3->render(device_context_,
+    }
+
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_3)])
+    {
+        key_stage3->render(device_context_,
             1860 + position + eas, 444,  //position
             1.0f, 1.0f,     // scal
             200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
@@ -295,22 +376,33 @@ void Scene_Select::render(float elapsed_time)
             0, 0,         // pibot
             1, 1, 1, 1,   // rgba
             0); // angle
-    key_stage4->render(device_context_,
-        2360 + position + eas, 444,  //position
-        1.0f, 1.0f,     // scal
-        200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        200, 200,   // size
-        0, 0,         // pibot
-        1, 1, 1, 1,   // rgba
-        0); // angle
-    key_boss->render(device_context_,
-        2860 + position + eas, 444,  //position
-        1.0f, 1.0f,     // scal
-        200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
-        200, 200,   // size
-        0, 0,         // pibot
-        1, 1, 1, 1,   // rgba
-        0); // angle
+    }
+
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_4)])
+    {
+        key_stage4->render(device_context_,
+            2360 + position + eas, 444,  //position
+            1.0f, 1.0f,     // scal
+            200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            200, 200,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+    }
+
+    if (!opm->get_binary().clear_flag[CAST_I(Stage_Select::STAGE_BOSS)])
+    {
+        key_boss->render(device_context_,
+            2860 + position + eas, 444,  //position
+            1.0f, 1.0f,     // scal
+            200, 200,    // ‚Ç‚ê‚­‚ç‚¢•`‰æ‚·‚é‚©
+            200, 200,   // size
+            0, 0,         // pibot
+            1, 1, 1, 1,   // rgba
+            0); // angle
+    }
+
+    
     if (eas == 0)
     {
         enter->render(device_context_,

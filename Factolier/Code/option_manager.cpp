@@ -6,6 +6,7 @@
 #define BGM 0
 #define SE 180
 #define CAMERA 360
+#define RETURN 480
 #define BAR_MAX 504
 #define BAR_MIN 0
 
@@ -44,7 +45,7 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     title_back = make_unique<Sprite>(device, "./Data/Sprite/オプション.png");
     game_back = make_unique<Sprite>(device, "./Data/Sprite/ゲーム中オプション.png");
 
-    File_IO::open("./Data/Binary/save.dat", binary_data);
+    File_IO::open("save.dat", binary_data);
 
     bar = make_unique<Sprite>(device, "./Data/Sprite/オプションバー.png");
     icon_spring = make_unique<Sprite>(device, "./Data/Sprite/春カーソル.png");
@@ -52,7 +53,7 @@ Option_Manager::Option_Manager(ID3D11Device* device, ID3D11DeviceContext* contex
     icon_autam = make_unique<Sprite>(device, "./Data/Sprite/秋カーソル.png");
     icon_winter = make_unique<Sprite>(device, "./Data/Sprite/冬カーソル.png");
     arrow = make_unique<Sprite>(device, "./Data/Sprite/バー矢印(38,164).png");
-    option_bakc = make_unique<Sprite>(device, "./Data/Sprite/option_4仮.png");
+    //option_bakc = make_unique<Sprite>(device, "./Data/Sprite/option_4仮.png");
 
 
     // 何割あるかパーセントで出す
@@ -164,6 +165,69 @@ void Option_Manager::update(float elapsedTime, Input_Manager* input_manager)
     
 }
 
+void Option_Manager::title_update(float elapsedTime, Input_Manager* input_manager)
+{
+    slideshow(elapsedTime);
+    if (icon_pos > 0 && down_flag == false)
+    {
+        if (input_manager->TRG(0) & PAD_UP)
+        {
+            up_flag = true;
+        }
+        if (up_flag)
+        {
+            if (time <= 0.5f)
+            {
+                time += elapsedTime;
+                icon_eas = -easing::out_quint(time, 0.5f, 180, 0.0f);
+         
+            }
+            else
+            {
+                up_flag = false;
+
+                time = 0.0f;
+                icon_pos -= 180;
+                icon_eas = 0.0f;
+            }
+        }
+    }
+
+    // 高さ　select 23
+    if (icon_pos < 360 && up_flag == false)
+    {
+        if (input_manager->TRG(0) & PAD_DOWN)
+        {
+            down_flag = true;
+        }
+        if (down_flag)
+        {
+            if (time <= 0.5f)
+            {
+                time += elapsedTime;
+                icon_eas = +easing::out_quint(time, 0.5f, 180, 0.0f);
+
+            }
+            else
+            {
+                down_flag = false;
+
+                time = 0.0f;
+                icon_pos += 180;
+
+                icon_eas = 0.0f;
+            }
+        }
+    };
+    if (icon_eas_x < 0)
+    {
+        icon_eas_x += 240;
+    }
+    setvolume(elapsedTime, input_manager);
+
+
+}
+
 void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
 {
     icon_select = static_cast<int>(icon_pos);
@@ -196,6 +260,8 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
             {
                 binary_data.bgm_bar = BAR_MAX;
             }
+
+            return_flag = false;
             break;
 
         case SE:
@@ -219,6 +285,8 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
             {
                 binary_data.se_bar = BAR_MAX;
             }
+
+            return_flag = false;
             break;
 
         case CAMERA:
@@ -242,7 +310,14 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
             {
                 binary_data.camera_bar = BAR_MAX;
             }
+
+            return_flag = false;
             break;
+
+        case RETURN:
+            return_flag = true;
+            break;
+
         }
     }
 
@@ -265,6 +340,7 @@ void Option_Manager::setvolume(float elapsedTime, Input_Manager* input_manager)
     arrow_camera = camera_move * 504;
   
 }
+
     
 void Option_Manager::slideshow(float elapsedTime)
 {
@@ -444,14 +520,49 @@ void Option_Manager::title_render()
 
 
     // アイコン
-   /* icon_spring->render(immediate_context,
-        382, 340 + icon_eas + icon_pos,
-        1.0f, 1.0f,
-        64, 64,
-        64, 64,
-        0, 0,
-        1, 1, 1, 1,
-        0);*/
+    {
+        icon_spring->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, 1,
+            0);
+        icon_winter->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, winter_alpha,
+            0);
+        icon_autam->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, autam_alpha,
+            0);
+        icon_summer->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, summer_alpha,
+            0);
+
+        icon_spring->render(immediate_context,
+            446 + icon_eas_x + icon_pos_x, 358 + icon_eas + icon_pos,
+            1.0f, 1.0f,
+            64, 64,
+            64, 64,
+            0, 0,
+            1, 1, 1, spring_alpha,
+            0);
+    }
 
 
 

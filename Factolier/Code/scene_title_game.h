@@ -7,8 +7,10 @@
 #include "sky_box.h"
 #include "model.h"
 #include "camera_controller.h" 
+#include "framework.h"
 
 
+extern bool quit;
 
 
 class Scene_Title_Game : public Scene
@@ -81,6 +83,7 @@ private:
 
 	std::unique_ptr<Sound> sound = nullptr;
 	std::unique_ptr<Sound> se = nullptr;
+	std::unique_ptr<Sound> cusor = nullptr;
 
 
 };

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef UTIL
+#define UTIL
+
 #include <windows.h>
 #include "math_xmfloat.h"
 
@@ -9,8 +12,7 @@ CONST LONG SCREEN_HEIGHT{ 1080 };
 CONST BOOL FULLSCREEN{ !TRUE };
 CONST LPWSTR APPLICATION_NAME{ L"Theme_Sphere" };
 
-static constexpr int sync_interval = 0;
-static bool quit = false;
+static constexpr int sync_interval = 1;
 
 
 #define CAST_I(f) static_cast<int>(f)
@@ -113,3 +115,4 @@ inline DirectX::XMFLOAT3 clamp_float3_box(
 }
 
 // ----Å[Å[---- //
+#endif

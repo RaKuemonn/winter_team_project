@@ -9,6 +9,7 @@ void Scene_Loading::initialize(Scene_Manager* parent_)
     parent = parent_;
 
     icon = make_unique<Sprite>(parent->device(), "./Data/Sprite/ロードアイコン.png");
+    loding = make_unique<Sprite>(parent->device(), "./Data/Sprite/ロード文字.png");
     //スレッド開始
     std::thread thread(loading_thread, this);
 
@@ -55,6 +56,14 @@ void Scene_Loading::render(float elapsed_time)
         0.5, 0.5,         // pibot
         1, 1, 1, 1,   // rgba
         angle);
+    loding->render(device_context_,
+        960, 740,  //position
+        1.0f, 1.0f,     // scal
+        400, 70,    // どれくらい描画するか
+        400, 70,   // size
+        0.5, 0.5,         // pibot
+        1, 1, 1, 1,   // rgba
+        0);
  
 
 }

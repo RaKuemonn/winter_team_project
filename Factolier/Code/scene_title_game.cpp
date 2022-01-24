@@ -8,10 +8,13 @@
 #include "scene_loading.h"
 #include "utility.h"
 #include "option_manager.h"
+#include "scene_game.h"
 
 #define SELECT 0
 #define OPTION 200
 #define END 400
+
+
 
 
 // デバッグ用GUI描画
@@ -42,11 +45,11 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     parent = parent_;
     title = make_unique<Sprite>(parent->device(), "Data/Sprite/title.png");
 
-    back_stage1 = make_unique<Sprite>(parent->device(), "Data/Sprite/select1.png");
-    back_stage2 = make_unique<Sprite>(parent->device(), "Data/Sprite/select2.png");
-    back_stage3 = make_unique<Sprite>(parent->device(), "Data/Sprite/select3.png");
-    back_stage4 = make_unique<Sprite>(parent->device(), "Data/Sprite/select4.png");
-    back_stage0 = make_unique<Sprite>(parent->device(), "Data/Sprite/select1.png");
+    back_stage1 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_spring.png");
+    back_stage2 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_summer.png");
+    back_stage3 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_autumn.png");
+    back_stage4 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_winter.png");
+    back_stage0 = make_unique<Sprite>(parent->device(), "Data/Sprite/title_spring.png");
    
     icon_spring = make_unique<Sprite>(parent->device(), "Data/Sprite/春カーソル.png");
     icon_summer = make_unique<Sprite>(parent->device(), "Data/Sprite/夏カーソル.png");
@@ -58,10 +61,11 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     option_start = make_unique<Sprite>(parent->device(), "Data/Sprite/オプション文字.png");
     exit = make_unique<Sprite>(parent->device(), "Data/Sprite/おわる.png");
 
-    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/タイトル.wav"));
+    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/titlr_bgm.wav"));
     sound->play(true);
    
     se = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/se_仮.wav"));
+    cusor = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/cusor.wav"));
     
 
 
@@ -99,6 +103,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             if (input_manager->TRG(0) & PAD_UP)
             {
                 icon_up_flag = true;
+                cusor->play(false);
             }
             if (icon_up_flag)
             {
@@ -123,6 +128,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             if (input_manager->TRG(0) & PAD_DOWN)
             {
                 icon_down_flag = true;
+                cusor->play(false);
             }
             if (icon_down_flag)
             {
@@ -157,6 +163,7 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
             if (move_flag)
             {
                 parent->change_scene(new Scene_Loading(new Scene_Select));
+                //parent->change_scene(new Scene_Loading(new Scene_Game));
          
             }
         }
@@ -175,6 +182,22 @@ void Scene_Title_Game::move(float elapsedTime, Input_Manager* input_manager)
                 icon_flag = false;
             
             }
+        }
+
+        if (icon_pos == 400)
+        {
+
+            if (input_manager->TRG(0) & PAD_START)
+            {
+                move_flag = true;
+                icon_flag = true;
+            }
+            if (move_flag)
+            {
+                // オプション画面に移行する
+                quit = true;
+            }
+            
         }
     }
     
@@ -217,17 +240,17 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
 {
     
     //sound->pause();
-    parent->option_manager()->update(elapsedTime, input_manager);
+    parent->option_manager()->title_update(elapsedTime, input_manager);
     sound->set_volume(parent->option_manager()->bgm_vo);
-    se->set_volume(parent->option_manager()->se_vo);
+    cusor->set_volume(parent->option_manager()->se_vo);
 
     if (parent->option_manager()->down_flag ||
         parent->option_manager()->up_flag)
     {
-        se->play(false);
+        cusor->play(false);
     }
 
-    if (input_manager->TRG(0) & PAD_START)
+    if (input_manager->TRG(0) & KEY_ESC)
     {
         option_flag = false;
     }
@@ -365,7 +388,7 @@ void Scene_Title_Game::render(float elapsed_time)
     // タイトル
     {
         title->render(device_context_,
-            100, 150,
+            100, 80,
             1.0f, 1.0f,
             900, 384,
             900, 384,
@@ -453,11 +476,11 @@ void Scene_Title_Game::render(float elapsed_time)
     // オプション画面を開いたとき
     else
     {
-        parent->option_manager()->game_render();
+        parent->option_manager()->title_render();
     }
 
    
 
-    DrawDebugGUI();
+    //DrawDebugGUI();
 
 }

@@ -23,4 +23,5 @@ private:
 
 	Scene* next_scene = nullptr;
 	std::unique_ptr<Sprite> icon = nullptr;
+	std::unique_ptr<Sprite> loding = nullptr;
 };
