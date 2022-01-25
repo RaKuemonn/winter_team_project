@@ -59,12 +59,28 @@ void Decotator_Supporter::imgui_control()
 
     position = m_transform->get_position();
 
+    if (ImGui::Button(Model_Paths::Deco::wood_spring))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Wood_Spring>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::wood_summer))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Wood_Summer>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::wood_fall))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Wood_Fall>(ptr_scene_manager, position));
+    }
+    if (ImGui::Button(Model_Paths::Deco::wood_winter))
+    {
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Wood_Winter>(ptr_scene_manager, position));
+    }
+
+
+
     if (ImGui::Button(Model_Paths::Deco::ball))
     {
-        DirectX::XMFLOAT3 pboll1 = { -20,0, -10 };
-        std::unique_ptr<Stage> s = std::make_unique<Deco_Ball>(ptr_scene_manager, pboll1);
-        s->set_scale(10);
-        Stage_Manager::instance().spawn_register(s);
+        Stage_Manager::instance().spawn_register(std::make_unique<Deco_Ball>(ptr_scene_manager, position));
     }
     if (ImGui::Button(Model_Paths::Deco::egg))
     {

@@ -549,7 +549,7 @@ bool Scene_Game::judge_clear()
         {
             for(int i = 0; i < size;++i)
             {
-                std::shared_ptr<Entity> player_vehicle = Entity_Manager::instance().get_entity(vec.at(0));
+                std::shared_ptr<Entity> player_vehicle = Entity_Manager::instance().get_entity(vec.at(i));
 
                 if(static_cast<Sphere_Vehicle*>(player_vehicle.get())->get_is_free() == true) continue;
 

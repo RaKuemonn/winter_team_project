@@ -25,3 +25,49 @@ public:
         get_transform()->Update();
     }
 };
+
+
+
+class Deco_Wood_Spring final : public Decorator
+{
+public:
+    Deco_Wood_Spring(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position)
+    {
+        load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::wood_spring, true));
+        get_transform()->set_position(position);
+        get_transform()->Update();
+    }
+};
+
+class Deco_Wood_Summer final : public Decorator
+{
+public:
+    Deco_Wood_Summer(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position)
+    {
+        load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::wood_summer, true));
+        get_transform()->set_position(position);
+        get_transform()->Update();
+    }
+};
+
+class Deco_Wood_Fall final : public Decorator
+{
+public:
+    Deco_Wood_Fall(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position)
+    {
+        load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::wood_fall, true));
+        get_transform()->set_position(position);
+        get_transform()->Update();
+    }
+};
+
+class Deco_Wood_Winter final : public Decorator
+{
+public:
+    Deco_Wood_Winter(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& position)
+    {
+        load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::wood_winter, true));
+        get_transform()->set_position(position);
+        get_transform()->Update();
+    }
+};

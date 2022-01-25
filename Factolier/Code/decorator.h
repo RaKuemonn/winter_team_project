@@ -23,6 +23,11 @@ namespace Model_Paths
         inline constexpr char* const kamakura   = "./Data/Model/stage4/object/stage4_kamakura.fbx";
         inline constexpr char* const fuyu_leaf  = "./Data/Model/stage4/object/stage4_leaf.fbx";
         inline constexpr char* const snow_man   = "./Data/Model/stage4/object/stage4_snowman.fbx";
+
+        inline constexpr char* const wood_spring   = "./Data/Model/stage1/stage1_wood.fbx";
+        inline constexpr char* const wood_summer   = "./Data/Model/stage2/stage2_wood.fbx";
+        inline constexpr char* const wood_fall     = "./Data/Model/stage3/tree/stage3_tree.fbx";
+        inline constexpr char* const wood_winter   = "./Data/Model/stage4/tree/stage4_tree.fbx";
     };
 };
 
@@ -32,7 +37,7 @@ class Decorator : public Stage
 public:
     Decorator()
     {
-        get_transform()->set_scale(stage::scale);
+        get_transform()->set_scale(stage::scale * 0.1f);
         set_is_raycast(false);
     };
     virtual ~Decorator()override = default;

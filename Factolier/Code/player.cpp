@@ -202,17 +202,24 @@ void Player::update_vehicle(const float elapsed_time_, P_Anim& anim_num_)
 
         if (static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->get_on_ground())
         {
-            if (anim_num_ != P_Anim::joy)
+            DirectX::XMFLOAT3 velocity = m_velocity->get();
+            velocity.y = 0.0f;
+            const float velo_length = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(DirectX::XMLoadFloat3(&velocity)));
+
+            if (velo_length > 5.0f * FLT_EPSILON)
             {
-                if (get_scene_manager()->input_manager()->TRG(0) & PAD_START)
+                if (anim_num_ != P_Anim::joy)
                 {
-                    // 地面にいて、Enterキーが押されたとき
-                    // 発射する
-                    static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
+                    if (get_scene_manager()->input_manager()->TRG(0) & PAD_START)
+                    {
+                        // 地面にいて、Enterキーが押されたとき
+                        // 発射する
+                        static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->set_is_free();
 
-                    anim_num_ = P_Anim::attack;
+                        anim_num_ = P_Anim::attack;
 
-                    return;
+                        return;
+                    }
                 }
             }
         }
