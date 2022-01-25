@@ -33,12 +33,18 @@ void Boss_Body_1::update(const float elapsed_time_)
     if(check_im_hp() == false)
     {
         constexpr float rotate_speed = DirectX::XMConvertToRadians(30.0f);
-        //m_euler_y += rotate_speed * elapsed_time_;
+        m_euler_y += rotate_speed * elapsed_time_;
+
+        constexpr float pi = DirectX::XMConvertToRadians(180.0f);
+        if(m_euler_y < pi)
+        {
+            m_euler_y += -2.0f * pi;
+        }
 
         // ‰ñ“]ˆ—
         DirectX::XMFLOAT4 quaternion;
         DirectX::XMStoreFloat4(&quaternion, DirectX::XMQuaternionRotationAxis(DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f), m_euler_y));
-        add_quaternion(quaternion);
+        set_quaternion(quaternion);
     }
 
     // “–‚½‚è”»’èˆÊ’u‚ÌXV

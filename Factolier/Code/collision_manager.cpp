@@ -370,18 +370,21 @@ namespace local_functions
 
     inline void remove_tag_is_collide(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)
     {
-        const Tag a_tag = entity_a_.lock()->get_tag();
-        const Tag b_tag = entity_b_.lock()->get_tag();
+        ///////////////////////////////////////////////////   const Tag a_tag = entity_a_.lock()->get_tag();
+        ///////////////////////////////////////////////////   const Tag b_tag = entity_b_.lock()->get_tag();
+        ///////////////////////////////////////////////////   
+        ///////////////////////////////////////////////////   if(a_tag == Tag::Collide)
+        ///////////////////////////////////////////////////   {
+        ///////////////////////////////////////////////////       Entity_Manager::instance().remove_register(entity_a_.lock().get());
+        ///////////////////////////////////////////////////   }
+        ///////////////////////////////////////////////////   
+        ///////////////////////////////////////////////////   if(b_tag == Tag::Collide)
+        ///////////////////////////////////////////////////   {
+        ///////////////////////////////////////////////////       Entity_Manager::instance().remove_register(entity_b_.lock().get());
+        ///////////////////////////////////////////////////   }
 
-        if(a_tag == Tag::Collide)
-        {
             Entity_Manager::instance().remove_register(entity_a_.lock().get());
-        }
-
-        if(b_tag == Tag::Collide)
-        {
             Entity_Manager::instance().remove_register(entity_b_.lock().get());
-        }
     }
 
     inline void decrease_tag_is_vehicle(std::weak_ptr<Entity> entity_a_, std::weak_ptr<Entity> entity_b_)

@@ -64,7 +64,7 @@ void Goal_Judge::init_stage_1()
 
 void Goal_Judge::init_stage_2()
 {
-    constexpr DirectX::XMFLOAT3 position = { 0.0f,8.0f,138.0f };
+    constexpr DirectX::XMFLOAT3 position = { 0.0f,8.0f,149.0f };
 
     m_area_origin_position = position;
     m_area_size             = { 12.0f,0.5f,1.0f };

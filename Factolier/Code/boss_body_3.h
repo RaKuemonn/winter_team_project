@@ -13,6 +13,7 @@ public:
     void update(const float elapsed_time_) override;
 
 private:
+    void check_reference(const float elapsed_time_);
 
 private:
     static constexpr int body_size = 2;

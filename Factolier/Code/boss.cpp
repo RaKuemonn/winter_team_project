@@ -18,7 +18,7 @@ using _this_type_ = Boss;
 
 #include "idle.h"
 
-Boss::Boss(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_boss_head, target_position_, false)
+Boss::Boss(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_boss_head, target_position_, true)
 {
     m_timer.Initialize(nullptr, COUNT::UP, 0.0f);
 
@@ -64,6 +64,8 @@ void Boss::update(const float elapsed_time_)
 
     // 体力の確認
     check_wkp_body();
+
+    check_reference(elapsed_time_);
     
     // 親の行動遷移
     m_move_phases->update(elapsed_time_, *this);
@@ -196,3 +198,16 @@ void Boss::check_wkp_body()
 
 }
 
+void Boss::check_reference(const float elapsed_time_)
+{
+    if (wkp_bodies[2].expired() == false)
+    {
+        const DirectX::XMFLOAT3& under_body_position = wkp_bodies[2].lock()->get_position();
+        set_position({ under_body_position.x,under_body_position.y + body_height ,under_body_position.z });
+
+        return;
+    }
+    // 参照先がないとき 重力で動かして移動させる
+    update_velocity(elapsed_time_);
+    add_position(m_velocity->get() * elapsed_time_);
+}

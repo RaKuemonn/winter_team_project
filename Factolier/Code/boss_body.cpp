@@ -37,7 +37,7 @@ Boss_Body::Boss_Body(Scene_Manager* ptr_scene_manager_, const char* filename_, c
     for(int i = 0; i < collide_array_size; ++i)
     {
         // TODO : 扉の大きさが違うが、全て同じ大きさの当たり判定になっている
-        static constexpr float collide_radius = 10.0f;
+        static constexpr float collide_radius = 0.9f;
         std::shared_ptr<Collide_Detection> collide_detection = std::make_shared<Collide_Detection>(ptr_scene_manager_,collide_radius);
 
         //　位置設定
@@ -89,5 +89,9 @@ bool Boss_Body::check_im_hp()
 
     // 死んでいる
     set_was_died();
+
+    // 削除予約
+    Entity_Manager::instance().remove_register(this);
+
     return true;
 }
