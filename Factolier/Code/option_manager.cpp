@@ -526,7 +526,7 @@ void Option_Manager::game_render()
         0, 0,
         1, 1, 1, 1,
         0);
-    DrawDebugGUI();
+   // DrawDebugGUI();
 }
 
 

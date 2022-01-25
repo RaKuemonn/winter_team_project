@@ -81,7 +81,7 @@ void Sphere_Vehicle::move_direction(const DirectX::XMFLOAT3& direction_)
 
     // TODO: 一時的にコメントアウトしている
     // 一度でも着地していれば　操作を受け付けるようにしている
-    //if (m_on_ground == false)return;
+    if (m_on_ground == false)return;
 
     m_is_jump = static_cast<bool>(direction_.y);
 }

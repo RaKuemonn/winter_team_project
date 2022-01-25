@@ -285,28 +285,32 @@ void Scene_Game::render(float elapsed_time)
 
     parent->state_manager()->setRS(RS::SOLID_NONE);
 
-    shader->begin(ptr_device_context, elapsed_time * 0.1f);
+    if (parent->option_manager()->get_now_stage() == Stage_Select::STAGE_2)
+    {
 
-    //行列を作成
-    DirectX::XMFLOAT4X4 world = {
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
-    };
+        shader->begin(ptr_device_context, elapsed_time * 0.1f);
 
-    DirectX::XMMATRIX S = DirectX::XMMatrixScaling(10.0f, 10.0f, 10.0f);
-    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f);
-    //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 0.15f, 1.0f);
-    DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(0), 0, DirectX::XMConvertToRadians(0));
-    DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
-    DirectX::XMMATRIX W = S * R * T;
+        //行列を作成
+        DirectX::XMFLOAT4X4 world = {
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+        };
 
-    DirectX::XMStoreFloat4x4(&world, W);
+        DirectX::XMMATRIX S = DirectX::XMMatrixScaling(10.0f, 10.0f, 10.0f);
+        //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f);
+        //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 0.15f, 1.0f);
+        DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(0), 0, DirectX::XMConvertToRadians(0));
+        DirectX::XMMATRIX T = DirectX::XMMatrixTranslation(0, 0, 0);
+        DirectX::XMMATRIX W = S * R * T;
 
-    water->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.5f });
+        DirectX::XMStoreFloat4x4(&world, W);
 
-    shader->end(ptr_device_context);
+        water->render(parent->device_context(), world, { 1.0f, 1.0f, 1.0f, 0.5f });
+
+        shader->end(ptr_device_context);
+    }
 
     //2D描画
     {
