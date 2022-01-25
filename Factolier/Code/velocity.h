@@ -50,7 +50,8 @@ private:
     {
         // m_mass‚Æm_friction‚Ì‰Šú’l‚ª0‚È‚Ì‚ÅA
         // set_mass()‚Æset_friction()‚µ‚È‚¢‚ÆŒvZã–€Cˆ—‚Í“®‚©‚È‚¢
-        const DirectX::XMFLOAT3 friction = me.m_velocity * -1.0f * (me.m_mass * -gravity) * me.m_friction;
+        DirectX::XMFLOAT3 friction = me.m_velocity * -1.0f * (me.m_mass * -gravity) * me.m_friction;
+        friction.y = 0.0f;
         me.add(friction);
     }
 

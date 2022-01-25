@@ -769,8 +769,12 @@ inline void entity_water(
     {
         std::shared_ptr<Entity> vehicle = e_manager.get_entity(index);
         const DirectX::XMFLOAT3 position = vehicle->get_position();
+
+        
         
         if(entity_in_water(position.y, water_y) == false) continue;
+
+        
 
         // 水中の場合
 
@@ -782,11 +786,13 @@ inline void entity_water(
         // 閾値以下の場合continue
         if (water_surface_length < FLT_EPSILON) continue;
 
-        // 
+        //
         DirectX::XMFLOAT3 add_velocity;
-        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 1000000.0f));
+        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 300.0f));
 
         vehicle->add_velocity(add_velocity);
+
+        vehicle->set_friction(0.0001f);
     }
 }
 
