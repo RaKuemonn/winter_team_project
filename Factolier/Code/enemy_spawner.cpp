@@ -28,8 +28,8 @@ void Enemy_Spawner::set_enemy_1(const DirectX::XMFLOAT3& target)
 
 void Enemy_Spawner::set_enemy_2(const DirectX::XMFLOAT3& target)
 {
-    set_enemy<Enemy_Summer>({ 0.0f,11.6f,10.0f }, target)->set_area_size({ 14.0f,0.5f,2.0f });
-    set_enemy<Enemy_Summer>({ 0.0f,9.2f,38.6f }, target)->set_area_size({ 14.0f,0.5f,8.0f });
+    set_enemy<Enemy_Summer>({ 0.0f,13.6f,-10.0f }, target)->set_area_size({ 14.0f,0.5f,2.0f });
+    set_enemy<Enemy_Summer>({ 0.0f,10.2f,-38.6f }, target)->set_area_size({ 14.0f,0.5f,8.0f });
 }
 
 void Enemy_Spawner::set_enemy_3(const DirectX::XMFLOAT3& target)

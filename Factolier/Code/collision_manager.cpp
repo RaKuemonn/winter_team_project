@@ -788,7 +788,7 @@ inline void entity_water(
 
         //
         DirectX::XMFLOAT3 add_velocity;
-        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 300.0f));
+        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 1000.0f));
 
         vehicle->add_velocity(add_velocity);
 
