@@ -97,15 +97,17 @@ void Enemy_Move_Closer_::update(const float elapsed_time_)
     add_position(m_velocity->get() * elapsed_time_);
 
     // エリア内か判断
-    judge_in_area();
+    judge_in_area();    // ここで姿勢更新
 
-    // 姿勢の更新
-    get_transform()->Update();
+
+    //// 姿勢の更新
+    //get_transform()->Update();
+
 
     // 死んだかどうか
 
     // モデルの更新
-    get_model()->play_animation(elapsed_time_, 0);
+    get_model()->play_animation(elapsed_time_, 2);
 }
 
 
@@ -155,7 +157,14 @@ void Enemy_Move_Closer_::look_in_area()
 
 void Enemy_Move_Closer_::judge_in_area()
 {
-    out_area();
+    // 姿勢の更新
+    get_transform()->Update();
+
+    if(out_area())
+    {
+        // 姿勢の更新
+        get_transform()->Update();
+    }
 }
 
 #undef min

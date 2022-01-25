@@ -28,8 +28,8 @@ void Enemy_Spawner::set_enemy_1(const DirectX::XMFLOAT3& target)
 
 void Enemy_Spawner::set_enemy_2(const DirectX::XMFLOAT3& target)
 {
-    set_enemy<Enemy_Summer>({ 0.0f,13.6f,-10.0f }, target)->set_area_size({ 14.0f,0.5f,2.0f });
-    set_enemy<Enemy_Summer>({ 0.0f,10.2f,-38.6f }, target)->set_area_size({ 14.0f,0.5f,8.0f });
+    set_enemy<Enemy_Summer>({ 0.0f,15.0f,-11.0f }, target)->set_area_size({ 14.0f,0.5f,10.0f });
+    set_enemy<Enemy_Summer>({ 0.0f,13.0f,40.0f }, target)->set_area_size({ 14.0f,0.5f,8.0f });
 }
 
 void Enemy_Spawner::set_enemy_3(const DirectX::XMFLOAT3& target)
@@ -38,8 +38,8 @@ void Enemy_Spawner::set_enemy_3(const DirectX::XMFLOAT3& target)
     set_enemy<Enemy_Fall>({ -4.0f,-8.2f,-43.0f }, target)->set_area_size({ 5.0f,0.5f,10.0f });
     set_enemy<Enemy_Fall>({ 4.0f,-8.2f,-43.0f }, target)->set_area_size({ 5.0f,0.5f,10.0f });
     set_enemy<Enemy_Fall>({ -9.2f,-8.2f,45.0f }, target)->set_area_size({ 10.0f,0.5f,5.0f });
-    set_enemy<Enemy_Fall>({ 0.0f,-8.2f,-45.0f }, target)->set_area_size({ 10.0f,0.5f,5.0f });
-    set_enemy<Enemy_Fall>({ 9.2f,-8.2f,-45.0f }, target)->set_area_size({ 10.0f,0.5f,5.0f });
+    set_enemy<Enemy_Fall>({ 0.0f,-8.2f,45.0f }, target)->set_area_size({ 10.0f,0.5f,5.0f });
+    set_enemy<Enemy_Fall>({ 9.2f,-8.2f,45.0f }, target)->set_area_size({ 10.0f,0.5f,5.0f });
 }
 
 void Enemy_Spawner::set_enemy_4(const DirectX::XMFLOAT3& target)

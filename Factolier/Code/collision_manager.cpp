@@ -52,11 +52,11 @@ namespace ray_functions
         // すでに位置が更新されたあとなのでこの計算になっている entityの更新で速度更新->位置更新->床の当たり判定
         // 始点が前回位置、終点が現在位置
 
-        const DirectX::XMFLOAT3 position = entity.lock()->get_position();
-        const float scale_y = entity.lock()->get_scale().y;
-        const float offset_y = (scale_y * 0.5f < 0.5f) ? 0.5f : scale_y * 0.5f;
-        const DirectX::XMFLOAT3 start = { position.x, position.y - velocity.y + offset_y, position.z };
-        const DirectX::XMFLOAT3 end = position/*{ position.x - velocity.x, position.y, position.z - velocity.z }*/;
+        const DirectX::XMFLOAT3 position    = entity.lock()->get_position();
+        const float scale_y                 = entity.lock()->get_scale().y;
+        const float offset_y                = (scale_y * 0.5f < 0.5f) ? 0.5f : scale_y * 0.5f;
+        const DirectX::XMFLOAT3 start       = { position.x, position.y - velocity.y + offset_y, position.z };
+        const DirectX::XMFLOAT3 end         = position/*{ position.x - velocity.x, position.y, position.z - velocity.z }*/;
 
 
         return s_manager.ray_cast(start, end, &hit_result_);
@@ -557,7 +557,7 @@ inline void ray_to_floor(
     // 敵
     for (auto index : std::get<1>(vectors_))
     {
-        std::shared_ptr<Entity> enemy = e_manager.get_entity(index);
+         std::shared_ptr<Entity> enemy = e_manager.get_entity(index);
         enemy->set_friction(0.0f);
         result = {};
         if (ray_cast_floor(elapsed_time, enemy, s_manager, result))
@@ -762,7 +762,7 @@ inline void entity_water(
 )
 {
     // 水の高さ
-    constexpr float water_y = -10.0f;
+    constexpr float water_y = 0.0f;
 
     // 乗り物
     for (auto index : std::get<2>(vectors_))
@@ -788,7 +788,7 @@ inline void entity_water(
 
         //
         DirectX::XMFLOAT3 add_velocity;
-        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 1000.0f));
+        DirectX::XMStoreFloat3(&add_velocity, DirectX::XMVectorScale(water_pressure_direction, water_surface_length * 100.0f));
 
         vehicle->add_velocity(add_velocity);
 

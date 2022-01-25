@@ -118,8 +118,8 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     const Stage_Select stage_num = parent->option_manager()->get_now_stage();
 #else
     // TODO: debug ステージが固定されている
-    //const Stage_Select stage_num = parent->option_manager()->get_now_stage();
-    const Stage_Select stage_num = Stage_Select::STAGE_1;
+    const Stage_Select stage_num = parent->option_manager()->get_now_stage();
+    //const Stage_Select stage_num = Stage_Select::STAGE_1;
 #endif
 
     // プレイヤーの位置
