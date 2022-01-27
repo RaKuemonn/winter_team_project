@@ -298,6 +298,7 @@ public:
 
     void update_animation(Keyframe& keyframe);
     bool append_animations(const char* animation_filename, float sampling_rate);
+    bool append_born(const char* filename);
     void blend_animations(const Keyframe* keyframes[2], float factor, Keyframe& keyframe);
 
     void create_com_objects(ID3D11Device* device);

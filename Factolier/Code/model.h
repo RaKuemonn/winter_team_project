@@ -26,6 +26,7 @@ private:
 public:
     void play_animation(float elapsed_time, int anime_num, bool loop = true, float blend_second = 1.0f);
     void append_animation(const char* animation_filename, float sampling_rate = 60.0f) { resource->append_animations(animation_filename, sampling_rate); }
+    void append_born(const char* born_filename) { resource->append_born(born_filename); }
     const bool get_anime_play_flag() const { return anime_play_flag; }
 
     void render(ID3D11DeviceContext* immediate_context, const DirectX::XMFLOAT4X4& world, const DirectX::XMFLOAT4& material_color);
