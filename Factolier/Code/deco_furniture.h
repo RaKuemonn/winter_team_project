@@ -33,6 +33,8 @@ public:
     {
         load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::kamakura, true));
         get_transform()->set_position(position);
+        get_transform()->set_euler({ 0.0f,-3.14f,0.0f });
+        get_transform()->set_scale(stage::scale * 0.2f);
         get_transform()->Update();
     }
 };
@@ -44,6 +46,8 @@ public:
     {
         load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::snow_man, true));
         get_transform()->set_position(position);
+        get_transform()->set_euler({ 0.0f,-3.14f,0.0f });
+        get_transform()->set_scale(stage::scale * 0.3f);
         get_transform()->Update();
     }
 };

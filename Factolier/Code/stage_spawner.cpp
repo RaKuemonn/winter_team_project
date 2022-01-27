@@ -179,6 +179,32 @@ void Stage_Spawner::set_stage_4()
     set_stage<Deco_Wood_Winter>({0.029140, 9.097606, 129.701538}  );
     set_stage<Deco_Wood_Winter>({19.662209, 9.097606, 117.682915} );
     set_stage<Deco_Wood_Winter>({-18.226181, 9.097606, 103.934937});
+
+
+    set_stage<Deco_Snow_Man>({4.882720, 0.256061, -120.899185}   );
+    set_stage<Deco_Kamakura>({-7.569036, -0.642542, -97.019562}  );
+    set_stage<Deco_Leaf_Winter>({6.299351, -0.642542, -87.905891}   );
+    set_stage<Deco_Leaf_Winter>({6.299351, -0.642542, -95.151489}   );
+    set_stage<Deco_Leaf_Winter>({-6.056017, -0.642542, -90.379997}  );
+    set_stage<Deco_Leaf_Winter>({-8.126642, -0.642542, -93.047081}  );
+    set_stage<Deco_Leaf_Winter>({4.043475, 0.258198, -107.259880}   );
+    set_stage<Deco_Leaf_Winter>({-3.323265, 0.258198, -107.289406}  );
+    set_stage<Deco_Leaf_Winter>({3.638399, 0.258198, -115.704414}   );
+    set_stage<Deco_Leaf_Winter>({-5.701273, 0.258198, -111.070694}  );
+    set_stage<Deco_Leaf_Winter>({4.918447, 6.629390, -38.285889}    );
+    set_stage<Deco_Kamakura>({-10.260880, 9.106196, 122.436775}  )->set_scale(0.12f);
+    set_stage<Deco_Leaf_Winter>({11.050152, 9.106196, 122.891891}   );
+    set_stage<Deco_Leaf_Winter>({17.315588, 9.106196, 122.023224}   );
+    set_stage<Deco_Leaf_Winter>({18.766335, 9.106196, 107.095192}   );
+    set_stage<Deco_Leaf_Winter>({19.142611, 9.106196, 101.048607}   );
+    set_stage<Deco_Leaf_Winter>({14.014485, 9.106196, 99.467514}    );
+    set_stage<Deco_Leaf_Winter>({9.155117, 9.106196, 91.786064}     );
+    set_stage<Deco_Leaf_Winter>({-8.983050, 9.106196, 92.220779}    );
+    set_stage<Deco_Leaf_Winter>({-8.998720, 9.106196, 85.762650}    );
+    set_stage<Deco_Snow_Man>({-3.628353, 9.106196, 83.865662}    );
+    set_stage<Deco_Leaf_Winter>({6.436167, 9.106196, 86.127060}     );
+
+
 }
 
 void Stage_Spawner::set_stage_boss()
