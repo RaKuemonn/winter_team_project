@@ -273,7 +273,7 @@ void Model_Resource::fetch_meshes(FbxScene* fbx_scene, const char* filename)
                     size_t influence_index;
                     for (influence_index = 0; influence_index < influences_per_control_point.size(); ++influence_index)
                     {
-                        if (influence_index <= MAX_BONE_INFLUENCES)
+                        if (influence_index < MAX_BONE_INFLUENCES)
                         {
                             vertex.bone_weights[influence_index] = influences_per_control_point.at(influence_index).bone_weight;
                             vertex.bone_indices[influence_index] = influences_per_control_point.at(influence_index).bone_index;
@@ -331,6 +331,10 @@ void Model_Resource::fetch_meshes(FbxScene* fbx_scene, const char* filename)
 
                     mesh.vertices.at(vertex_index) = std::move(vertex);
                     mesh.indices.at(static_cast<size_t>(offset) + position_in_polygon) = vertex_index;
+
+                    //mesh.vertices.emplace_back(vertex);
+                    //mesh.indices.emplace_back(vertex_index);
+
                     subset.index_count++;
                 }
             }
@@ -556,6 +560,190 @@ void Model_Resource::update_animation(Keyframe& keyframe)
         XMStoreFloat4x4(&node.global_transform, S * R * T * P);
     }
 }
+
+
+bool Model_Resource::append_born(const char* filename)
+{
+    //既にボーンが存在するなら追加しない
+    for (const MeshData& m : meshes)
+    {
+        if (m.skeletons.bones.size() > 0)
+        {
+            return false;
+        }
+    }
+
+
+    FbxManager* fbx_manager{ FbxManager::Create() };
+    FbxScene* fbx_scene{ FbxScene::Create(fbx_manager, "") };
+
+    FbxImporter* fbx_importer{ FbxImporter::Create(fbx_manager, "") };
+    bool import_status{ false };
+
+    import_status = fbx_importer->Initialize(filename);
+    _ASSERT_EXPR_A(import_status, fbx_importer->GetStatus().GetErrorString());
+
+    import_status = fbx_importer->Import(fbx_scene);
+    _ASSERT_EXPR_A(import_status, fbx_importer->GetStatus().GetErrorString());
+
+
+    //ノード取得
+    std::vector<Node> nodes_ex;
+    std::vector<MeshData> meshes_ex;
+
+    std::function<void(FbxNode*)> traverse{ [&](FbxNode* fbx_node)
+        {
+            Node& node{ nodes_ex.emplace_back() };
+            //全てのアトリビュートを取得
+            for (int i = 0; i < fbx_node->GetNodeAttributeCount(); i++)
+            {
+                node.attribute.emplace_back(fbx_node->GetNodeAttributeByIndex(i)->GetAttributeType());
+            }
+
+            if (fbx_node->GetNodeAttributeCount() == 0)
+            {
+                node.attribute.emplace_back(FbxNodeAttribute::EType::eUnknown);
+            }
+
+            node.name = fbx_node->GetName();
+            node.unique_id = fbx_node->GetUniqueID();
+            node.parent_index = indexof_node(fbx_node->GetParent() ?
+                fbx_node->GetParent()->GetUniqueID() : 0);
+
+            for (int child_index = 0; child_index < fbx_node->GetChildCount(); ++child_index)
+            {
+                //再起処理
+                traverse(fbx_node->GetChild(child_index));
+            }
+        }
+    };
+    traverse(fbx_scene->GetRootNode());
+
+
+    //メッシュのノード取得
+    for (const Node& node : nodes_ex)
+    {
+        for (int i = 0; i < node.attribute.size(); i++)
+        {
+            //ノードのアトリビュートがメッシュ以外なら飛ばす
+            if (node.attribute[i] != FbxNodeAttribute::EType::eMesh) continue;
+
+
+            //ノードとメッシュのデータ取得
+            FbxNode* fbx_node{ fbx_scene->FindNodeByName(node.name.c_str()) };
+            FbxMesh* fbx_mesh{ fbx_node->GetMesh() };
+
+
+            //メッシュの情報を記録
+            MeshData& mesh{ meshes_ex.emplace_back() };
+
+
+            //ボーンのウエイト値を取得
+            std::vector<bone_influences_per_control_point> bone_influences;
+            fetch_bone_influences(fbx_mesh, bone_influences);
+
+            //バインドポーズを取得
+            fetch_skeleton(fbx_mesh, mesh.skeletons);
+
+
+            //全てのマテリアルの情報を取得
+            const int material_count{ fbx_mesh->GetNode()->GetMaterialCount() };
+            mesh.subsets.resize(material_count > 0 ? material_count : 1);
+
+
+            //ポリゴン設定
+            const int polygon_count{ fbx_mesh->GetPolygonCount() };
+            mesh.vertices.resize(polygon_count * 3LL);
+            mesh.indices.resize(polygon_count * 3LL);
+
+
+            FbxStringList uv_names;
+            fbx_mesh->GetUVSetNames(uv_names);
+            const FbxVector4* control_points{ fbx_mesh->GetControlPoints() };
+
+            //ポリゴン取得
+            for (int polygon_index = 0; polygon_index < polygon_count; ++polygon_index)
+            {
+                const int material_index{ material_count > 0 ? fbx_mesh->GetElementMaterial()->GetIndexArray().GetAt(polygon_index) : 0 };
+                Subset& subset{ mesh.subsets.at(material_index) };
+                const uint32_t offset{ subset.index_start + subset.index_count };
+
+                for (int position_in_polygon = 0; position_in_polygon < 3; ++position_in_polygon)
+                {
+                    const int vertex_index{ polygon_index * 3 + position_in_polygon };
+
+                    //頂点情報の取得
+                    Vertex vertex;
+                    const int polygon_vertex{ fbx_mesh->GetPolygonVertex(polygon_index, position_in_polygon) };
+
+                    //ボーンの影響度の取得
+                    const bone_influences_per_control_point& influences_per_control_point{ bone_influences.at(polygon_vertex) };
+                    size_t influence_index;
+                    for (influence_index = 0; influence_index < influences_per_control_point.size(); ++influence_index)
+                    {
+                        if (influence_index < MAX_BONE_INFLUENCES)
+                        {
+                            vertex.bone_weights[influence_index] = influences_per_control_point.at(influence_index).bone_weight;
+                            vertex.bone_indices[influence_index] = influences_per_control_point.at(influence_index).bone_index;
+                        }
+
+                        else
+                        {
+                            size_t minimum_value_index = 0;
+                            float minimum_value = FLT_MAX;
+                            for (size_t i = 0; i < MAX_BONE_INFLUENCES; ++i)
+                            {
+                                if (minimum_value > vertex.bone_weights[i])
+                                {
+                                    minimum_value = vertex.bone_weights[i];
+                                    minimum_value_index = i;
+                                }
+                            }
+                            vertex.bone_weights[minimum_value_index] += influences_per_control_point.at(influence_index).bone_weight;
+                            vertex.bone_indices[minimum_value_index] = influences_per_control_point.at(influence_index).bone_index;
+                        }
+                    }
+
+
+                    mesh.vertices.at(vertex_index) = std::move(vertex);
+                    mesh.indices.at(static_cast<size_t>(offset) + position_in_polygon) = vertex_index;
+
+
+                    subset.index_count++;
+                }
+            }
+
+
+        }
+    }
+
+
+    //元データに取得したボーンデータを設定
+    for (int i = 0; i < static_cast<int>(meshes.size()); i++)
+    {
+        meshes[i].skeletons = meshes_ex[i].skeletons;
+
+        for (int j = 0; j < static_cast<int>(meshes[i].vertices.size()); j++)
+        {
+            for (int k = 0; k < MAX_BONE_INFLUENCES; k++)
+            {
+                meshes[i].vertices[j].bone_indices[k] = meshes_ex[i].vertices[j].bone_indices[k];
+                meshes[i].vertices[j].bone_weights[k] = meshes_ex[i].vertices[j].bone_weights[k];
+            }
+        }
+    }
+
+
+    fbx_manager->Destroy();
+
+    //シリアライズデータ作成
+    std::ofstream ofs(fcm_name, std::ios::binary);
+    cereal::BinaryOutputArchive serialization(ofs);
+    serialization(nodes, meshes, animations);
+
+    return true;
+}
+
 
 
 bool Model_Resource::append_animations(const char* animation_filename, float sampling_rate)
