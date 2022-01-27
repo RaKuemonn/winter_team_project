@@ -11,7 +11,7 @@
 #include "stage_manager.h"
 
 
-Decotator_Supporter::Decotator_Supporter(Scene_Manager* ptr_scene_manager_)
+Decotator_Supporter::Decotator_Supporter(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& player_pos) : player_position(player_pos)
 {
     ptr_scene_manager = ptr_scene_manager_;
 
@@ -30,6 +30,7 @@ void Decotator_Supporter::imgui_control()
 {
     ImGui::Begin("Decorator_Supporter");
 
+    /*
     DirectX::XMFLOAT3 position  = m_transform->get_position();
     DirectX::XMFLOAT3 scale     = m_transform->get_scale();
 
@@ -57,7 +58,9 @@ void Decotator_Supporter::imgui_control()
 
 
 
-    position = m_transform->get_position();
+    position = m_transform->get_position(); */
+
+    DirectX::XMFLOAT3 position = player_position;
 
     if (ImGui::Button(Model_Paths::Deco::wood_spring))
     {

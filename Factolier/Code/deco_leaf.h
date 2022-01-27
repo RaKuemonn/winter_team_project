@@ -11,6 +11,7 @@ public:
     {
         load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::aki_leaf, true));
         get_transform()->set_position(position);
+        get_transform()->set_scale(stage::scale * 0.3f);
         get_transform()->Update();
     }
 };
@@ -22,6 +23,7 @@ public:
     {
         load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::fuyu_leaf, true));
         get_transform()->set_position(position);
+        get_transform()->set_scale(stage::scale * 0.3f);
         get_transform()->Update();
     }
 };

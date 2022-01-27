@@ -6,12 +6,13 @@
 #include "camera.h"
 #include "entity_manager.h"
 #include "stage_manager.h"
-#include "player.h"
+#include "Edit_Player.h"
 #include "enemy_move_closer.h"
 #include "enemy_move_closer_.h"
 #include "enemy_spring.h"
 #include "camera_controller.h"
 #include "imgui.h"
+#include "player.h"
 #include "utility.h"
 #include "sphere_vehicle.h"
 #include "scene_loading.h"
@@ -101,7 +102,13 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
     Entity_Manager::instance().set_update_move();
 
+
+#ifdef NDEBUG
     std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
+#else
+    std::shared_ptr<Entity> player = std::make_shared<Edit_Player>(parent);
+#endif
+
     Entity_Manager::instance().spawn_register(player);
 
 
@@ -138,7 +145,7 @@ void Scene_Game::initialize(Scene_Manager* parent_)
     camera_controller   = std::make_unique<Camera_Controller>(&player->get_position());
     
 
-    debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_);
+    debug_decorator_supporter = std::make_unique<Decotator_Supporter>(parent_, player->get_position());
 
     bgm_stage1 = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/select_BGM.wav"));
 
@@ -222,9 +229,9 @@ void Scene_Game::render(float elapsed_time)
 {
     parent->state_manager()->setDS(DS::ON_ON);
 
-    parent->state_manager()->setBS(BS::ALPHA);
+    parent->state_manager()->setBS(BS::COVERAGE);
 
-    parent->state_manager()->setRS(RS::SOLID_BACK);
+    parent->state_manager()->setRS(RS::SOLID_NONE);
 
 
     Shader* shader = nullptr;
@@ -241,6 +248,7 @@ void Scene_Game::render(float elapsed_time)
         shader->end(ptr_device_context);
     }
 
+    //parent->state_manager()->setRS(RS::SOLID_BACK);
     
     {
         ID3D11RenderTargetView* rtv = parent->render_target_view();
@@ -288,7 +296,9 @@ void Scene_Game::render(float elapsed_time)
     if (parent->option_manager()->get_now_stage() == Stage_Select::STAGE_2)
     {
 
-        shader->begin(ptr_device_context, elapsed_time * 0.1f);
+        parent->state_manager()->setBS(BS::ALPHA);
+
+        shader->begin(ptr_device_context, elapsed_time * 0.05f);
 
         //行列を作成
         DirectX::XMFLOAT4X4 world = {
@@ -298,7 +308,7 @@ void Scene_Game::render(float elapsed_time)
             0.0f, 0.0f, 0.0f, 1.0f
         };
 
-        DirectX::XMMATRIX S = DirectX::XMMatrixScaling(10.0f, 10.0f, 10.0f);
+        DirectX::XMMATRIX S = DirectX::XMMatrixScaling(50.0f, 50.0f, 50.0f);
         //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 1.0f, 1.0f);
         //DirectX::XMMATRIX S = DirectX::XMMatrixScaling(1.0f, 0.15f, 1.0f);
         DirectX::XMMATRIX R = DirectX::XMMatrixRotationRollPitchYaw(DirectX::XMConvertToRadians(0), 0, DirectX::XMConvertToRadians(0));
