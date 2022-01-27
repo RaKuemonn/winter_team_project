@@ -106,7 +106,8 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 #ifdef NDEBUG
     std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
 #else
-    std::shared_ptr<Entity> player = std::make_shared<Edit_Player>(parent);
+    std::shared_ptr<Entity> player = std::make_shared<Player>(parent);
+    //std::shared_ptr<Entity> player = std::make_shared<Edit_Player>(parent);
 #endif
 
     Entity_Manager::instance().spawn_register(player);
@@ -204,10 +205,13 @@ void Scene_Game::update(float elapsed_time)
             return;
         }
     }
-
+    
 
     Stage_Manager::instance().update(elapsed_time);
     Stage_Manager::instance().imgui();
+
+
+    judge_out_stage_player();
 
     Entity_Manager::instance().update(elapsed_time);
 
@@ -586,4 +590,23 @@ bool Scene_Game::judge_clear()
     }
 
     return true;
+}
+
+
+bool Scene_Game::judge_out_stage_player()
+{
+    std::vector<short> vec = Entity_Manager::instance().get_entities(Tag::Vehicle);
+
+    for(auto i : vec)
+    {
+        std::shared_ptr<Entity> player = Entity_Manager::instance().get_entity(i);
+
+        if(static_cast<Sphere_Vehicle*>(player.get())->get_is_free()) continue;
+
+        if (player->get_latest_position().y < -30.0f)
+        {
+            init_player_position(parent->option_manager()->get_now_stage(), player);
+        }
+    }
+    return false;
 }

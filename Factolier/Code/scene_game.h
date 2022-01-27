@@ -27,6 +27,7 @@ private:
 	void init_stage(const Stage_Select stage_);
     short* init_enemy(const Stage_Select stage_,const DirectX::XMFLOAT3& target_position);
 	bool judge_clear();
+	bool judge_out_stage_player();
 
 private:
 	std::unique_ptr<Sky_Box> sky_box = nullptr;

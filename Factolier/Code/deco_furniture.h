@@ -22,6 +22,7 @@ public:
     {
         load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::umbrella_and_bed, true));
         get_transform()->set_position(position);
+        get_transform()->set_scale(stage::scale * 0.15f);
         get_transform()->Update();
     }
 };

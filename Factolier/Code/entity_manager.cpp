@@ -94,7 +94,7 @@ void Entity_Manager::spawn_register(std::shared_ptr<Entity>& entity)
 void Entity_Manager::remove_register(Entity* entity)
 {
     //vec_removes.emplace_back(entity);
-    vec_removes.emplace_back(get_entity(entity));
+    vec_removes.emplace_back( get_entity(entity) );
 }
 
 void Entity_Manager::all_clear()
