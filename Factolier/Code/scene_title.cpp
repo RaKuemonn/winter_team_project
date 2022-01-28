@@ -12,9 +12,9 @@ void Scene_Title::initialize(Scene_Manager* parent_)
 
     //title_back = std::make_unique<Sprite_Batch>(parent->device(), "./Data/cyberpunk.jpg", 1000);
 
-    //sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/_.wav"));
+    sound = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/_.wav"));
 
-    //sound->play(false);
+    sound->play(false);
 
     sky_box = std::make_unique<Sky_Box>(parent->device(), L"./Data/cubemap_batch.dds");
 

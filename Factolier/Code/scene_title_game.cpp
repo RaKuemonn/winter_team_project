@@ -68,6 +68,8 @@ void Scene_Title_Game::initialize(Scene_Manager* parent_)
     cusor = std::make_unique<Sound>(parent->sound_manager()->load_sound(L"./Data/Sound/cusor.wav"));
     
 
+    sound->set_volume(parent->option_manager()->bgm_vo);
+    cusor->set_volume(parent->option_manager()->se_vo);
 
 }
 
@@ -244,11 +246,11 @@ void Scene_Title_Game::option(float elapsedTime, Input_Manager* input_manager)
     sound->set_volume(parent->option_manager()->bgm_vo);
     cusor->set_volume(parent->option_manager()->se_vo);
 
-    if (parent->option_manager()->down_flag ||
-        parent->option_manager()->up_flag)
-    {
-        cusor->play(false);
-    }
+    //if (parent->option_manager()->down_flag ||
+    //    parent->option_manager()->up_flag)
+    //{
+    //    cusor->play(false);
+    //}
 
     if (input_manager->TRG(0) & KEY_ESC)
     {
