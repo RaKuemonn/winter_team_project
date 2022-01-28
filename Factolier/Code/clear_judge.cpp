@@ -22,7 +22,8 @@ Clear_Judge::Clear_Judge(Stage_Select stage_enum_, const DirectX::XMFLOAT3& play
 
 bool Clear_Judge::judge()
 {
-    return judge_function();
+    bool i = judge_function();
+    return i;
 }
 
 
@@ -34,5 +35,6 @@ bool Clear_Judge::area_judge()
 bool Clear_Judge::boss_dead()
 {
     constexpr short zero = 0;
-    return (ptr_boss_hp <= zero);
+    bool i = (*ptr_boss_hp <= zero);
+    return i;
 }

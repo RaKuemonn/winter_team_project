@@ -381,6 +381,9 @@
     <ClCompile Include="Factolier\Code\stage_4_move.cpp">
       <Filter>Factolier\Stage\stage_4</Filter>
     </ClCompile>
+    <ClCompile Include="Factolier\Code\edit_player.cpp">
+      <Filter>Factolier\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Factolier\Code\scene_loading.h">
@@ -718,6 +721,9 @@
     </ClInclude>
     <ClInclude Include="Factolier\Code\stage_4_move.h">
       <Filter>Factolier\Stage\stage_4</Filter>
+    </ClInclude>
+    <ClInclude Include="Factolier\Code\edit_player.h">
+      <Filter>Factolier\Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,7 @@
 #include "entity_manager.h"
 
 
-Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const char* filename_, const DirectX::XMFLOAT3& target_position_, bool default_collde_is_) : target_position(target_position_)
+Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const char* filename_, const DirectX::XMFLOAT3& target_position_, bool default_collde_is_, bool boss_) : target_position(target_position_)
 {
 
     set_ptr_scene_manager(ptr_scene_manager_);
@@ -20,7 +20,15 @@ Enemy::Enemy(Scene_Manager* ptr_scene_manager_, const char* filename_, const Dir
     if(default_collde_is_)
     {
         constexpr float radius = 0.8f;
-        std::shared_ptr<Collide_Detection> collide_detection    = std::make_shared<Collide_Detection>(ptr_scene_manager_, radius);
+        std::shared_ptr<Collide_Detection> collide_detection;
+        if (boss_)
+        {
+            collide_detection = std::make_shared<Collide_Detection>(ptr_scene_manager_, radius * 5.0f);
+        }
+        else
+        {
+            collide_detection = std::make_shared<Collide_Detection>(ptr_scene_manager_, radius);
+        }
         wkp_collide_detection                                   = collide_detection;
 
         std::shared_ptr<Entity> e_collide_detection             = collide_detection;
@@ -60,6 +68,17 @@ bool Enemy::check_im_die()
 
 
     Entity_Manager::instance().remove_register(this);
+
+    return true;
+}
+
+bool Enemy::check_im_die_only()
+{
+    if (wkp_collide_detection.expired() == false) // ŽQÆ‚ªØ‚ê‚éˆ—collide_detection‚ªÁ‚³‚ê‚é‚Ì‚ÍAcollision_manager‚Åíœˆ—‚ª“ü‚Á‚½Œã@
+    {
+        wkp_collide_detection.lock()->set_position(get_position());
+        return false;
+    }
 
     return true;
 }

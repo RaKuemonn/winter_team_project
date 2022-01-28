@@ -4,8 +4,11 @@
 #include <d3d11.h>
 #include <memory>
 #include <vector>
+
+#include "stage.h"
 class Stage;
 
+#include "binary_loader.h"
 
 class Stage_Manager final
 {
@@ -33,9 +36,21 @@ public:
     void spawn_register(std::shared_ptr<Stage>& stage);
     void remove_register(Stage* stage);
 
+    std::shared_ptr<Stage> get_stage(Stage* entity_) const;
+
     void all_clear();
 
+    void file_write()
+    {
+        std::vector<DirectX::XMFLOAT3> vec = {};
 
+        for(auto& stage : vec_stages)
+        {
+            vec.emplace_back(stage->get_position());
+        }
+
+        File_IO<int>::write("./Data/stage_data.dat", vec, 1);
+    }
 
 private:
     std::vector<std::shared_ptr<Stage>> vec_stages = {};

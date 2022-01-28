@@ -28,6 +28,7 @@ constexpr int KEY_SPACE     = (1 << 16);
 constexpr int MOUSE_LEFT    = (1 << 17);
 constexpr int KEY_ESC       = (1 << 18);
 constexpr int KEY_BACK      = (1 << 19);
+constexpr int KEY_L_SHIFT   = (1 << 20);
 
 // ƒpƒbƒh‚ÌÅ‘å”
 constexpr int GAMEPAD_NUM   = 4;

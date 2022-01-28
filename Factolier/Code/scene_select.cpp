@@ -71,7 +71,7 @@ void Scene_Select::initialize(Scene_Manager* parent_)
 
 void Scene_Select::uninitialize()
 {
-    File_IO::write("save.dat", parent->option_manager()->get_binary());
+    //File_IO<Binary_Data>::write("./Data/save.dat", parent->option_manager()->get_binary());
 }
 
 

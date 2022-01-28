@@ -9,8 +9,8 @@
 
 CONST LONG SCREEN_WIDTH{ 1920 };
 CONST LONG SCREEN_HEIGHT{ 1080 };
-CONST BOOL FULLSCREEN{ !TRUE };
-CONST LPWSTR APPLICATION_NAME{ L"Theme_Sphere" };
+CONST BOOL FULLSCREEN{ TRUE };
+CONST LPWSTR APPLICATION_NAME{ L"Ride_On_Seasons" };
 
 static constexpr int sync_interval = 1;
 
@@ -31,7 +31,7 @@ inline void safe_delete(T*& p)
 
 
 
-// --- óêêî --- //
+// --- ÔøΩÔøΩÔøΩÔøΩ --- //
 
 inline float random_float(const float range_min_, const float range_max_)
 {
@@ -64,10 +64,10 @@ inline DirectX::XMFLOAT3 random_range_box(
     );
 }
 
-// ----Å[Å[---- //
+// ----ÔøΩ[ÔøΩ[---- //
 
 
-// --- å≈íË --- //
+// --- ÔøΩ≈íÔøΩ --- //
 inline float clamp_float(const float value_, const float min_, const float max_)
 {
     if (value_ < min_)
@@ -114,5 +114,5 @@ inline DirectX::XMFLOAT3 clamp_float3_box(
     );
 }
 
-// ----Å[Å[---- //
+// ----ÔøΩ[ÔøΩ[---- //
 #endif

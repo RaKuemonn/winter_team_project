@@ -91,8 +91,8 @@ void Sphere_Vehicle::update_velocity(const float elapsed_time_)
 {
     if (m_is_free)
     {
-        m_velocity->set_friction(0.01f);
-        m_velocity->set_mass((get_scale().x < scale) ? get_scale().x : 1.0f);
+        m_velocity->set_friction(0.0f);
+        m_velocity->set_mass((get_scale().x < scale) ? 5.0f: 1.0f);
     }
 
     const DirectX::XMFLOAT3 gravity = { 0.0f,(2.0f + m_velocity->get_mass()) * -9.8f,0.0f };

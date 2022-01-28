@@ -202,11 +202,11 @@ void Player::update_vehicle(const float elapsed_time_, P_Anim& anim_num_)
 
         if (static_cast<Sphere_Vehicle*>(m_wkp_vehicle.lock().get())->get_on_ground())
         {
-            DirectX::XMFLOAT3 velocity = m_velocity->get();
+            DirectX::XMFLOAT3 velocity = m_wkp_vehicle.lock()->get_velocity();
             velocity.y = 0.0f;
             const float velo_length = DirectX::XMVectorGetX(DirectX::XMVector3LengthEst(DirectX::XMLoadFloat3(&velocity)));
 
-            if (velo_length > 5.0f * FLT_EPSILON)
+            if (velo_length > 2.0f)
             {
                 if (anim_num_ != P_Anim::joy)
                 {

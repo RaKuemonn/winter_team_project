@@ -11,14 +11,14 @@
 #include "boss_body_3.h"
 using namespace body;
 
-constexpr short boss_hp = 3;
+constexpr short boss_hp = 4;
 
 // 別名エイリアス
 using _this_type_ = Boss;
 
 #include "idle.h"
 
-Boss::Boss(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_boss_head, target_position_, true)
+Boss::Boss(Scene_Manager* ptr_scene_manager_, const DirectX::XMFLOAT3& target_position_) : Enemy(ptr_scene_manager_, Model_Paths::Entity::enemy_boss_head, target_position_, true, true)
 {
     m_timer.Initialize(nullptr, COUNT::UP, 0.0f);
 
@@ -74,6 +74,12 @@ void Boss::update(const float elapsed_time_)
 
     // 姿勢の更新
     get_transform()->Update();
+
+
+    if(get_ability().get_hp() <= 0)
+    {
+        Entity_Manager::instance().remove_register(this);
+    }
 
     //// モデルの更新
     //get_model()->play_animation(elapsed_time_, 0);
@@ -191,6 +197,11 @@ void Boss::check_wkp_body()
         if(wkp_bodies[i].expired() == false) continue;
 
         // 参照がない時
+        --hp;
+    }
+
+    if(check_im_die_only())
+    {
         --hp;
     }
 

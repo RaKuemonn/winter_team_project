@@ -9,7 +9,7 @@ using namespace body;
 
 inline void collide_detection_set_position(std::weak_ptr<Collide_Detection> collide_detection, const DirectX::XMFLOAT3& axis_z_ , const DirectX::XMFLOAT3& body_position, const float rotated_y, const int i)
 {
-    constexpr float body_radius = 20.0f;
+    constexpr float body_radius = 15.0f;
     constexpr float radian_60 = DirectX::XMConvertToRadians(60.0f);
     const DirectX::XMVECTOR y_axis = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f);
 
@@ -19,7 +19,7 @@ inline void collide_detection_set_position(std::weak_ptr<Collide_Detection> coll
     DirectX::XMFLOAT3 collision_detection_position = {};
 
     DirectX::XMStoreFloat3(&collision_detection_position, DirectX::XMVectorAdd(DirectX::XMLoadFloat3(&body_position), vec));
-    constexpr float height = 0.0f;
+    constexpr float height = 1.0f;
     collision_detection_position.y += height;
     collide_detection.lock()->set_position(collision_detection_position);
 }
