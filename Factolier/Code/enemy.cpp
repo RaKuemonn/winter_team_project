@@ -71,3 +71,14 @@ bool Enemy::check_im_die()
 
     return true;
 }
+
+bool Enemy::check_im_die_only()
+{
+    if (wkp_collide_detection.expired() == false) // ŽQÆ‚ªØ‚ê‚éˆ—collide_detection‚ªÁ‚³‚ê‚é‚Ì‚ÍAcollision_manager‚Åíœˆ—‚ª“ü‚Á‚½Œã@
+    {
+        wkp_collide_detection.lock()->set_position(get_position());
+        return false;
+    }
+
+    return true;
+}

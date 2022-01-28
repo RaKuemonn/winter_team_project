@@ -37,6 +37,8 @@ public:
     {
         load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::wood_spring, true));
         get_transform()->set_position(position);
+        y_radian += 1.2f;
+        get_transform()->set_euler({ 0.0f,y_radian,0.0f });
         get_transform()->Update();
     }
 };
@@ -48,6 +50,8 @@ public:
     {
         load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::wood_summer, true));
         get_transform()->set_position(position);
+        y_radian += 1.2f;
+        get_transform()->set_euler({ 0.0f,y_radian,0.0f });
         get_transform()->Update();
     }
 };
@@ -59,6 +63,8 @@ public:
     {
         load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::wood_fall, true));
         get_transform()->set_position(position);
+        y_radian += 1.2f;
+        get_transform()->set_euler({ 0.0f,y_radian,0.0f });
         get_transform()->Update();
     }
 };
@@ -70,6 +76,8 @@ public:
     {
         load_model(ptr_scene_manager_->model_manager()->load_model(Model_Paths::Deco::wood_winter, true));
         get_transform()->set_position(position);
+        y_radian += 1.2f;
+        get_transform()->set_euler({ 0.0f,y_radian,0.0f });
         get_transform()->Update();
     }
 };

@@ -41,6 +41,8 @@ private:
 	std::unique_ptr<class Camera_Controller> camera_controller = nullptr;
 
 	std::unique_ptr<Sprite> clear_back = nullptr;
+	std::unique_ptr<Sprite> spr_key		= nullptr;
+	std::unique_ptr<Sprite> spr_mouse	= nullptr;
 	std::unique_ptr<Model> water = nullptr;
 
 	std::unique_ptr<Sound> bgm_stage1 = nullptr;
@@ -50,4 +52,5 @@ private:
 	std::unique_ptr<Sound> bgm_boss = nullptr;
 	bool is_option = false;
 	bool clear_end = false;
+	bool once_space = false;
 };

@@ -11,7 +11,7 @@
 #include "boss_body_3.h"
 using namespace body;
 
-constexpr short boss_hp = 3;
+constexpr short boss_hp = 4;
 
 // 別名エイリアス
 using _this_type_ = Boss;
@@ -197,6 +197,11 @@ void Boss::check_wkp_body()
         if(wkp_bodies[i].expired() == false) continue;
 
         // 参照がない時
+        --hp;
+    }
+
+    if(check_im_die_only())
+    {
         --hp;
     }
 

@@ -7,7 +7,6 @@
 #include "entity_manager.h"
 #include "stage_manager.h"
 #include "Edit_Player.h"
-#include "enemy_move_closer.h"
 #include "enemy_move_closer_.h"
 #include "enemy_spring.h"
 #include "camera_controller.h"
@@ -115,6 +114,8 @@ void Scene_Game::initialize(Scene_Manager* parent_)
 
     //２D読み込み
     clear_back = std::make_unique<Sprite>(parent->device(), "./Data/Sprite/clear.png");
+    spr_key     = std::make_unique<Sprite>(parent->device(), "./Data/Sprite/key.png");
+    spr_mouse   = std::make_unique<Sprite>(parent->device(), "./Data/Sprite/mouse_left.png");
 
 
     water = std::make_unique<Model>(parent->model_manager()->load_model("./Data/Model/water.fbx"));
@@ -333,6 +334,43 @@ void Scene_Game::render(float elapsed_time)
         //parent->state_manager()->setBS(BS::ALPHA);
 
         parent->state_manager()->setRS(RS::SOLID_NONE);
+
+        if(parent->option_manager()->get_binary().clear_flag[0] == false)
+        {
+            if(parent->input_manager()->TRG(0) & KEY_SPACE)
+            {
+                once_space = true;
+            }
+
+
+            if(!once_space)
+            {
+                spr_key->render(ptr_device_context,
+                    0, 0,  //position
+                    1.0f, 1.0f,     // scal
+                    0, 0,    // どれくらい描画するか
+                    1920, 1080,   // size
+                    0.0, 0.0,         // pibot
+                    1, 1, 1, 1,   // rgba
+                    0.0f);
+            }
+
+            else
+            {
+                spr_mouse->render(ptr_device_context,
+                    1550, 750,  //position
+                    1.0f, 1.0f,     // scal
+                    0, 0,    // どれくらい描画するか
+                    200, 200,   // size
+                    0.0, 0.0,         // pibot
+                    1, 1, 1, 1,   // rgba
+                    0.0f);
+            }
+            
+
+            
+        }
+
 
         if (is_option)
         {

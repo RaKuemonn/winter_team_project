@@ -31,6 +31,7 @@ namespace Model_Paths
     };
 };
 
+static float y_radian = 0.0f;
 
 class Decorator : public Stage
 {
